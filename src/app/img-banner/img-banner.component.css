@@ -1,0 +1,30 @@
+.carousel-control-next,
+.carousel-control-prev{
+    display: none;
+}
+
+.carousel-caption {
+    text-align: right;
+}
+.carousel-caption h1{
+    font-family: var(--font-family);
+    font-weight: 600;
+    font-size: 4rem;
+}
+.carousel-caption p{
+    font-family: var(--font-family);
+    font-weight: 600;
+    font-size: 1.7rem;
+    color: var(--org-color);
+}
+.carousel-caption p span{
+    font-size: 3rem;
+    padding-left: 1rem;
+}
+.carousel-caption a{
+    color: var(--white);
+    font-size: 1.5rem;
+}
+.carousel-caption a span{
+    padding-left: .5rem;
+}

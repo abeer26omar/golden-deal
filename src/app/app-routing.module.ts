@@ -1,10 +1,36 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-const routes: Routes = [];
+import { HeaderComponent } from './header/header.component';
+import { FooterComponent } from './footer/footer.component';
+import { SearchComponent } from './search/search.component';
+import { ImgBannerComponent } from './img-banner/img-banner.component';
+import { TermsConditionsComponent } from './terms-conditions/terms-conditions.component';
+import { ProductsComponent } from './products/products.component';
+import { TestimonialComponent } from './testimonial/testimonial.component';
+import { CarouselModule } from 'ngx-owl-carousel-o';
+import { SearchResultComponent } from './search/search-result/search-result.component';
+import { ProductDetailsComponent } from './products/product-details/product-details.component';
+import { HomeComponent } from './home/home.component';
+import { NotfoundComponent } from './notfound/notfound.component';
+import { ChatsComponent } from './chats/chats.component';
+import { AddsComponent } from './adds/adds.component';
+import { NewAddComponent } from './adds/new-add/new-add.component';
+
+
+
+const routes: Routes = [
+  { path:'', redirectTo: 'home', pathMatch:'full'},
+  { path:'home', component:HomeComponent},
+  { path:'product-details/:id', component:ProductDetailsComponent},
+  { path:'chat', component:ChatsComponent},
+  { path:'adds', component:AddsComponent},
+  { path:'new-add', component:NewAddComponent},
+  { path:'**', component:NotfoundComponent}
+];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes,{scrollPositionRestoration: 'enabled'})],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

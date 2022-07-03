@@ -1,0 +1,34 @@
+.btn-adds{
+    background-color: var(--primary-color);
+    color: var(--white);
+    padding: .7rem 3rem;
+    border-radius: 10px;
+}
+@media screen and (max-width: 991px) {
+    .btn-adds{
+        padding: .7rem 2rem;
+    }
+}
+@media screen and (max-width: 767.5px) {
+    .div-add{
+        justify-content: center !important;
+        padding: 1rem 0;
+    }
+}
+.btn-adds span{
+    padding-right: .8rem;
+    font-weight: 500;
+}
+input{
+    padding: 0.7rem 0.75rem;
+    padding-right: 3rem;
+    border-radius: 10px;
+    border: 1px solid var(--gray);
+    color: var(--gray);
+    font-weight: 400;
+}
+.btn-search{
+    position: absolute;
+    color: var(--gray);
+    padding-top: .6rem;
+}

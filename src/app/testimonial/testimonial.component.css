@@ -1,0 +1,41 @@
+.section-title h2{
+    color: var(--primary-color);
+    font-weight: 600;
+}
+.testimonial-list{
+    position: relative;
+    padding-bottom: 30px;
+}
+.testimonial-list .image{
+    margin: 0 auto -45px;
+    text-align: center;
+}
+.testimonial-list .image img{
+    height: 130px;
+    margin: 0 auto;
+}
+.testimonial_content{
+    border: 2px solid var(--primary-color);
+    border-radius: 24px;
+    padding: 5rem 2rem 2rem;
+}
+.testimonial_desc p{
+    color: var(--sec-text);
+    text-align: center;
+    padding: 1rem;
+    font-weight: 400;
+    font-size: 1rem;
+}
+.testimonial_author h3 , 
+.testimonial_author span{
+    color: var(--sec-color);
+}
+.carousel-indicators{
+    bottom: -30px;
+}
+.carousel-indicators [data-bs-target] {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background-color: var(--primary-color);
+}

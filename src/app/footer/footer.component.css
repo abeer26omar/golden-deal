@@ -1,0 +1,44 @@
+footer{
+    background-color: var(--org-color);
+}
+ul{
+    padding-left: 0;
+}
+.footer-widget__contact li{
+    color: var(--white);
+    padding: 1rem 0rem;
+}
+.footer-widget__contact li:nth-child(1){
+    padding-top: 0;
+}
+.footer-widget__contact li a{
+    color: var(--white);
+    font-weight: 500;
+    font-size: 1.2rem;
+}
+@media screen and (max-width: 326px) {
+    .footer-widget__contact li a{
+        font-size: 1rem;
+    }
+}
+@media screen and (max-width: 991px) {
+    .logofooter{
+        padding-bottom: 3rem;
+    }
+}
+.rights{
+    color: var(--white);
+    font-weight: 400;
+    font-size: 1rem;
+}
+@media screen and (max-width: 767px) {
+    .lastwidget{
+        text-align: center;
+        padding-top: 3rem;
+    }
+}
+@media screen and (max-width: 575px){
+    .google-play{
+        padding-top: .6rem;
+    }
+}

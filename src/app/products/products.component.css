@@ -1,0 +1,126 @@
+.content{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.nav-tabs {
+    padding: 0;
+    border-bottom: none;
+}
+ .nav-item{
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+}
+ .nav-link{
+    padding: 1rem 0rem;
+}
+ .nav-link.all{
+    padding: 1rem 1.5rem;
+    cursor: pointer;
+    align-items: center;
+}
+.nav-tabs .nav-link:not(.all):focus, 
+.nav-tabs .nav-link:not(.all):hover,
+.nav-tabs .nav-item.show .nav-link:not(.all), 
+.nav-tabs .nav-link:not(.all).active {
+    border-color: var(--white)  var(--white) var(--org-color) ;
+    color: var(--org-color);
+}
+
+.nav-tabs a{
+    color: var(--primary-color);
+    font-size: 1.2rem;
+    font-weight: 500;
+    display: flex;
+}
+.nav-tabs a.all{
+    background-color: var(--bg-color);
+    box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.25);
+    font-weight: 900;
+}
+.nav-tabs a.all:hover,a.all:focus{
+    color: var(--primary-color);
+}
+.loader {
+       /* transform: translate3d(-50%, -50%, 0); */
+       display: flex;
+       justify-content: center;
+  }
+
+.products-row .card{
+    background-color: var(--bg-color);
+    border: 0.956962px solid #AAAAAA;
+    border-radius: 15.3114px;
+}
+.products-row .card-header{
+    padding: 0.5rem ;
+    border-bottom: none ;
+    background-color: var(--bg-color);
+    border-radius: 15.3114px;
+}
+.products-row .card-header img{
+    border-radius: 11.4835px 11.4835px 0px 0px;
+} 
+.products-row .card-body{
+    position: relative;
+    background-color: var(--bg-color);
+    top: -40px;
+    z-index: 99;
+    border-radius: 15.3114px;
+    margin: 0 1rem;
+}
+.products-row .card-body h4{
+    font-family: var(--font-family);
+    color: var(--primary-color);
+    font-weight: 600;
+    font-size: 1rem;
+}
+.products-row .card-body .discription{
+    color: var(--sec-text);
+    font-weight: 400;
+    font-size: 1rem;
+}
+.products-row .card-body .time span{
+    color: var(--primary-color);
+    font-weight: 400;
+    font-size: .8rem;
+    padding-right: .3rem;
+}
+.products-row .card-body .evaluation  p{
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+    color: var(--primary-color);
+    font-weight: 600;
+    font-size: 1rem;
+}
+.products-row .card-body .evaluation  p.name{
+    font-size: .8rem;
+}
+.products-row .card-body .person{
+    border-right: 2px solid #8E8E8E;
+    padding-right: 1.5rem;
+}
+.products-row .card-body .person img{
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+}
+#myModal .modal-header .btn{
+    background-image: url(../../assets/images/close.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 1rem ;
+}
+#myModal .modal-header {
+    justify-content: unset;
+    border: none;
+}
+#myModal .modal-footer{
+    border: none;
+    justify-content: center;
+}
+#myModal .modal-footer .btn-save{
+    background-color: var(--primary-color);
+    color: var(--white);
+    padding: .5rem 4rem;
+}

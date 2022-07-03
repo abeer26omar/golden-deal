@@ -1,0 +1,231 @@
+
+.main-card{
+    box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.15);
+    border-radius: 15px;
+    background-color: var(--white);
+}
+.main-card .card-header{
+    background-color: var(--bg-color);
+    border-radius: 12px 12px 0px 0px;
+}
+.prod-name{
+    color: var(--primary-color);
+    font-weight: 600;
+    font-size: 1.8rem;
+}
+.prod-desc{
+    color: var(--sec-text);
+    font-weight: 400;
+    font-size: 1.3rem;
+    padding-top: .5rem;
+}
+p.time, p.p-rate, span.name{
+    padding-bottom: 0;
+    margin-bottom: 0;
+    font-size: 1rem;
+}
+.prod-details p{
+    color: var(--primary-color);
+}
+span.name{
+   color: var(--primary-color);
+}
+.content .nav-tabs {
+    border-bottom: none !important;
+    padding: 0;
+}
+.content .nav-item{
+    cursor: pointer;
+}
+.content .nav-link{
+    color: var(--sec-text);
+    padding: 0.7rem 1.3rem;
+}
+.content .nav-tabs .nav-link {
+    border: none !important;
+}
+.content .nav-link.active{
+    background-color: var(--light-org);
+    border-radius: 8px;
+    color: var( --org-color);
+}
+.content .nav-link:hover{
+    color: var(--org-color);
+}
+.content-desc p.title,
+.material-desc p.title,
+.adds .add-name{
+    color: var(--black);
+    font-weight: 400;
+    font-size: 1.2rem;
+}
+.content-desc p.desc{
+    color: var(--primary-color);
+}
+.related-apps{
+    text-align: center;
+    padding: 2rem;
+}
+.related-apps p:nth-child(1){
+    color: var(--primary-color);
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+.related-apps p:nth-child(2),
+.adds .add-desc{
+    color: var(--sec-text);
+}
+.adds{
+    text-align: center;
+}
+.adds .add-name{
+    font-weight: 600;
+}
+.btn-site{
+    background-color: var(--primary-color);
+    color: var(--white);
+}
+.btn-Merchant{
+    background-color: transparent;
+    color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+}
+.btn{
+    padding: 1rem 1.5rem;
+}
+@media screen and (max-width: 357px) {
+    .btn{
+        padding: 0.375rem 0.75rem;
+    }
+}
+.prod-details .owner img{
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+}
+.ownership-desc{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+p{
+    color: var(--primary-color);
+    font-weight: 400;
+}
+.btn-display{
+    background-color: transparent;
+    border: 2px solid var(--primary-color);
+    border-radius: 10px;
+    color: var(--primary-color);
+    padding: .6rem 2rem;
+    display: flex;
+    justify-content: center;
+    font-weight: 600;
+}
+
+#myModal .modal-content .btn{
+    background-image: url(../../../assets/images/close.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 1rem;
+}
+
+.none p{
+    font-weight: 500;
+    color: var( --sec-text);
+    font-size: 1.3rem;
+    text-align: center;
+}
+input:focus , textarea:focus{
+    box-shadow: none !important;
+}
+.card-rate{
+    border: 0.5px solid var(--sec-text);
+    border-radius: 10px;
+}
+.client-img img{
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+}
+.client-name p{
+    color: var(--primary-color);
+    font-weight: 600;
+}
+.desc p{
+    color: var(--primary-color);
+    font-weight: 400;
+    font-size: .9rem;
+}
+.desc small{
+    color: var(--sec-text);
+    font-weight: 300;
+}
+.add-rate a{
+    color: var(--primary-color);
+    border-bottom: 1px solid var(--primary-color) ;
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+#staticBackdrop .modal-header{
+    background-color: var(--org-color);
+    justify-content: center;
+    border: 1px solid var(--org-color);
+    border-radius: 27px 27px 0px 0px;
+}
+#staticBackdrop .modal-header p{
+    color: var(--white);
+    text-align: center;
+}
+#staticBackdrop .modal-body {
+    padding: 2rem;
+}
+#staticBackdrop .form-check {
+    padding-right: 1.5em;
+    padding-left: 0;
+}
+#staticBackdrop .form-check .form-check-input {
+    float: right;
+    margin-right: -2em;
+}
+#staticBackdrop .modal-body form label{
+    color: var(--primary-color);
+    font-weight: 600;
+}
+#staticBackdrop .modal-body form .form-check label{
+    color: var(--primary-color);
+    font-weight: 400;
+}
+#staticBackdrop .form-check-input {
+    width: 1.4em;
+    height: 1.4em;
+    border-radius: 5.94307px;
+}
+#staticBackdrop .form-check-input:checked {
+    background-color: var(--org-color);
+    border-color: var(--org-color);
+}
+#staticBackdrop .modal-body form textarea {
+    resize: none;
+    background-color: var( --bg-color);
+    border-radius: 14.8577px;
+    border: none;
+}
+#staticBackdrop .modal-body form textarea::placeholder{
+    color: var(--sec-text);
+    font-weight: 300;
+}
+#staticBackdrop .modal-body  .btn-save{
+    background-color: var(--primary-color);
+    color: var(--bg-color-2);
+    padding: 1rem 4rem;
+    border-radius: 14.8577px;
+}
+#staticBackdrop .modal-body  .btn-cancel{
+    background-color: transparent;
+    color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+    padding: 1rem 4rem;
+    border-radius: 14.8577px;   
+}

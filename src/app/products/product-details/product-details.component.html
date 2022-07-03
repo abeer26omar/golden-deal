@@ -1,0 +1,233 @@
+<div class="container">
+    <div class="product-row row g-4 justify-content-center pt-5 pb-5">
+        <div class="col-lg-9 col-12">
+            <div class="card main-card">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-md-10 col-12 prod-desc px-3 py-4">
+                            <h2 class="prod-name">{{singleProduct.data.name}}</h2>
+                            <p class="prod-desc">{{singleProduct.data.desc}}</p>
+                            <div class="prod-details d-flex align-items-center">
+                                <p class="p-rate" *ngIf="singleProduct.data.owner_ratings">{{singleProduct.data.owner_ratings.length}} تقيمات</p>
+                                <p *ngIf="!singleProduct.data.owner_ratings || null">0 تقيمات</p>
+                                <p class="time px-5"><img src="../../assets/images/clock.svg" alt="clock"><span class="pe-1">{{singleProduct.data.created_since}}ايام</span></p>
+                                <div class="owner">
+                                    <img *ngIf="singleProduct.data.owner.image_url" src="{{singleProduct.data.owner.image_url}}" alt="profile">
+                                    <img *ngIf="!singleProduct.data.owner.image_url" src="../../assets/images/Portrait_Placeholder.png" alt="profile">  
+                                    <span class="name pe-1">{{singleProduct.data.owner.name}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-12 icons  py-3">
+                            <a href="" class="">
+                                <img src="../../../assets/images/wishlisticon.svg" alt="wishlisticon">
+                            </a>
+                            <a href="" class="pe-2">
+                                <img src="../../../assets/images/IconShare.svg" alt="IconShare">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="content">
+                        <ul ngbNav #nav="ngbNav"  class="nav-tabs">
+                            <li [ngbNavItem]="1">
+                              <a ngbNavLink>الوصف</a>
+                              <ng-template ngbNavContent>
+                                <div class="content-desc col-md-9 col-12 pt-3">
+                                    <p class="title">{{singleProduct.data.name}}</p>
+                                    <p class="desc">{{singleProduct.data.desc}}</p>
+                                </div>    
+                              </ng-template>
+                            </li>
+                            <li [ngbNavItem]="2">
+                              <a ngbNavLink>الخامات</a>
+                              <ng-template ngbNavContent>
+                                <div class="material-desc col-md-9 col-12 pt-3">
+                                    <p class="title">{{singleProduct.data.name}}</p>
+                                    <p class="material">{{singleProduct.data.materials}}</p>
+                                </div>
+                              </ng-template>
+                            </li>
+                            <li [ngbNavItem]="3">
+                              <a ngbNavLink>عن البائع</a>
+                              <ng-template ngbNavContent>
+                                <div class="owner-desc col-md-9 col-12 pt-3">
+                                    <p class="title">{{singleProduct.data.owner.name}}</p>
+                                </div>
+                              </ng-template>
+                            </li>
+                            <li [ngbNavItem]="4">
+                                <a ngbNavLink>الملكيه</a>
+                                <ng-template ngbNavContent>
+                                    <div class="ownership-desc col-md-9 col-12 pt-3">
+                                        <p class="desc">نعرض لك هنا نسخه مصغره من المستندات التي تثبت ملكيه المنتج للبائع وفي حاله الشراء سيتم ارفاقها مع المنتج </p>
+                                        <button class="btn btn-display" (click)="openFormModal()">عرض</button>
+                                    </div>
+                                    
+                                </ng-template>
+                            </li>
+                            <li [ngbNavItem]="5">
+                                <a ngbNavLink>التقيمات</a>
+                                <ng-template ngbNavContent>
+                                    <div *ngIf="!singleProduct.data.owner_ratings || singleProduct.data.owner_ratings == null" class="none pt-4 pb-5">
+                                        <p>لا يوجد تقيمات</p>
+                                    </div>
+                                      
+                                      <div class="rating-row row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4 justify-content-center pt-5 pb-5" *ngIf="singleProduct.data.owner_ratings || singleProduct.data.owner_ratings !== null">
+                                            <div class="col wow fadeIn" 
+                                             data-wow-duration="1.3s"  style="visibility: visible; animation-duration: 1.3s; 
+                                             animation-name: fadeIn;" *ngFor="let ownerRating of singleProduct.data.owner_ratings ; let i = index" >
+                                              <div class="card h-100 card-rate">
+                                                <div class="card-body text-center">
+                                                  <div class="client-img">
+                                                      <img src="{{ownerRating.reviewer.image_url}}" alt="profile">
+                                                  </div>
+                                                  <div class="client-name pt-1">
+                                                      <p>{{ownerRating.reviewer.name}}</p>
+                                                  </div>
+                                                  <div class="rate d-flex justify-content-center">
+                                                    <ng-container *ngFor="let _ of [].constructor(ownerRating.value)">
+                                                      <img src="../../../../assets/images/ratestar.svg" alt="ratestar" width="13%">
+                                                    </ng-container>
+                                                  </div>
+                                                  <div class="desc pt-2">
+                                                      <p>{{ownerRating.desc}}</p>
+                                                      <small>منذ {{ownerRating.created_since}} ايام</small>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+                                        </div>
+                                          <div class="add-rate d-flex justify-content-center pt-5">
+                                             <img src="../../../../assets/images/add-rate.svg" alt="add-rate" class="ps-3">
+                                             <a (click)="openFormModal2()">اضافه تقيم</a>
+                                          </div>
+                                        
+                                </ng-template>
+                            </li>
+                        </ul>
+                          <div [ngbNavOutlet]="nav" class="mt-2"></div>
+                    </div>                  
+                    <div class="content-images d-flex pt-5 pb-5 justify-content-end" dir="ltr">
+                        <div class="column text-left"  *ngIf="singleProduct.data.product_images">
+                            <div class="col-md-7 col-12 p-2" *ngFor="let img of singleProduct.data.product_images">
+                                <img src="{{img.image_url}}" alt="product-img" width='100%'>
+                            </div>
+                        </div>
+                        <div class="column text-left"  *ngIf="!singleProduct.data.product_images || singleProduct.data.product_images.length == 0">
+                            <div class="">
+                                <p>لا يوجد صور للمنتج</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="btn-buy d-flex justify-content-center pt-5">
+                <button class="btn btn-site"> شراء عبر الموقع </button>
+                <button class="btn btn-Merchant me-3"> شراء عبر التاجر </button>
+            </div>
+        </div>
+        <div class="col-lg-3 col-12">
+            <div class="card main-card">
+                <div class="card-header related-apps">
+                    <p>اعلانات مشابهة</p>
+                    <p>سياره جديده-سياره جديده</p>
+                </div>
+                <div class="card-body">
+                    <div class="column">
+                        <div class="adds">
+                            <img src="../../../assets/images/caradd.svg" alt="caradd" width="100%">
+                            <p class="add-name pt-2"> السيارة: شيفروليه-فان</p>
+                            <p class="add-desc">سياره جديده</p>
+                        </div>
+                        <div class="adds">
+                            <img src="../../../assets/images/cardadd2.svg" alt="cardadd2" width="100%">
+                            <p class="add-name pt-2"> السيارة: شيفروليه-فان</p>
+                            <p class="add-desc">سياره جديده</p>
+                        </div>
+                        <div class="adds">
+                            <img src="../../../assets/images/caradd3.svg" alt="caradd3" width="100%">
+                            <p class="add-name pt-2"> السيارة: شيفروليه-فان</p>
+                            <p class="add-desc">سياره جديده</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- modal 1-->
+    <div class="modal fade"
+    id="myModal"
+    tabindex="-1"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+    >
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <img src="{{singleProduct.data.ownership_image_url}}" alt="ProductOwnership" width="100%" *ngIf="singleProduct.data.ownership_image_url">
+                <p *ngIf="!singleProduct.data.ownership_image_url || null">لا يوجد اثبات ملكيه</p>
+            </div>
+        </div>
+    </div>
+    </div>
+<!-- modal 2-->
+    <div class="modal fade" id="staticBackdrop" 
+    data-bs-backdrop="static" data-bs-keyboard="false" 
+    tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <p>اضافه تقييم</p>
+                </div>
+                <div class="modal-body">
+                    <form action="" name="form"
+                    #f="ngForm"
+                    (ngSubmit)="f.form.valid && onSubmit(f)">
+                        <div class="mb-3 form-check">
+                            <label class="form-check-label" for="exampleCheck1">اتعهد واقسم بالله انني قمت بشراء سلعة من العضو وان المعلومات التي اقدمها في التقييم هي معلومات صحيحه ودقيقه واتحمل صحه هذه المعلومات</label>
+                                <input type="checkbox" class="form-check-input" id="exampleCheck1" name="usercheck"
+                                ngModel 
+                                required
+                                #usercheck="ngModel">
+                                    <div class="text-danger" *ngIf="(usercheck.invalid && usercheck.touched)">
+                                        <span *ngIf="usercheck.errors?.['required']">يجب التحديد</span>
+                                    </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleFormControlTextarea1" class="form-label">اكتب تقيمك هنا</label>
+                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="اكتب تقيمك هنا"
+                                name="userdesc"
+                                ngModel 
+                                required
+                                #userdesc="ngModel"></textarea>
+                                <div class="text-danger" *ngIf="(userdesc.invalid && userdesc.touched)">
+                                    <span *ngIf="userdesc.errors?.['required']">يجب كتابه وصف</span>
+                                </div>
+                        </div>
+                        <div class="mb-3 d-flex justify-content-center">
+                            <ngx-star-rating  [id]="'rating'" 
+                                name="userrate"
+                                ngModel 
+                                required
+                                #userrate="ngModel"></ngx-star-rating>
+                                <div class="text-danger" *ngIf="(userrate.invalid && userrate.touched)">
+                                    <span *ngIf="userrate.errors?.['required']">يجب تحديد تقيم</span>
+                                </div>
+                        </div>
+                        <div class="mb-3 d-flex justify-content-center">
+                            <button type="submit" class="btn btn-save"  [disabled]="f.form.invalid">حفظ</button>
+                        </div>
+                        <div class="mb-3 d-flex justify-content-center">
+                            <button type="button" class="btn btn-cancel" data-bs-dismiss="modal" aria-label="Close">الغاء</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>

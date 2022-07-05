@@ -69,3 +69,24 @@ interface productImages{
     image: string;
     image_url: string;
 }
+export interface Category{
+    id: number,
+    title: string,
+    slug: string
+}
+export interface APIResponse2<T>{
+    data: Array<T>;
+}
+export interface Adds{
+    id: number,
+    title: string,
+    link: string,
+    image: string,
+    active: number,
+    created_at: string,
+    updated_at: string,
+    image_url: string
+}
+export interface APIResponse3<T>{
+    data: Array<T>;
+}

@@ -1,27 +1,12 @@
 <div class=" content pb-4 pt-5">
-  <!-- <nav class="nav">
-      <a class="nav-link all" aria-current="page" >كل المنتجات</a>
-      <li class="nav-item">
-          <a class="nav-link"  active-link='active'>مجوهرات</a>
-      </li>
-      <li class="nav-item">
-          <a class="nav-link"  active-link='active'>سيارات</a>
-      </li>
-      <li class="nav-item">
-          <a class="nav-link"  active-link='active'>ساعات</a>
-      </li>
-      <li class="nav-item">
-          <a class="nav-link"  active-link='active'>لوحات سيارات</a>
-      </li>
-      <li class="nav-item">
-          <a class="nav-link"  active-link='active'>لوحات فنية</a>
-      </li>
-  </nav> -->
   <ul ngbNav #nav="ngbNav"  class="nav-tabs">
-    <li [ngbNavItem]="1">
-      <a ngbNavLink class="all" (click)="getProducts('')"> <img src="../../assets/images/left-arrow.svg" class="ps-2"> كل المنتجات</a>
+    <li [ngbNavItem]="" *ngFor="let category of categories">
+      <a ngbNavLink [ngClass]="{'all': category.id == 0}" (click)="getProducts(category.slug)"> 
+        <img src="../../assets/images/left-arrow.svg" class="ps-2" 
+        *ngIf="category.id == 0" >{{category.title}}</a>
       <ng-template ngbNavContent>
-        <div class="products-row row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4 justify-content-center">
+        <!-- <p>{{category.slug}}</p> -->
+        <div class="products-row row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4 justify-content-start">
           <div class="alert alert-danger text-center" *ngIf="error">
             {{error}}
           </div>
@@ -39,8 +24,9 @@
                   </a>
                   <p class="discription">{{product.desc}}</p>
                   <p class="time"><img src="../../assets/images/clock.svg" alt="clock"><span>{{product.created_since}}ايام</span></p>
-                  <div class="evaluation d-flex justify-content-between">
+                  <div class="evaluation d-flex justify-content-between align-items-center">
                     <p>{{product.owner_ratings_count}} تقيمات</p>
+                    <img src="../../assets/images/Separator.svg" alt="Separator">
                     <div class="person d-flex align-items-center">
                         <img *ngIf="product.owner.image_url" src="{{product.owner.image_url}}" alt="profile" width="30px" height="30px">
                         <img *ngIf="!product.owner.image_url" src="../../assets/images/Portrait_Placeholder.png" alt="profile" width="30px" height="30px">
@@ -50,10 +36,11 @@
                 </div>
               </div>
             </div>
-        </div>
+            <p class="text-danger" *ngIf="errorLength !== ''">{{errorLength}}</p>
+        </div> 
       </ng-template>
     </li>
-    <li [ngbNavItem]="2">
+    <!-- <li [ngbNavItem]="2">
       <a ngbNavLink (click)="getProducts('accessories')">مجوهرات</a>
       <ng-template ngbNavContent>
         <div class="products-row row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4 justify-content-center">
@@ -227,7 +214,7 @@
             </div>
         </div>
       </ng-template>
-    </li>
+    </li> -->
   </ul>
   <div class="filter">
     <a (click)="openFormModal()">

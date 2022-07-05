@@ -30,6 +30,10 @@ import { NotfoundComponent } from './notfound/notfound.component';
 import { ChatsComponent } from './chats/chats.component';
 import { AddsComponent } from './adds/adds.component';
 import { NewAddComponent } from './adds/new-add/new-add.component';
+import { WhoWeAreComponent } from './who-we-are/who-we-are.component';
+import { AccoutSettingComponent } from './accout-setting/accout-setting.component';
+import { BuyingRecordComponent } from './buying-record/buying-record.component';
+import { SearchproductsPipe } from './pipes/searchproducts.pipe';
 
 @NgModule({
   declarations: [
@@ -47,7 +51,11 @@ import { NewAddComponent } from './adds/new-add/new-add.component';
     NotfoundComponent,
     ChatsComponent,
     AddsComponent,
-    NewAddComponent
+    NewAddComponent,
+    WhoWeAreComponent,
+    AccoutSettingComponent,
+    BuyingRecordComponent,
+    SearchproductsPipe
   ],
   imports: [
     BrowserModule,

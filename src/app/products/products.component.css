@@ -8,7 +8,7 @@
     border-bottom: none;
 }
  .nav-item{
-    padding: 0.5rem 1rem;
+    padding: 0.5rem 1.5rem;
     cursor: pointer;
 }
  .nav-link{
@@ -29,7 +29,7 @@
 
 .nav-tabs a{
     color: var(--primary-color);
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     font-weight: 500;
     display: flex;
 }
@@ -96,10 +96,7 @@
 .products-row .card-body .evaluation  p.name{
     font-size: .8rem;
 }
-.products-row .card-body .person{
-    border-right: 2px solid #8E8E8E;
-    padding-right: 1.5rem;
-}
+
 .products-row .card-body .person img{
     width: 35px;
     height: 35px;

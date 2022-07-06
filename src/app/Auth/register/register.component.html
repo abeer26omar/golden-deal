@@ -1,0 +1,66 @@
+<div class="register-card mt-5 mb-5">
+    <div class="card">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-md-8">
+                    <div class="head text-center">
+                        <p class="title">حساب جديد</p>
+                    </div>
+                    <div class="row justify-content-center pb-4">
+                        <div class="col-7">
+                            <form [formGroup]="registerForm" (ngSubmit)="submitData()" class="row  g-3">
+                                <mat-form-field appearance="legacy">
+                                    <mat-label>الاسم</mat-label>
+                                    <input matInput placeholder="الاسم">
+                                </mat-form-field>   
+                                <mat-form-field appearance="legacy">
+                                    <mat-label>النوع</mat-label>
+                                    <mat-select>
+                                      <mat-option value="one">انثى</mat-option>
+                                      <mat-option value="two">ذكر</mat-option>
+                                    </mat-select>
+                                  </mat-form-field>
+                                  <mat-form-field class="example-full-width" appearance="legacy">
+                                    <mat-label>تاريخ الميلاد</mat-label>
+                                    <input matInput [matDatepicker]="picker">
+                                    <mat-datepicker-toggle matSuffix [for]="picker">
+                                    </mat-datepicker-toggle>
+                                    <mat-datepicker #picker></mat-datepicker>
+                                  </mat-form-field> 
+                                  <mat-form-field appearance="legacy">
+                                    <mat-label>رقم الهاتف</mat-label>
+                                    <input matInput placeholder="رقم الهاتف">
+                                  </mat-form-field>
+                                  <div class="d-flex justify-content-center pt-3">
+                                      <button class="btn btn-prim" type="submit">انشاء حساب</button>
+                                  </div>   
+                            </form>
+                            <div class="d-flex justify-content-center align-items-center pt-5">
+                                <img src="../../../assets/images/Line 9.svg" alt="Line">
+                                <p class="or px-3">او</p>
+                                <img src="../../../assets/images/Line 8.svg" alt="Line">
+                            </div>
+                            <div class="d-flex justify-content-center py-5 apps-icon">
+                                <a href=""><img src="../../../assets/images/googlee.svg" alt="google"></a>
+                                <a href=""><img src="../../../assets/images/faceboook.svg" alt="facebook" class="px-5"></a>
+                                <a href=""><img src="../../../assets/images/applee.svg" alt="apple" ></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4 swipper">
+                        <div class="logo">
+                            <img src="../../../assets/images/logofooter.svg" alt="logofooter">
+                        </div>
+                       <div class="title text-center">
+                        <p class="ask">قمت بالتسجيل بالفعل؟</p>
+                        <p class="pref">دعنا نجهزك جميعًا حتى تتمكن من البدء في إنشاء أول تجربة تأهيل لك.</p>
+                       </div> 
+                       <div class="btn-swiper">
+                        <button class="btn btn-sec">تسجيل الدخول</button>
+                       </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

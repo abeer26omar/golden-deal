@@ -13,6 +13,16 @@ import { FormsModule , ReactiveFormsModule } from '@angular/forms';
 import { NgxStarRatingModule } from 'ngx-star-rating';
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { NgxFontAwesomeModule } from 'ngx-font-awesome';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSortModule } from '@angular/material/sort';
+import { MatTableModule } from '@angular/material/table';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSelectModule } from '@angular/material/select';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatButtonModule } from '@angular/material/button';
 
 
 //components
@@ -34,6 +44,7 @@ import { WhoWeAreComponent } from './who-we-are/who-we-are.component';
 import { AccoutSettingComponent } from './accout-setting/accout-setting.component';
 import { BuyingRecordComponent } from './buying-record/buying-record.component';
 import { SearchproductsPipe } from './pipes/searchproducts.pipe';
+import { RegisterComponent } from './Auth/register/register.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +66,8 @@ import { SearchproductsPipe } from './pipes/searchproducts.pipe';
     WhoWeAreComponent,
     AccoutSettingComponent,
     BuyingRecordComponent,
-    SearchproductsPipe
+    SearchproductsPipe,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
@@ -68,8 +80,18 @@ import { SearchproductsPipe } from './pipes/searchproducts.pipe';
     ReactiveFormsModule,
     NgxStarRatingModule,
     NgxFontAwesomeModule,
-    NgbModule
-  ],
+    NgbModule,
+    MatTableModule,
+    MatSortModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatIconModule,
+    MatSelectModule,
+    MatRadioModule,
+    MatButtonModule,
+      ],
   providers: [{
     provide: HTTP_INTERCEPTORS,
     useClass: HttpHeadersInterceptor,

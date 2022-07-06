@@ -1,4 +1,4 @@
-import { Component, OnInit,OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit} from '@angular/core';
 import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRoute, Params, Router } from '@angular/router';
@@ -25,20 +25,19 @@ export class ImgBannerComponent implements OnInit , OnDestroy{
     config.pauseOnHover = true;
     config.animation = true;
    }
-  ngOnDestroy(): void {
-    throw new Error('Method not implemented.');
-  }
+ 
 
   ngOnInit(): void {
     this.getAdds();
   }
   getAdds(){
-    this.addSub = this.httpService.getAdds().subscribe((addList: APIResponse3<Adds>)=>{
+    this.addSub = this.httpService.getAdds()
+    .subscribe((addList: APIResponse3<Adds>)=>{
       this.adds = addList.data;
       console.log(this.adds);
     })
   }
-  ngOnDestory() :void{
+  ngOnDestroy(): void {
     if(this.addSub){
       this.addSub.unsubscribe();
     }

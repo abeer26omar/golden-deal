@@ -1,0 +1,40 @@
+p.title{
+    padding: 2.5rem 1.3rem 1.3rem;
+    color: var(--primary-color);
+    font-weight: 600;
+    font-size: 1.7rem;
+}
+.card{
+    background: #FFFFFF;
+    box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.15);
+    border-radius: 15px;
+}
+.mat-form-field {
+    text-align: right;
+}
+.btn-prim{
+    padding: .9rem 3.2rem;
+    border-radius: 10px;
+}
+.btn-prim:hover{
+    color: var(--white);
+}
+p.or{
+    color: var(--primary-color);
+    font-weight: 400;
+    font-size: 1rem;
+}
+.swipper{
+    background-color: var(--org-color);
+    border-radius: 15px 0px 0px 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.btn-sec{
+    padding: .9rem 2.2rem;
+    border-color: var(--white);
+    color: var(--white);
+    border-radius: 10px;
+}

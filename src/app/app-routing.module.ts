@@ -18,6 +18,7 @@ import { AddsComponent } from './adds/adds.component';
 import { NewAddComponent } from './adds/new-add/new-add.component';
 import { WhoWeAreComponent } from './who-we-are/who-we-are.component';
 import { BuyingRecordComponent } from './buying-record/buying-record.component';
+import { RegisterComponent } from './Auth/register/register.component';
 
 
 
@@ -31,6 +32,7 @@ const routes: Routes = [
   { path:'termsandconditions', component: TermsConditionsComponent},
   { path:'whoweare', component: WhoWeAreComponent},
   { path:'buyingrecord', component: BuyingRecordComponent},
+  { path:'register', component: RegisterComponent},
   { path:'**', component:NotfoundComponent}
 ];
 

@@ -103,3 +103,10 @@ input.star:checked ~ label.star:before {
     border-radius: 50%;
     background-color: var(--primary-color);
 }
+
+.mat-form-field-type-mat-select .mat-form-field-label {
+    width: 100% !important;
+}
+.mat-form-field-appearance-legacy.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label, .mat-form-field-appearance-legacy.mat-form-field-can-float .mat-input-server:focus+.mat-form-field-label-wrapper .mat-form-field-label {
+    width: 133.3333333333% !important;
+}

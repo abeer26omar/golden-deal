@@ -8,28 +8,31 @@
                     </div>
                     <div class="row justify-content-center pb-4">
                         <div class="col-7">
+                            <div class="alert alert-danger text-center" *ngIf="error">
+                                {{error}}
+                              </div>
                             <form [formGroup]="registerForm" (ngSubmit)="submitData()" class="row  g-3">
                                 <mat-form-field appearance="legacy">
                                     <mat-label>الاسم</mat-label>
-                                    <input matInput placeholder="الاسم">
+                                    <input matInput placeholder="الاسم" formControlName="name">
                                 </mat-form-field>   
                                 <mat-form-field appearance="legacy">
                                     <mat-label>النوع</mat-label>
-                                    <mat-select>
-                                      <mat-option value="one">انثى</mat-option>
-                                      <mat-option value="two">ذكر</mat-option>
+                                    <mat-select formControlName="gender">
+                                      <mat-option value="female">انثى</mat-option>
+                                      <mat-option value="male">ذكر</mat-option>
                                     </mat-select>
                                   </mat-form-field>
                                   <mat-form-field class="example-full-width" appearance="legacy">
                                     <mat-label>تاريخ الميلاد</mat-label>
-                                    <input matInput [matDatepicker]="picker">
+                                    <input matInput [matDatepicker]="picker" formControlName="dateOfBirth">
                                     <mat-datepicker-toggle matSuffix [for]="picker">
                                     </mat-datepicker-toggle>
                                     <mat-datepicker #picker></mat-datepicker>
                                   </mat-form-field> 
                                   <mat-form-field appearance="legacy">
                                     <mat-label>رقم الهاتف</mat-label>
-                                    <input matInput placeholder="رقم الهاتف">
+                                    <input matInput placeholder="رقم الهاتف" formControlName="phone">
                                   </mat-form-field>
                                   <div class="d-flex justify-content-center pt-3">
                                       <button class="btn btn-prim" type="submit">انشاء حساب</button>
@@ -50,10 +53,10 @@
                 </div>
                 <div class="col-12 col-md-4 swipper">
                         <div class="logo">
-                            <img src="../../../assets/images/logofooter.svg" alt="logofooter">
+                            <img src="../../../assets/images/logofooter.svg" alt="logofooter" width="100%">
                         </div>
-                       <div class="title text-center">
-                        <p class="ask">قمت بالتسجيل بالفعل؟</p>
+                       <div class="title text-center py-5">
+                        <p class="ask pt-5 pb-4">قمت بالتسجيل بالفعل؟</p>
                         <p class="pref">دعنا نجهزك جميعًا حتى تتمكن من البدء في إنشاء أول تجربة تأهيل لك.</p>
                        </div> 
                        <div class="btn-swiper">
@@ -63,4 +66,27 @@
             </div>
         </div>
     </div>
+</div>
+<!-- otpModel modal -->
+<div class="modal fade"
+id="otpModel"
+tabindex="-1"
+aria-labelledby="exampleModalLabel"
+aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-sm">
+      <div class="modal-content">
+        <div class="modal-header justify-content-center">
+            <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close">
+                <img src="../../../assets/images/close.svg" alt="close">
+            </button>
+          <h5 class="modal-title text-center" id="staticBackdropLabel">رمز التحقق</h5>
+        </div>
+        <div class="modal-body">
+            <button type="button" class="btn btn-yes m-3">نعم</button>
+    
+        </div>
+       
+      </div>
+  </div>
 </div>

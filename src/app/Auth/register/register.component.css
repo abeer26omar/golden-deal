@@ -38,3 +38,13 @@ p.or{
     color: var(--white);
     border-radius: 10px;
 }
+p.ask{
+    color: var(--bg-color-2);
+    font-size: 1.5rem;
+    font-weight: 500;
+}
+p.pref{
+    color: var(--bg-color-2);
+    font-size: 1rem;
+    font-weight: 400;
+}

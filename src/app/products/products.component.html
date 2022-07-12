@@ -1,119 +1,12 @@
 <div class=" content pb-4 pt-5">
   <ul ngbNav #nav="ngbNav"  class="nav-tabs">
-    <li [ngbNavItem]="" *ngFor="let category of categories">
-      <a ngbNavLink [ngClass]="{'all': category.id == 0}" (click)="getProducts(category.slug)"> 
-        <img src="../../assets/images/left-arrow.svg" class="ps-2" 
-        *ngIf="category.id == 0" >{{category.title}}</a>
-      <ng-template ngbNavContent>
-        <!-- <p>{{category.slug}}</p> -->
-        <div class="products-row row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4 justify-content-start">
-          <div class="alert alert-danger text-center" *ngIf="error">
-            {{error}}
-          </div>
-            <div class="col wow fadeIn" 
-             data-wow-duration="1.3s"  style="visibility: visible; animation-duration: 1.3s; 
-             animation-name: fadeIn;"  *ngFor="let product of products">
-              <div class="card h-100">
-                <div class="card-header text-center" >
-                  <img *ngIf="product.default_image" src="{{product.default_image}}" alt="car" width="100%" height="200px !important">
-                  <img *ngIf="!product.default_image" src="../../assets/images/placeholderimg.jpg" alt="placeholderimg" width="100%" height="200px !important">                
-                </div>
-                <div class="card-body text-center">
-                  <a (click)="productDetails(product.id)" style="cursor: pointer;">
-                    <h4>{{product.name}}</h4>
-                  </a>
-                  <p class="discription">{{product.desc}}</p>
-                  <p class="time"><img src="../../assets/images/clock.svg" alt="clock"><span>{{product.created_since}}ايام</span></p>
-                  <div class="evaluation d-flex justify-content-between align-items-center">
-                    <p>{{product.owner_ratings_count}} تقيمات</p>
-                    <img src="../../assets/images/Separator.svg" alt="Separator">
-                    <div class="person d-flex align-items-center">
-                        <img *ngIf="product.owner.image_url" src="{{product.owner.image_url}}" alt="profile" width="30px" height="30px">
-                        <img *ngIf="!product.owner.image_url" src="../../assets/images/Portrait_Placeholder.png" alt="profile" width="30px" height="30px">
-                        <p class="name">{{product.owner.name}}</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <p class="text-danger" *ngIf="errorLength !== ''">{{errorLength}}</p>
-        </div> 
-      </ng-template>
-    </li>
-    <!-- <li [ngbNavItem]="2">
-      <a ngbNavLink (click)="getProducts('accessories')">مجوهرات</a>
-      <ng-template ngbNavContent>
-        <div class="products-row row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4 justify-content-center">
-          <div class="alert alert-danger text-center" *ngIf="error">
-            {{error}}
-          </div>
-            <div class="col wow fadeIn" 
-             data-wow-duration="1.3s"  style="visibility: visible; animation-duration: 1.3s; 
-             animation-name: fadeIn;"  *ngFor="let product of products">
-              <div class="card h-100">
-                <div class="card-header text-center" >
-                  <img *ngIf="product.default_image" src="{{product.default_image}}" alt="car" width="100%" height="200px !important">
-                  <img *ngIf="!product.default_image" src="../../assets/images/placeholderimg.jpg" alt="placeholderimg" width="100%" height="200px !important">                
-                </div>
-                <div class="card-body text-center">
-                  <a (click)="productDetails(product.id)" style="cursor: pointer;">
-                    <h4>{{product.name}}</h4>
-                  </a>
-                  <p class="discription">{{product.desc}}</p>
-                  <p class="time"><img src="../../assets/images/clock.svg" alt="clock"><span>{{product.created_since}}ايام</span></p>
-                  <div class="evaluation d-flex justify-content-between">
-                    <p>{{product.owner_ratings_count}} تقيمات</p>
-                    <div class="person d-flex align-items-center">
-                        <img *ngIf="product.owner.image_url" src="{{product.owner.image_url}}" alt="profile" width="30px" height="30px">
-                        <img *ngIf="!product.owner.image_url" src="../../assets/images/Portrait_Placeholder.png" alt="profile" width="30px" height="30px">
-                        <p class="name">{{product.owner.name}}</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-        </div>
-      </ng-template>
-    </li>
-    <li [ngbNavItem]="3">
-      <a ngbNavLink (click)="getProducts('cars')">سيارات</a>
-      <ng-template ngbNavContent>
-        <div class="products-row row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4 justify-content-center">
-          <div class="alert alert-danger text-center" *ngIf="error">
-            {{error}}
-          </div>
-            <div class="col wow fadeIn" 
-             data-wow-duration="1.3s"  style="visibility: visible; animation-duration: 1.3s; 
-             animation-name: fadeIn;"  *ngFor="let product of products">
-              <div class="card h-100">
-                <div class="card-header text-center" >
-                  <img *ngIf="product.default_image" src="{{product.default_image}}" alt="car" width="100%" height="200px !important">
-                  <img *ngIf="!product.default_image" src="../../assets/images/placeholderimg.jpg" alt="placeholderimg" width="100%" height="200px !important">                
-                </div>
-                <div class="card-body text-center">
-                  <a (click)="productDetails(product.id)" style="cursor: pointer;">
-                    <h4>{{product.name}}</h4>
-                  </a>
-                  <p class="discription">{{product.desc}}</p>
-                  <p class="time"><img src="../../assets/images/clock.svg" alt="clock"><span>{{product.created_since}}ايام</span></p>
-                  <div class="evaluation d-flex justify-content-between">
-                    <p>{{product.owner_ratings_count}} تقيمات</p>
-                    <div class="person d-flex align-items-center">
-                        <img *ngIf="product.owner.image_url" src="{{product.owner.image_url}}" alt="profile" width="30px" height="30px">
-                        <img *ngIf="!product.owner.image_url" src="../../assets/images/Portrait_Placeholder.png" alt="profile" width="30px" height="30px">
-                        <p class="name">{{product.owner.name}}</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-        </div>
-      </ng-template>
-    </li>
-    <li [ngbNavItem]="4">
-        <a ngbNavLink (click)="getProducts('watches')">ساعات</a>
+    <ng-container *ngFor="let category of categories; let i = index">
+      <li [ngbNavItem]="i">
+        <a ngbNavLink [ngClass]="{'all': category.id == 0}" (click)="getProducts(category.slug);productsDefId.style.display = 'none';"> 
+          <img src="../../assets/images/left-arrow.svg" class="ps-2" 
+          *ngIf="category.id == 0" >{{category.title}}</a>
         <ng-template ngbNavContent>
-          <div class="products-row row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4 justify-content-center">
+          <div class="products-row row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4 justify-content-start">
             <div class="alert alert-danger text-center" *ngIf="error">
               {{error}}
             </div>
@@ -127,12 +20,13 @@
                   </div>
                   <div class="card-body text-center">
                     <a (click)="productDetails(product.id)" style="cursor: pointer;">
-                      <h4>{{product.name}}</h4>
+                      <h4>{{(product.name.length > 20)? (product.name | slice:0:20)+'..':(product.name)}}</h4>
                     </a>
-                    <p class="discription">{{product.desc}}</p>
+                    <p class="discription">{{(product.desc.length > 40)? (product.desc | slice:0:40)+'...':(product.desc)}}</p>
                     <p class="time"><img src="../../assets/images/clock.svg" alt="clock"><span>{{product.created_since}}ايام</span></p>
-                    <div class="evaluation d-flex justify-content-between">
+                    <div class="evaluation d-flex justify-content-between align-items-center">
                       <p>{{product.owner_ratings_count}} تقيمات</p>
+                      <img src="../../assets/images/Separator.svg" alt="Separator">
                       <div class="person d-flex align-items-center">
                           <img *ngIf="product.owner.image_url" src="{{product.owner.image_url}}" alt="profile" width="30px" height="30px">
                           <img *ngIf="!product.owner.image_url" src="../../assets/images/Portrait_Placeholder.png" alt="profile" width="30px" height="30px">
@@ -142,79 +36,11 @@
                   </div>
                 </div>
               </div>
-          </div>
+              <p class="text-danger" *ngIf="errorLength !== ''">{{errorLength}}</p>
+          </div> 
         </ng-template>
-    </li>
-    <li [ngbNavItem]="5">
-        <a ngbNavLink>لوحات سيارات</a>
-        <ng-template ngbNavContent>
-          <div class="products-row row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4 justify-content-center">
-            <div class="alert alert-danger text-center" *ngIf="error">
-              {{error}}
-            </div>
-              <div class="col wow fadeIn" 
-               data-wow-duration="1.3s"  style="visibility: visible; animation-duration: 1.3s; 
-               animation-name: fadeIn;"  *ngFor="let product of products">
-                <div class="card h-100">
-                  <div class="card-header text-center" >
-                    <img *ngIf="product.default_image" src="{{product.default_image}}" alt="car" width="100%" height="200px !important">
-                    <img *ngIf="!product.default_image" src="../../assets/images/placeholderimg.jpg" alt="placeholderimg" width="100%" height="200px !important">                
-                  </div>
-                  <div class="card-body text-center">
-                    <a (click)="productDetails(product.id)" style="cursor: pointer;">
-                      <h4>{{product.name}}</h4>
-                    </a>
-                    <p class="discription">{{product.desc}}</p>
-                    <p class="time"><img src="../../assets/images/clock.svg" alt="clock"><span>{{product.created_since}}ايام</span></p>
-                    <div class="evaluation d-flex justify-content-between">
-                      <p>{{product.owner_ratings_count}} تقيمات</p>
-                      <div class="person d-flex align-items-center">
-                          <img *ngIf="product.owner.image_url" src="{{product.owner.image_url}}" alt="profile" width="30px" height="30px">
-                          <img *ngIf="!product.owner.image_url" src="../../assets/images/Portrait_Placeholder.png" alt="profile" width="30px" height="30px">
-                          <p class="name">{{product.owner.name}}</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-          </div>
-        </ng-template>
-    </li>
-    <li [ngbNavItem]="6">
-      <a ngbNavLink>لوحات فنية</a>
-      <ng-template ngbNavContent>
-        <div class="products-row row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4 justify-content-center">
-          <div class="alert alert-danger text-center" *ngIf="error">
-            {{error}}
-          </div>
-            <div class="col wow fadeIn" 
-             data-wow-duration="1.3s"  style="visibility: visible; animation-duration: 1.3s; 
-             animation-name: fadeIn;"  *ngFor="let product of products">
-              <div class="card h-100">
-                <div class="card-header text-center" >
-                  <img *ngIf="product.default_image" src="{{product.default_image}}" alt="car" width="100%" height="200px !important">
-                  <img *ngIf="!product.default_image" src="../../assets/images/placeholderimg.jpg" alt="placeholderimg" width="100%" height="200px !important">                
-                </div>
-                <div class="card-body text-center">
-                  <a (click)="productDetails(product.id)" style="cursor: pointer;">
-                    <h4>{{product.name}}</h4>
-                  </a>
-                  <p class="discription">{{product.desc}}</p>
-                  <p class="time"><img src="../../assets/images/clock.svg" alt="clock"><span>{{product.created_since}}ايام</span></p>
-                  <div class="evaluation d-flex justify-content-between">
-                    <p>{{product.owner_ratings_count}} تقيمات</p>
-                    <div class="person d-flex align-items-center">
-                        <img *ngIf="product.owner.image_url" src="{{product.owner.image_url}}" alt="profile" width="30px" height="30px">
-                        <img *ngIf="!product.owner.image_url" src="../../assets/images/Portrait_Placeholder.png" alt="profile" width="30px" height="30px">
-                        <p class="name">{{product.owner.name}}</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-        </div>
-      </ng-template>
-    </li> -->
+      </li>
+    </ng-container>
   </ul>
   <div class="filter">
     <a (click)="openFormModal()">
@@ -238,7 +64,38 @@ viewBox="0 0 100 100" width="70px" height="70px" enable-background="new 0 0 0 0"
 </svg>
 </div>
   <div [ngbNavOutlet]="nav" class="mt-5 mb-5"></div>
-    
+  <div class="products-row row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 g-4 justify-content-start" id="products-def">
+    <div class="alert alert-danger text-center" *ngIf="error">
+      {{error}}
+    </div>
+      <div class="col wow fadeIn" 
+       data-wow-duration="1.3s"  style="visibility: visible; animation-duration: 1.3s; 
+       animation-name: fadeIn;"  *ngFor="let product of products">
+        <div class="card h-100">
+          <div class="card-header text-center" >
+            <img *ngIf="product.default_image" src="{{product.default_image}}" alt="car" width="100%" height="200px !important">
+            <img *ngIf="!product.default_image" src="../../assets/images/placeholderimg.jpg" alt="placeholderimg" width="100%" height="200px !important">                
+          </div>
+          <div class="card-body text-center">
+            <a (click)="productDetails(product.id)" style="cursor: pointer;">
+              <h4>{{(product.name.length > 20)? (product.name | slice:0:20)+'..':(product.name)}}</h4>
+            </a>
+            <p class="discription">{{(product.desc.length > 40)? (product.desc | slice:0:40)+'...':(product.desc)}}</p>
+            <p class="time"><img src="../../assets/images/clock.svg" alt="clock"><span>{{product.created_since}}ايام</span></p>
+            <div class="evaluation d-flex justify-content-between align-items-center">
+              <p>{{product.owner_ratings_count}} تقيمات</p>
+              <img src="../../assets/images/Separator.svg" alt="Separator">
+              <div class="person d-flex align-items-center">
+                  <img *ngIf="product.owner.image_url" src="{{product.owner.image_url}}" alt="profile" width="30px" height="30px">
+                  <img *ngIf="!product.owner.image_url" src="../../assets/images/Portrait_Placeholder.png" alt="profile" width="30px" height="30px">
+                  <p class="name">{{product.owner.name}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="text-danger" *ngIf="errorLength !== ''">{{errorLength}}</p>
+  </div> 
 <!-- filter modal -->
 <div class="modal fade"
 id="myModal"

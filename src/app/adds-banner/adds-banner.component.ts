@@ -8,11 +8,11 @@ import { HomeAddsService } from '../services/home-adds.service';
 
 
 @Component({
-  selector: 'app-img-banner',
-  templateUrl: './img-banner.component.html',
-  styleUrls: ['./img-banner.component.css']
+  selector: 'app-adds-banner',
+  templateUrl: './adds-banner.component.html',
+  styleUrls: ['./adds-banner.component.css']
 })
-export class ImgBannerComponent implements OnInit , OnDestroy{
+export class AddsBannerComponent implements OnInit , OnDestroy{
   public adds : Array<Adds> = [];
   private addSub: Subscription = new Subscription;
 

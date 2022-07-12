@@ -1,4 +1,4 @@
-<div class="container">
+<!-- <div class="container"> -->
     <div class="product-row row g-4 justify-content-center pt-5 pb-5">
         <div class="col-lg-9 col-12">
             <div class="card main-card">
@@ -6,7 +6,7 @@
                     <div class="row">
                         <div class="col-md-10 col-12 prod-desc px-3 py-4">
                             <h2 class="prod-name">{{singleProduct.data.name}}</h2>
-                            <p class="prod-desc">{{singleProduct.data.desc}}</p>
+                            <p class="prod-desc">{{(singleProduct.data.desc.length > 40)? (singleProduct.data.desc | slice:0:40)+'..':(singleProduct.data.desc)}}</p>
                             <div class="prod-details d-flex align-items-center">
                                 <p class="p-rate" *ngIf="singleProduct.data.owner_ratings">{{singleProduct.data.owner_ratings.length}} تقيمات</p>
                                 <p *ngIf="!singleProduct.data.owner_ratings || null">0 تقيمات</p>
@@ -156,7 +156,7 @@
             </div>
         </div>
     </div>
-</div>
+<!-- </div> -->
 <!-- modal 1-->
     <div class="modal fade"
     id="myModal"

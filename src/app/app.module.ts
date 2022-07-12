@@ -29,7 +29,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { SearchComponent } from './search/search.component';
-import { ImgBannerComponent } from './img-banner/img-banner.component';
+import { AddsBannerComponent } from './adds-banner/adds-banner.component';
 import { TermsConditionsComponent } from './terms-conditions/terms-conditions.component';
 import { ProductsComponent } from './products/products.component';
 import { TestimonialComponent } from './testimonial/testimonial.component';
@@ -52,7 +52,7 @@ import { RegisterComponent } from './Auth/register/register.component';
     HeaderComponent,
     FooterComponent,
     SearchComponent,
-    ImgBannerComponent,
+    AddsBannerComponent,
     TermsConditionsComponent,
     ProductsComponent,
     TestimonialComponent,

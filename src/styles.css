@@ -29,6 +29,10 @@ body {
 *{
     font-family: var(--font-family);
 }
+.container-fluid {
+    padding-right: var(--bs-gutter-x,3rem);
+    padding-left: var(--bs-gutter-x,3rem);
+}
 .btn:focus,
 input:focus,button:focus{
     box-shadow: none !important;

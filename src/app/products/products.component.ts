@@ -21,6 +21,7 @@ export class ProductsComponent implements OnInit {
   error: string = '';
   formModal: any;
   errorLength = '';
+  productsDefId : any;
   private routeSub: Subscription = new Subscription;
   private productSub: Subscription = new Subscription;
   private categorySub : Subscription = new Subscription;
@@ -31,23 +32,19 @@ export class ProductsComponent implements OnInit {
      }
 
   ngOnInit(): void {
-    // this.routeSub = this.route.params.subscribe((params: Params)=>{
-    //   if(params['products-search']){
-    //     this.getProducts('products', params['products-search'])
-    //   } else{
-    //   }
-    // });
     this.formModal = new window.bootstrap.Modal(
       document.getElementById('myModal')
     );
+    this.productsDefId = document.getElementById('products-def');
     this.getCategories();
-    // this.getProducts();
+    this.getProducts('all');
   }
   getProducts(categorySlug: string){
     this.loadding = true;
     this.productSub = this.httpService
     .getProductsList(categorySlug)
     .subscribe((productsList: APIResponse<Products>)=>{
+      // this.productsDefId.style.display= 'none'; 
       setTimeout(() => {
         this.loadding = false;
         this.products = productsList.data;

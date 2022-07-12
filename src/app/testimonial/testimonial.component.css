@@ -1,6 +1,8 @@
 .section-title h2{
+    font-family: var( --font-family);
     color: var(--primary-color);
     font-weight: 600;
+    font-size: calc(1.325rem + .9vw);
 }
 .testimonial-list{
     position: relative;
@@ -29,6 +31,15 @@
 .testimonial_author h3 , 
 .testimonial_author span{
     color: var(--sec-color);
+    font-family: var( --font-family);
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+.testimonial_author span{
+    color: var(--light-blue);
+    font-weight: 400;
+    font-size: .9rem;
+
 }
 .carousel-indicators{
     bottom: -30px;

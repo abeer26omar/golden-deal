@@ -2,14 +2,16 @@
 .carousel-control-prev{
     display: none;
 }
-
+.picsum-img-wrapper img{
+    border-radius: 8px;
+}
 .carousel-caption {
     text-align: right;
 }
 .carousel-caption h1{
     font-family: var(--font-family);
     font-weight: 600;
-    font-size: 4rem;
+    font-size: 3rem;
 }
 .carousel-caption p{
     font-family: var(--font-family);

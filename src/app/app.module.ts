@@ -23,6 +23,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatButtonModule } from '@angular/material/button';
+import { Ng2TelInputModule } from 'ng2-tel-input';
+import { NgOtpInputModule } from  'ng-otp-input';
+
 
 
 //components
@@ -91,7 +94,9 @@ import { RegisterComponent } from './Auth/register/register.component';
     MatSelectModule,
     MatRadioModule,
     MatButtonModule,
-      ],
+    Ng2TelInputModule,
+    NgOtpInputModule,
+    ],
   providers: [{
     provide: HTTP_INTERCEPTORS,
     useClass: HttpHeadersInterceptor,

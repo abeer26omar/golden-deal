@@ -18,6 +18,7 @@
     --online: #2AD750;
     --offline: red;
     --header-bg: #D9D9D9;
+    --light-grey: #8C8C8C;
     --light-blue: #039AEE;
 }
 /* html, body { height: 100%;} */
@@ -109,4 +110,22 @@ input.star:checked ~ label.star:before {
 }
 .mat-form-field-appearance-legacy.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label, .mat-form-field-appearance-legacy.mat-form-field-can-float .mat-input-server:focus+.mat-form-field-label-wrapper .mat-form-field-label {
     width: 133.3333333333% !important;
+}
+.mat-form-field-appearance-legacy .mat-form-field-infix {
+    padding: 0.7em 0;
+}
+.mat-form-field:nth-child(4){
+    direction: ltr;
+}
+#otpModel .modal-body .otp-input{
+    width: 50px;
+    height: 50px;
+    border-radius: 4px;
+    border: none; 
+    text-align: center;
+    font-size: 20px;
+    margin: 1rem .5rem;
+    background: #F7F9FD;
+    box-shadow: 0px 1.86006px 7.44023px rgba(0, 0, 0, 0.25);
+    caret-color: var(--org-color);
 }

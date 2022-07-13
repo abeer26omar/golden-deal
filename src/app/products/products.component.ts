@@ -33,7 +33,7 @@ export class ProductsComponent implements OnInit {
 
   ngOnInit(): void {
     this.formModal = new window.bootstrap.Modal(
-      document.getElementById('myModal')
+      document.getElementById('filterModal')
     );
     this.productsDefId = document.getElementById('products-def');
     this.getCategories();

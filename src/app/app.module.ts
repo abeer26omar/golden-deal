@@ -48,6 +48,7 @@ import { AccoutSettingComponent } from './accout-setting/accout-setting.componen
 import { BuyingRecordComponent } from './buying-record/buying-record.component';
 import { SearchproductsPipe } from './pipes/searchproducts.pipe';
 import { RegisterComponent } from './Auth/register/register.component';
+import { EditAddComponent } from './adds/edit-add/edit-add.component';
 
 @NgModule({
   declarations: [
@@ -70,7 +71,8 @@ import { RegisterComponent } from './Auth/register/register.component';
     AccoutSettingComponent,
     BuyingRecordComponent,
     SearchproductsPipe,
-    RegisterComponent
+    RegisterComponent,
+    EditAddComponent
   ],
   imports: [
     BrowserModule,

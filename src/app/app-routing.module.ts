@@ -19,6 +19,7 @@ import { NewAddComponent } from './adds/new-add/new-add.component';
 import { WhoWeAreComponent } from './who-we-are/who-we-are.component';
 import { BuyingRecordComponent } from './buying-record/buying-record.component';
 import { RegisterComponent } from './Auth/register/register.component';
+import { EditAddComponent } from './adds/edit-add/edit-add.component';
 
 
 
@@ -29,6 +30,7 @@ const routes: Routes = [
   { path:'chat', component:ChatsComponent},
   { path:'adds', component:AddsComponent},
   { path:'new-add', component:NewAddComponent},
+  { path:'edit-add', component: EditAddComponent},
   { path:'termsandconditions', component: TermsConditionsComponent},
   { path:'whoweare', component: WhoWeAreComponent},
   { path:'buyingrecord', component: BuyingRecordComponent},

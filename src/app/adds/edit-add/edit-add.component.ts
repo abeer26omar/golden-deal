@@ -1,14 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { Form, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-new-add',
-  templateUrl: './new-add.component.html',
-  styleUrls: ['./new-add.component.css']
+  selector: 'app-edit-add',
+  templateUrl: './edit-add.component.html',
+  styleUrls: ['./edit-add.component.css']
 })
-export class NewAddComponent implements OnInit {
-  step: any = 1;
+export class EditAddComponent implements OnInit {
   images : string[] = [];
   myForm = new FormGroup({
     agrement: new FormControl('', [Validators.required]),
@@ -55,9 +54,7 @@ export class NewAddComponent implements OnInit {
     if((this.myForm.get('agrement')?.invalid)){
       return;
     } else{
-      if(this.step == 1){
-        this.step = this.step + 1;
-      }
+      
       if(this.myForm.valid){
           console.log('form valid')
       } else{

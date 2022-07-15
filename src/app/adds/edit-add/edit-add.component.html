@@ -2,28 +2,9 @@
     <form [formGroup] ="myForm"  (ngSubmit)="submit()" class="row g-3">
         <div class="card">
             <div class="card-header">
-                <p class="header text-center">اتفاقيه الاعلان</p>
+                <p class="header text-center">تعديل الاعلان</p>
             </div>
-            <div class="card-body" *ngIf="step == 1">
-                <div class="aggrement p-sm-5 p-2 ">
-                    <p class="title">إتفاقية العمولة <img src="../../../assets/images/arrows.svg" alt="arrows" class="pe-3"></p>
-                    <div class="pt-4">
-                        <p class="qoran">بسم الله الرحمن الرحيم</p>
-                        <p><span>قال الله تعالى</span><span class="sora">:"وَأَوْفُواْ بِعَهْدِ ٱللَّهِ إِذَا عَٰهَدتُّمْ وَلَا تَنقُضُواْ ٱلْأَيْمَٰنَ <br>بَعْدَ تَوْكِيدِهَا وَقَدْ جَعَلْتُمُ ٱللَّهَ عَلَيْكُمْ كَفِيلًا "</span> <span>صدق الله العظيم</span></p>
-                    </div>
-                    <div class="form-check col-12 col-md-8 pt-4">
-                        <input class="form-check-input" type="checkbox" 
-                        value="" 
-                        id="agrement"
-                        formControlName="agrement">
-                        <label class="form-check-label" for="agrement">
-                            اتعهد واقسم بالله أنا المعلن أن أدفع عمولة الموقع وهي 1% من قيمة الخدمة. وفي حالة تقديم الخدمة لأكثر من شخص فإنني أتعهد بتحويل العمولة عن كل خدمة يتم تقديمها.  كما أتعهد بدفع*العمولة خلال 10 أيام من استلام مبلغ الخدمة 
-                        </label>
-                        <div *ngIf="f['agrement'].invalid && f['agrement'].untouched" class="text-danger">يجب التحديد</div>
-                    </div>
-                </div>
-            </div>
-            <div class="card-body row g-5" *ngIf="step == 2">
+            <div class="card-body row g-5">
                 <div class="col-12">
                     <label for="file" class="file-upload">
                         <input
@@ -35,7 +16,7 @@
                             (change)="onFileChange($event)">
                             <div class="text-center">
                                 <img src="../../../assets/images/product-imgs.svg" alt="product-imgs">
-                                <p>اضافه صور المنتج</p>
+                                <p>تعديل صور المنتج</p>
                                 <img *ngFor='let url of images'  [src]="url" height="150" width="200px" style="margin: 3px;">
                             </div>
                     </label>
@@ -121,7 +102,7 @@
                     <label for="file2" id="label-file">
                         <input type="file" id="file2" class="form-control" style="height: 0px">
                         <div class="d-flex justify-content-between py-2 px-3">
-                            <span>اضافه وثيقه المنتج</span>
+                            <span>تعديل وثيقه المنتج</span>
                             <img src="../../../assets/images/upload-docs.svg" alt="upload-docs">
                         </div>
                     </label>

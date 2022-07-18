@@ -50,6 +50,7 @@ import { BuyingRecordComponent } from './buying-record/buying-record.component';
 import { SearchproductsPipe } from './pipes/searchproducts.pipe';
 import { RegisterComponent } from './Auth/register/register.component';
 import { EditAddComponent } from './adds/edit-add/edit-add.component';
+import { SubscriptionsComponent } from './subscriptions/subscriptions.component';
 
 @NgModule({
   declarations: [
@@ -73,7 +74,8 @@ import { EditAddComponent } from './adds/edit-add/edit-add.component';
     BuyingRecordComponent,
     SearchproductsPipe,
     RegisterComponent,
-    EditAddComponent
+    EditAddComponent,
+    SubscriptionsComponent
   ],
   imports: [
     BrowserModule,

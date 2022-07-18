@@ -34,11 +34,13 @@
                             <div class="sign-up-form row justify-content-center">
                                 <div class="col-12 head text-center">
                                     <p class="title">حساب جديد</p>
+                                    <!-- <mat-spinner *ngIf="loader"></mat-spinner> -->
+                                    <mat-progress-bar mode="indeterminate" *ngIf="loader" class="mb-3"></mat-progress-bar>
                                 </div>
                                 <div class="col-11 col-sm-7">
-                                    <div class="alert alert-danger text-center" *ngIf="error">
+                                    <p class="text-danger text-center" *ngIf="error">
                                         {{error}}
-                                      </div>
+                                    </p>
                                     <form [formGroup]="registerForm" (ngSubmit)="submitData()" class="row  g-3">
                                         <mat-form-field appearance="legacy">
                                             <mat-label>الاسم</mat-label>
@@ -69,7 +71,7 @@
                                               <button class="btn btn-prim" type="submit">انشاء حساب</button>
                                           </div>   
                                     </form>
-                                    <div class="d-flex justify-content-center align-items-center pt-5">
+                                    <!-- <div class="d-flex justify-content-center align-items-center pt-5">
                                         <img src="../../../assets/images/Line 9.svg" alt="Line">
                                         <p class="or px-3">او</p>
                                         <img src="../../../assets/images/Line 8.svg" alt="Line">
@@ -78,7 +80,7 @@
                                         <a href=""><img src="../../../assets/images/googlee.svg" alt="google"></a>
                                         <a href=""><img src="../../../assets/images/faceboook.svg" alt="facebook" class="px-5"></a>
                                         <a href=""><img src="../../../assets/images/applee.svg" alt="apple" ></a>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                             <div class="sign-in-form row justify-content-center">
@@ -99,7 +101,7 @@
                                               <button class="btn btn-prim" type="submit">انشاء حساب</button>
                                           </div>   
                                     </form>
-                                    <div class="d-flex justify-content-center align-items-center pt-5">
+                                    <!-- <div class="d-flex justify-content-center align-items-center pt-5">
                                         <img src="../../../assets/images/Line 9.svg" alt="Line">
                                         <p class="or px-3">او</p>
                                         <img src="../../../assets/images/Line 8.svg" alt="Line">
@@ -108,7 +110,7 @@
                                         <a href=""><img src="../../../assets/images/googlee.svg" alt="google"></a>
                                         <a href=""><img src="../../../assets/images/faceboook.svg" alt="facebook" class="px-5"></a>
                                         <a href=""><img src="../../../assets/images/applee.svg" alt="apple" ></a>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                         </div>
@@ -194,18 +196,19 @@ data-bs-backdrop="static"
                 <img src="../../../assets/images/close.svg" alt="close">
             </button>
         </div>
-          <div class="modal-header  justify-content-center align-items-center">
+          <div class="modal-header column justify-content-center align-items-center">
           <h5 class="modal-title text-center" id="staticBackdropLabel">رمز التحقق</h5>
+          <mat-progress-bar mode="indeterminate" class="my-3"></mat-progress-bar>
         </div>
         <div class="modal-body">
             <p class="send">تم ارسال رمز التحقق الي الرقم</p>
             <p class="number">{{fRegister['phone'].value}}</p>
-            <ng-otp-input  (onInputChange)="onOtpChange($event)"  [config]="{length:4}"></ng-otp-input>
+            <ng-otp-input  (onInputChange)="onOtpChange($event)"  [config]="config"></ng-otp-input>
             <div>
-                <a class="resend">اعاده ارسال الرمز بعد </a><span>0:{{timeLeft}}</span>
+                <a class="resend">اعاده ارسال الرمز بعد</a><span>0:{{timeLeft}}</span>
             </div>
 
-            <button type="button" class="btn btn-prim m-3">التالى</button>
+            <button type="button" class="btn btn-prim m-3" (click)="onOtpSubmmit()">التالى</button>
         </div>
       </div>
   </div>

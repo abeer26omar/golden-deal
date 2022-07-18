@@ -20,8 +20,6 @@ import { WhoWeAreComponent } from './who-we-are/who-we-are.component';
 import { BuyingRecordComponent } from './buying-record/buying-record.component';
 import { RegisterComponent } from './Auth/register/register.component';
 import { EditAddComponent } from './adds/edit-add/edit-add.component';
-import { SubscriptionsComponent } from './subscriptions/subscriptions.component';
-import { ProfileComponent } from './profile/profile.component';
 
 
 
@@ -33,12 +31,10 @@ const routes: Routes = [
   { path:'adds', component:AddsComponent},
   { path:'new-add', component:NewAddComponent},
   { path:'edit-add', component: EditAddComponent},
-  { path:'subscriptions', component: SubscriptionsComponent},
   { path:'termsandconditions', component: TermsConditionsComponent},
   { path:'whoweare', component: WhoWeAreComponent},
   { path:'buyingrecord', component: BuyingRecordComponent},
   { path:'register', component: RegisterComponent},
-  { path:'profile', component: ProfileComponent},
   { path:'**', component:NotfoundComponent}
 ];
 

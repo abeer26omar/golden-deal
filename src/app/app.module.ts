@@ -25,7 +25,8 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatButtonModule } from '@angular/material/button';
 import { Ng2TelInputModule } from 'ng2-tel-input';
 import { NgOtpInputModule } from  'ng-otp-input';
-
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatProgressBarModule } from '@angular/material/progress-bar'
 
 
 //components
@@ -49,7 +50,6 @@ import { BuyingRecordComponent } from './buying-record/buying-record.component';
 import { SearchproductsPipe } from './pipes/searchproducts.pipe';
 import { RegisterComponent } from './Auth/register/register.component';
 import { EditAddComponent } from './adds/edit-add/edit-add.component';
-import { SubscriptionsComponent } from './subscriptions/subscriptions.component';
 
 @NgModule({
   declarations: [
@@ -73,8 +73,7 @@ import { SubscriptionsComponent } from './subscriptions/subscriptions.component'
     BuyingRecordComponent,
     SearchproductsPipe,
     RegisterComponent,
-    EditAddComponent,
-    SubscriptionsComponent
+    EditAddComponent
   ],
   imports: [
     BrowserModule,
@@ -100,6 +99,8 @@ import { SubscriptionsComponent } from './subscriptions/subscriptions.component'
     MatButtonModule,
     Ng2TelInputModule,
     NgOtpInputModule,
+    MatProgressSpinnerModule,
+    MatProgressBarModule
     ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

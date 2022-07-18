@@ -17,13 +17,16 @@ export class RegisterComponent implements OnInit {
   formbox: any;
   timeLeft: number = 60;
   interval: any;
+  error: string = '';
+  loader: boolean = false;
+
   //register
   registerForm = new FormGroup({
     name: new FormControl('', [Validators.required]),
     gender: new FormControl('', [Validators.required]),
     dateOfBirth: new FormControl('', [Validators.required]),
-    phone: new FormControl('', [Validators.required, Validators.pattern('^[6-9]\d{9}$')]),
-    
+    phone: new FormControl('', [Validators.required]),
+    // , Validators.pattern('^[6-9]\d{9}$')
   });
   //login
   loginForm = new FormGroup({
@@ -59,47 +62,54 @@ export class RegisterComponent implements OnInit {
     })
 
   }
-  error: string = '';
   submitData() {
-    this.otpModel.show();
-    this.startTimer();
-    // const userName = this.registerForm.get('name')?.value;
-    // const userGender = this.registerForm.get('gender')?.value;
-    // const userDateOfBirth = this.registerForm.get('dateOfBirth')?.value;
-    // const userPhone = this.registerForm.get('phone')?.value;
-    console.log(this.registerForm)
+
+    const userName = this.registerForm.get('name')?.value;
+    const userGender = this.registerForm.get('gender')?.value;
+    const userDateOfBirth = this.registerForm.get('dateOfBirth')?.value;
+    const userPhone = this.registerForm.get('phone')?.value;
     // if(this.registerForm.valid){
-    //   // console.log(this.userName, this.userDateOfBirth,this.userGender,this.userPhone);
-    //   this.auth.signUp(userName, userGender, userDateOfBirth, userPhone).subscribe(resData =>{
-    //     console.log(resData);
+    //   this.loader = true;
+    //   this.error = '';
+    //   // this.startTimer();
+    //   this.auth
+    //   .signUp(userName, userGender, userDateOfBirth, userPhone)
+    //   .subscribe(resData =>{
+    //     this.loader = false;
+    //     // console.log(resData);
+    //     localStorage.setItem('user', JSON.stringify(resData.data.user))
+    //     this.otpModel.show();
     //   },
-    //   errorMsg=>{
+    //   errorMsg =>{
+    //     this.loader = false;
     //     this.error = errorMsg;
-    //   })
+    //   });
+      
     // }
     // else{
     //   return;
-    //   // console.log('fill the fucking form!')
     // }
+        this.otpModel.show();
+
   }
   submitLogin(){
     if(this.loginForm.valid){
-      console.log('welcome')
+      console.log('welcome');
     }
   }
   //otp input
-  otp: string ='';
+  otp!: number ;
   showOtpComponent = true;
   @ViewChild('ngOtpInput', { static: false}) ngOtpInput: any;
   config:NgOtpInputConfig = {
-    allowNumbersOnly: true,
+    allowNumbersOnly: false,
     length: 4,
     isPasswordInput: false,
     disableAutoFocus: false,
     placeholder: '',
     inputStyles: {
       'width': '50px',
-      'height': '50px'    
+      'height': '50px' 
     }
   };
   onOtpChange(otp:any) {
@@ -124,5 +134,11 @@ export class RegisterComponent implements OnInit {
       }
     },1000)
   }
-
+  onOtpSubmmit(){
+    const otp = this.otp;
+    this.auth.verifyOTP(otp).subscribe(res => {
+      console.log(res)
+    });
+    console.log(this.otp);
+  }
 }

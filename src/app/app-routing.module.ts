@@ -22,6 +22,7 @@ import { RegisterComponent } from './Auth/register/register.component';
 import { EditAddComponent } from './adds/edit-add/edit-add.component';
 import { SubscriptionsComponent } from './subscriptions/subscriptions.component';
 import { ProfileComponent } from './profile/profile.component';
+import { AddressComponent } from './address/address.component';
 
 
 
@@ -39,6 +40,7 @@ const routes: Routes = [
   { path:'buyingrecord', component: BuyingRecordComponent},
   { path:'register', component: RegisterComponent},
   { path:'profile', component: ProfileComponent},
+  { path:'address', component: AddressComponent},
   { path:'**', component:NotfoundComponent}
 ];
 

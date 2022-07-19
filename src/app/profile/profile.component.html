@@ -1,25 +1,136 @@
 <div class="main mt-5 mb-5">
-    <div class="title">
-        <h1>من نحن</h1>
-    </div>
-    <div class="content pt-5 pb-5">
-        <ul>
-            <li>
-                <p>و هنالك العديد من الأنواع المتوفرة لنصوص لوريم إيبسوم، ولكن الغالبية تم تعديلها بشكل ما عبر إدخال بعض النوادر أو الكلمات العشوائية إلى النص. إن كنت تريد أن تستخدم نص ل </p>
-                <p>لوريم إيبسوم، ولكن الغالبية تم تعديلها بشكل ما عبر</p>
-            </li>
-            <li>
-                <p>و هنالك العديد من الأنواع المتوفرة لنصوص لوريم إيبسوم، ولكن الغالبية تم تعديلها بشكل ما عبر إدخال بعض النوادر أو الكلمات العشوائية إلى النص. إن كنت تريد أن تستخدم نص ل </p>
-                <p>لوريم إيبسوم، ولكن الغالبية تم تعديلها بشكل ما عبر</p>
-            </li>
-            <li>
-                <p>و هنالك العديد من الأنواع المتوفرة لنصوص لوريم إيبسوم، ولكن الغالبية تم تعديلها بشكل ما عبر إدخال بعض النوادر أو الكلمات العشوائية إلى النص. إن كنت تريد أن تستخدم نص ل </p>
-                <p>لوريم إيبسوم، ولكن الغالبية تم تعديلها بشكل ما عبر</p>
-            </li>
-            <li>
-                <p>و هنالك العديد من الأنواع المتوفرة لنصوص لوريم إيبسوم، ولكن الغالبية تم تعديلها بشكل ما عبر إدخال بعض النوادر أو الكلمات العشوائية إلى النص. إن كنت تريد أن تستخدم نص ل </p>
-                <p>لوريم إيبسوم، ولكن الغالبية تم تعديلها بشكل ما عبر</p>
-            </li>
-        </ul>
-    </div>
+    <div class="title"></div>
+        <div class="profile-img">
+            <img src="../../assets/images/profile-img.svg" alt="profile-img">
+            <!-- <a class="edit">
+                <img src="../../assets/images/edit-pen.svg" alt="edit-pen">
+            </a> -->
+        </div>
+        <p class="text-center user-name">فاطمه علي</p>
+        <div class="container">
+            <p>اعدادات الحساب</p>
+            <form  class="row  g-3 form-profile pt-4">
+                <div class="col-6">
+                    <mat-form-field appearance="fill">
+                        <mat-label>الاسم</mat-label>
+                        <input matInput  disabled="{{edit}}" value="abeer">
+                    </mat-form-field>   
+                </div>
+                <div class="col-6">
+                    <mat-form-field appearance="fill">
+                        <mat-label>رقم الهاتف</mat-label>
+                        <input matInput  disabled="{{edit}}">
+                    </mat-form-field>   
+                </div>
+                <div class="col-6">
+                    <mat-form-field appearance="fill">
+                        <mat-label>تاريخ الميلاد</mat-label>
+                        <input matInput  disabled="{{edit}}">
+                    </mat-form-field>   
+                </div>
+                <div class="col-6">
+                    <mat-form-field appearance="fill">
+                        <mat-label>البريد الالكترونى</mat-label>
+                        <input matInput  disabled="{{edit}}">
+                    </mat-form-field>   
+                </div>
+                <div class="col-6">
+                    <mat-form-field appearance="fill">
+                        <mat-label>النوع</mat-label>
+                        <input matInput  disabled="{{edit}}">
+                    </mat-form-field>   
+                </div>
+                <div class="col-6">
+                    <mat-form-field appearance="fill">
+                        <mat-label>العنوان</mat-label>
+                        <input matInput  disabled="{{edit}}">
+                    </mat-form-field>   
+                </div>
+                <div class="col-12 d-flex justify-content-center">
+                    <button type="button" class="btn btn-prim mx-3" (click)="askEdit()">{{changeBtn}}</button>
+                    <button type="button" class="btn btn-sec mx-3" (click)="askDelete()">حذف الحساب</button>
+                </div>
+            </form>
+        </div>
 </div>
+<!-- edit modal -->
+<div class="modal fade"
+id="modalEdit"
+tabindex="-1"
+aria-labelledby="exampleModalLabel"
+aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-sm">
+      <div class="modal-content">
+        <div class="modal-header justify-content-center">
+          <h5 class="modal-title text-center" id="staticBackdropLabel">{{editTitle}}</h5>
+        </div>
+        <div class="modal-body">
+            <button type="button" class="btn btn-yes m-3"(click)="allowEdit()">نعم</button>
+    
+            <button type="button" class="btn btn-no m-3" data-bs-dismiss="modal" aria-label="Close">لا</button>
+        </div>
+       
+      </div>
+  </div>
+</div>
+<!-- delete modal -->
+<div class="modal fade"
+id="modalRemove"
+tabindex="-1"
+aria-labelledby="exampleModalLabel"
+aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-sm">
+      <div class="modal-content">
+        <div class="modal-header justify-content-center">
+          <h5 class="modal-title text-center" id="staticBackdropLabel">تاكيد الحذف </h5>
+        </div>
+        <div class="modal-body">
+            <button type="button" class="btn btn-yes m-3">نعم</button>
+    
+            <button type="button" class="btn btn-no m-3" data-bs-dismiss="modal" aria-label="Close">لا</button>
+        </div>
+       
+      </div>
+  </div>
+</div>
+<!-- edit success -->
+
+<div id="editSuccess" 
+class="modal fade"
+tabindex="-1"
+aria-labelledby="exampleModalLabel"
+aria-hidden="true"
+>
+	<div class="modal-dialog modal-dialog-centered modal-sm">
+		<div class="modal-content">
+			<div class="modal-header justify-content-center">
+                    <img src="../../assets/images/sucess-mark.svg" alt="sucess-mark" width="67px">
+			</div>
+			<div class="modal-body text-center">
+				<p>تم الحفظ بنجاح</p>
+			</div>
+		</div>
+	</div>
+</div>     
+<!-- edit faild -->
+
+<div id="editFaild" 
+class="modal fade"
+tabindex="-1"
+aria-labelledby="exampleModalLabel"
+aria-hidden="true"
+>
+	<div class="modal-dialog modal-dialog-centered modal-sm">
+		<div class="modal-content">
+			<div class="modal-header justify-content-center">
+                    <img src="../../assets/images/faild-mark.svg" alt="faild-mark">
+			</div>
+			<div class="modal-body text-center">
+                <p>لم ينجح الحفظ</p>
+			</div>
+		</div>
+	</div>
+</div>     
+

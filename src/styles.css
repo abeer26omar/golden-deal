@@ -52,6 +52,9 @@ input:focus,button:focus{
     background-color: var(--primary-color);
     color: var(--white);
 }
+.btn-prim:hover{
+    color: var(--white);
+}
 .btn-sec{
     background-color: transparent;
     border: 1px solid var(--primary-color);
@@ -168,4 +171,17 @@ input.star:checked ~ label.star:before {
 }
 #payment .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
     border-color: var(--org-color);
+}
+.form-profile .mat-form-field{
+    width: 100%;
+}
+.form-profile .mat-form-field-empty.mat-form-field-label, 
+.form-profile .mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
+    display: block;
+    text-align: right;
+}
+#modalEdit h5{
+    font-size: 1.25rem;
+    font-weight: 400;
+    font-family: var(--font-family);
 }

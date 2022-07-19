@@ -45,7 +45,6 @@ import { ChatsComponent } from './chats/chats.component';
 import { AddsComponent } from './adds/adds.component';
 import { NewAddComponent } from './adds/new-add/new-add.component';
 import { WhoWeAreComponent } from './who-we-are/who-we-are.component';
-import { AccoutSettingComponent } from './accout-setting/accout-setting.component';
 import { BuyingRecordComponent } from './buying-record/buying-record.component';
 import { SearchproductsPipe } from './pipes/searchproducts.pipe';
 import { RegisterComponent } from './Auth/register/register.component';
@@ -71,7 +70,6 @@ import { ProfileComponent } from './profile/profile.component';
     AddsComponent,
     NewAddComponent,
     WhoWeAreComponent,
-    AccoutSettingComponent,
     BuyingRecordComponent,
     SearchproductsPipe,
     RegisterComponent,

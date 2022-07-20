@@ -1,0 +1,36 @@
+
+.main p.title{
+    color: var(--primary-color);
+    font-weight: 600;
+    font-size: 1.5rem;
+    padding: 2rem;
+}
+.card{
+    background-color: var(--bg-color);
+    box-shadow: 0px 6px 12px 1px rgba(0, 0, 0, 0.16);
+    border-radius: 6px;
+}
+.card p.name span{
+    color: var(--org-color);   
+}
+.card p.sort{
+   color: var(--light-blue);
+}
+.card p.card-text{
+    color: var(--primary-color);
+    font-weight: 400;
+    font-size: 1rem;
+}
+.card .btn{
+    padding: .3rem 1.5rem;
+    border-radius: 10px;
+}
+.card .btn-sec{
+    border: 1px solid ;
+    color: var(--semi-red);
+}
+.card .add-address p{
+    color: var(--primary-color);
+    font-size: 1.2rem;
+    font-weight: 600;
+}

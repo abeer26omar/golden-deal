@@ -1,0 +1,78 @@
+<div class="addresses mt-5 mb-5 ">
+    <div class="main">
+        <div class="container-fluid">
+            <p class="text-center title">قائمه العناوين</p>
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4 justify-content-start py-5">
+                <div class="col">
+                    <div class="card h-100">
+                        <img src="../../assets/images/address-map.svg" class="card-img-top" alt="address-map">
+                            <div class="card-body">
+                                <div class="card-add d-flex justify-content-between">
+                                    <p class="name">
+                                        <img src="../../assets/images/locate.svg" alt="locate">
+                                        <span>المنزل</span>
+                                    </p>
+                                    <a (click)="openMajorModal()"><p class="sort">اساسى</p></a>
+                                </div>
+                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                <div class="d-flex justify-content-around">
+                                    <button  class="btn btn-prim" (click)="editAddress()">تعديل</button>
+                                    <button  class="btn btn-sec" (click)="delAddress()">حذف</button>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card h-100 justify-content-center align-items-center">
+                        <div class="add-address text-center ">
+                            <button class="btn"><img  src="../../assets/images/circle-add.svg" alt="circle-add" (click)="addNewAdd()"></button>
+                            <p class="py-4">اضافه عنوان</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- major address -->
+<div class="modal fade yesORno"
+id="majorModal"
+tabindex="-1"
+aria-labelledby="exampleModalLabel"
+aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-sm">
+      <div class="modal-content">
+        <div class="modal-header justify-content-center">
+          <h5 class="modal-title text-center" id="staticBackdropLabel">تحديد العنوان كرئيسي</h5>
+        </div>
+        <div class="modal-body">
+            <button type="button" class="btn btn-yes m-3">نعم</button>
+    
+            <button type="button" class="btn btn-no m-3" data-bs-dismiss="modal" aria-label="Close">لا</button>
+        </div>
+       
+      </div>
+  </div>
+</div>
+<!-- delete address -->
+<div class="modal fade yesORno"
+id="delModal"
+tabindex="-1"
+aria-labelledby="exampleModalLabel"
+aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-sm">
+      <div class="modal-content">
+        <div class="modal-header justify-content-center">
+          <h5 class="modal-title text-center" id="staticBackdropLabel">تاكيد الحذف</h5>
+        </div>
+        <div class="modal-body">
+            <button type="button" class="btn btn-yes m-3">نعم</button>
+    
+            <button type="button" class="btn btn-no m-3" data-bs-dismiss="modal" aria-label="Close">لا</button>
+        </div>
+       
+      </div>
+  </div>
+</div>

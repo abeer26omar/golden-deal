@@ -23,6 +23,7 @@ import { EditAddComponent } from './adds/edit-add/edit-add.component';
 import { SubscriptionsComponent } from './subscriptions/subscriptions.component';
 import { ProfileComponent } from './profile/profile.component';
 import { AddressComponent } from './address/address.component';
+import { AddEditAddressComponent } from './address/add-edit-address/add-edit-address.component';
 
 
 
@@ -41,6 +42,8 @@ const routes: Routes = [
   { path:'register', component: RegisterComponent},
   { path:'profile', component: ProfileComponent},
   { path:'address', component: AddressComponent},
+  { path: 'add', component: AddEditAddressComponent},
+  { path:'edit/:id', component:AddEditAddressComponent},
   { path:'**', component:NotfoundComponent}
 ];
 

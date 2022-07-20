@@ -179,33 +179,6 @@
     color: var(--white);
     padding: .5rem 4.5rem;
 }
-#myModalDelete .modal-header,
-#myModalSolid .modal-header{
-    background-color: var(--org-color);
-    color: var(--white);
-    border-radius: 23.16px 23.16px 0px 0px;
-}
-#myModalDelete .modal-body,
-#myModalSolid .modal-body{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-#myModalDelete .modal-body .btn-yes,
-#myModalSolid .modal-body .btn-yes{
-    background-color: var(--primary-color);
-    color: var(--white);
-    padding: 1rem 1.5rem;
-    border-radius: 15.44px;
-}
-#myModalDelete .modal-body .btn-no,
-#myModalSolid .modal-body .btn-no{
-    background-color: var(--white);
-    color: var(--primary-color);
-    padding: 1rem 1.5rem;
-    border-radius: 15.44px;
-    border:1px solid var(--primary-color) ;
-}
 .btn-adds {
     padding: 1rem 4rem;
     border-radius: 10px;

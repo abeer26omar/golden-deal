@@ -51,6 +51,8 @@ import { RegisterComponent } from './Auth/register/register.component';
 import { EditAddComponent } from './adds/edit-add/edit-add.component';
 import { SubscriptionsComponent } from './subscriptions/subscriptions.component';
 import { ProfileComponent } from './profile/profile.component';
+import { AddressComponent } from './address/address.component';
+import { AddEditAddressComponent } from './address/add-edit-address/add-edit-address.component';
 
 @NgModule({
   declarations: [
@@ -75,7 +77,9 @@ import { ProfileComponent } from './profile/profile.component';
     RegisterComponent,
     EditAddComponent,
     SubscriptionsComponent,
-    ProfileComponent
+    ProfileComponent,
+    AddressComponent,
+    AddEditAddressComponent,
   ],
   imports: [
     BrowserModule,

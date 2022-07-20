@@ -1,0 +1,45 @@
+<div class="add-edit pt-5 pb-5">
+    <div class="main">
+        <div class="map"></div>
+        <div class="container-fluid pt-5 pb-5">
+            <form  class="row g-3 form-profile pt-4" [formGroup]="addForm" (ngSubmit)="onSubmit()">
+                <div class="col-6">
+                    <mat-form-field appearance="legacy">
+                        <mat-label>تصنيف العنوان</mat-label>
+                        <mat-select formControlName="addKind">
+                          <mat-option value="home">المنزل</mat-option>
+                          <mat-option value="work">العمل</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                </div>
+                <div class="col-6">
+                    <mat-form-field appearance="legacy">
+                        <mat-label>العنوان</mat-label>
+                        <input matInput formControlName="add">
+                    </mat-form-field>   
+                </div>
+                <div class="col-6">
+                    <mat-form-field appearance="legacy">
+                        <mat-label>المدينه</mat-label>
+                        <input matInput formControlName="city">
+                    </mat-form-field>   
+                </div>
+                <div class="col-6">
+                    <mat-form-field appearance="legacy">
+                        <mat-label>رقم الشارع</mat-label>
+                        <input matInput formControlName="streetNo">
+                    </mat-form-field>   
+                </div>
+                <div class="col-6">
+                    <mat-form-field appearance="legacy">
+                        <mat-label>رقم المبني</mat-label>
+                        <input matInput formControlName="buildingNo">
+                    </mat-form-field>   
+                </div>
+                <div class="col-12 d-flex justify-content-center">
+                    <button type="submit" class="btn btn-prim" >حفظ</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

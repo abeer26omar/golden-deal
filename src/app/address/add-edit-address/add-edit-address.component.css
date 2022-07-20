@@ -1,0 +1,11 @@
+.map{
+    background-image: url(../../../assets/images/address-map.svg);
+    height: 500px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    border-radius: 15px;
+}
+.btn-prim{
+    padding: .6rem 4.5rem;
+}

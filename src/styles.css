@@ -216,3 +216,58 @@ input.star:checked ~ label.star:before {
     margin: 0;
     padding: .5rem;
 }
+.products-row .card{
+    background-color: var(--bg-color);
+    border: 0.956962px solid #AAAAAA;
+    border-radius: 15.3114px;
+}
+.products-row .card-header{
+    padding: 0.5rem ;
+    border-bottom: none ;
+    background-color: var(--bg-color);
+    border-radius: 15.3114px;
+}
+.products-row .card-header img{
+    border-radius: 11.4835px 11.4835px 0px 0px;
+} 
+.products-row .card-body{
+    position: relative;
+    background-color: var(--bg-color);
+    top: -40px;
+    z-index: 99;
+    border-radius: 15.3114px;
+    margin: 0 1rem;
+}
+.products-row .card-body h4{
+    font-family: var(--font-family);
+    color: var(--primary-color);
+    font-weight: 600;
+    font-size: 1rem;
+}
+.products-row .card-body .discription{
+    color: var(--sec-text);
+    font-weight: 400;
+    font-size: 1rem;
+}
+.products-row .card-body .time span{
+    color: var(--primary-color);
+    font-weight: 400;
+    font-size: .8rem;
+    padding-right: .3rem;
+}
+.products-row .card-body .evaluation  p{
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+    color: var(--primary-color);
+    font-weight: 600;
+    font-size: 1rem;
+}
+.products-row .card-body .evaluation  p.name{
+    font-size: .8rem;
+}
+
+.products-row .card-body .person img{
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+}

@@ -23,6 +23,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatButtonModule } from '@angular/material/button';
+import { MatMenuModule } from '@angular/material/menu'
 import { Ng2TelInputModule } from 'ng2-tel-input';
 import { NgOtpInputModule } from  'ng-otp-input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -106,7 +107,8 @@ import { AddEditAddressComponent } from './address/add-edit-address/add-edit-add
     Ng2TelInputModule,
     NgOtpInputModule,
     MatProgressSpinnerModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatMenuModule
     ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

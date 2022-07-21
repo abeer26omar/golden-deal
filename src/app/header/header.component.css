@@ -14,7 +14,7 @@ nav ul.nav02 .nav-item{
 nav ul:not(.more-dropdown) .nav-link{
     color: var(--primary-color);
     font-weight: 600;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
 }
 nav ul:not(.more-dropdown) .nav-item:hover a,
 nav ul:not(.more-dropdown) .nav-item a.active{

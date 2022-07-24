@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
+import { ProfileService } from '../services/profile.service';
 
 @Component({
   selector: 'app-header',
@@ -7,9 +10,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
   panelOpenState = false;
-  constructor() { }
+  constructor(public authService: AuthService,
+    private route: Router,
+    private profileService: ProfileService ) { 
+  }
 
   ngOnInit(): void {
   }
-
+  logOut(){
+    this.authService.logOut().subscribe({
+      next:(res)=>{
+        console.log(res)
+        localStorage.clear();
+      },
+      error: (err)=>{
+        console.log(err)
+      }
+    })
+  }
 }

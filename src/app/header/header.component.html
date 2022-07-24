@@ -122,12 +122,14 @@
                 <li><a class="dropdown-item" href="#">Something else here</a></li>
               </ul>
             </li> -->
-            <li class="nav-item">
+            <li class="nav-item" *ngIf="!(authService.isRegister | async)">
               <button class="btn create-account" routerLink="register">إنشاء حساب</button>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#"><img src="../../assets/images/profile-icon.svg" alt="profile-icon"></a>
-            </li>
+            <li class="nav-item" *ngIf="authService.isRegister | async">
+              <a class="nav-link" routerLink="/profile">
+                <img src="../../assets/images/profile-icon.svg" alt="profile-icon"></a>
+              </li>
+              <a class="nav-link" (click)="logOut()"><img src="../../assets/images/exit.svg" alt="exit"></a>
           </ul>
       </div>
     </div>

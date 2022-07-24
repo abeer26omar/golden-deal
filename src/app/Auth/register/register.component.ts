@@ -1,5 +1,6 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgOtpInputConfig } from 'ng-otp-input';
 import { AuthService } from 'src/app/services/auth.service';
@@ -11,14 +12,22 @@ declare var window: any;
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
-  otpModel: any;
+  otpModal: any;
+  successModal: any;
   signin: any;
   signup: any;
   formbox: any;
   timeLeft: number = 60;
   interval: any;
   error: string = '';
+  errorOtp: string = '';
+  errorLogin: string = '';
   loader: boolean = false;
+  loaderOtp: boolean = false;
+  loaderLogin: boolean = false;
+  subOtp: boolean = true;
+  resend:boolean = true;
+  resMsg: boolean = false;
 
   //register
   registerForm = new FormGroup({
@@ -28,13 +37,13 @@ export class RegisterComponent implements OnInit {
     phone: new FormControl('', [Validators.required]),
     // , Validators.pattern('^[6-9]\d{9}$')
   });
+  
   //login
   loginForm = new FormGroup({
-    phone: new FormControl('',[Validators.required,Validators.pattern('^[6-9]\d{9}$')])
+    phone: new FormControl('',[Validators.required])
   });
 
-  constructor(private fb: FormBuilder,
-    private auth: AuthService, 
+  constructor(private auth: AuthService, 
     private route: ActivatedRoute,
     private router: Router) { }
     //get forms controls
@@ -44,11 +53,14 @@ export class RegisterComponent implements OnInit {
     get fLogin(){
       return this.loginForm.controls;
     }
-
+    
   ngOnInit(): void {
-    this.otpModel = new window.bootstrap.Modal(
+    this.otpModal = new window.bootstrap.Modal(
       document.getElementById('otpModel')
     );
+    this.successModal = new window.bootstrap.Modal(
+      document.getElementById('success')
+    )
     this.signin = document.getElementById('signin');
     this.signup = document.getElementById('signup');
     this.formbox = document.querySelector('.form');
@@ -63,38 +75,49 @@ export class RegisterComponent implements OnInit {
 
   }
   submitData() {
-
     const userName = this.registerForm.get('name')?.value;
     const userGender = this.registerForm.get('gender')?.value;
     const userDateOfBirth = this.registerForm.get('dateOfBirth')?.value;
     const userPhone = this.registerForm.get('phone')?.value;
-    // if(this.registerForm.valid){
-    //   this.loader = true;
-    //   this.error = '';
-    //   // this.startTimer();
-    //   this.auth
-    //   .signUp(userName, userGender, userDateOfBirth, userPhone)
-    //   .subscribe(resData =>{
-    //     this.loader = false;
-    //     // console.log(resData);
-    //     localStorage.setItem('user', JSON.stringify(resData.data.user))
-    //     this.otpModel.show();
-    //   },
-    //   errorMsg =>{
-    //     this.loader = false;
-    //     this.error = errorMsg;
-    //   });
-      
-    // }
-    // else{
-    //   return;
-    // }
-        this.otpModel.show();
-
+    if(this.registerForm.valid){
+      this.loader = true;
+      this.error = '';
+      this.auth
+      .signUp(userName, userGender, userDateOfBirth, userPhone)
+      .subscribe({
+        next: resData =>{
+            this.loader = false;
+            this.openOtpModal();
+            localStorage.setItem('token', resData.data.token);
+        },
+        error: errorMsg =>{
+            this.loader = false;
+            this.error = errorMsg;
+            localStorage.clear()
+          }
+      })  
+    }
+    else{ 
+      return;
+    }    
   }
   submitLogin(){
+    const phoneNo = this.loginForm.get('phone')?.value;
     if(this.loginForm.valid){
-      console.log('welcome');
+      this.loaderLogin = true;
+      this.errorLogin = '';    
+      this.auth.signIn(phoneNo).subscribe({
+        next: resData =>{
+          this.loaderLogin = false;
+          console.log(resData);
+          localStorage.setItem('token', resData.data.token);
+        },
+        error: ()=>{
+          this.loaderLogin = false;
+          this.errorLogin =" هذا الحساب غير موجود";
+          localStorage.clear();
+        }
+      })
     }
   }
   //otp input
@@ -102,43 +125,72 @@ export class RegisterComponent implements OnInit {
   showOtpComponent = true;
   @ViewChild('ngOtpInput', { static: false}) ngOtpInput: any;
   config:NgOtpInputConfig = {
-    allowNumbersOnly: false,
+    allowNumbersOnly: true,
     length: 4,
     isPasswordInput: false,
     disableAutoFocus: false,
-    placeholder: '',
-    inputStyles: {
-      'width': '50px',
-      'height': '50px' 
-    }
+    placeholder: ''
   };
   onOtpChange(otp:any) {
     this.otp = otp;
-  }
-  toggleDisable(){
-    if(this.ngOtpInput.otpForm){
-      if(this.ngOtpInput.otpForm.disabled){
-        this.ngOtpInput.otpForm.enable();
-      }else{
-        this.ngOtpInput.otpForm.disable();
-      }
+    if(otp.length == 4){
+      // console.log(otp)
+      this.subOtp = !this.subOtp;
     }
   }
+  
   //timer to resend
   startTimer() {
     this.interval = setInterval(() => {
       if(this.timeLeft > 0) {
         this.timeLeft--;
-      } else {
-        this.timeLeft = 60;
+      } else{
+        this.resend = false;
       }
     },1000)
   }
   onOtpSubmmit(){
     const otp = this.otp;
-    this.auth.verifyOTP(otp).subscribe(res => {
-      console.log(res)
-    });
-    console.log(this.otp);
+    this.loaderOtp = true;
+    this.auth.otpVerify(otp).subscribe({
+    next:()=>{
+      this.loaderOtp = false;
+      this.openSuccessModal();
+      setTimeout(()=>{
+        this.successModal.hide();
+        this.router.navigate(['/home'])
+      },1000)
+    },
+    error: () =>{
+      this.loaderOtp = false;
+      this.errorOtp = 'الكود الذى ادخلته غير صحيح';
+    }
+   })
+  }
+  openOtpModal(){
+    this.otpModal.show();
+    this.startTimer();
+  }
+  openSuccessModal(){
+    this.otpModal.hide();
+    this.successModal.show();
+  }
+  resendOtp(){
+    this.loaderOtp = true;
+    this.auth.resendOtp().subscribe({
+      next: (res)=>{
+        this.resMsg = true ;
+        this.loaderOtp = false;
+        setTimeout(()=>{
+          this.resMsg = false;
+          this.resend = true;
+          this.timeLeft = 60;
+        },1500)
+      },
+      error: error=>{
+        this.loaderOtp = false;
+        console.log(error)
+      }
+    })
   }
 }

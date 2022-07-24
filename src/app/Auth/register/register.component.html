@@ -1,5 +1,4 @@
 <div class="register-card  mt-lg-0 mt-5 mb-lg-0 mb-5">
-    <!-- <div class="card"> -->
         <div class="container">
             <div class="row">
                 <div class="page-wrap">
@@ -34,7 +33,6 @@
                             <div class="sign-up-form row justify-content-center">
                                 <div class="col-12 head text-center">
                                     <p class="title">حساب جديد</p>
-                                    <!-- <mat-spinner *ngIf="loader"></mat-spinner> -->
                                     <mat-progress-bar mode="indeterminate" *ngIf="loader" class="mb-3"></mat-progress-bar>
                                 </div>
                                 <div class="col-11 col-sm-7">
@@ -71,25 +69,16 @@
                                               <button class="btn btn-prim" type="submit">انشاء حساب</button>
                                           </div>   
                                     </form>
-                                    <!-- <div class="d-flex justify-content-center align-items-center pt-5">
-                                        <img src="../../../assets/images/Line 9.svg" alt="Line">
-                                        <p class="or px-3">او</p>
-                                        <img src="../../../assets/images/Line 8.svg" alt="Line">
-                                    </div>
-                                    <div class="d-flex justify-content-center py-5 apps-icon">
-                                        <a href=""><img src="../../../assets/images/googlee.svg" alt="google"></a>
-                                        <a href=""><img src="../../../assets/images/faceboook.svg" alt="facebook" class="px-5"></a>
-                                        <a href=""><img src="../../../assets/images/applee.svg" alt="apple" ></a>
-                                    </div> -->
                                 </div>
                             </div>
                             <div class="sign-in-form row justify-content-center">
                                 <div class="col-12 head text-center">
                                     <p class="title">تسجيل الدخول</p>
+                                    <mat-progress-bar mode="indeterminate" *ngIf="loaderLogin" class="mb-3"></mat-progress-bar>
                                 </div>
                                 <div class="col-11 col-sm-7">
-                                    <div class="alert alert-danger text-center" *ngIf="error">
-                                        {{error}}
+                                    <div class="text-danger text-center" *ngIf="errorLogin">
+                                        {{errorLogin}}
                                       </div>
                                     <form [formGroup]="loginForm" (ngSubmit)="submitLogin()" class="row  g-3">
                                           <mat-form-field appearance="legacy">
@@ -98,88 +87,16 @@
                                           </mat-form-field>
                                           <p class="agree">بالنقر فوق تسجيل الدخول ، فإنك توافق على شروطنا. تعرف على كيفية معالجة بياناتك في سياسة الخصوصية وسياسة ملفات تعريف الارتباط. بالنقر فوق تسجيل الدخول ، فإنك توافق على شروطنا. تعرف على كيفية معالجة بياناتك في سياسة الخصوصية وملفات تعريف الارتباط الخاصة بنا </p>
                                           <div class="d-flex justify-content-center pt-3">
-                                              <button class="btn btn-prim" type="submit">انشاء حساب</button>
+                                              <button class="btn btn-prim" type="submit">تسجيل الدخول</button>
                                           </div>   
                                     </form>
-                                    <!-- <div class="d-flex justify-content-center align-items-center pt-5">
-                                        <img src="../../../assets/images/Line 9.svg" alt="Line">
-                                        <p class="or px-3">او</p>
-                                        <img src="../../../assets/images/Line 8.svg" alt="Line">
-                                    </div>
-                                    <div class="d-flex justify-content-center py-5 apps-icon">
-                                        <a href=""><img src="../../../assets/images/googlee.svg" alt="google"></a>
-                                        <a href=""><img src="../../../assets/images/faceboook.svg" alt="facebook" class="px-5"></a>
-                                        <a href=""><img src="../../../assets/images/applee.svg" alt="apple" ></a>
-                                    </div> -->
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- <div class="col-12 col-md-8">
-                    <div class="head text-center">
-                        <p class="title">حساب جديد</p>
-                    </div>
-                    <div class="row justify-content-center pb-4">
-                        <div class="col-7">
-                            <div class="alert alert-danger text-center" *ngIf="error">
-                                {{error}}
-                              </div>
-                            <form [formGroup]="registerForm" (ngSubmit)="submitData()" class="row  g-3">
-                                <mat-form-field appearance="legacy">
-                                    <mat-label>الاسم</mat-label>
-                                    <input matInput placeholder="الاسم" formControlName="name">
-                                </mat-form-field>   
-                                <mat-form-field appearance="legacy">
-                                    <mat-label>النوع</mat-label>
-                                    <mat-select formControlName="gender">
-                                      <mat-option value="female">انثى</mat-option>
-                                      <mat-option value="male">ذكر</mat-option>
-                                    </mat-select>
-                                  </mat-form-field>
-                                  <mat-form-field class="example-full-width" appearance="legacy">
-                                    <mat-label>تاريخ الميلاد</mat-label>
-                                    <input matInput [matDatepicker]="picker" formControlName="dateOfBirth">
-                                    <mat-datepicker-toggle matSuffix [for]="picker">
-                                    </mat-datepicker-toggle>
-                                    <mat-datepicker #picker></mat-datepicker>
-                                  </mat-form-field> 
-                                  <mat-form-field appearance="legacy">
-                                    <mat-label>رقم الهاتف</mat-label>
-                                    <input matInput placeholder="رقم الهاتف" formControlName="phone">
-                                  </mat-form-field>
-                                  <div class="d-flex justify-content-center pt-3">
-                                      <button class="btn btn-prim" type="submit">انشاء حساب</button>
-                                  </div>   
-                            </form>
-                            <div class="d-flex justify-content-center align-items-center pt-5">
-                                <img src="../../../assets/images/Line 9.svg" alt="Line">
-                                <p class="or px-3">او</p>
-                                <img src="../../../assets/images/Line 8.svg" alt="Line">
-                            </div>
-                            <div class="d-flex justify-content-center py-5 apps-icon">
-                                <a href=""><img src="../../../assets/images/googlee.svg" alt="google"></a>
-                                <a href=""><img src="../../../assets/images/faceboook.svg" alt="facebook" class="px-5"></a>
-                                <a href=""><img src="../../../assets/images/applee.svg" alt="apple" ></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-md-4 swipper" id="swipe">
-                        <div class="logo">
-                            <img src="../../../assets/images/logofooter.svg" alt="logofooter" width="100%">
-                        </div>
-                       <div class="title text-center py-5">
-                        <p class="ask pt-5 pb-4">قمت بالتسجيل بالفعل؟</p>
-                        <p class="pref">دعنا نجهزك جميعًا حتى تتمكن من البدء في إنشاء أول تجربة تأهيل لك.</p>
-                       </div> 
-                       <div class="btn-swiper">
-                        <button class="btn btn-sec" (click)="swipe()">تسجيل الدخول</button>
-                       </div>
-                </div> -->
             </div>
         </div>
-    <!-- </div> -->
 </div>
 <!-- otpModel modal -->
 <div class="modal fade"
@@ -197,19 +114,40 @@ data-bs-backdrop="static"
             </button>
         </div>
           <div class="modal-header column justify-content-center align-items-center">
-          <h5 class="modal-title text-center" id="staticBackdropLabel">رمز التحقق</h5>
-          <mat-progress-bar mode="indeterminate" class="my-3"></mat-progress-bar>
+          <h5 class="modal-title text-center py-3" id="staticBackdropLabel">رمز التحقق</h5>
+          <mat-progress-bar mode="indeterminate" class="my-3" *ngIf="loaderOtp"></mat-progress-bar>
+          <p class="text-success" *ngIf="resMsg">تم ارسال كود جديد</p>
+          <p class="text-danger text-center" *ngIf="errorOtp">
+            {{errorOtp}}
+          </p>
         </div>
         <div class="modal-body">
             <p class="send">تم ارسال رمز التحقق الي الرقم</p>
             <p class="number">{{fRegister['phone'].value}}</p>
-            <ng-otp-input  (onInputChange)="onOtpChange($event)"  [config]="config"></ng-otp-input>
-            <div>
-                <a class="resend">اعاده ارسال الرمز بعد</a><span>0:{{timeLeft}}</span>
+                <ng-otp-input  (onInputChange)="onOtpChange($event)"   [config]="config"></ng-otp-input>
+                <div>
+                    <a class="resend" [ngClass]="{'pe-none': resend}"
+                    (click)="resendOtp()">اعاده ارسال الرمز بعد</a><span>0:{{timeLeft}}</span>
+                </div>
+                <button type="button" class="btn btn-prim m-3" (click)="onOtpSubmmit()" [disabled]="subOtp">التالى</button>
             </div>
-
-            <button type="button" class="btn btn-prim m-3" (click)="onOtpSubmmit()">التالى</button>
-        </div>
       </div>
   </div>
 </div>
+<!-- modal success -->
+<div id="success" 
+class="modal fade"
+tabindex="-1"
+aria-labelledby="exampleModalLabel"
+aria-hidden="true"
+>
+	<div class="modal-dialog modal-dialog-centered modal-sm">
+		<div class="modal-content">
+			
+			<div class="modal-body text-center">
+                <img src="../../assets/images/sucess-mark.svg" alt="sucess-mark" width="67px">
+				<p class="py-4">تم التسجبل بنجاح</p>
+			</div>
+		</div>
+	</div>
+</div>  

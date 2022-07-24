@@ -89,7 +89,7 @@ p.pref{
     width: 60%;
     height: 800px;
     position: absolute;
-    left: 40%;
+    left: 41%;
     z-index: 1000;
     display: flex;
     justify-content: center;
@@ -197,6 +197,9 @@ p.pref{
     font-size: .8rem;
     font-weight: 100;
   }
+  .modal-body a.resend.pe-none{
+    color: var(--sec-text);
+  }
   .modal-body a.resend{
     text-decoration: underline;
     color: var(--primary-color);
@@ -206,3 +209,11 @@ p.pref{
     text-decoration: none;
     color: var(--light-blue);
   }
+#success .modal-body p{
+    color: var(--primary-color);
+    font-weight: 500;
+    font-size: 1.2rem;
+}
+#success .modal-header{
+    border: none;
+}

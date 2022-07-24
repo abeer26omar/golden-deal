@@ -1,23 +1,3 @@
-export class User{
-    constructor(
-        public name: string, 
-        public id: string, 
-        private _token: string,
-        public birth_date: string,
-        public phone: string,
-        public otp: number,
-        public image_url: string,
-        public cover_url: string, 
-        private _tokenExpirationDate?: Date){}
-
-        get token(){
-            if(!this._tokenExpirationDate || new Date() > this._tokenExpirationDate){
-                return null
-            }
-            return this._token;
-        }
-}
-
 export interface Register{
     data: {
         user: {
@@ -33,4 +13,45 @@ export interface Register{
         },
         token: string
     }      
+}
+export interface Login{
+    data:{
+        user: {
+            id: number,
+            name: string,
+            email: string,
+            phone: string,
+            image: string,
+            cover: string,
+            subscribed: number,
+            is_admin: number,
+            birth_date: string,
+            gender: string,
+            otp: number,
+            fcm_token: null,
+            email_verified_at: null,
+            image_url: string,
+            cover_url: string
+        },
+        token: string
+    }
+}
+export interface Profile{
+    data:{
+            id: number,
+            name: string,
+            email: string,
+            phone: string,
+            image: string,
+            cover: string,
+            subscribed: number,
+            is_admin: number,
+            birth_date: string,
+            gender: string,
+            otp: number,
+            fcm_token: null,
+            email_verified_at: null,
+            image_url: string,
+            cover_url: string
+    }
 }

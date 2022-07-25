@@ -9,5 +9,11 @@ import { AuthService } from './services/auth.service';
 })
 export class AppComponent {
   title = 'Golden-deal';
-  constructor(public authService: AuthService){}
+  // loadMatSpinner :boolean = true;
+  constructor(public authService: AuthService){
+    // setTimeout(() => {
+    //   this.loadMatSpinner = false;
+    // }, 1000);
+  }
+  
 }

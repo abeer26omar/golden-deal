@@ -160,6 +160,10 @@ input.star:checked ~ label.star:before {
 .mat-progress-bar{
     width: 50% !important;
 }
+#addprog{
+    width: 100% !important;
+    height: 3px;
+}
 .container .mat-radio-container {
     display: none !important;
 }
@@ -194,23 +198,27 @@ input.star:checked ~ label.star:before {
     box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.15);
     border-radius: 15px;
 }
-.yesORno .modal-header{
+.yesORno .modal-header,
+.yesORno .header{
     background-color: var(--org-color);
     color: var(--white);
     border-radius: 23.16px 23.16px 0px 0px;
 }
-.yesORno .modal-body{
+.yesORno .modal-body,
+.yesORno .body{
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
-.yesORno .modal-body .btn-yes{
+.yesORno .modal-body .btn-yes,
+.yesORno .body .btn-yes{
     background-color: var(--primary-color);
     color: var(--white);
     padding: 1rem 1.5rem;
     border-radius: 15.44px;
 }
-.yesORno .modal-body .btn-no{
+.yesORno .modal-body .btn-no,
+.yesORno .body .btn-no{
     background-color: var(--white);
     color: var(--primary-color);
     padding: 1rem 1.5rem;
@@ -278,4 +286,11 @@ input.star:checked ~ label.star:before {
     width: 35px;
     height: 35px;
     border-radius: 50%;
+}
+.mat-menu-panel {
+    overflow: hidden !important;
+}
+.mat-dialog-container {
+    border-radius: 23.16px !important;
+    padding: 0 !important;
 }

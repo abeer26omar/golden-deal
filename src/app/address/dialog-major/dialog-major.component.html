@@ -1,0 +1,12 @@
+<div class="content yesORno">
+    <div class="header justify-content-center">
+      <h5 class="title text-center" id="staticBackdropLabel">تحديد العنوان كرئيسي</h5>
+    </div>
+    <mat-progress-bar mode="indeterminate" class="my-3" *ngIf="load" id="addprog"></mat-progress-bar>
+
+    <div class="body">
+        <button type="button" class="btn btn-yes m-3" (click)="setPrimary()">نعم</button>
+
+        <button type="button" class="btn btn-no m-3"(click)="onNoClick()">لا</button>
+    </div>
+  </div>

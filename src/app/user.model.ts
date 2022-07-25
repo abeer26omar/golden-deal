@@ -55,3 +55,28 @@ export interface Profile{
             cover_url: string
     }
 }
+export interface Addresses{
+    id: number,
+    user_id: number,
+    title: string,
+    address_type: string,
+    city: string,
+    street: string,
+    building: string,
+    is_primary: number
+}
+export interface APIResponse<T>{
+    data: Array<T>;
+}
+export interface Address{
+    data: {
+        address_type: string,
+        building: string,
+        city: string,
+        id: number,
+        is_primary: number,
+        street: string,
+        title: string,
+        user_id: number
+    }
+}

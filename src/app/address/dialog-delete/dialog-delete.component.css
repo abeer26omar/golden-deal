@@ -1,0 +1,6 @@
+.header,.body{
+    padding: 1rem 3rem;
+}
+.btn-yes,.btn-no{
+    padding: 1rem 3.5rem !important;
+}

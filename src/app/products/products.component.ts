@@ -54,7 +54,7 @@ export class ProductsComponent implements OnInit {
           this.errorLength = '';
         }
       }, 0);
-      console.log(productsList.data);
+      // console.log(productsList.data);
     }, (error :HttpErrorResponse) => {
       if(error.error){
         setTimeout(() => {

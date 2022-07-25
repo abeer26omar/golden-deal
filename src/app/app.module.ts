@@ -27,7 +27,8 @@ import { MatMenuModule } from '@angular/material/menu'
 import { Ng2TelInputModule } from 'ng2-tel-input';
 import { NgOtpInputModule } from  'ng-otp-input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatProgressBarModule } from '@angular/material/progress-bar'
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatDialogModule } from '@angular/material/dialog';
 
 
 //components
@@ -54,6 +55,8 @@ import { SubscriptionsComponent } from './subscriptions/subscriptions.component'
 import { ProfileComponent } from './profile/profile.component';
 import { AddressComponent } from './address/address.component';
 import { AddEditAddressComponent } from './address/add-edit-address/add-edit-address.component';
+import { DialogMajorComponent } from './address/dialog-major/dialog-major.component';
+import { DialogDeleteComponent } from './address/dialog-delete/dialog-delete.component';
 
 @NgModule({
   declarations: [
@@ -81,6 +84,8 @@ import { AddEditAddressComponent } from './address/add-edit-address/add-edit-add
     ProfileComponent,
     AddressComponent,
     AddEditAddressComponent,
+    DialogMajorComponent,
+    DialogDeleteComponent,
   ],
   imports: [
     BrowserModule,
@@ -108,7 +113,8 @@ import { AddEditAddressComponent } from './address/add-edit-address/add-edit-add
     NgOtpInputModule,
     MatProgressSpinnerModule,
     MatProgressBarModule,
-    MatMenuModule
+    MatMenuModule,
+    MatDialogModule
     ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

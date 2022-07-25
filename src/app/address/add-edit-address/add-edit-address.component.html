@@ -1,12 +1,18 @@
 <div class="add-edit pt-5 pb-5">
     <div class="main">
         <div class="map"></div>
+
         <div class="container-fluid pt-5 pb-5">
-            <form  class="row g-3 form-profile pt-4" [formGroup]="addForm" (ngSubmit)="onSubmit()">
+            <mat-progress-bar mode="indeterminate" class="my-3" *ngIf="loaderAdd" id="addprog"></mat-progress-bar>
+            <form  class="row g-3 form-profile pt-4" 
+                [formGroup]="addForm" 
+                (ngSubmit)="onSubmit()">
                 <div class="col-6">
                     <mat-form-field appearance="legacy">
                         <mat-label>تصنيف العنوان</mat-label>
-                        <mat-select formControlName="addKind">
+                        <mat-select 
+                            formControlName="addKind"
+                            >
                           <mat-option value="home">المنزل</mat-option>
                           <mat-option value="work">العمل</mat-option>
                         </mat-select>
@@ -15,19 +21,24 @@
                 <div class="col-6">
                     <mat-form-field appearance="legacy">
                         <mat-label>العنوان</mat-label>
-                        <input matInput formControlName="add">
+                        <input matInput 
+                        formControlName="title"
+                        >
                     </mat-form-field>   
                 </div>
                 <div class="col-6">
                     <mat-form-field appearance="legacy">
                         <mat-label>المدينه</mat-label>
-                        <input matInput formControlName="city">
+                        <input matInput 
+                        formControlName="city"
+                        >
                     </mat-form-field>   
                 </div>
                 <div class="col-6">
                     <mat-form-field appearance="legacy">
                         <mat-label>رقم الشارع</mat-label>
-                        <input matInput formControlName="streetNo">
+                        <input matInput 
+                        formControlName="streetNo">
                     </mat-form-field>   
                 </div>
                 <div class="col-6">
@@ -43,3 +54,20 @@
         </div>
     </div>
 </div>
+<!-- modal success -->
+<div id="successAdd" 
+class="modal fade"
+tabindex="-1"
+aria-labelledby="exampleModalLabel"
+aria-hidden="true"
+>
+	<div class="modal-dialog modal-dialog-centered modal-sm">
+		<div class="modal-content">
+			
+			<div class="modal-body text-center">
+                <img src="../../assets/images/sucess-mark.svg" alt="sucess-mark" width="67px">
+				<p class="py-4">تم التسجبل بنجاح</p>
+			</div>
+		</div>
+	</div>
+</div>  

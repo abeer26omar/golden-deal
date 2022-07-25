@@ -1,9 +1,9 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgOtpInputConfig } from 'ng-otp-input';
 import { AuthService } from 'src/app/services/auth.service';
+import { Login } from 'src/app/user.model';
 declare var window: any;
 
 @Component({
@@ -12,6 +12,28 @@ declare var window: any;
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
+  userData : Login = {
+    data:{
+      user: {
+          id: 0,
+          name: '',
+          email: '',
+          phone: '',
+          image: '',
+          cover: '',
+          subscribed: 0,
+          is_admin: 0,
+          birth_date: '',
+          gender: '',
+          otp: 0,
+          fcm_token: null,
+          email_verified_at: null,
+          image_url: '',
+          cover_url: ''
+      },
+      token: ''
+  }
+  }
   otpModal: any;
   successModal: any;
   signin: any;
@@ -107,11 +129,11 @@ export class RegisterComponent implements OnInit {
       this.loaderLogin = true;
       this.errorLogin = '';    
       this.auth.signIn(phoneNo).subscribe({
-        next: resData =>{
+        next: (resData: Login) =>{
           this.loaderLogin = false;
-          console.log(resData);
-          localStorage.setItem('token', resData.data.token);
-        },
+          this.userData = resData;
+          localStorage.setItem('token', this.userData.data.token);
+         },
         error: ()=>{
           this.loaderLogin = false;
           this.errorLogin =" هذا الحساب غير موجود";

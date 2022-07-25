@@ -21,11 +21,23 @@
     position: relative;
     top: -139px;
 }
+.profile-img img{
+    width: 235px;
+    height: 235px;
+    border-radius: 50%;
+}
 .profile-img .edit{
     position: relative;
     left: 87px;
     bottom: 220px;
     height: 0;
+}
+.profile-img .edit img{
+    width: 65px;
+    height: 65px;
+}
+.profile-img .edit label{
+    cursor: pointer;
 }
 .user-name{
     position: relative;
@@ -57,4 +69,10 @@ div.container p{
 }
 #editSuccess .modal-header{
     border: none;
+}
+.loader{
+    position: relative;
+    bottom: 90px;
+    display: flex;
+    justify-content: center;
 }

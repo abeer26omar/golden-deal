@@ -32,27 +32,32 @@ export class ProfileComponent implements OnInit {
         cover_url: ''
     }
   }
+  loadProfile: boolean = false;
   deleteModal: any;
   editModal: any;
   successModal: any;
   faildModel: any;
   edit:boolean = true;
-  delete:boolean = false;
   changeBtn: boolean = false;
-  editTitle: string = '' ;
-  editSuccessTitle:string = '';
+  imageUrl!: File ;
+
   private userSub: Subscription = new Subscription;
   constructor(public authService: AuthService,
     private route: Router,
     private profileService: ProfileService ) {
+      this.profileService.refresh.subscribe((res)=>{
+        this.getProfileInfo();
+      })
    }
    userForm = new FormGroup({
-    name: new FormControl({value: this.userData.data.name, disabled: this.edit}),
+    name: new FormControl({value: '', disabled: this.edit}),
     phone: new FormControl({value: '', disabled: this.edit}),
     birthdate: new FormControl({value: '', disabled: this.edit}),
     email: new FormControl({value: '', disabled: this.edit}),
-    gender: new FormControl({value: '', disabled: this.edit}),
     address: new FormControl({value: '', disabled: this.edit})
+   });
+   photoForm = new FormGroup({
+    fileSource: new FormControl('')
    })
   ngOnInit(): void {
     this.deleteModal = new window.bootstrap.Modal(
@@ -67,90 +72,100 @@ export class ProfileComponent implements OnInit {
     this.faildModel = new window.bootstrap.Modal(
       document.getElementById('editFaild')
     );
-    this.getProfileInfo()
+    this.getProfileInfo();
   }
   get fuser(){
     return this.userForm.controls;
   }
-  setDefaultValues(){
-    const userName = this.userForm.get('name')?.setValue(this.userData.data.name);
-    const userEmail = this.userForm.get('email')?.setValue(this.userData.data.email);
-    const userBirthDate = this.userForm.get('birthdate')?.setValue(this.userData.data.birth_date);
-    const userPhone = this.userForm.get('phone')?.setValue(this.userData.data.phone);
+  get fphoto(){
+    return this.photoForm.controls;
   }
   getProfileInfo(){
     this.userSub = this.profileService.profileInfo()
-    .subscribe((userDetails: Profile)=>{
-      this.userData = userDetails;
-      // console.log(this.userData.data);
+    .subscribe({
+      next:(userDetails: Profile)=>{
+        // console.log(userDetails)
+        this.userData = userDetails;
+        this.userForm = new FormGroup({
+          name: new FormControl({value:this.userData.data.name,disabled: this.edit}),
+          phone: new FormControl({value:this.userData.data.phone,disabled: this.edit}),
+          birthdate: new FormControl({value:this.userData.data.birth_date,disabled: this.edit}),
+          email: new FormControl({value:this.userData.data.email,disabled: this.edit}),
+          address: new FormControl({value:'',disabled: this.edit})
+         })
+      }
     })
   }
-  
   submitEdit(){ 
   const nameval = this.userForm.get('name')?.value;
   const emailval = this.userForm.get('email')?.value;
   const birthval = this.userForm.get('birthdate')?.value;
   const phoneval = this.userForm.get('phone')?.value;
-console.log(this.userForm.value)
-    // console.log(nameval,emailval,birthval,phoneval)
-    // this.userSub = this.profileService
-    // .editProfile(nameval, emailval,phoneval,birthval)
-    // .subscribe({
-    //   next: (res)=>{
-    //     console.log(res)
-    //       this.openSuccessModal();
-    //       this.editSuccessTitle = 'تم الحفظ بنجاح';
-    //   },
-    //   error: (err)=>{
-    //     console.log(err)
-    //   }
-    // })
+  this.loadProfile = true;
+    this.userSub = this.profileService
+    .editProfile(nameval, emailval,phoneval,birthval)
+    .subscribe({
+      next: (res)=>{
+        this.loadProfile = false;
+        this.successModal.show();
+        this.edit = true;
+        this.changeBtn = false;
+
+      },
+      error: (err)=>{
+        this.loadProfile = false;
+        this.faildModel.show();
+        this.edit = true;
+        this.changeBtn = false;
+      }
+    })
   }
   allowEdit(){
-    this.edit = false;
-    this.toggleFormState()
-    if(this.edit == false){
-      this.changeBtn = true;
-      this.openEditModal();
-      this.editTitle = 'هل تريد تعديل البيانات' ; 
-    }
-    this.editModal.hide();
-  }
-  askEdit(){
-    if(this.changeBtn){
-      this.openSuccessModal();
-      this.editSuccessTitle = 'تم الحفظ بنجاح';
-    }else{
-      this.openEditModal();
-      this.editTitle = 'هل تريد تعديل البيانات' ;
-    }
-  }
-  askDelete(){
-    this.openEditModal();
-    // this.delete = true;
-    this.editTitle = 'هل تريد حذف البيانات' ;
-    if(this.delete == true){
-      this.editSuccessTitle = 'تم الحذف بنجاح';
-      this.openSuccessModal();
-    }
-  }
-  openDeleteModal(){
-    this.deleteModal.show();
-  }
-  openEditModal(){
     this.editModal.show();
   }
-  openFaildModel(){
-    this.faildModel.show();
+  goEdit(){
+    this.edit = false;
+    this.toggleFormState();
+    this.editModal.hide();
+    this.changeBtn = true;
   }
-  openSuccessModal(){
-    this.successModal.show();
+  deleteAcc(){
+    this.deleteModal.show();
   }
+  confirmDel(){
+    this.userSub = this.profileService.deleteAccount()
+    .subscribe({
+      next: res=>{
+        console.log(res)
+      },
+      error: err=>{
+        console.log(err)
+      }
+    })
+  }
+  
   public toggleFormState() {
     const state = this.edit ? 'disable' : 'enable';
 
     Object.keys(this.userForm.controls).forEach((formControlName) => {
         this.userForm.controls[formControlName][state](); 
     });
+  }
+  onFileChange(event:any) {
+    this.imageUrl = <File>event.target.files[0].name; 
+    console.log(this.imageUrl)
+    // this.userSub = this.profileService.updatePhoto(this.imageUrl).subscribe({
+    //   next: res=>{
+    //     console.log(res)
+    //   },
+    //   error: err=>{
+    //     console.log(err)
+    //   }
+    // })
+  }
+  ngOnDestory() :void{ 
+    if(this.userSub){
+      this.userSub.unsubscribe();
+    }
   }
 }

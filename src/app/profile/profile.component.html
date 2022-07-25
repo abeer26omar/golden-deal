@@ -1,13 +1,34 @@
 <div class="main mt-5 mb-5">
     <div class="title"></div>
-        <div class="profile-img">
-            <img src="../../assets/images/profile-img.svg" alt="profile-img">
+    <div class="profile-img">
+        <img *ngIf="userData.data.image_url" src="{{userData.data.image_url}}" alt="profile-img">
+        <img *ngIf="!(userData.data.image_url)" src="../../assets/images/profilePlacholder.png" alt="profile-img">
+        <div class="edit">
+            <form [formGroup]="photoForm">
+                <label for="file" class="file-upload">
+                    <input
+                        formControlName="fileSource"
+                        id="file"
+                        type="file"
+                        class="form-control" 
+                        hidden
+                        (change)="onFileChange($event)">
+                        <div class="text-center">
+                            <img src="../../assets/images/edit-pen.svg" alt="edit">
+                        </div>
+                </label>
+            </form>
         </div>
-        <p class="text-center user-name">{{userData.data.name}}</p>
+    </div>
+    
+    <p class="text-center user-name">{{userData.data.name}}</p>
+    <div class="loader" *ngIf="loadProfile">
+        <mat-progress-bar mode="indeterminate" class="my-3 text-center" ></mat-progress-bar>
+    </div>
         <div class="container">
             <p>اعدادات الحساب</p>
             <form  class="row  g-3 form-profile pt-4" 
-            [formGroup]="userForm" (ngSubmit)="submitEdit()">
+            [formGroup]="userForm" >
                 <div class="col-6">
                     <mat-form-field appearance="fill">
                         <mat-label>الاسم</mat-label>
@@ -21,7 +42,6 @@
                         <mat-label>رقم الهاتف</mat-label>
                         <input matInput 
                         formControlName="phone"
-                       value="{{userData.data.phone}}"
                         >
                     </mat-form-field>   
                 </div>
@@ -30,7 +50,7 @@
                         <mat-label>تاريخ الميلاد</mat-label>
                         <input matInput [matDatepicker]="picker" 
                         formControlName="birthdate"
-                        value="{{userData.data.birth_date}}">
+                       >
                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                             <mat-datepicker #picker></mat-datepicker>
                     </mat-form-field>   
@@ -40,15 +60,16 @@
                         <mat-label>البريد الالكترونى</mat-label>
                         <input matInput 
                         formControlName="email"
-                        value="{{userData.data.email}}"
+                      
                         >
                     </mat-form-field>   
                 </div>
                 <div class="col-6">
                     <mat-form-field appearance="fill">
                         <mat-label>النوع</mat-label>
-                        <mat-select formControlName="gender"
-                        value="{{userData.data.gender}}">
+                        <mat-select disabled="edit"
+                        value="{{userData.data.gender}}"
+                        >
                             <mat-option value="female">انثى</mat-option>
                             <mat-option value="male">ذكر</mat-option>
                         </mat-select>
@@ -64,8 +85,8 @@
                 </div>
                 <div class="col-12 d-flex justify-content-center">
                     <button type="button" class="btn btn-prim mx-3" *ngIf="!changeBtn" (click)="allowEdit()">تعديل</button>
-                    <button type="submit" class="btn btn-prim mx-3" *ngIf="changeBtn">حفظ</button>
-                    <button type="button" class="btn btn-sec mx-3" (click)="askDelete()">حذف الحساب</button>
+                    <button type="button" class="btn btn-prim mx-3" *ngIf="changeBtn" (click)="submitEdit()">حفظ</button>
+                    <button type="button" class="btn btn-sec mx-3" (click)="deleteAcc()">حذف الحساب</button>
                 </div>
             </form>
         </div>
@@ -80,10 +101,10 @@ aria-hidden="true"
   <div class="modal-dialog modal-dialog-centered modal-sm">
       <div class="modal-content">
         <div class="modal-header justify-content-center">
-          <h5 class="modal-title text-center" id="staticBackdropLabel">{{editTitle}}</h5>
+          <h5 class="modal-title text-center" id="staticBackdropLabel">هل تريد تعديل البيانات</h5>
         </div>
         <div class="modal-body">
-            <button type="button" class="btn btn-yes m-3"(click)="allowEdit()">نعم</button>
+            <button type="button" class="btn btn-yes m-3"(click)="goEdit()">نعم</button>
     
             <button type="button" class="btn btn-no m-3" data-bs-dismiss="modal" aria-label="Close">لا</button>
         </div>
@@ -104,7 +125,7 @@ aria-hidden="true"
           <h5 class="modal-title text-center" id="staticBackdropLabel">تاكيد الحذف </h5>
         </div>
         <div class="modal-body">
-            <button type="button" class="btn btn-yes m-3">نعم</button>
+            <button type="button" class="btn btn-yes m-3" (click)="confirmDel()">نعم</button>
     
             <button type="button" class="btn btn-no m-3" data-bs-dismiss="modal" aria-label="Close">لا</button>
         </div>

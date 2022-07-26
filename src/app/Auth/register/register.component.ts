@@ -67,7 +67,12 @@ export class RegisterComponent implements OnInit {
 
   constructor(private auth: AuthService, 
     private route: ActivatedRoute,
-    private router: Router) { }
+    private router: Router) { 
+      this.auth.refresh.subscribe((res)=>{
+        this.submitData();
+        this.submitLogin();
+      })
+    }
     //get forms controls
     get fRegister(){
       return this.registerForm.controls;
@@ -182,6 +187,7 @@ export class RegisterComponent implements OnInit {
         this.successModal.hide();
         this.router.navigate(['/home'])
       },1000)
+      window.location.reload()
     },
     error: () =>{
       this.loaderOtp = false;

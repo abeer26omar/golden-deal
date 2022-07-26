@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders} from '@angular/common/http';
 import { environment as env } from 'src/environments/environment';
-import { Profile} from '../user.model';
-import { Subject,tap } from 'rxjs';
+import { APIResponse2, Profile, Purchases} from '../user.model';
+import { Observable, Subject,tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -42,5 +42,8 @@ export class ProfileService {
       },this.httpOptions).pipe(tap(()=>{
         this._refresh.next();
       }))
+    }
+    buyingRecord(): Observable<APIResponse2<Purchases>>{
+      return this.http.get<APIResponse2<Purchases>>(`${env.api_url}/purchase-history`,this.httpOptions)
     }
 }

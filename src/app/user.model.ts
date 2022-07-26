@@ -80,3 +80,31 @@ export interface Address{
         user_id: number
     }
 }
+export interface Purchases{
+    id: number,
+    name: string,
+    desc: string,
+    owner_id: number,
+    created_since: string,
+    default_image: string,
+    ownership_image_url: string,
+      owner: {
+        id: number,
+        name: string,
+        image: string,
+        image_url: string,
+        cover_url: string
+      }
+}
+export interface APIResponse2<T>{
+    data: Array<T>;
+}
+export interface Pages{
+    id: number,
+    title: string,
+    desc: string,
+    slug: string,
+}
+export interface APIResponse4<T>{
+    data: Array<T>;
+}

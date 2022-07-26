@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { Category,APIResponse2 } from '../products';
 import { AuthService } from '../services/auth.service';
-import { ProfileService } from '../services/profile.service';
+import { HomeAddsService } from '../services/home-adds.service';
+import { ProductsRequestService } from '../services/products-request.service'
+import { APIResponse4, Pages } from '../user.model';
 
 @Component({
   selector: 'app-header',
@@ -10,22 +14,48 @@ import { ProfileService } from '../services/profile.service';
 })
 export class HeaderComponent implements OnInit {
   panelOpenState = false;
+  httpService: any;
+  public categories : Array<Category> = [];
+
   constructor(public authService: AuthService,
     private route: Router,
-    private profileService: ProfileService ) { 
+    private categoryService: ProductsRequestService ) { 
   }
+  ngOnInit(): void { 
+    this.getCategories();
+  }
+  private categorySub : Subscription = new Subscription;
 
-  ngOnInit(): void {
+  getCategories(){
+    this.categorySub = this.categoryService.
+    getProductsCategories().
+    subscribe((categoryList: APIResponse2<Category>)=>{ 
+      this.categories = categoryList.data;
+      // console.log(categoryList.data);
+    })
   }
   logOut(){
     this.authService.logOut().subscribe({
       next:(res)=>{
         console.log(res)
         localStorage.clear();
+        window.location.reload()
       },
       error: (err)=>{
         console.log(err)
       }
     })
+  }
+  termsCondition(slug: string){
+    this.route.navigate(['/termsandconditions',slug])
+  }
+  prop(event: any){
+    event.stopPropagation();  
+  }
+  ngOnDestory() :void{
+   if(this.categorySub){
+     this.categorySub.unsubscribe();
+   }
+   
   }
 }

@@ -1,24 +1,21 @@
 <div class="main mt-5 mb-5">
     <div class="title"></div>
     <div class="profile-img">
-        <img *ngIf="userData.data.image_url" src="{{userData.data.image_url}}" alt="profile-img">
+        <img *ngIf="userData.data.image_url" [src]="userData.data.image_url" alt="profile-img">
         <img *ngIf="!(userData.data.image_url)" src="../../assets/images/profilePlacholder.png" alt="profile-img">
         <div class="edit">
-            <form [formGroup]="photoForm">
-                <label for="file" class="file-upload">
-                    <input
-                        formControlName="fileSource"
-                        id="file"
-                        type="file"
-                        class="form-control" 
-                        hidden
-                        (change)="onFileChange($event)">
-                        <div class="text-center">
-                            <img src="../../assets/images/edit-pen.svg" alt="edit">
-                        </div>
+            <label for="file" class="file-upload">
+                <input
+                id="file"
+                type="file"
+                class="form-control" 
+                hidden
+                (change)="onFileChange($event)">
+                
+                <img src="../../assets/images/edit-pen.svg" alt="edit">
                 </label>
-            </form>
         </div>
+        <!-- <img [src]="imageUrl" alt=""> -->
     </div>
     
     <p class="text-center user-name">{{userData.data.name}}</p>
@@ -171,4 +168,6 @@ aria-hidden="true"
 		</div>
 	</div>
 </div>     
+
+<!-- image update modal -->
 

@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 import { ProfileService } from '../services/profile.service';
 import { Profile } from '../user.model';
+
 declare var window: any;
 
 @Component({
@@ -39,12 +40,12 @@ export class ProfileComponent implements OnInit {
   faildModel: any;
   edit:boolean = true;
   changeBtn: boolean = false;
-  imageUrl!: File ;
+  imageUrl: any ;
 
   private userSub: Subscription = new Subscription;
   constructor(public authService: AuthService,
     private route: Router,
-    private profileService: ProfileService ) {
+    private profileService: ProfileService) {
       this.profileService.refresh.subscribe((res)=>{
         this.getProfileInfo();
       })
@@ -151,11 +152,41 @@ export class ProfileComponent implements OnInit {
         this.userForm.controls[formControlName][state](); 
     });
   }
+  
   onFileChange(event:any) {
-    this.imageUrl = <File>event.target.files[0].name; 
-    console.log(this.imageUrl)
+    // const reader = new FileReader();
+    // reader.readAsDataURL(event.target.files[0]);
+    // reader.onload=()=>{
+    //   this.imageUrl = reader.result;
+    // } 
     // this.userSub = this.profileService.updatePhoto(this.imageUrl).subscribe({
     //   next: res=>{
+    //     console.log(res)
+    //   },
+    //   error: err=>{
+    //     console.log(err)
+    //   }
+    // })
+    this.imageUrl =<File>event.target.files[0]
+    let imgData = new FormData();
+    imgData.append('image',this.imageUrl,this.imageUrl.name)
+   this.userSub = this.profileService.updatePhoto(imgData).subscribe({
+      next: res=>{
+        console.log(imgData) 
+        console.log(res)
+      },
+      error: err=>{
+        console.log(err)
+      }
+    })
+  }
+  upload(){
+    let imgData = new FormData();
+    imgData.append('image',this.imageUrl.name,this.imageUrl)
+    console.log(this.imageUrl)
+    // this.userSub = this.profileService.updatePhoto(imgData).subscribe({
+    //   next: res=>{
+    //     console.log(imgData) 
     //     console.log(res)
     //   },
     //   error: err=>{
@@ -168,4 +199,5 @@ export class ProfileComponent implements OnInit {
       this.userSub.unsubscribe();
     }
   }
+ 
 }

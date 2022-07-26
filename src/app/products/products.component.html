@@ -1,7 +1,7 @@
 <div class=" content pb-4 pt-5">
   <ul ngbNav #nav="ngbNav"  class="nav-tabs">
     <ng-container *ngFor="let category of categories; let i = index">
-      <li [ngbNavItem]="i">
+      <li [ngbNavItem]="i" id="{{category.slug}}">
         <a ngbNavLink [ngClass]="{'all': category.id == 0}" (click)="getProducts(category.slug);productsDefId.style.display = 'none';"> 
           <img src="../../assets/images/left-arrow.svg" class="ps-2" 
           *ngIf="category.id == 0" >{{category.title}}</a>

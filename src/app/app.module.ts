@@ -46,7 +46,6 @@ import { NotfoundComponent } from './notfound/notfound.component';
 import { ChatsComponent } from './chats/chats.component';
 import { AddsComponent } from './adds/adds.component';
 import { NewAddComponent } from './adds/new-add/new-add.component';
-import { WhoWeAreComponent } from './who-we-are/who-we-are.component';
 import { BuyingRecordComponent } from './buying-record/buying-record.component';
 import { SearchproductsPipe } from './pipes/searchproducts.pipe';
 import { RegisterComponent } from './Auth/register/register.component';
@@ -75,7 +74,6 @@ import { DialogDeleteComponent } from './address/dialog-delete/dialog-delete.com
     ChatsComponent,
     AddsComponent,
     NewAddComponent,
-    WhoWeAreComponent,
     BuyingRecordComponent,
     SearchproductsPipe,
     RegisterComponent,

@@ -5,23 +5,23 @@ nav{
 .navbar-brand {
   margin-right: 0rem;
 }
-nav ul:not(.more-dropdown) .nav-item{
+nav  .nav-item{
     padding: .5rem;
 }
-nav ul.nav02 .nav-item{
-    padding: .5rem 1rem;
-}
-nav ul:not(.more-dropdown) .nav-link{
+nav  .nav-link,
+nav .nav-item .ps-1{
     color: var(--primary-color);
     font-weight: 600;
-    font-size: 1.1rem;
+    font-size: 1.2rem;
 }
-nav ul:not(.more-dropdown) .nav-item:hover a,
-nav ul:not(.more-dropdown) .nav-item a.active{
+nav ul .nav-link:hover ,
+nav ul .nav-item a.active,
+nav .nav-item:hover .ps-1{
     color: var(--org-color);
 }
-nav ul:not(.more-dropdown) .nav-item:hover a svg path,
-nav ul:not(.more-dropdown) .nav-item a.active svg path{
+nav ul .nav-item:hover a svg path,
+nav .nav-item:hover svg path,
+nav ul .nav-item a.active svg path{
     fill: var(--org-color);
 }
 .dropdown-toggle::after {
@@ -101,3 +101,49 @@ ul.more-dropdown{
   min-width: 28rem;
   text-align: right;
 }
+#forms-collapse{
+  position: absolute;
+  top: 70px;
+  z-index: 9999;
+  width: 370px;
+  padding: .5rem 1rem;
+  background-color: white;
+  box-shadow: 0px 5.82143px 17.4643px rgba(0, 0, 0, 0.25);
+  border-radius: 7.27679px;
+}
+.more-list{
+  list-style: none;
+  padding: 1rem ;
+}
+.adds{
+  padding: 0;
+  color: var(--primary-color);
+  font-weight: 600;
+}
+.adds-list{
+  list-style: none;
+  padding: 0;
+  padding-right: .5rem;
+}
+ul.more-list li{
+  padding: .7rem 0;
+}
+ul.more-list li a{
+  color: var(--primary-color);
+  font-weight: 600;
+  font-size: 1rem;
+}
+ul.more-list li a:hover{
+  color: var(--org-color);
+}
+ul.adds-list li{
+  padding: 0;
+}
+ul.adds-list li a{
+  color: var(--sec-text);
+  padding: .5rem 0;
+  font-weight: 400;
+}
+/* ul.more-list li.spec{
+  padding: 0.5rem 0;
+} */

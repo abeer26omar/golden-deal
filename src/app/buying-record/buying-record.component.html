@@ -8,31 +8,24 @@
             <div class="products-row row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4 justify-content-start">
                   <div class="col wow fadeIn" 
                    data-wow-duration="1.3s"  style="visibility: visible; animation-duration: 1.3s; 
-                   animation-name: fadeIn;"  >
+                   animation-name: fadeIn;"   *ngFor="let record of records">
                     <div class="card h-100">
                       <div class="card-header text-center" >
-                        <!-- <img *ngIf="product.default_image" src="{{product.default_image}}" alt="car" width="100%" height="200px !important"> -->
-                        <img  src="../../assets/images/placeholderimg.jpg" alt="placeholderimg" width="100%" height="200px !important">                
+                        <img *ngIf="record.default_image" src="{{record.default_image}}" alt="car" width="100%" height="200px !important">
+                        <img *ngIf="record.default_image" src="../../assets/images/placeholderimg.jpg" alt="placeholderimg" width="100%" height="200px !important">                
                       </div>
                       <div class="card-body text-center">
                         <a style="cursor: pointer;">
-                          <h4></h4>
+                          <h4>{{record.name}}</h4>
                         </a>
-                        <p class="discription"></p>
-                        <p class="time"><img src="../../assets/images/clock.svg" alt="clock"><span>ايام</span></p>
-                        <div class="evaluation d-flex justify-content-between align-items-center">
-                          <p>تقيمات</p>
-                          <img src="../../assets/images/Separator.svg" alt="Separator">
-                          <div class="person d-flex align-items-center">
-                              <!-- <img *ngIf="product.owner.image_url" src="{{product.owner.image_url}}" alt="profile" width="30px" height="30px"> -->
-                              <img  src="../../assets/images/Portrait_Placeholder.png" alt="profile" width="30px" height="30px">
-                              <p class="name"></p>
-                          </div>
-                        </div>
+                        <p class="discription">{{record.desc}}</p>
+                        <p class="time"><img src="../../assets/images/clock.svg" alt="clock"><span>{{record.created_since}}</span></p>
+                        <!-- <p class="price">{{record.price}}</p> -->
                       </div>
                     </div>
                   </div>
               </div> 
+              <p class="text-danger text-center" *ngIf="records.length == 0">لا يوجد مشتريات</p>
         </div>
     </section>
   <app-testimonial></app-testimonial>

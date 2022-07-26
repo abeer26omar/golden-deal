@@ -22,94 +22,57 @@
           <li class="nav-item">
             <a class="nav-link" routerLink="/buyingrecord" routerLinkActive="active">سجل الشراء</a>
           </li>
-          <!-- <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-               <span>المزيد</span><svg width="16" height="11" viewBox="0 0 16 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <li class="nav-item">
+            <button class="btn collapsed custom" data-bs-toggle="collapse" data-bs-target="#forms-collapse" aria-expanded="false">
+              <span class="ps-1">المزيد</span><svg width="16" height="11" viewBox="0 0 16 11" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M8 10.3529L16 2.58778L13.3321 0L8 5.17739L2.66792 0L3.2528e-07 2.58778L8 10.3529Z" fill="#12004C"/>
-             </svg>
-            </a>
-            <ul class="dropdown-menu more-dropdown" aria-labelledby="navbarDropdown">
-              <div class="row">
-                <div class="col-6">
-                <li><button mat-button [matMenuTriggerFor]="menu">Menu</button>
-                  <mat-menu #menu="matMenu">
-                    <button mat-menu-item>Item 1</button>
-                    <button mat-menu-item>Item 2</button>
-                  </mat-menu></li>
-                <li><a class="dropdown-item" href="#">المفضله</a></li>
-                <li><a class="dropdown-item" routerLink="/address">قائمه العناوين</a></li>
-                <li><a class="dropdown-item" routerLink="/subscriptions">الاشتراكات</a></li>
-                <li><a class="dropdown-item" href="#">اضافه اعلان</a></li>
-                <li><a class="dropdown-item" href="#">الدعم</a></li>
+                </svg>
+            </button>
+            <div class="collapse" id="forms-collapse" >
+              <ul class="more-list">
+                <div class="row">
+                  <div class="col-6">
+                    <li class="mb-1">
+                      <button class="btn adds custom collapsed" 
+                      data-bs-toggle="collapse" data-bs-target="#forms-collapse2" aria-expanded="false">
+                      <img class="ps-2" src="../../assets/images/apps.svg" alt="apps"><span>التطبيقات</span>
+                      </button>
+                      <div class="collapse" id="forms-collapse2" >
+                        <ul class="adds-list">
+                            <li *ngFor="let category of categories">
+                              <a [routerLink]="['/home']" fragment="{{category.slug}}}" class="d-inline-flex align-items-center rounded">{{category.title}}</a>
+                            </li>
+                        </ul>
+                      </div>
+                    </li>
+                    <li><a class="" href="#"><img class="ps-2" src="../../assets/images/fav.svg" alt="">المفضله</a></li>
+                    <li class="spec"><a class="" routerLink="/address"><img class="ps-2" src="../../assets/images/address.svg" alt="">
+                      قائمه العناوين</a></li>
+                    <li><a class="" routerLink="/subscriptions"><img class="ps-2" src="../../assets/images/subscribtion.svg" alt="">
+                      الاشتراكات</a></li>
+                    <li><a class="" href="#"><img class="ps-2" src="../../assets/images/newAdd.svg" alt="">
+                      اضافه اعلان</a></li>
+                    <li><a class="" href="#"><img class="ps-2" src="../../assets/images/support.svg" alt="">
+                      الدعم</a></li>
+                  </div>
+                  <div class="col-6">
+                    <li class="spec"><a class="" routerLink="/profile"><img class="ps-2" src="../../assets/images/accountSetting.svg" alt="">
+                      اعدادت الحساب</a></li>
+                    <li><a class="" (click)="termsCondition('privacy_policy')"><img class="ps-2" src="../../assets/images/whoweAre.svg" alt="">
+                      من نحن</a></li>
+                    <li><a class="" href="#"><img class="ps-2" src="../../assets/images/myorders.svg" alt="">
+                      طلباتى</a></li>
+                    <li class="spec"><a class="" (click)="termsCondition('terms_conditions')"><img class="ps-2" src="../../assets/images/termsConditions.svg" alt="">
+                      الشروط والاحكام</a></li>
+                    <li><a class="" href="#"><img class="ps-2" src="../../assets/images/exit.svg" alt="">
+                      تسجيل خروج</a></li>
+                  </div>
                 </div>
-                <div class="col-6">
-                  <li><a class="dropdown-item" routerLink="/profile">اعدادت الحساب</a></li>
-                  <li><a class="dropdown-item" routerLink="/whoweare">من نحن</a></li>
-                  <li><a class="dropdown-item" href="#">طلباتى</a></li>
-                  <li><a class="dropdown-item" routerLink="/termsandconditions">الشروط والاحكام</a></li>
-                  <li><a class="dropdown-item" href="#">تسجيل خروج</a></li>
-                </div>
-              </div>
-            
-            </ul>
-          </li> -->
-         <li class="nav-item">
-          <a class="nav-link" mat-button [matMenuTriggerFor]="animals">
-            <span class="ps-1">المزيد</span><svg width="16" height="11" viewBox="0 0 16 11" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M8 10.3529L16 2.58778L13.3321 0L8 5.17739L2.66792 0L3.2528e-07 2.58778L8 10.3529Z" fill="#12004C"/>
-            </svg>
-          </a>
-          <mat-menu #animals="matMenu">
-            <div class="row">
-              <div class="col-6">
-                <li><a class="dropdown-item" href="#">المفضله</a></li>
-                <li><a class="dropdown-item" routerLink="/address">قائمه العناوين</a></li>
-                <li><a class="dropdown-item" routerLink="/subscriptions">الاشتراكات</a></li>
-                <li><a class="dropdown-item" href="#">اضافه اعلان</a></li>
-                <li><a class="dropdown-item" href="#">الدعم</a></li>
-              </div>
-              <div class="col-6">
-                <li class="nav-item dropdown" mat-menu-item [matMenuTriggerFor]="invertebrates">
-                  <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    التطبيقات
-                  </a>
-                </li>
-                <li><a class="dropdown-item" routerLink="/profile">اعدادت الحساب</a></li>
-                  <li><a class="dropdown-item" routerLink="/whoweare">من نحن</a></li>
-                  <li><a class="dropdown-item" href="#">طلباتى</a></li>
-                  <li><a class="dropdown-item" routerLink="/termsandconditions">الشروط والاحكام</a></li>
-                  <li><a class="dropdown-item" href="#">تسجيل خروج</a></li>
-              </div>
+              </ul>
             </div>
-          </mat-menu>
-
-          <mat-menu #invertebrates="matMenu">
-            <button mat-menu-item>Insects</button>
-            <button mat-menu-item>Molluscs</button>
-            <button mat-menu-item>Crustaceans</button>
-            <button mat-menu-item>Corals</button>
-            <button mat-menu-item>Arachnids</button>
-            <button mat-menu-item>Velvet worms</button>
-            <button mat-menu-item>Horseshoe crabs</button>
-          </mat-menu>
-         </li>
+          </li>
         </ul>
         <ul class="navbar-nav main-nv mb-2 mb-lg-0   align-items-center">
-<!--             
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <span>العربية</span>
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M10.01 0C15.53 0 20 4.48 20 10C20 15.52 15.53 20 10.01 20C4.48 20 0 15.52 0 10C0 4.48 4.48 0 10.01 0ZM3.08 6H6.03C6.35 4.75 6.81 3.55 7.41 2.44C5.57 3.07 4.04 4.35 3.08 6ZM10 2.04C9.17 3.24 8.52 4.57 8.09 6H11.91C11.48 4.57 10.83 3.24 10 2.04ZM17.74 12C17.9 11.36 18 10.69 18 10C18 9.31 17.9 8.64 17.74 8H14.36C14.44 8.66 14.5 9.32 14.5 10C14.5 10.68 14.44 11.34 14.36 12H17.74ZM16.92 14H13.97C13.65 15.25 13.19 16.45 12.59 17.56C14.43 16.93 15.96 15.66 16.92 14ZM13.97 6H16.92C15.96 4.34 14.43 3.07 12.59 2.44C13.19 3.55 13.65 4.75 13.97 6ZM10 17.96C10.83 16.76 11.48 15.43 11.91 14H8.09C8.52 15.43 9.17 16.76 10 17.96ZM7.66 12H12.34C12.43 11.34 12.5 10.68 12.5 10C12.5 9.32 12.43 8.65 12.34 8H7.66C7.57 8.65 7.5 9.32 7.5 10C7.5 10.68 7.57 11.34 7.66 12ZM7.41 17.56C6.81 16.45 6.35 15.25 6.03 14H3.08C4.04 15.65 5.57 16.93 7.41 17.56ZM5.64 12C5.56 11.34 5.5 10.68 5.5 10C5.5 9.32 5.56 8.66 5.64 8H2.26C2.1 8.64 2 9.31 2 10C2 10.69 2.1 11.36 2.26 12H5.64Z" fill="#12004C"/>
-                </svg>
-              </a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="#">Something else here</a></li>
-              </ul>
-            </li> -->
             <li class="nav-item" *ngIf="!(authService.isRegister | async)">
               <button class="btn create-account" routerLink="register">إنشاء حساب</button>
             </li>

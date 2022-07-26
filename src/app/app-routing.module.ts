@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { ExtraOptions, RouterModule, Routes } from '@angular/router';
 
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
@@ -16,7 +16,6 @@ import { NotfoundComponent } from './notfound/notfound.component';
 import { ChatsComponent } from './chats/chats.component';
 import { AddsComponent } from './adds/adds.component';
 import { NewAddComponent } from './adds/new-add/new-add.component';
-import { WhoWeAreComponent } from './who-we-are/who-we-are.component';
 import { BuyingRecordComponent } from './buying-record/buying-record.component';
 import { RegisterComponent } from './Auth/register/register.component';
 import { EditAddComponent } from './adds/edit-add/edit-add.component';
@@ -37,19 +36,23 @@ const routes: Routes = [
   { path:'new-add', component:NewAddComponent},
   { path:'edit-add', component: EditAddComponent},
   { path:'subscriptions', component: SubscriptionsComponent},
-  { path:'termsandconditions', component: TermsConditionsComponent},
-  { path:'whoweare', component: WhoWeAreComponent},
-  { path:'buyingrecord', component: BuyingRecordComponent},
+  { path:'termsandconditions/:slug', component: TermsConditionsComponent},
+  { path:'buyingrecord', component: BuyingRecordComponent, canActivate:[AuthGuardGuard]},
   { path:'register', component: RegisterComponent},
-  { path:'profile', component: ProfileComponent},
-  { path:'address', component: AddressComponent},
-  { path:'add', component: AddEditAddressComponent},
-  { path:'edit/:id', component:AddEditAddressComponent},
+  { path:'profile', component: ProfileComponent, canActivate:[AuthGuardGuard]},
+  { path:'address', component: AddressComponent, canActivate:[AuthGuardGuard]},
+  { path:'add', component: AddEditAddressComponent , canActivate:[AuthGuardGuard]},
+  { path:'edit/:id', component:AddEditAddressComponent, canActivate:[AuthGuardGuard]},
   { path:'**', component:NotfoundComponent}
 ];
+const routerOptions: ExtraOptions = {
+  scrollPositionRestoration: 'enabled',
+  anchorScrolling: 'enabled',
+  scrollOffset: [0, 64],
+};
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes,{scrollPositionRestoration: 'enabled'})],
+  imports: [RouterModule.forRoot(routes,routerOptions)],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

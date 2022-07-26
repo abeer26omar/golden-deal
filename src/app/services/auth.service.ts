@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
-import { throwError, catchError, tap,BehaviorSubject} from 'rxjs';
+import { throwError, catchError, tap,BehaviorSubject, Subject} from 'rxjs';
 import { environment as env } from 'src/environments/environment';
 import { Register, Login} from '../user.model';
 @Injectable({
@@ -10,10 +10,17 @@ export class AuthService {
   auth_token: any;
   private _isRegister = new BehaviorSubject<boolean>(false);
   isRegister = this._isRegister.asObservable();
+  private _refresh = new Subject<void>();
+  get refresh(){
+    return this._refresh;
+  }
   constructor(private http: HttpClient) {
     const TOKEN = localStorage.getItem('token');
     this._isRegister.next(!!TOKEN)
-   }
+  }
+  IsloggedIn(){
+    return !!localStorage.getItem('token')
+  }
   signUp(name: string,gender: string, birth_date:string ,phone: string){
     return this.http.post<Register>(`${env.api_url}/auth/register`,{
       name: name,
@@ -24,8 +31,9 @@ export class AuthService {
     .pipe(catchError(this.handelError)
     , tap(() => {
       this._isRegister.next(true);
+      this._refresh.next();
     }))
-  };
+  }
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
@@ -45,6 +53,7 @@ export class AuthService {
       phone: phone
     }).pipe(tap(()=>{
       this._isRegister.next(true);
+      this._refresh.next();
     }))
   }
   logOut(){

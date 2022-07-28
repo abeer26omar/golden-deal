@@ -3,7 +3,7 @@ import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { Adds, APIResponse3} from '../products';
+import { Adds, APIResponse3} from '../models/products.model';
 import { HomeAddsService } from '../services/home-adds.service';
 
 

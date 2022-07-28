@@ -69,3 +69,9 @@
     color: var(--white);
     padding: .5rem 4rem;
 }
+.none{
+    font-weight: 500;
+    color: var( --sec-text);
+    font-size: 1.3rem;
+    text-align: center;
+}

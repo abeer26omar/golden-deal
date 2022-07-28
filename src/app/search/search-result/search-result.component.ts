@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Params } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-search-result',
@@ -6,8 +8,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./search-result.component.css']
 })
 export class SearchResultComponent implements OnInit {
+  arrayOfValues: Array<object> = [];
 
-  constructor() { }
+private routeSub: Subscription = new Subscription;
+  constructor(private route: ActivatedRoute) { 
+  const myArray = this.route.queryParams.subscribe((result) => {
+    // console.log(result)
+  })
+} 
 
   ngOnInit(): void {
   }

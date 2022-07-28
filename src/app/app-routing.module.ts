@@ -30,9 +30,10 @@ import { AuthGuardGuard } from './Guards/auth-guard.guard';
 const routes: Routes = [
   { path:'', redirectTo: 'home', pathMatch:'full'},
   { path:'home', component:HomeComponent},
+  { path:'search-result',component: SearchResultComponent},
   { path:'product-details/:id', component:ProductDetailsComponent},
   { path:'chat', component:ChatsComponent},
-  { path:'adds', component:AddsComponent},
+  { path:'adds/:id', component:AddsComponent, canActivate:[AuthGuardGuard]},
   { path:'new-add', component:NewAddComponent},
   { path:'edit-add', component: EditAddComponent},
   { path:'subscriptions', component: SubscriptionsComponent},

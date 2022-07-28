@@ -2,7 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { APIResponse, Products , APIResponse2, Category} from '../products';
+import { APIResponse, Products , APIResponse2, Category} from '../models/products.model';
 import { ProductsRequestService } from '../services/products-request.service';
 declare var window: any;
 
@@ -43,36 +43,39 @@ export class ProductsComponent implements OnInit {
     this.loadding = true;
     this.productSub = this.httpService
     .getProductsList(categorySlug)
-    .subscribe((productsList: APIResponse<Products>)=>{
-      // this.productsDefId.style.display= 'none'; 
-      setTimeout(() => {
-        this.loadding = false;
-        this.products = productsList.data;
-        if(this.products.length == 0){
-          this.errorLength = 'لا يوجد منتجات';
-        }else{
-          this.errorLength = '';
-        }
-      }, 0);
-      // console.log(productsList.data);
-    }, (error :HttpErrorResponse) => {
-      if(error.error){
+    .subscribe({
+      next:(productsList: APIResponse<Products>)=>{
         setTimeout(() => {
           this.loadding = false;
-          this.error = 'An unknown Error Occurred Check your Internet Connection Or Reload Your Page';
+          this.products = productsList.data;
+          if(this.products.length == 0){
+            this.errorLength = 'لا يوجد منتجات';
+          }else{
+            this.errorLength = '';
+          }
         }, 0);
+      },
+      error: (error :HttpErrorResponse)=>{
+        if(error.error){
+          setTimeout(() => {
+            this.loadding = false;
+            this.error = 'An unknown Error Occurred Check your Internet Connection Or Reload Your Page';
+          }, 0);
+        }
       }
     })
   }
   getCategories(){
     this.categorySub = this.httpService.
     getProductsCategories().
-    subscribe((categoryList: APIResponse2<Category>)=>{ 
-      this.categories = categoryList.data;
-      // console.log(categoryList.data);
-    },(error : HttpErrorResponse)=>{
-      if(error){
-        this.error = 'An unknown Error Occurred Check your Internet Connection Or Reload Your Page';
+    subscribe({
+      next: (categoryList: APIResponse2<Category>)=>{ 
+        this.categories = categoryList.data;
+      },
+      error:(error : HttpErrorResponse)=>{
+        if(error){
+          this.error = 'An unknown Error Occurred Check your Internet Connection Or Reload Your Page';
+        }
       }
     })
   }
@@ -80,16 +83,16 @@ export class ProductsComponent implements OnInit {
     this.router.navigate(['product-details', id])
   }
   ngOnDestory() :void{
-     if(this.productSub){
-       this.productSub.unsubscribe();
-     }
-     if(this.routeSub){
+    if(this.productSub){
+      this.productSub.unsubscribe();
+    }
+    if(this.routeSub){
       this.routeSub.unsubscribe();
     }
     if(this.categorySub){
       this.categorySub.unsubscribe();
     }
-   }
+  }
    openFormModal() {
     this.formModal.show();
   }

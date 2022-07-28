@@ -29,6 +29,11 @@ input{
 }
 .btn-search{
     position: absolute;
-    color: var(--gray);
-    padding-top: .6rem;
+    color: var(--white);
+    padding: 0.6rem;
+    background-color: var(--org-color);
+    border-radius: 0px 10px 10px 0px;
+}
+.btn-search:hover{
+    transform: none;
 }

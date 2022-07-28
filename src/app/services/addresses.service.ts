@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders} from '@angular/common/http';
 import { environment as env } from 'src/environments/environment';
-import { Address, Addresses, APIResponse } from '../user.model';
+import { Address, Addresses, APIResponse } from '../models/user.model';
 import { Subject, tap } from 'rxjs';
 
 @Injectable({

@@ -8,8 +8,23 @@
 }
 .add-content .card-header{
     height: 300px;
-    background-color: var(--header-bg);
+    /* background-color: var(--header-bg); */
     border-radius: 15px 15px 0px 0px;
+}
+.add-content .card-header .badge,
+.add-content .card-header .fav{
+    position: absolute;
+    left: 20px;
+    top: 27px;
+}
+.add-content .card-header .imgCover{
+    border-radius: 15px 15px 0px 0px;
+    width:100%;
+    height:300px;
+}
+.add-content .card-header .edit{
+    position: absolute;
+    left: 0;
 }
 .add-content .card-body,.add-content .card-header{
     padding: 0;
@@ -30,7 +45,10 @@
     border-radius: 50%;
     /* top: 35%; */
 }
-
+.add-content .card-body .my-info{
+    position: relative;
+    top: 100px;
+}
 .add-content .card-body .user-data p.user-name{
     color: var(--primary-color);
     font-size: 1.4rem;
@@ -151,4 +169,10 @@
 }
 .btn-adds:hover{
     color: var(--white);
+}
+.none{
+    font-weight: 500;
+    color: var( --sec-text);
+    font-size: 1.3rem;
+    text-align: center;
 }

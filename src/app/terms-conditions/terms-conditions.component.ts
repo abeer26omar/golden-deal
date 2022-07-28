@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { HomeAddsService } from '../services/home-adds.service';
-import { APIResponse4, Pages } from '../user.model';
+import { APIResponse4, Pages } from '../models/user.model';
 
 @Component({
   selector: 'app-terms-conditions',

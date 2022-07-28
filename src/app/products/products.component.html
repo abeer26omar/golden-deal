@@ -64,7 +64,7 @@ viewBox="0 0 100 100" width="70px" height="70px" enable-background="new 0 0 0 0"
 </svg>
 </div>
   <div [ngbNavOutlet]="nav" class="mt-5 mb-5"></div>
-  <div class="products-row row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 g-4 justify-content-start" id="products-def">
+  <div class="products-row row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4 justify-content-start" id="products-def">
     <div class="alert alert-danger text-center" *ngIf="error">
       {{error}}
     </div>
@@ -94,7 +94,7 @@ viewBox="0 0 100 100" width="70px" height="70px" enable-background="new 0 0 0 0"
           </div>
         </div>
       </div>
-      <p class="text-danger" *ngIf="errorLength !== ''">{{errorLength}}</p>
+      <p class="none" *ngIf="errorLength !== ''">{{errorLength}}</p>
   </div> 
 <!-- filter modal -->
 <div class="modal fade"

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ProfileService } from '../services/profile.service';
-import { APIResponse2, Purchases } from '../user.model';
+import { APIResponse2, Purchases } from '../models/user.model';
 
 @Component({
   selector: 'app-buying-record',

@@ -1,4 +1,3 @@
-<!-- <div class="container"> -->
     <div class="product-row row g-4 justify-content-center pt-5 pb-5">
         <div class="col-lg-9 col-12">
             <div class="card main-card">
@@ -19,11 +18,8 @@
                             </div>
                         </div>
                         <div class="col-md-2 col-12 icons  py-3">
-                            <a href="" class="">
+                            <a (click)="addToFav()" class="">
                                 <img src="../../../assets/images/wishlisticon.svg" alt="wishlisticon">
-                            </a>
-                            <a href="" class="pe-2">
-                                <img src="../../../assets/images/IconShare.svg" alt="IconShare">
                             </a>
                         </div>
                     </div>
@@ -128,7 +124,7 @@
                 <button class="btn btn-Merchant me-3"> شراء عبر التاجر </button>
             </div>
         </div>
-        <div class="col-lg-3 col-12">
+        <!-- <div class="col-lg-3 col-12">
             <div class="card main-card">
                 <div class="card-header related-apps">
                     <p>اعلانات مشابهة</p>
@@ -154,9 +150,8 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
-<!-- </div> -->
 <!-- modal 1-->
     <div class="modal fade"
     id="myModal"
@@ -186,7 +181,7 @@
                     <p>اضافه تقييم</p>
                 </div>
                 <div class="modal-body">
-                    <form action="" name="form"
+                    <form  name="form"
                     #f="ngForm"
                     (ngSubmit)="f.form.valid && onSubmit(f)">
                         <div class="mb-3 form-check">

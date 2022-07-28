@@ -1,30 +1,31 @@
 <div class="add-content mt-5 mb-5">
     <div class="card">
         <div class="card-header">
-            <div class="d-flex justify-content-end p-3">
-                <a href=""><img src="../../assets/images/edit-btn.svg" alt="edit-btn"></a>
-            </div>
+          <div class="d-flex justify-content-end p-3 edit">
+              <a href=""><img src="../../assets/images/edit-btn.svg" alt="edit-btn"></a>
+          </div>
+          <img class="imgCover" *ngIf="!portfolio.data.cover_url" src="../../assets/images/coverPlaceholder.png" alt="cover" >
+          <img class="imgCover" *ngIf="portfolio.data.cover_url" src="{{portfolio.data.cover_url}}" alt="cover">
         </div>
         <div class="card-body">
             <div class="user-profile">
                 <div class="profile-img">
-                    <img src="../../assets/images/profile-img.svg" alt="profile">
+                    <img *ngIf="portfolio.data.image_url" src="{{portfolio.data.image_url}}" alt="profile">
+                    <img *ngIf="!portfolio.data.image_url" src="../../assets/images/profilePlacholder.png" alt="profile">
                 </div>
-                <div class="d-flex justify-content-end p-3">
-                    <a href=""><img src="../../assets/images/share-btn.svg" alt="share-btn"></a>
-                </div>
-                <div class="row justify-content-center">
+                
+                <div class="row justify-content-center my-info">
                     <div class="user-data text-center col-sm-5 col-12 ">
-                        <p class="user-name">مريم على</p>
-                        <div class="d-flex justify-content-evenly pt-3 align-items-center">
+                        <p class="user-name">{{portfolio.data.name}}</p>
+                        <div class="d-flex justify-content-evenly pt-5 align-items-center">
                             <div class="crown">
                                 <img src="../../assets/images/profile-crown.svg" alt="profile-crown">
-                                <p class="user-rate">4.5</p>
+                                <p class="user-rate">{{(portfolio.data.sum_of_ratings / portfolio.data.ratings_count) * 100}}</p>
                             </div>
                             <img src="../../assets/images/divider-1.svg" alt="divider-1" class="divider">
                             <div class="rate">
                                 <img src="../../assets/images/chat-msg.svg" alt="chat-msg">
-                                <p class="user-rate">47 تقيم</p>
+                                <p class="user-rate">{{portfolio.data.ratings_count}} تقيم</p>
                             </div>
                         </div>
                     </div>
@@ -36,14 +37,10 @@
                     <li [ngbNavItem]="1">
                       <a ngbNavLink>التقيمات</a>
                       <ng-template ngbNavContent>
-                        <div class="filter d-flex justify-content-between align-items-center pt-3 px-3">
-                            <p class="all">الكل</p>
-                            <a href=""><img src="../../assets/images/filter.svg" alt="filter" width="50px"></a>
-                        </div>
                         <div class="rating-row row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 g-4 justify-content-center pt-5 pb-5" >
                             <div class="col wow fadeIn" 
                              data-wow-duration="1.3s"  style="visibility: visible; animation-duration: 1.3s; 
-                             animation-name: fadeIn;">
+                             animation-name: fadeIn;" *ngFor="let rate of portfolio.data.reviews">
                               <div class="card h-100 card-rate">
                                 <div class="card-body text-center">
                                   <div class="client-img">
@@ -64,76 +61,8 @@
                                 </div>
                               </div>
                             </div>
-                            <div class="col wow fadeIn" 
-                            data-wow-duration="1.3s"  style="visibility: visible; animation-duration: 1.3s; 
-                            animation-name: fadeIn;">
-                             <div class="card h-100 card-rate">
-                               <div class="card-body text-center">
-                                 <div class="client-img">
-                                     <img src="../../assets/images/profile-img.svg" alt="profile">
-                                 </div>
-                                 <div class="client-name pt-1">
-                                     <p>ندا على</p>
-                                 </div>
-                                 <div class="rate d-flex justify-content-center">
-                                   <ng-container *ngFor="let _ of [].constructor(5)">
-                                     <img src="../../../../assets/images/ratestar.svg" alt="ratestar" width="13%">
-                                   </ng-container>
-                                 </div>
-                                 <div class="desc pt-2">
-                                     <p>كان لوريم إيبسوم ولايزال المعيار للنص الشكلي منذ القرن الخامس عشر</p>
-                                     <small>منذ 4 ايام</small>
-                                 </div>
-                               </div>
-                             </div>
-                           </div>
-                           <div class="col wow fadeIn" 
-                           data-wow-duration="1.3s"  style="visibility: visible; animation-duration: 1.3s; 
-                           animation-name: fadeIn;">
-                            <div class="card h-100 card-rate">
-                              <div class="card-body text-center">
-                                <div class="client-img">
-                                    <img src="../../assets/images/profile-img.svg" alt="profile">
-                                </div>
-                                <div class="client-name pt-1">
-                                    <p>ندا على</p>
-                                </div>
-                                <div class="rate d-flex justify-content-center">
-                                  <ng-container *ngFor="let _ of [].constructor(5)">
-                                    <img src="../../../../assets/images/ratestar.svg" alt="ratestar" width="13%">
-                                  </ng-container>
-                                </div>
-                                <div class="desc pt-2">
-                                    <p>كان لوريم إيبسوم ولايزال المعيار للنص الشكلي منذ القرن الخامس عشر</p>
-                                    <small>منذ 4 ايام</small>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col wow fadeIn" 
-                          data-wow-duration="1.3s"  style="visibility: visible; animation-duration: 1.3s; 
-                          animation-name: fadeIn;">
-                           <div class="card h-100 card-rate">
-                             <div class="card-body text-center">
-                               <div class="client-img">
-                                   <img src="../../assets/images/profile-img.svg" alt="profile">
-                               </div>
-                               <div class="client-name pt-1">
-                                   <p>ندا على</p>
-                               </div>
-                               <div class="rate d-flex justify-content-center">
-                                 <ng-container *ngFor="let _ of [].constructor(5)">
-                                   <img src="../../../../assets/images/ratestar.svg" alt="ratestar" width="13%">
-                                 </ng-container>
-                               </div>
-                               <div class="desc pt-2">
-                                   <p>كان لوريم إيبسوم ولايزال المعيار للنص الشكلي منذ القرن الخامس عشر</p>
-                                   <small>منذ 4 ايام</small>
-                               </div>
-                             </div>
-                           </div>
-                         </div>
                         </div>
+                        <p class="none" *ngIf="!portfolio.data.reviews">لا يوجد تقيميات</p>
                       </ng-template>
                     </li>
                     <li [ngbNavItem]="2">
@@ -147,7 +76,7 @@
                         <div class="products-row row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4 justify-content-center">
                               <div class="col wow fadeIn" 
                                data-wow-duration="1.3s"  style="visibility: visible; animation-duration: 1.3s; 
-                               animation-name: fadeIn;" >
+                               animation-name: fadeIn;" *ngFor="let product of portfolio.data.products">
                                 <div class="card h-100">
                                   <div class="card-header text-center" >
                                     <div ngbDropdown class="btn-dots">
@@ -164,181 +93,88 @@
                                           </button>
                                         </div>
                                     </div>
-                                    <!-- <img  src="{{product.default_image}}" alt="car" width="100%" height="200px !important"> -->
-                                    <img class="img-raduis" src="../../assets/images/ring.svg" alt="placeholderimg" width="100%" height="200px !important">                
+                                    <img  class="img-raduis" *ngIf="product.default_image" src="{{product.default_image}}" alt="car" width="100%" height="200px !important">
+                                    <img class="img-raduis" *ngIf="!product.default_image" src="../../assets/images/ring.svg" alt="placeholderimg" width="100%" height="200px !important">                
                                   </div>
                                   <div class="card-body text-center">
                                     <a  style="cursor: pointer;">
-                                      <h4>خاتم الماس مميز</h4>
+                                      <h4>{{product.name}}</h4>
                                     </a>
-                                    <p class="discription">خاتم مكون من فصوص الماس عاليه الجوده</p>
-                                    <p class="time"><img src="../../assets/images/timerlightblue.svg" alt="timerlightblue"><span>5 ايام</span></p>
-                                    <p class="price">$5000</p>
+                                    <p class="discription">{{product.desc}}</p>
+                                    <p class="time"><img src="../../assets/images/timerlightblue.svg" alt="timerlightblue"><span>{{product.created_since}} ايام</span></p>
+                                    <p class="price">{{product.price}}</p>
                                   </div>
                                 </div>
                               </div>
-                              <div class="col wow fadeIn" 
-                               data-wow-duration="1.3s"  style="visibility: visible; animation-duration: 1.3s; 
-                               animation-name: fadeIn;" >
-                                <div class="card h-100">
-                                  <div class="card-header text-center" >
-                                    <!-- <img  src="{{product.default_image}}" alt="car" width="100%" height="200px !important"> -->
-                                    <img  src="../../assets/images/ring.svg" alt="placeholderimg" width="100%" height="200px !important">                
-                                  </div>
-                                  <div class="card-body text-center">
-                                    <a  style="cursor: pointer;">
-                                      <h4>خاتم الماس مميز</h4>
-                                    </a>
-                                    <p class="discription">خاتم مكون من فصوص الماس عاليه الجوده</p>
-                                    <p class="time"><img src="../../assets/images/timerlightblue.svg" alt="timerlightblue"><span>5 ايام</span></p>
-                                    <p class="price">$5000</p>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="col wow fadeIn" 
-                               data-wow-duration="1.3s"  style="visibility: visible; animation-duration: 1.3s; 
-                               animation-name: fadeIn;" >
-                                <div class="card h-100">
-                                  <div class="card-header text-center" >
-                                    <!-- <img  src="{{product.default_image}}" alt="car" width="100%" height="200px !important"> -->
-                                    <img  src="../../assets/images/ring.svg" alt="placeholderimg" width="100%" height="200px !important">                
-                                  </div>
-                                  <div class="card-body text-center">
-                                    <a  style="cursor: pointer;">
-                                      <h4>خاتم الماس مميز</h4>
-                                    </a>
-                                    <p class="discription">خاتم مكون من فصوص الماس عاليه الجوده</p>
-                                    <p class="time"><img src="../../assets/images/timerlightblue.svg" alt="timerlightblue"><span>5 ايام</span></p>
-                                    <p class="price">$5000</p>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="col wow fadeIn" 
-                               data-wow-duration="1.3s"  style="visibility: visible; animation-duration: 1.3s; 
-                               animation-name: fadeIn;" >
-                                <div class="card h-100">
-                                  <div class="card-header text-center" >
-                                    <!-- <img  src="{{product.default_image}}" alt="car" width="100%" height="200px !important"> -->
-                                    <img  src="../../assets/images/ring.svg" alt="placeholderimg" width="100%" height="200px !important">                
-                                  </div>
-                                  <div class="card-body text-center">
-                                    <a  style="cursor: pointer;">
-                                      <h4>خاتم الماس مميز</h4>
-                                    </a>
-                                    <p class="discription">خاتم مكون من فصوص الماس عاليه الجوده</p>
-                                    <p class="time"><img src="../../assets/images/timerlightblue.svg" alt="timerlightblue"><span>5 ايام</span></p>
-                                    <p class="price">$5000</p>
-                                  </div>
-                                </div>
-                              </div>
+                              
                         </div>
+                        <p class="none" *ngIf="portfolio.data.products.length == 0">لا يوجد اعلانات</p>
                         <div class="d-flex justify-content-center pt-5 pb-5">
                             <button class="btn btn-adds btn-prim" type="button" (click)="addNewAdd()">اضافه اعلان</button>
                         </div>
                       </ng-template>
                     </li>
                     <li [ngbNavItem]="3">
-                      <a ngbNavLink>المفضله</a>
+                      <a ngbNavLink (click)="getMyFav()">المفضله</a>
                       <ng-template ngbNavContent>
-                        <div class="filter d-flex justify-content-between align-items-center pt-3">
-                            <p class="all">الكل</p>
-                            <a (click)="openFilterModal()"><img src="../../assets/images/filter.svg" alt="filter" width="50px"></a>
-                        </div>
-                        <div class="products-row row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4 justify-content-center pt-4">
+                        <div class="products-row row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4 justify-content-start pt-5 pb-5">
                               <div class="col wow fadeIn" 
                                data-wow-duration="1.3s"  style="visibility: visible; animation-duration: 1.3s; 
-                               animation-name: fadeIn;" >
+                               animation-name: fadeIn;" *ngFor="let fav of favoraties.data.favourites">
                                 <div class="card h-100">
                                   <div class="card-header text-center" >
-                                    <div ngbDropdown class="btn-dots">
-                                        <a type="button" class="" id="dropdownBasic1" ngbDropdownToggle><img src="../../assets/images/btn-dots.svg" alt="btn-dots"></a>
-                                        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                                          <button ngbDropdownItem class="d-flex justify-content-between align-items-center" (click)="openDeleteModal()">
-                                            <span>حذف</span><img src="../../assets/images/delete.svg" alt="delete">
-                                          </button>
-                                          <button ngbDropdownItem class="d-flex justify-content-between align-items-center">
-                                            <span>تعديل</span><img src="../../assets/images/edit.svg" alt="edit">
-                                          </button>
-                                          <button ngbDropdownItem class="d-flex justify-content-between align-items-center" (click)="openSolidModal()">
-                                            <span>تحديد ك مباع</span><img src="../../assets/images/solid.svg" alt="solid">
-                                          </button>
-                                        </div>
-                                    </div>
-                                    <!-- <img  src="{{product.default_image}}" alt="car" width="100%" height="200px !important"> -->
+                                    <a (click)="removeFav(fav.product_id)" class="fav"><img src="../../assets/images/removeFav.svg" alt="removeFav"></a>
+                                    <img *ngIf="fav.product.default_image" class="img-raduis" src="{{fav.product.default_image}}" alt="car" width="100%" height="200px !important">
+                                    <img *ngIf="!fav.product.default_image" class="img-raduis" src="../../assets/images/placeholderimg.jpg" alt="placeholderimg" width="100%" height="200px !important">                
+                                  </div>
+                                  <div class="card-body text-center">
+                                    <a  (click)="productDetails(fav.product_id)" style="cursor: pointer;">
+                                      <h4 class="mb-0 p-2">{{fav.product.name}}</h4>
+                                    </a>
+                                    <p class="discription">{{fav.product.desc}}</p>
+                                    <p class="time"><img src="../../assets/images/timerlightblue.svg" alt="timerlightblue"><span>{{fav.product.created_since}} ايام</span></p>
+                                    <p class="price">{{fav.product.price}}</p>
+                                  </div>
+                                </div>
+                              </div>
+                        </div>
+                        <p class="none" *ngIf="favoraties.data.favourites.length == 0">لا يوجد مفضله</p>
+                        
+                      </ng-template>
+                    </li>
+                    <li [ngbNavItem]="4">
+                      <a ngbNavLink (click)="getMyOrders()">طلباتى</a>
+                      <ng-template ngbNavContent>
+                      
+                        <div class="products-row row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4 justify-content-start pt-5 pb-5">
+                              <div class="col wow fadeIn" 
+                               data-wow-duration="1.3s"  style="visibility: visible; animation-duration: 1.3s; 
+                               animation-name: fadeIn;" *ngFor="let order of orders">
+                                <div class="card h-100">
+                                  <div class="card-header text-center" >
+                                    <span class="badge bg-success">Success</span>
                                     <img class="img-raduis" src="../../assets/images/ring.svg" alt="placeholderimg" width="100%" height="200px !important">                
                                   </div>
                                   <div class="card-body text-center">
                                     <a  style="cursor: pointer;">
-                                      <h4>خاتم الماس مميز</h4>
+                                      <h4 class="mb-0 py-3">خاتم الماس مميز</h4>
                                     </a>
-                                    <p class="discription">خاتم مكون من فصوص الماس عاليه الجوده</p>
-                                    <p class="time"><img src="../../assets/images/timerlightblue.svg" alt="timerlightblue"><span>5 ايام</span></p>
-                                    <p class="price">$5000</p>
+                                    <p class="discription pt-4">رقم الطلب : 1234#</p>
+                                    
+                                    <div class="evaluation d-flex justify-content-around align-items-center">
+                                      <p class="time"><img  src="../../assets/images/catSlug.svg" alt="profile"><span>مجوهرات</span></p>
+                                      <img src="../../assets/images/Separator.svg" alt="Separator">
+                                      <p class="time"><img src="../../assets/images/timerlightblue.svg" alt="timerlightblue"><span>5 ايام</span></p>
+                                    </div>
                                   </div>
                                 </div>
                               </div>
-                              <div class="col wow fadeIn" 
-                               data-wow-duration="1.3s"  style="visibility: visible; animation-duration: 1.3s; 
-                               animation-name: fadeIn;" >
-                                <div class="card h-100">
-                                  <div class="card-header text-center" >
-                                    <!-- <img  src="{{product.default_image}}" alt="car" width="100%" height="200px !important"> -->
-                                    <img  src="../../assets/images/ring.svg" alt="placeholderimg" width="100%" height="200px !important">                
-                                  </div>
-                                  <div class="card-body text-center">
-                                    <a  style="cursor: pointer;">
-                                      <h4>خاتم الماس مميز</h4>
-                                    </a>
-                                    <p class="discription">خاتم مكون من فصوص الماس عاليه الجوده</p>
-                                    <p class="time"><img src="../../assets/images/timerlightblue.svg" alt="timerlightblue"><span>5 ايام</span></p>
-                                    <p class="price">$5000</p>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="col wow fadeIn" 
-                               data-wow-duration="1.3s"  style="visibility: visible; animation-duration: 1.3s; 
-                               animation-name: fadeIn;" >
-                                <div class="card h-100">
-                                  <div class="card-header text-center" >
-                                    <!-- <img  src="{{product.default_image}}" alt="car" width="100%" height="200px !important"> -->
-                                    <img  src="../../assets/images/ring.svg" alt="placeholderimg" width="100%" height="200px !important">                
-                                  </div>
-                                  <div class="card-body text-center">
-                                    <a  style="cursor: pointer;">
-                                      <h4>خاتم الماس مميز</h4>
-                                    </a>
-                                    <p class="discription">خاتم مكون من فصوص الماس عاليه الجوده</p>
-                                    <p class="time"><img src="../../assets/images/timerlightblue.svg" alt="timerlightblue"><span>5 ايام</span></p>
-                                    <p class="price">$5000</p>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="col wow fadeIn" 
-                               data-wow-duration="1.3s"  style="visibility: visible; animation-duration: 1.3s; 
-                               animation-name: fadeIn;" >
-                                <div class="card h-100">
-                                  <div class="card-header text-center" >
-                                    <!-- <img  src="{{product.default_image}}" alt="car" width="100%" height="200px !important"> -->
-                                    <img  src="../../assets/images/ring.svg" alt="placeholderimg" width="100%" height="200px !important">                
-                                  </div>
-                                  <div class="card-body text-center">
-                                    <a  style="cursor: pointer;">
-                                      <h4>خاتم الماس مميز</h4>
-                                    </a>
-                                    <p class="discription">خاتم مكون من فصوص الماس عاليه الجوده</p>
-                                    <p class="time"><img src="../../assets/images/timerlightblue.svg" alt="timerlightblue"><span>5 ايام</span></p>
-                                    <p class="price">$5000</p>
-                                  </div>
-                                </div>
-                              </div>
+                              
                         </div>
-                        <div class="d-flex justify-content-center pt-5 pb-5">
-                            <button class="btn btn-adds btn-prim" type="button">اضافه اعلان</button>
-                        </div>
+                        <p class="none" *ngIf="orders.length == 0">لا يوجد طلبات</p>
                       </ng-template>
                     </li>
                   </ul>
-                  
                   <div [ngbNavOutlet]="nav" class="mt-2 px-3"></div>
                   
             </div>

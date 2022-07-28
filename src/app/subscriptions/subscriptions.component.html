@@ -11,21 +11,12 @@
         <form [formGroup] ="subscribtionForm"  (ngSubmit)="submit()">
             <mat-radio-group aria-label="Select an option" formControlName="subscribe">
             <div class="row row-cols-1 row-cols-md-3 row-cols-xl-4 g-4 justify-content-center">
-                    <div class="col">
-                    <mat-radio-button value="1" [checked]="true">
+                    <div class="col" *ngFor="let subscription of subscriptions">
+                    <mat-radio-button value="{{subscription.id}}" [checked]="subscription.slug == 'gold' ? 'true':'false'">
                         <div class="card h-100">
-                            <p class="name">ذهبي</p>
-                            <p class="price py-4">350  ريال </p>
-                            <p class="desc">10 اعلانات شهريه</p>
-                        </div>
-                    </mat-radio-button>
-                </div>
-                <div class="col">
-                    <mat-radio-button value="2">
-                        <div class="card h-100">     
-                            <p class="name">فضي</p>
-                            <p class="price py-4">250  ريال </p>
-                            <p class="desc">5 اعلانات شهريه</p>
+                            <p class="name">{{subscription.title}}</p>
+                            <p class="price py-4"><span>{{subscription.fees}}</span>  {{subscription.currency_name}}</p>
+                            <p class="desc">{{subscription.number_of_ads}} اعلانات شهريه</p>
                         </div>
                     </mat-radio-button>
                 </div>

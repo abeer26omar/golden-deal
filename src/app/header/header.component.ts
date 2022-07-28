@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { Category,APIResponse2 } from '../products';
+import { Category,APIResponse2 } from '../models/products.model';
 import { AuthService } from '../services/auth.service';
-import { HomeAddsService } from '../services/home-adds.service';
 import { ProductsRequestService } from '../services/products-request.service'
-import { APIResponse4, Pages } from '../user.model';
 
 @Component({
   selector: 'app-header',
@@ -16,13 +14,15 @@ export class HeaderComponent implements OnInit {
   panelOpenState = false;
   httpService: any;
   public categories : Array<Category> = [];
-
+  userId!: any;
   constructor(public authService: AuthService,
     private route: Router,
     private categoryService: ProductsRequestService ) { 
   }
   ngOnInit(): void { 
     this.getCategories();
+    this.userId = localStorage.getItem('userId')
+    // console.log()
   }
   private categorySub : Subscription = new Subscription;
 

@@ -17,7 +17,7 @@
             <a class="nav-link" routerLink="/chat" routerLinkActive="active">الرسائل</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="/adds" routerLinkActive="active">إعلاناتي</a>
+            <a class="nav-link" [routerLink]="['/adds',userId]"  routerLinkActive="active">إعلاناتي</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" routerLink="/buyingrecord" routerLinkActive="active">سجل الشراء</a>
@@ -50,7 +50,7 @@
                       قائمه العناوين</a></li>
                     <li><a class="" routerLink="/subscriptions"><img class="ps-2" src="../../assets/images/subscribtion.svg" alt="">
                       الاشتراكات</a></li>
-                    <li><a class="" href="#"><img class="ps-2" src="../../assets/images/newAdd.svg" alt="">
+                    <li><a class="" routerLink="/new-add"><img class="ps-2" src="../../assets/images/newAdd.svg" alt="">
                       اضافه اعلان</a></li>
                     <li><a class="" href="#"><img class="ps-2" src="../../assets/images/support.svg" alt="">
                       الدعم</a></li>
@@ -64,7 +64,7 @@
                       طلباتى</a></li>
                     <li class="spec"><a class="" (click)="termsCondition('terms_conditions')"><img class="ps-2" src="../../assets/images/termsConditions.svg" alt="">
                       الشروط والاحكام</a></li>
-                    <li><a class="" href="#"><img class="ps-2" src="../../assets/images/exit.svg" alt="">
+                    <li><a class="" (click)="logOut()"><img class="ps-2" src="../../assets/images/exit.svg" alt="">
                       تسجيل خروج</a></li>
                   </div>
                 </div>

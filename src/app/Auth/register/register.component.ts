@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgOtpInputConfig } from 'ng-otp-input';
 import { AuthService } from 'src/app/services/auth.service';
-import { Login } from 'src/app/user.model';
+import { Login } from 'src/app/models/user.model';
 declare var window: any;
 
 @Component({
@@ -138,6 +138,7 @@ export class RegisterComponent implements OnInit {
           this.loaderLogin = false;
           this.userData = resData;
           localStorage.setItem('token', this.userData.data.token);
+          localStorage.setItem('userId', JSON.stringify(this.userData.data.user.id));
          },
         error: ()=>{
           this.loaderLogin = false;

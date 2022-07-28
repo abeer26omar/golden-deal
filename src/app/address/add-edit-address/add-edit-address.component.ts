@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router,ActivatedRoute, Params } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AddressesService } from 'src/app/services/addresses.service';
-import { Address } from 'src/app/user.model';
+import { Address } from 'src/app/models/user.model';
 declare var window: any;
 
 @Component({

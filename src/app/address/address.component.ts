@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AddressesService } from '../services/addresses.service';
-import { Addresses, APIResponse } from '../user.model';
+import { Addresses, APIResponse } from '../models/user.model';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogMajorComponent } from './dialog-major/dialog-major.component';
 import { DialogDeleteComponent } from './dialog-delete/dialog-delete.component';

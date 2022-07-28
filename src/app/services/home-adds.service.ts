@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient} from '@angular/common/http';
 import { Observable, Subject, tap} from 'rxjs';
 import { environment as env } from 'src/environments/environment';
-import { Adds , APIResponse3} from '../products';
-import { APIResponse4, Pages } from '../user.model'
+import { Adds , APIResponse3} from '../models/products.model';
+import { APIResponse4, Pages } from '../models/user.model'
 
 @Injectable({
   providedIn: 'root'

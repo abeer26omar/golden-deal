@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 import { ProfileService } from '../services/profile.service';
-import { Profile } from '../user.model';
+import { Profile } from '../models/user.model';
 
 declare var window: any;
 

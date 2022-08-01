@@ -5,7 +5,6 @@ import { Subscription } from 'rxjs';
 import { ProductsRequestService } from '../../services/products-request.service';
 import { NgForm } from '@angular/forms';
 import { ActionsService } from 'src/app/services/actions.service';
-import { Provider } from 'src/app/models/actions.model';
 declare var window: any;
 
 @Component({
@@ -46,7 +45,7 @@ export class ProductDetailsComponent implements OnInit {
   ProductId: string = '';
   formModal: any;
   formModal2: any;
-
+  buyModal: any;
 
   private routeSub: Subscription = new Subscription;
   private productSub: Subscription = new Subscription;
@@ -66,6 +65,9 @@ export class ProductDetailsComponent implements OnInit {
     );
     this.formModal2 = new window.bootstrap.Modal(
       document.getElementById('staticBackdrop')
+    );
+    this.buyModal = new window.bootstrap.Modal(
+      document.getElementById('buyModal')
     );
   }
   getProductDetails(id: string){
@@ -106,7 +108,10 @@ export class ProductDetailsComponent implements OnInit {
       })
       form.reset()
       this.formModal.hide();
-    }
+  }
+  onBuy(){
+    this.buyModal.show()
+  }
     
   ngOnDestory() :void{
     if(this.productSub){

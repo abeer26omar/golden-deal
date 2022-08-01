@@ -13,7 +13,8 @@ declare var window: any;
 })
 export class AddEditAddressComponent implements OnInit {
   edit: boolean = false;
-  successAdd:any;
+  successAdd: any;
+  faildAdd: any;
   loaderAdd:boolean = false;
   addId!: number;
   addRes: Address = {
@@ -48,6 +49,9 @@ export class AddEditAddressComponent implements OnInit {
     this.successAdd = new window.bootstrap.Modal(
       document.getElementById('successAdd')
     );
+    this.faildAdd = new window.bootstrap.Modal(
+      document.getElementById('faildAdd')
+    );
     this.routeSub = this.router.params.subscribe((params: Params) => {
     this.addId = params['id'];
     if(this.route.url !== '/add'){
@@ -63,17 +67,27 @@ export class AddEditAddressComponent implements OnInit {
     const streetNo = this.addForm.get('streetNo')?.value;
     const buildingNo = this.addForm.get('buildingNo')?.value;
     if(this.edit){
+      this.loaderAdd = true
       this.addSub = this.addService
       .updateAddress(this.addId,title,addKind,city,streetNo,buildingNo)
       .subscribe({
         next: res=>{
-          console.log(res)
+          this.loaderAdd = false
+          this.successAdd.show();
+          setTimeout(()=>{
+            this.successAdd.hide()
+            this.route.navigate(['/address'])
+          },1000)
+        }, 
+        error: err=>{
+          this.loaderAdd = false;
+          this.faildAdd.show()
         }
       })
 
     } else{
       if (this.addForm.valid) {
-        this.loaderAdd = true;
+        this.loaderAdd = true
         this.addSub = this.addService
         .addNewAddress(title, addKind,city,streetNo,buildingNo)
         .subscribe({
@@ -88,6 +102,7 @@ export class AddEditAddressComponent implements OnInit {
           },
           error: err=>{
             this.loaderAdd = false;
+            this.faildAdd.show();
           }
         })
       } else{
@@ -98,9 +113,7 @@ export class AddEditAddressComponent implements OnInit {
   loadEditAdd(id: number){
     this.addSub = this.addService.getAddress(id).subscribe({
       next: (res: Address)=>{
-        // console.log(res)
         this.addRes = res;
-        console.log(this.addRes.data)
         this.addForm = new FormGroup({
           addKind: new FormControl(this.addRes.data.address_type),
           title: new FormControl(this.addRes.data.title),

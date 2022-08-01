@@ -6,6 +6,7 @@ import { Addresses, APIResponse } from '../models/user.model';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogMajorComponent } from './dialog-major/dialog-major.component';
 import { DialogDeleteComponent } from './dialog-delete/dialog-delete.component';
+declare var window: any;
 
 @Component({
   selector: 'app-address',
@@ -13,7 +14,7 @@ import { DialogDeleteComponent } from './dialog-delete/dialog-delete.component';
   styleUrls: ['./address.component.css']
 })
 export class AddressComponent implements OnInit {
-
+  toast: any;
   public adds: Array<Addresses> = [];
   private addSub: Subscription = new Subscription;
 
@@ -28,6 +29,9 @@ export class AddressComponent implements OnInit {
 
   ngOnInit(): void {
       this.getAdds();
+      this.toast = new window.bootstrap.Modal(
+        document.getElementById('toast')
+      );  
   }
   getAdds(){
     this.addSub = this.addService.getAllAddresses()
@@ -47,7 +51,8 @@ export class AddressComponent implements OnInit {
   openMajorDialog(id: number){
     this.dialogRef.open(DialogMajorComponent,{
       data: {
-        id: id
+        id: id,
+        toast: this.toast
       }
     })
   }

@@ -293,3 +293,15 @@ input.star:checked ~ label.star:before {
     border-radius: 23.16px !important;
     padding: 0 !important;
 }
+.mat-slider-horizontal {
+    min-width: 250px !important;
+}
+.ant-slider-rail {
+    background-color: var(--gray);
+}
+#search .mat-form-field-wrapper {
+    padding-bottom: 0 !important;
+}
+#search .mat-form-field-underline {
+    width: 0 !important;
+}

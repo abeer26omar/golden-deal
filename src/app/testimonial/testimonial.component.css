@@ -28,6 +28,11 @@
     font-weight: 400;
     font-size: 1rem;
 }
+@media screen and (max-width: 768px) {
+    .testimonial_desc p{
+        padding: 0;
+    }
+}
 .testimonial_author h3 , 
 .testimonial_author span{
     color: var(--sec-color);

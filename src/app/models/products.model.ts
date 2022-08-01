@@ -47,7 +47,6 @@ export interface Product{
         owner_ratings: Array<ownerRatings>;
         }
 }
-
 export interface ownerRatings{
     id: number;
     user_id: number;
@@ -89,4 +88,38 @@ export interface Adds{
 }
 export interface APIResponse3<T>{
     data: Array<T>;
+}
+export interface CategoryFilter{
+    data:{
+        filters: Array<Filters>,
+        price:{
+            min: number,
+            max: number
+        }
+    }
+}
+interface Filters{
+    id: number,
+    category_id: number,
+    name_ar: string,
+    name_en: string,
+    type: string,
+    required: number,
+    slug_name: string,
+    sort: number,
+    active: number,
+    has_filters: boolean,
+    filter_options: Array<filter_options>
+}
+interface filter_options{
+    id: number,
+    filter_id: number,
+    name: string,
+    sort: number
+}
+export interface NewProduct{
+    data:{
+        order_code: number,
+        msg: string
+    }
 }

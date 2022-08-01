@@ -18,10 +18,10 @@ export class HeaderComponent implements OnInit {
   constructor(public authService: AuthService,
     private route: Router,
     private categoryService: ProductsRequestService ) { 
+    this.userId = localStorage.getItem('userId')
   }
   ngOnInit(): void { 
     this.getCategories();
-    this.userId = localStorage.getItem('userId')
     // console.log()
   }
   private categorySub : Subscription = new Subscription;

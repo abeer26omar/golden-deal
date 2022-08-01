@@ -24,12 +24,13 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu'
-import { Ng2TelInputModule } from 'ng2-tel-input';
 import { NgOtpInputModule } from  'ng-otp-input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatDialogModule } from '@angular/material/dialog';
-
+import { MatSliderModule } from '@angular/material/slider';
+import { NzSliderModule } from 'ng-zorro-antd/slider';
+import { MatAutocompleteModule } from '@angular/material/autocomplete'
 
 //components
 import { HeaderComponent } from './header/header.component';
@@ -56,6 +57,8 @@ import { AddressComponent } from './address/address.component';
 import { AddEditAddressComponent } from './address/add-edit-address/add-edit-address.component';
 import { DialogMajorComponent } from './address/dialog-major/dialog-major.component';
 import { DialogDeleteComponent } from './address/dialog-delete/dialog-delete.component';
+import { DialogSolidComponent } from './adds/dialog-solid/dialog-solid.component';
+import { DialogImageComponent } from './profile/dialog-image/dialog-image.component';
 
 @NgModule({
   declarations: [
@@ -84,6 +87,8 @@ import { DialogDeleteComponent } from './address/dialog-delete/dialog-delete.com
     AddEditAddressComponent,
     DialogMajorComponent,
     DialogDeleteComponent,
+    DialogSolidComponent,
+    DialogImageComponent,
   ],
   imports: [
     BrowserModule,
@@ -107,12 +112,14 @@ import { DialogDeleteComponent } from './address/dialog-delete/dialog-delete.com
     MatSelectModule,
     MatRadioModule,
     MatButtonModule,
-    Ng2TelInputModule,
     NgOtpInputModule,
     MatProgressSpinnerModule,
     MatProgressBarModule,
     MatMenuModule,
-    MatDialogModule
+    MatDialogModule,
+    MatSliderModule,
+    NzSliderModule,
+    MatAutocompleteModule
     ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

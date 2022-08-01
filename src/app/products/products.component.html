@@ -2,7 +2,8 @@
   <ul ngbNav #nav="ngbNav"  class="nav-tabs">
     <ng-container *ngFor="let category of categories; let i = index">
       <li [ngbNavItem]="i" id="{{category.slug}}">
-        <a ngbNavLink [ngClass]="{'all': category.id == 0}" (click)="getProducts(category.slug);productsDefId.style.display = 'none';"> 
+        <a ngbNavLink [ngClass]="{'all': category.id == 0}" 
+        (click)="getProducts(category.slug);productsDefId.style.display = 'none';getCategoryFilter(category.slug)"> 
           <img src="../../assets/images/left-arrow.svg" class="ps-2" 
           *ngIf="category.id == 0" >{{category.title}}</a>
         <ng-template ngbNavContent>
@@ -106,14 +107,34 @@ aria-hidden="true"
   <div class="modal-dialog modal-dialog-centered modal-sm">
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close"></button>
+          <button type="button" class="btn p-0" data-bs-dismiss="modal" aria-label="Close">
+            <img src="../../assets/images/close.svg" alt="close">
+          </button>
           <h5 class="modal-title text-center col-10" id="staticBackdropLabel">فلتر</h5>
         </div>
         <div class="modal-body">
-          ...
+          <form [formGroup]="formFilter">
+            <div class="pb-4 " *ngFor="let filter of filters.data.filters">
+              <input type="checkbox" [formControlName]="filter.slug_name"
+              class="form-check-input mx-2"  *ngIf="filter.type == 'check'" >
+              <label for="productMark" class="form-label">{{filter.name_ar}}</label>
+              <select class="form-select" id="productMark" 
+               *ngIf="filter.type == 'select'" [formControlName]="filter.slug_name">
+                  <option value="{{filterOption.name}}" *ngFor="let filterOption of filter.filter_options">{{filterOption.name}}</option>
+              </select>
+            </div>
+          </form>
+          <p>السعر <span>({{value}})</span></p>
+          <nz-slider 
+              nzRange 
+              [(ngModel)]="value"
+              [nzStep]="1"
+              [nzMin]	= valueMin
+              [nzMax]	= valueMax>
+          </nz-slider>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-save">حفظ</button>
+          <button type="button" class="btn btn-save" (click)="onApplayFilters(value)">حفظ</button>
         </div>
       </div>
   </div>

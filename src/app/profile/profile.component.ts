@@ -5,6 +5,8 @@ import { Subscription } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 import { ProfileService } from '../services/profile.service';
 import { Profile } from '../models/user.model';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogImageComponent } from './dialog-image/dialog-image.component';
 
 declare var window: any;
 
@@ -45,7 +47,8 @@ export class ProfileComponent implements OnInit {
   private userSub: Subscription = new Subscription;
   constructor(public authService: AuthService,
     private route: Router,
-    private profileService: ProfileService) {
+    private profileService: ProfileService,
+    private dialogRef: MatDialog) {
       this.profileService.refresh.subscribe((res)=>{
         this.getProfileInfo();
       })
@@ -193,6 +196,13 @@ export class ProfileComponent implements OnInit {
     //     console.log(err)
     //   }
     // })
+  }
+  editImgProfile(imgSrc: string){
+    this.dialogRef.open(DialogImageComponent,{
+      data: {
+        imgSrc: imgSrc
+      }
+    })
   }
   ngOnDestory() :void{ 
     if(this.userSub){

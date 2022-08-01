@@ -230,3 +230,37 @@ input:focus , textarea:focus{
     padding: 1rem 4rem;
     border-radius: 14.8577px;   
 }
+#buyModal .modal-header,
+#buyModal .modal-footer{
+    border: 0;
+}
+#buyModal .modal-body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+#buyModal .modal-body p{
+    font-family: var(--primary-color);
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin: 0;
+    padding: .5rem 0;
+}
+#buyModal .modal-body p.prod-name,
+#buyModal .modal-body p.prod-owner,
+#buyModal .modal-body p.prod-price{
+    font-family: var(--primary-color);
+    font-size: 1rem;
+    font-weight: 500;
+    margin: 0;   
+    padding: .5rem 0rem;
+}
+#buyModal .modal-body p.prod-price{
+    color: var(--org-color);
+    font-weight: 600;
+}
+#buyModal .modal-footer .btn-prim,
+#buyModal .modal-footer .btn-sec{
+    padding: 0.7rem 1.5rem;
+}

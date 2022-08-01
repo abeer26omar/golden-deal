@@ -1,8 +1,11 @@
-import { JsonPipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { Router , NavigationExtras} from '@angular/router';
+import { Observable } from 'rxjs';
 import { Products} from '../models/products.model';
 import { ActionsService } from '../services/actions.service';
+import { map, startWith} from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-search',
@@ -14,29 +17,37 @@ export class SearchComponent implements OnInit {
   constructor(private route: Router,
     private actionService: ActionsService) { }
 
-  ngOnInit(): void {
-  }
+    myControl = new FormControl('');
+    options: string[] = [];
+    resultName:any = [];
+    filteredOptions!: Observable<string[]>;
+  
+    ngOnInit() {
+      this.filteredOptions = this.myControl.valueChanges.pipe(
+        startWith(''),
+        map(value => this._filter(value || '')),
+      );
+      // this.search('');
+    }
+  
+    private _filter(value: string): string[] {
+      const filterValue = value.toLowerCase();
+  
+      return this.options.filter(option => option.toLowerCase().includes(filterValue));
+    }
   search(name: any){
     const key = name.target.value;
-    //  this.actionService.search(key).subscribe({
-    //   next: (res: APIResponse2<Products>)=>{
-    //     this.data = res.data
-    //     // console.log(res)
-    //   },
-    //   error: err=>{
-    //     console.log(err)
-    //   }
-    //  })
-    const search = this.actionService.search(key.trim()).then(
-      (response) =>{
-        this.data = response.data
-        // console.log(response)
-        console.log(this.data)
-      },
-      error=>{
-        console.log(error)
+    this.actionService.search(key).subscribe({
+      next: (res)=>{
+        this.data = res.data
+        console.log(this.data);
+        
+        res.data.forEach(e=>{
+          this.resultName.push(e.name)
+        })
+        this.options = this.resultName
       }
-    )
+    })
   }
   goLittleRockStar(){
     this.route.navigate(['/new-add'])

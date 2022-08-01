@@ -152,6 +152,12 @@
 #myModalFilter .modal-footer{
     border: none;
 }
+#myModalFilter .modal-header h5{
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-size: 1.3rem;
+    margin: 0;
+}
 #myModalFilter .modal-body .sort{
     border-bottom: 1px solid #C7C7C7;
 }

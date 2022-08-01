@@ -120,8 +120,7 @@
                 </div>
             </div>
             <div class="btn-buy d-flex justify-content-center pt-5">
-                <button class="btn btn-site"> شراء عبر الموقع </button>
-                <button class="btn btn-Merchant me-3"> شراء عبر التاجر </button>
+                <button class="btn btn-site" (click)="onBuy()"> شراء عبر الموقع </button>
             </div>
         </div>
         <!-- <div class="col-lg-3 col-12">
@@ -226,3 +225,31 @@
             </div>
         </div>
     </div>
+<!-- modal buy product -->
+<div class="modal fade"
+id="buyModal"
+tabindex="-1"
+aria-labelledby="exampleModalLabel"
+aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="btn p-0" data-bs-dismiss="modal" aria-label="Close">
+            <img src="../../assets/images/close.svg" alt="close">
+          </button>
+        </div>
+        <div class="modal-body">
+            <p class="modal-title ">المدير</p>    
+            <img class="py-2" src="../../../assets/images/linebuy.svg" alt="linebuy">  
+            <p class="prod-owner">{{singleProduct.data.owner.name}}</p>
+            <p class="prod-price">{{singleProduct.data.price}}</p>
+            <p class="prod-name">{{singleProduct.data.name}}</p>
+        </div>
+        <div class="modal-footer justify-content-evenly">
+          <button type="button" class="btn btn-prim">اتصال <img src="../../../assets/images/call.svg" alt="call"></button>
+          <button type="button" class="btn btn-sec">محادثه <img src="../../../assets/images/chat.svg" alt="chat"></button>
+        </div>
+      </div>
+  </div>
+</div>

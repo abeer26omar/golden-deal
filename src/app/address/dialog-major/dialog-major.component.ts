@@ -17,9 +17,9 @@ export class DialogMajorComponent implements OnInit {
   public dialogRef: MatDialogRef<MatDialogClose>,
   private addService: AddressesService) { 
     this.id = data.id
-    // console.log(this.id)
   }
   ngOnInit(): void {
+    
   }
   setPrimary(){
     this.load = true
@@ -27,6 +27,7 @@ export class DialogMajorComponent implements OnInit {
       next: res=>{
       this.load = false;
       this.dialogRef.close();
+      // this.data.toast.show()
       },
       error: err=>{
       this.load = false;

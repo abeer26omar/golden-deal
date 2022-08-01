@@ -72,8 +72,8 @@
                             <p class="all">الكل</p>
                             <a (click)="openFilterModal()"><img src="../../assets/images/filter.svg" alt="filter" width="50px"></a>
                         </div>
-                        <p class="filter-result"><span class="ps-2">نشطه</span> <span>12-10-2021</span></p>
-                        <div class="products-row row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4 justify-content-center">
+                        <p class="filter-result"><span class="ps-2">نشطه</span></p>
+                        <div class="products-row row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4 justify-content-start">
                               <div class="col wow fadeIn" 
                                data-wow-duration="1.3s"  style="visibility: visible; animation-duration: 1.3s; 
                                animation-name: fadeIn;" *ngFor="let product of portfolio.data.products">
@@ -82,13 +82,13 @@
                                     <div ngbDropdown class="btn-dots">
                                         <a type="button" class="" id="dropdownBasic1" ngbDropdownToggle><img src="../../assets/images/btn-dots.svg" alt="btn-dots"></a>
                                         <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                                          <button ngbDropdownItem class="d-flex justify-content-between align-items-center" (click)="openDeleteModal()">
+                                          <button ngbDropdownItem class="d-flex justify-content-between align-items-center" (click)="openDelDialog(product.id)">
                                             <span>حذف</span><img src="../../assets/images/delete.svg" alt="delete">
                                           </button>
                                           <button ngbDropdownItem class="d-flex justify-content-between align-items-center">
                                             <span>تعديل</span><img src="../../assets/images/edit.svg" alt="edit">
                                           </button>
-                                          <button ngbDropdownItem class="d-flex justify-content-between align-items-center" (click)="openSolidModal()">
+                                          <button ngbDropdownItem class="d-flex justify-content-between align-items-center" (click)="openSolidDialog(product.id)">
                                             <span>تحديد ك مباع</span><img src="../../assets/images/solid.svg" alt="solid">
                                           </button>
                                         </div>
@@ -97,8 +97,8 @@
                                     <img class="img-raduis" *ngIf="!product.default_image" src="../../assets/images/ring.svg" alt="placeholderimg" width="100%" height="200px !important">                
                                   </div>
                                   <div class="card-body text-center">
-                                    <a  style="cursor: pointer;">
-                                      <h4>{{product.name}}</h4>
+                                    <a  (click)="productDetails(product.id)" style="cursor: pointer;">
+                                      <h4 class="mb-0 p-2">{{product.name}}</h4>
                                     </a>
                                     <p class="discription">{{product.desc}}</p>
                                     <p class="time"><img src="../../assets/images/timerlightblue.svg" alt="timerlightblue"><span>{{product.created_since}} ايام</span></p>
@@ -152,19 +152,20 @@
                                animation-name: fadeIn;" *ngFor="let order of orders">
                                 <div class="card h-100">
                                   <div class="card-header text-center" >
-                                    <span class="badge bg-success">Success</span>
-                                    <img class="img-raduis" src="../../assets/images/ring.svg" alt="placeholderimg" width="100%" height="200px !important">                
+                                    <span class="badge " [ngClass]="{'bg-success' : order.order_status == 'approved', 'bg-warning': order.order_status == 'pending','bg-danger': order.order_status == 'rejected'}">{{order.order_status}}</span>
+                                    <img *ngIf="order.product.default_image" class="img-raduis" src="{{order.product.default_image}}" alt="placeholderimg" width="100%" height="200px !important"> 
+                                    <img *ngIf="!order.product.default_image" class="img-raduis" src="../../assets/images/placeholderimg.jpg" alt="placeholderimg" width="100%" height="200px !important">                
                                   </div>
                                   <div class="card-body text-center">
                                     <a  style="cursor: pointer;">
-                                      <h4 class="mb-0 py-3">خاتم الماس مميز</h4>
+                                      <h4 class="mb-0 py-3">{{order.product.name}}</h4>
                                     </a>
-                                    <p class="discription pt-4">رقم الطلب : 1234#</p>
+                                    <p class="discription pt-4">رقم الطلب : {{order.order_code}}#</p>
                                     
                                     <div class="evaluation d-flex justify-content-around align-items-center">
-                                      <p class="time"><img  src="../../assets/images/catSlug.svg" alt="profile"><span>مجوهرات</span></p>
+                                      <p class="time"><img  src="../../assets/images/catSlug.svg" alt="profile"><span>{{order.category.title}}</span></p>
                                       <img src="../../assets/images/Separator.svg" alt="Separator">
-                                      <p class="time"><img src="../../assets/images/timerlightblue.svg" alt="timerlightblue"><span>5 ايام</span></p>
+                                      <p class="time"><img src="../../assets/images/timerlightblue.svg" alt="timerlightblue"> <span>{{order.product.created_since}} ايام</span> </p>
                                     </div>
                                   </div>
                                 </div>
@@ -191,68 +192,19 @@ aria-hidden="true"
   <div class="modal-dialog modal-dialog-centered modal-sm">
       <div class="modal-content">
         <div class="modal-header justify-content-center">
-          <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
-          <h5 class="modal-title text-center" id="staticBackdropLabel">اضافه فلتر</h5>
+          <h5 class="modal-title text-center" >اضافه فلتر</h5>
         </div>
         <div class="modal-body">
             <div class="sort py-2">
-                <select class="form-select" aria-label="Default select example">
+                <select class="form-select" aria-label="Default select example" (ngModelChange)="getInfoStatus($event)">
                     <option value="1">منتهية</option>
-                    <option value="2">نشطه</option>
-                </select>
-            </div>
-            <div class="date py-2">
-                <select class="form-select" aria-label="Default select example">
-                    <option value="1">التاريخ</option>
-                    <option value="2">نشطه</option>
+                    <option value="active">نشطه</option>
                 </select>
             </div>
         </div>
         <div class="modal-footer justify-content-center">
           <button type="button" class="btn btn-save">تأكيد</button>
         </div>
-      </div>
-  </div>
-</div>
-<!-- delete modal -->
-<div class="modal fade yesORno"
-id="myModalDelete"
-tabindex="-1"
-aria-labelledby="exampleModalLabel"
-aria-hidden="true"
->
-  <div class="modal-dialog modal-dialog-centered modal-sm">
-      <div class="modal-content">
-        <div class="modal-header justify-content-center">
-          <h5 class="modal-title text-center" id="staticBackdropLabel">تاكيد الحذف </h5>
-        </div>
-        <div class="modal-body">
-            <button type="button" class="btn btn-yes m-3">نعم</button>
-    
-            <button type="button" class="btn btn-no m-3" data-bs-dismiss="modal" aria-label="Close">لا</button>
-        </div>
-       
-      </div>
-  </div>
-</div>
-<!-- solid modal -->
-<div class="modal fade yesORno"
-id="myModalSolid"
-tabindex="-1"
-aria-labelledby="exampleModalLabel"
-aria-hidden="true"
->
-  <div class="modal-dialog modal-dialog-centered modal-sm">
-      <div class="modal-content">
-        <div class="modal-header justify-content-center">
-          <h5 class="modal-title text-center" id="staticBackdropLabel">هل تريد تاكيد البيع</h5>
-        </div>
-        <div class="modal-body">
-            <button type="button" class="btn btn-yes m-3">نعم</button>
-    
-            <button type="button" class="btn btn-no m-3" data-bs-dismiss="modal" aria-label="Close">لا</button>
-        </div>
-       
       </div>
   </div>
 </div>

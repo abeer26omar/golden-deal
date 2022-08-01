@@ -1,8 +1,9 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { FormControl, FormGroup } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { APIResponse, Products , APIResponse2, Category} from '../models/products.model';
+import { APIResponse, Products , APIResponse2, Category, CategoryFilter} from '../models/products.model';
 import { ProductsRequestService } from '../services/products-request.service';
 declare var window: any;
 
@@ -12,6 +13,16 @@ declare var window: any;
   styleUrls: ['./products.component.css']
 })
 export class ProductsComponent implements OnInit {
+  filters: CategoryFilter = {
+    data: {
+      filters: [],
+        price:{
+            min: 0,
+            max: 0
+        }
+    }
+  }
+  filterOptions :any= [];
   searchText: any;
   public sort: string = '';
   public products: Array<Products> = [];
@@ -25,7 +36,11 @@ export class ProductsComponent implements OnInit {
   private routeSub: Subscription = new Subscription;
   private productSub: Subscription = new Subscription;
   private categorySub : Subscription = new Subscription;
- 
+  valueMin: number = 1000;
+  valueMax: number = 98898;
+  value = [this.valueMin, this.valueMax];
+  
+  formFilter = new FormGroup({})
   constructor(private httpService: ProductsRequestService, 
     private route: ActivatedRoute,
     private router: Router) {
@@ -79,9 +94,30 @@ export class ProductsComponent implements OnInit {
       }
     })
   }
+  getCategoryFilter(categoryName: any){    
+    this.categorySub = this.httpService.getCategoryFilters(categoryName).subscribe({
+      next: (res: CategoryFilter)=>{
+        this.filters = res;
+        this.valueMin = this.filters.data.price.min
+        this.valueMax = this.filters.data.price.max
+        this.filters.data.filters.forEach(filter=>{
+          this.formFilter.addControl(filter.slug_name, new FormControl('')) 
+        })
+      },
+      error: err=>{
+        console.log(err);
+      }
+    })
+  }
   productDetails(id: number){
     this.router.navigate(['product-details', id])
   }
+  onApplayFilters(price: any){
+      console.log(price)
+      for (const field in this.formFilter.controls) { 
+      
+      }  
+    }
   ngOnDestory() :void{
     if(this.productSub){
       this.productSub.unsubscribe();

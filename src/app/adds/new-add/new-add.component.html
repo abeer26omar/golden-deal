@@ -19,35 +19,51 @@
                         <label class="form-check-label" for="agrement">
                             اتعهد واقسم بالله أنا المعلن أن أدفع عمولة الموقع وهي 1% من قيمة الخدمة. وفي حالة تقديم الخدمة لأكثر من شخص فإنني أتعهد بتحويل العمولة عن كل خدمة يتم تقديمها.  كما أتعهد بدفع*العمولة خلال 10 أيام من استلام مبلغ الخدمة 
                         </label>
-                        <div *ngIf="f['agrement'].invalid && f['agrement'].untouched" class="text-danger">يجب التحديد</div>
+                        <div *ngIf="submitted && f['agrement'].errors && f['agrement'].invalid" class="text-danger">يجب التحديد</div>
                     </div>
                 </div>
             </div>
             <div class="card-body row g-5" *ngIf="step == 2">
-                <div class="col-12">
+                <!-- <div class="col-12">
                     <label for="file" class="file-upload">
                         <input
-                            formControlName="file"
+                            formControlName="fileSource"
                             id="file"
                             type="file"
                             class="form-control"
-                            multiple=""
+                            multiple
                             (change)="onFileChange($event)">
                             <div class="text-center">
                                 <img src="../../../assets/images/product-imgs.svg" alt="product-imgs">
                                 <p>اضافه صور المنتج</p>
                                 <img *ngFor='let url of images'  [src]="url" height="150" width="200px" style="margin: 3px;">
                             </div>
-                    </label>
-                    <span *ngIf="f['file'].touched && f['file'].errors?.['required']" class="text-danger">يجب اضافه صور</span>
+                        </label>
+                        <div *ngIf="submitted && f['fileSource'].errors" class="text-danger text-center pt-1">يجب اضافه صور للمنتج </div>
+                </div> -->
+                <div class="col-md-6">
+                    <label for="productName" class="form-label">اسم المنتج</label>
+                    <input type="text" class="form-control" id="productName" 
+                    placeholder=" سياره بي ام"
+                    formControlName="name">
+                    <div *ngIf="f['name'].touched && f['name'].errors" class="text-danger">يجب كتابه اسم للمنتج</div>  
+                </div>
+                <div class="col-md-6">
+                    <label for="productCategory" class="form-label">التصنيف</label>
+                    <select class="form-select" id="productCategory" 
+                    formControlName="productCategory" (ngModelChange)="getCategoryFilter($event)">
+                        <option  [value]="category.slug" 
+                        *ngFor="let category of categories" [disabled]="category.title == 'الكل'">{{category.title == 'الكل'? 'اختر تصنيف' : category.title}}</option>
+                      </select>
+                      <div *ngIf="f['productCategory'].touched && f['productCategory'].errors" class="text-danger">يجب تحديد تصنيف للمنتج</div>  
                 </div>
                 <div class="col-md-6">
                     <label for="phone" class="form-label">رقم البائع</label>
                     <input type="text" 
                     class="form-control" 
                     id="phone"
-                    formControlName="phone">
-                    <div *ngIf="f['phone'].touched && f['phone'].errors?.['required']" class="text-danger">يجب اضافه رقم الهاتف</div>
+                    formControlName="seller_phone">
+                    <div *ngIf="f['seller_phone'].touched && f['seller_phone'].errors" class="text-danger">يجب اضافه رقم الهاتف</div>
                 </div>
                 <div class="col-md-6">
                     <label for="productStatus" class="form-label">حاله المنتج</label>
@@ -55,77 +71,62 @@
                         <option value="1">منتج جديد</option>
                         <option value="2">منتج مستخدم</option>
                       </select>
-                      <div *ngIf="f['productStatus'].touched && f['productStatus'].errors?.['required']" class="text-danger">يجب تحديد حالة المنتج</div>  
+                      <div *ngIf="f['productStatus'].touched && f['productStatus'].errors" class="text-danger">يجب تحديد حالة المنتج</div>  
                 </div>
-                <div class="col-md-6">
-                    <label for="productCategory" class="form-label">التصنيف</label>
-                    <select class="form-select" id="productCategory" formControlName="productCategory">
-                        <option value="1">منتج جديد</option>
-                        <option value="2">منتج مستخدم</option>
-                      </select>
-                      <div *ngIf="f['productCategory'].touched && f['productCategory'].errors?.['required']" class="text-danger">تصنبف للمنتج يجب تحديد</div>  
-                </div>
-                <div class="col-md-6">
-                    <label for="productMark" class="form-label">العلامه التجاريه</label>
-                    <select class="form-select" id="productMark" formControlName="productMark">
-                        <option value="1">منتج جديد</option>
-                        <option value="2">منتج مستخدم</option>
-                      </select>
-                      <div *ngIf="f['productMark'].touched && f['productMark'].errors?.['required']" class="text-danger">العلامه التجاريه يجب تحديد</div>  
-
-                </div>
-                <div class="col-md-6">
-                    <label for="productName" class="form-label">اسم المنتج</label>
-                    <input type="text" class="form-control" id="productName" 
-                    placeholder=" سياره بي ام"
-                    formControlName="productName">
-                    <div *ngIf="f['productName'].touched && f['productName'].errors?.['required']" class="text-danger">يجب التحديد</div>  
-
+                <div class="col-md-6" *ngFor="let filter of filters.data.filters">
+                    <input type="checkbox" class="form-check-input mx-2"  *ngIf="filter.type == 'check'" >
+                    <label for="productMark" class="form-label">{{filter.name_ar}}</label>
+                    <select class="form-select" id="productMark" 
+                    [formControlName]="filter.slug_name" *ngIf="filter.type == 'select'">
+                        <option value="{{filterOption.name}}" *ngFor="let filterOption of filter.filter_options">{{filterOption.name}}</option>
+                    </select>
+                      <!-- <div *ngIf="f['productMark'].touched && f['productMark'].errors" class="text-danger">يجب تحديد العلامه التجاريه</div>   -->
                 </div>
                 <div class="col-md-6">
                     <label for="productPrice" class="form-label">السعر</label>
                     <input type="text" class="form-control" id="productPrice" 
                     placeholder="4000"
                     formControlName="productPrice">
-                    <div *ngIf="f['productPrice'].touched && f['productPrice'].errors?.['required']" class="text-danger">يجب التحديد</div>  
+                    <div *ngIf="f['productPrice'].touched && f['productPrice'].errors" class="text-danger">يجب تحديد سعر  للمنتج</div>  
 
                 </div>
                 <div class="col-md-6">
                     <label for="productSeller" class="form-label">عن البائع</label>
                     <textarea type="text" class="form-control" id="productSeller" 
-                    placeholder="عن البائع عن البائع" formControlName="productSeller"></textarea>
-                    <div *ngIf="f['productSeller'].touched && f['productSeller'].errors?.['required']" class="text-danger">يجب التحديد</div>  
+                    placeholder="عن البائع عن البائع" formControlName="about_seller"></textarea>
+                    <div *ngIf="f['about_seller'].touched && f['about_seller'].errors" class="text-danger">يجب اضافه معلومات عن البائع </div> 
 
                 </div>
                 <div class="col-md-6">
                     <label for="sellerinfo" class="form-label">ملاحظات التواصل</label>
                     <textarea type="text" class="form-control" id="sellerinfo" 
                     placeholder="معلومات لاتصال" formControlName="sellerinfo"></textarea>
-                    <div *ngIf="f['sellerinfo'].touched && f['sellerinfo'].errors?.['required']" class="text-danger">يجب التحديد</div>  
+                    <div *ngIf="f['sellerinfo'].touched && f['sellerinfo'].errors" class="text-danger">يجب اضافه ملاحظات للتواصل</div>  
 
                 </div>
                 <div class="col-md-6">
                     <label for="productDesc" class="form-label">وصف المنتج</label>
                     <textarea type="text" class="form-control" id="productDesc" 
                     placeholder="سياره بي ام سياره بي ام" formControlName="productDesc"></textarea>
-                    <div *ngIf="f['productDesc'].touched && f['productDesc'].errors?.['required']" class="text-danger">يجب التحديد</div>  
+                    <div *ngIf="f['productDesc'].touched && f['productDesc'].errors" class="text-danger">يجب اضافه وصف للمنتج</div>  
 
                 </div>
                 <div class="col-md-6">
                     <label for="productMaterial" class="form-label">خامات المنتج</label>
                     <textarea type="text" class="form-control" id="productMaterial" 
                     placeholder="سياره بي ام سياره بي ام" formControlName="productMaterial"></textarea>
-                    <div *ngIf="f['productMaterial'].touched && f['productMaterial'].errors?.['required']" class="text-danger">يجب التحديد</div>  
+                    <div *ngIf="f['productMaterial'].touched && f['productMaterial'].errors" class="text-danger">يجب وصف خامات المنتج</div>  
                 </div>
-                <div class="d-flex justify-content-center align-items-center">
+                <!-- <div class="d-flex justify-content-center align-items-center">
                     <label for="file2" id="label-file">
-                        <input type="file" id="file2" class="form-control" style="height: 0px">
+                        <input type="file" id="file2" formControlName="file" class="form-control" style="height: 0px">
                         <div class="d-flex justify-content-between py-2 px-3">
                             <span>اضافه وثيقه المنتج</span>
                             <img src="../../../assets/images/upload-docs.svg" alt="upload-docs">
                         </div>
                     </label>
-                </div>
+                </div> -->
+                <mat-progress-bar mode="indeterminate" class="my-3" *ngIf="load" id="addprog"></mat-progress-bar>
             </div>
             <div class="d-flex justify-content-center align-items-center pt-5 pb-3">
                 <button class="btn btn-next btn-prim" type="submit">التالى</button>
@@ -133,3 +134,34 @@
         </div>
     </form>
 </div>
+
+<div id="modelSuccessNewProduct" 
+class="modal fade"
+tabindex="-1"
+aria-labelledby="exampleModalLabel"
+aria-hidden="true"
+>
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-header justify-content-center">
+                    <img src="../../assets/images/sucess-mark.svg" alt="sucess-mark" width="67px">
+			</div>
+			<div class="modal-body text-center p-0">
+				<p class="review">سيتم مراجعه طلبك وسنقوم بالرد عليك فى خلال ساعات</p>
+                <div class="contnet d-flex align-items-center justify-content-evenly">
+                    <div class="copy">
+                        <a href="">
+                            <img src="../../../assets/images/copy.svg" alt="copy">
+                        </a> 
+                    </div>
+                    <img src="../../../assets/images/divider.svg" alt="divider">
+                    <div class="order">
+                        <p class="pp-1">رقم الطلب الخاص بك هو</p>
+                        <p class="pp-2">{{NewProductRes.data.order_code}}</p>
+                        <p class="pp-3"><span>ملاحظه:</span>سيتم ارسال اشعار في حاله الموافقه علي الطلب</p>
+                    </div>                   
+                </div>
+			</div>
+		</div>
+	</div>
+</div>     

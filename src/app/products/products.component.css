@@ -50,21 +50,28 @@
        justify-content: center;
   }
 
-#myModal .modal-header .btn{
-    background-image: url(../../assets/images/close.svg);
-    background-position: center;
-    background-repeat: no-repeat;
-    padding: 1rem ;
-}
-#myModal .modal-header {
-    justify-content: unset;
+
+.modal-header {
+    justify-content: center;
     border: none;
 }
-#myModal .modal-footer{
+.modal-header h5{
+    font-family: var(--font-family);
+    color: var(--primary-color);
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin: 0;
+}
+.modal-body{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+.modal-footer{
     border: none;
     justify-content: center;
 }
-#myModal .modal-footer .btn-save{
+.modal-footer .btn-save{
     background-color: var(--primary-color);
     color: var(--white);
     padding: .5rem 4rem;

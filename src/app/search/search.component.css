@@ -19,14 +19,13 @@
     padding-right: .8rem;
     font-weight: 500;
 }
-input{
+/* input{
     padding: 0.7rem 0.75rem;
     padding-right: 3rem;
-    border-radius: 10px;
-    border: 1px solid var(--gray);
+    
     color: var(--gray);
     font-weight: 400;
-}
+} */
 .btn-search{
     position: absolute;
     color: var(--white);
@@ -36,4 +35,16 @@ input{
 }
 .btn-search:hover{
     transform: none;
+}
+.search-list{
+    position: absolute;
+    width: initial;
+    background-color: var(--bg-color);
+    z-index: 99;
+}
+.mat-form-field {
+    width: 100% !important;
+    border: 1px solid var();
+    border-radius: 10px;
+    border: 1px solid var(--gray);
 }

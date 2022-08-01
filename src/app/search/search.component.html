@@ -1,18 +1,38 @@
 <div class="">
     <div class="row justify-content-between align-items-center pt-4 pb-4">
-        <div class="col-sm-12 col-md-5">
-                <button class="btn btn-search"(click)="getSearchRes()"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <div class="col-sm-12 col-md-5" id="search">
+                <!-- <button class="btn btn-search"(click)="getSearchRes()"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M13 18.9999C8.58172 18.9999 5 15.4182 5 10.9999C5 6.58166 8.58172 2.99994 13 2.99994C17.4183 2.99994 21 6.58166 21 10.9999C21 15.4182 17.4183 18.9999 13 18.9999Z" stroke="#FFFFFF" stroke-width="1.96154" stroke-linecap="round" stroke-linejoin="round"/>
                     <path d="M2.99961 21L7.34961 16.65" stroke="#FFFFFF" stroke-width="1.96154" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                     </button>
                 <input class="form-control" (input)="search($event)" type="search" placeholder="البحث" aria-label="Search">
+                <ul *ngIf="data.length > 0" class="search-list">
+                    <li class="card-body mb-1" *ngFor="let result of data">
+                        <h4>{{result.name}}</h4>
+                    </li>
+                </ul> -->
+                <form class="example-form">
+                    <mat-form-field class="example-full-width" appearance="fill">
+                      <mat-label><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M13 18.9999C8.58172 18.9999 5 15.4182 5 10.9999C5 6.58166 8.58172 2.99994 13 2.99994C17.4183 2.99994 21 6.58166 21 10.9999C21 15.4182 17.4183 18.9999 13 18.9999Z" stroke="#8C8C8C" stroke-width="1.96154" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M2.99961 21L7.34961 16.65" stroke="#8C8C8C" stroke-width="1.96154" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>  البحث</mat-label>
+                      <input type="text"
+                             placeholder="ادخل كلمه البحث"
+                             aria-label="Number"
+                             matInput
+                             [formControl]="myControl"
+                             [matAutocomplete]="auto"
+                             (input)="search($event)">
+                            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                                <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                                {{option}}
+                                </mat-option>
+                            </mat-autocomplete>
+                    </mat-form-field>
+                  </form>
         </div>
-        <ul *ngIf="data.length > 0">
-            <li class="card-body mb-1" *ngFor="let result of data">
-                <h4>{{result.name}}</h4>
-            </li>
-        </ul>
         <div class="col-sm-12 col-md-4 d-flex justify-content-end div-add">
             <button class="btn btn-adds" (click)="goLittleRockStar()"><img src="../../assets/images/adds.svg" alt="adds" ><span class="pe-2">إضافة إعلان</span></button>
         </div>

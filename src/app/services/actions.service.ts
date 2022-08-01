@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders} from '@angular/common/http';
 import { environment as env } from 'src/environments/environment';
-import { Observable, Subject, tap } from 'rxjs';
+import { map, Observable, Subject, tap } from 'rxjs';
 import { APIresponse, APIresponse2, Favourites, Orders, Portfolio, Provider, Subscriptions } from '../models/actions.model';
 import { APIResponse, Products } from '../models/products.model';
 
@@ -65,18 +65,6 @@ export class ActionsService {
     })
   }
   search(name: string){
-  // return  this.http.get<APIResponse<Products>>(`${env.api_url}/products/search-products/search-with-key?key=${name}`)
-  const response = new Promise<APIResponse<Products>>(resolve=>{
-    this.http.get<APIResponse<Products>>(`${env.api_url}/products/search-products/search-with-key?key=${name}`)
-    .subscribe({
-      next: data=>{
-        resolve(data)
-      },
-      error: err=>{
-        console.log(err)
-      }
-    })
-  })
-  return response;
+  return  this.http.get<APIResponse<Products>>(`${env.api_url}/products/search-products/search-with-key?key=${name}`)
   }
 }

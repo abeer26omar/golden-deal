@@ -38,11 +38,17 @@ export class ProductsComponent implements OnInit {
   private routeSub: Subscription = new Subscription;
   private productSub: Subscription = new Subscription;
   private categorySub : Subscription = new Subscription;
+  private filterSub : Subscription = new Subscription;
+
   valueMin: number = 1000;
   valueMax: number = 98898;
   value = [this.valueMin, this.valueMax];
   
-  formFilter = new FormGroup({})
+  formFilter = new FormGroup({
+    min_price: new FormControl(''),
+    max_price: new FormControl('')
+  })
+
   constructor(private httpService: ProductsRequestService, 
     private router: Router) {
      }
@@ -102,6 +108,7 @@ export class ProductsComponent implements OnInit {
         this.filters.data.filters.forEach(filter=>{
           this.formFilter.addControl(filter.slug_name, new FormControl('')) 
         })
+         
       },
       error:(err: HttpErrorResponse)=>{
         this.faildProducts.show();
@@ -112,11 +119,23 @@ export class ProductsComponent implements OnInit {
   productDetails(id: number){
     this.router.navigate(['product-details', id])
   }
-  onApplayFilters(price: any){
-      console.log(price)
+  onApplayFilters(){
+    this.formFilter.get('min_price')?.setValue(this.valueMin);
+    this.formFilter.get('max_price')?.setValue(this.valueMax);
+    const formData = new FormData()
       for (const field in this.formFilter.controls) { 
-      
+        formData.append(field,this.formFilter.controls[field].value)
       }  
+     this.filterSub = this.httpService.applayFilter(formData).subscribe({
+      next: res=>{
+        console.log(res);
+        
+      },
+      error:err=>{
+        console.log(err);
+        
+      }
+     })
     }
   openFormModal() {
     this.formModal.show();

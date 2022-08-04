@@ -4,6 +4,7 @@ import { Observable, Subject, tap} from 'rxjs';
 import { environment as env } from 'src/environments/environment';
 import { Products , APIResponse , Product ,
   APIResponse2 , Category, CategoryFilter, NewProduct, EditProduct, APIResponse4, EditProductFilters, Update} from '../models/products.model';
+import { ResponseSuccess } from '../models/actions.model';
 
 @Injectable({
   providedIn: 'root'
@@ -66,6 +67,12 @@ export class ProductsRequestService {
   }
   updateAdd(id: number,body: any){
     return this.http.post<Update>(`${env.api_url}/products/update-product/${id}`,
+    body,this.httpOptions).pipe(tap(()=>{
+      this._refresh.next();
+    }))
+  }
+  applayFilter(body: any){
+    return this.http.post<ResponseSuccess>(`${env.api_url}/filters/submit-filters`,
     body,this.httpOptions).pipe(tap(()=>{
       this._refresh.next();
     }))

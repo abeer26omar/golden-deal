@@ -116,6 +116,7 @@ export class RegisterComponent implements OnInit {
             this.loader = false;
             this.openOtpModal(); 
             localStorage.setItem('token', this.userData.data.token); 
+            localStorage.setItem('userId', JSON.stringify(this.userData.data.user.id));
         },
         error: errorMsg =>{
             this.loader = false;
@@ -139,7 +140,6 @@ export class RegisterComponent implements OnInit {
           this.userData = resData;
           localStorage.setItem('token', this.userData.data.token);
           localStorage.setItem('userId', JSON.stringify(this.userData.data.user.id));
-          this.openOtpModal();
           window.location.reload();
          },
         error: ()=>{

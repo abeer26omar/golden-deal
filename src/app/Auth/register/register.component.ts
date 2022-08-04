@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgOtpInputConfig } from 'ng-otp-input';
 import { AuthService } from 'src/app/services/auth.service';
-import { Login } from 'src/app/models/user.model';
+import { Login, Verify } from 'src/app/models/user.model';
 declare var window: any;
 
 @Component({
@@ -50,6 +50,9 @@ export class RegisterComponent implements OnInit {
   subOtp: boolean = true;
   resend:boolean = true;
   resMsg: boolean = false;
+  token: any;
+  id: any;
+  succMsg: string = '';
 
   //register
   registerForm = new FormGroup({
@@ -68,10 +71,6 @@ export class RegisterComponent implements OnInit {
   constructor(private auth: AuthService, 
     private route: ActivatedRoute,
     private router: Router) { 
-      this.auth.refresh.subscribe(()=>{
-        this.submitData();
-        this.submitLogin();
-      })
     }
     //get forms controls
     get fRegister(){
@@ -113,10 +112,10 @@ export class RegisterComponent implements OnInit {
       .signUp(userName, userGender, userDateOfBirth, userPhone)
       .subscribe({
         next: resData =>{
+            this.token = resData.data.token;
+            this.id = resData.data.user.id;
             this.loader = false;
             this.openOtpModal(); 
-            localStorage.setItem('token', this.userData.data.token); 
-            localStorage.setItem('userId', JSON.stringify(this.userData.data.user.id));
         },
         error: errorMsg =>{
             this.loader = false;
@@ -136,12 +135,12 @@ export class RegisterComponent implements OnInit {
       this.errorLogin = '';    
       this.auth.signIn(phoneNo).subscribe({
         next: (resData: Login) =>{
+          this.token = resData.data.token;
+          this.id = resData.data.user.id;
           this.loaderLogin = false;
           this.userData = resData;
-          localStorage.setItem('token', this.userData.data.token);
-          localStorage.setItem('userId', JSON.stringify(this.userData.data.user.id));
-          window.location.reload();
-         },
+          this.openOtpModal(); 
+        },
         error: ()=>{
           this.loaderLogin = false;
           this.errorLogin =" هذا الحساب غير موجود";
@@ -179,21 +178,21 @@ export class RegisterComponent implements OnInit {
     },1000)
   }
   onOtpSubmmit(){
+    this.succMsg ='';
     const otp = this.otp;
     this.loaderOtp = true;
-    this.auth.otpVerify(otp).subscribe({
-    next:()=>{
+    this.auth.otpVerify(otp,this.token,this.id).subscribe({
+    next:(res: Verify)=>{
+      this.succMsg = res.data;
       this.loaderOtp = false;
-      this.openSuccessModal();
-      localStorage.setItem('token', this.userData.data.token);
-      localStorage.setItem('userId', JSON.stringify(this.userData.data.user.id));
+      localStorage.setItem('token', this.token);
+      localStorage.setItem('userId', JSON.stringify(this.id));
       setTimeout(()=>{
-        this.successModal.hide();
+        this.otpModal.hide();
         this.router.navigate(['/home'])
-      },1000)
-      window.location.reload();
+      },1500)
     },
-    error: () =>{
+    error: (err) =>{
       this.loaderOtp = false;
       this.errorOtp = 'الكود الذى ادخلته غير صحيح';
       localStorage.clear();
@@ -210,7 +209,7 @@ export class RegisterComponent implements OnInit {
   }
   resendOtp(){
     this.loaderOtp = true;
-    this.auth.resendOtp().subscribe({
+    this.auth.resendOtp(this.token).subscribe({
       next: (res)=>{
         this.resMsg = true ;
         this.loaderOtp = false;

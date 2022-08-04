@@ -108,3 +108,6 @@ export interface Pages{
 export interface APIResponse4<T>{
     data: Array<T>;
 }
+export interface Verify{
+    data: string;
+}

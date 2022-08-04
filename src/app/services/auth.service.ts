@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import { throwError, catchError, tap,BehaviorSubject, Subject} from 'rxjs';
 import { environment as env } from 'src/environments/environment';
-import { Register, Login} from '../models/user.model';
+import { Register, Login, Verify} from '../models/user.model';
 import { ResponseSuccess } from '../models/actions.model';
 @Injectable({
   providedIn: 'root'
@@ -29,32 +29,33 @@ export class AuthService {
       birth_date: birth_date,
       phone: phone
     })
-    .pipe(catchError(this.handelError)
-    , tap(() => {
-      this._isRegister.next(true);
-      this._refresh.next();
-    }))
+    .pipe(catchError(this.handelError))
   }
   httpOptions = {
     headers: new HttpHeaders({
       'Authorization': `Bearer ${localStorage.getItem('token')}`
     })}
 
-  otpVerify(otp:number){
-    return this.http.post(`${env.api_url}/auth/verify-otp`,{
+  otpVerify(otp: number,token: any,id?:any){
+    const headers = new HttpHeaders ({
+      'Authorization': `Bearer ${token}`
+    }) 
+    return this.http.post<Verify>(`${env.api_url}/auth/verify-otp`,{
       otp: otp
-    }, this.httpOptions)
+    },{headers}).pipe(tap(()=>{
+      this._isRegister.next(true);
+    }))
   }
-  resendOtp(){
-    return this.http.get(`${env.api_url}/auth/resend-otp`,this.httpOptions)
+  resendOtp(token: any){
+    const headers = new HttpHeaders ({
+      'Authorization': `Bearer ${token}`
+    }) 
+    return this.http.get<Verify>(`${env.api_url}/auth/resend-otp`,{headers})
   }
   signIn(phone: string){
     return this.http.post<Login>(`${env.api_url}/auth/login`,{
       phone: phone
-    }).pipe(tap(()=>{
-      this._isRegister.next(true);
-      this._refresh.next();
-    }))
+    })
   }
   logOut(){
     return this.http.get<ResponseSuccess>(`${env.api_url}/auth/logout`, this.httpOptions)

@@ -6,6 +6,7 @@ import { Addresses, APIResponse } from '../models/user.model';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogMajorComponent } from './dialog-major/dialog-major.component';
 import { DialogDeleteComponent } from './dialog-delete/dialog-delete.component';
+import { HttpErrorResponse } from '@angular/common/http';
 declare var window: any;
 
 @Component({
@@ -14,7 +15,8 @@ declare var window: any;
   styleUrls: ['./address.component.css']
 })
 export class AddressComponent implements OnInit {
-  toast: any;
+  faildAddress: any;
+  error: string = '';
   public adds: Array<Addresses> = [];
   private addSub: Subscription = new Subscription;
 
@@ -22,26 +24,30 @@ export class AddressComponent implements OnInit {
     private router: Router,
     private addService: AddressesService,
     private dialogRef: MatDialog) { 
-      this.addService.refresh.subscribe((res)=>{
+      this.addService.refresh.subscribe(()=>{
         this.getAdds();
       })
     }
 
   ngOnInit(): void {
       this.getAdds();
-      this.toast = new window.bootstrap.Modal(
-        document.getElementById('toast')
-      );  
+      this.faildAddress = new window.bootstrap.Modal(
+        document.getElementById('faildAddress')
+      );
   }
   getAdds(){
     this.addSub = this.addService.getAllAddresses()
     .subscribe({
       next: (addsList: APIResponse<Addresses>)=>{
         this.adds = addsList.data;
-        // console.log(this.adds)
       },
-      error: err=>{
-        console.log(err)
+      error: (err: HttpErrorResponse)=>{
+        if(err.error.data){
+          this.error = err.error.data;
+        }else{
+          this.error = err.statusText;
+        }
+        this.faildAddress.show();
       }
     })
   }
@@ -51,8 +57,7 @@ export class AddressComponent implements OnInit {
   openMajorDialog(id: number){
     this.dialogRef.open(DialogMajorComponent,{
       data: {
-        id: id,
-        toast: this.toast
+        id: id
       }
     })
   }
@@ -62,14 +67,6 @@ export class AddressComponent implements OnInit {
         id: id
       }
     })
-    // this.addSub = this.addService.deleteAdd(id).subscribe({
-    //   next: res=>{
-    //     // console.log(res)
-    //   },
-    //   error: err=>{
-    //     console.log(err)
-    //   }
-    // })
   }
   addNewAdd(){
     this.router.navigate(['/add']);

@@ -1,14 +1,7 @@
 import { NgModule } from '@angular/core';
 import { ExtraOptions, RouterModule, Routes } from '@angular/router';
 
-import { HeaderComponent } from './header/header.component';
-import { FooterComponent } from './footer/footer.component';
-import { SearchComponent } from './search/search.component';
-import { AddsBannerComponent } from './adds-banner/adds-banner.component';
 import { TermsConditionsComponent } from './terms-conditions/terms-conditions.component';
-import { ProductsComponent } from './products/products.component';
-import { TestimonialComponent } from './testimonial/testimonial.component';
-import { CarouselModule } from 'ngx-owl-carousel-o';
 import { SearchResultComponent } from './search/search-result/search-result.component';
 import { ProductDetailsComponent } from './products/product-details/product-details.component';
 import { HomeComponent } from './home/home.component';
@@ -31,18 +24,19 @@ const routes: Routes = [
   { path:'', redirectTo: 'home', pathMatch:'full'},
   { path:'home', component:HomeComponent},
   { path:'search-result',component: SearchResultComponent},
+  { path:'search-result/:key',component: SearchResultComponent},
   { path:'product-details/:id', component:ProductDetailsComponent},
-  { path:'chat', component:ChatsComponent},
+  { path:'chat', component:ChatsComponent,canActivate:[AuthGuardGuard]},
   { path:'adds/:id', component:AddsComponent, canActivate:[AuthGuardGuard]},
-  { path:'new-add', component:NewAddComponent},
-  { path:'edit-add', component: EditAddComponent},
-  { path:'subscriptions', component: SubscriptionsComponent},
+  { path:'new-add', component:NewAddComponent,canActivate:[AuthGuardGuard]},
+  { path:'edit-add/:id', component: EditAddComponent},
+  { path:'subscriptions', component: SubscriptionsComponent,canActivate:[AuthGuardGuard]},
   { path:'termsandconditions/:slug', component: TermsConditionsComponent},
   { path:'buyingrecord', component: BuyingRecordComponent, canActivate:[AuthGuardGuard]},
   { path:'register', component: RegisterComponent},
   { path:'profile', component: ProfileComponent, canActivate:[AuthGuardGuard]},
   { path:'address', component: AddressComponent, canActivate:[AuthGuardGuard]},
-  { path:'add', component: AddEditAddressComponent , canActivate:[AuthGuardGuard]},
+  { path:'add', component: AddEditAddressComponent, canActivate:[AuthGuardGuard]},
   { path:'edit/:id', component:AddEditAddressComponent, canActivate:[AuthGuardGuard]},
   { path:'**', component:NotfoundComponent}
 ];

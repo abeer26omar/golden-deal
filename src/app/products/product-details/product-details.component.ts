@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Product} from '../../models/products.model';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ProductsRequestService } from '../../services/products-request.service';
 import { NgForm } from '@angular/forms';
 import { ActionsService } from 'src/app/services/actions.service';
+import { HttpErrorResponse } from '@angular/common/http';
 declare var window: any;
 
 @Component({
@@ -43,16 +44,18 @@ export class ProductDetailsComponent implements OnInit {
   }
   error: string = '';
   ProductId: string = '';
+  loaderAdd: boolean = false;
   formModal: any;
   formModal2: any;
   buyModal: any;
-
+  success:any;
+  faild: any;
+  errMsg: string = '';
   private routeSub: Subscription = new Subscription;
   private productSub: Subscription = new Subscription;
   
   constructor(private httpService: ProductsRequestService, 
     private route: ActivatedRoute,
-    private router: Router,
     private actionService : ActionsService) { }
 
   ngOnInit(): void {
@@ -69,6 +72,12 @@ export class ProductDetailsComponent implements OnInit {
     this.buyModal = new window.bootstrap.Modal(
       document.getElementById('buyModal')
     );
+    this.success = new window.bootstrap.Modal(
+      document.getElementById('success')
+    );
+    this.faild = new window.bootstrap.Modal(
+      document.getElementById('faild')
+    );
   }
   getProductDetails(id: string){
     this.productSub = this.httpService.getDetails(id)
@@ -76,13 +85,22 @@ export class ProductDetailsComponent implements OnInit {
       next:(productDetails: Product)=>{
         this.singleProduct = productDetails;
       },
-      error: err=>{
-        console.log(err)
+      error:(err: HttpErrorResponse)=>{
+        this.faild.show();
+        this.errMsg = err.error.data;
       }
     })
   }
   addToFav(){
-    this.actionService.addToFav(this.singleProduct.data.id)
+    this.actionService.addToFav(this.singleProduct.data.id).subscribe({
+      next:res=>{
+        this.success.show();
+      },
+      error:(err: HttpErrorResponse)=>{
+        this.faild.show();
+        this.errMsg = err.error.data;
+      }
+    })
   }
   openFormModal() {
     this.formModal.show();
@@ -94,16 +112,21 @@ export class ProductDetailsComponent implements OnInit {
     if(!form.valid){
       return;
     }
+    this.loaderAdd = true;
       const providerid = this.singleProduct.data.owner_id;
       const desc = form.value.userdesc;
       const value = form.value.userrate;
-      
       this.httpService.addRate(providerid , desc , value).subscribe({
-        next: res=>{
-          console.log(res)
+        next: (res)=>{
+          this.loaderAdd = false;
+          this.formModal2.hide();
+          this.success.show();
         },
-        error: err=>{
-          console.log(err)
+        error: (err: HttpErrorResponse)=>{
+          this.loaderAdd = false;
+          this.formModal2.hide();
+          this.faild.show();
+          this.errMsg = err.error.data;
         }
       })
       form.reset()
@@ -111,8 +134,7 @@ export class ProductDetailsComponent implements OnInit {
   }
   onBuy(){
     this.buyModal.show()
-  }
-    
+  } 
   ngOnDestory() :void{
     if(this.productSub){
       this.productSub.unsubscribe();

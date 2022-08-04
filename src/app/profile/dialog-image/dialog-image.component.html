@@ -1,8 +1,11 @@
 <div class="content ">
+    <a mat-dialog-close><img src="../../../assets/images/close.svg" alt="close"></a>
     <div class="header justify-content-center">
       <h5 class="title text-center" id="staticBackdropLabel">تعديل الصوره الشخصيه</h5>
     </div>
     <mat-progress-bar mode="indeterminate" class="my-3" *ngIf="load" id="addprog"></mat-progress-bar>
+        <p class="text-danger text-center" *ngIf="error">{{error}}</p>
+        <p class="text-success text-center" *ngIf="resSuc">{{resSuc}}</p>
 
     <div class="body">
         <input type="file" (change)="onFileChange($event)" name="" id="" class="form-control">

@@ -1,7 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { APIResponse, Products , APIResponse2, Category, CategoryFilter} from '../models/products.model';
 import { ProductsRequestService } from '../services/products-request.service';
@@ -31,6 +31,8 @@ export class ProductsComponent implements OnInit {
   loadding = false;
   error: string = '';
   formModal: any;
+  faildProducts: any;
+  errMsg: string = '';
   errorLength = '';
   productsDefId : any;
   private routeSub: Subscription = new Subscription;
@@ -42,13 +44,15 @@ export class ProductsComponent implements OnInit {
   
   formFilter = new FormGroup({})
   constructor(private httpService: ProductsRequestService, 
-    private route: ActivatedRoute,
     private router: Router) {
      }
 
   ngOnInit(): void {
     this.formModal = new window.bootstrap.Modal(
       document.getElementById('filterModal')
+    );
+    this.faildProducts = new window.bootstrap.Modal(
+      document.getElementById('faildProducts')
     );
     this.productsDefId = document.getElementById('products-def');
     this.getCategories();
@@ -70,13 +74,9 @@ export class ProductsComponent implements OnInit {
           }
         }, 0);
       },
-      error: (error :HttpErrorResponse)=>{
-        if(error.error){
-          setTimeout(() => {
-            this.loadding = false;
-            this.error = 'An unknown Error Occurred Check your Internet Connection Or Reload Your Page';
-          }, 0);
-        }
+      error:(err: HttpErrorResponse)=>{
+        this.faildProducts.show();
+        this.errMsg = err.error.data;
       }
     })
   }
@@ -87,10 +87,9 @@ export class ProductsComponent implements OnInit {
       next: (categoryList: APIResponse2<Category>)=>{ 
         this.categories = categoryList.data;
       },
-      error:(error : HttpErrorResponse)=>{
-        if(error){
-          this.error = 'An unknown Error Occurred Check your Internet Connection Or Reload Your Page';
-        }
+      error:(err: HttpErrorResponse)=>{
+        this.faildProducts.show();
+        this.errMsg = err.error.data;
       }
     })
   }
@@ -104,8 +103,9 @@ export class ProductsComponent implements OnInit {
           this.formFilter.addControl(filter.slug_name, new FormControl('')) 
         })
       },
-      error: err=>{
-        console.log(err);
+      error:(err: HttpErrorResponse)=>{
+        this.faildProducts.show();
+        this.errMsg = err.error.data;
       }
     })
   }
@@ -118,6 +118,9 @@ export class ProductsComponent implements OnInit {
       
       }  
     }
+  openFormModal() {
+    this.formModal.show();
+  }
   ngOnDestory() :void{
     if(this.productSub){
       this.productSub.unsubscribe();
@@ -128,8 +131,5 @@ export class ProductsComponent implements OnInit {
     if(this.categorySub){
       this.categorySub.unsubscribe();
     }
-  }
-   openFormModal() {
-    this.formModal.show();
   }
 }

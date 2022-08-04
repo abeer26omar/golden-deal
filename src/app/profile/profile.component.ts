@@ -7,6 +7,8 @@ import { ProfileService } from '../services/profile.service';
 import { Profile } from '../models/user.model';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogImageComponent } from './dialog-image/dialog-image.component';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ResponseSuccess } from '../models/actions.model';
 
 declare var window: any;
 
@@ -43,13 +45,14 @@ export class ProfileComponent implements OnInit {
   edit:boolean = true;
   changeBtn: boolean = false;
   imageUrl: any ;
-
+  error: string = '';
+  sucMsg: string = '';
   private userSub: Subscription = new Subscription;
   constructor(public authService: AuthService,
     private route: Router,
     private profileService: ProfileService,
     private dialogRef: MatDialog) {
-      this.profileService.refresh.subscribe((res)=>{
+      this.profileService.refresh.subscribe(()=>{
         this.getProfileInfo();
       })
    }
@@ -60,8 +63,8 @@ export class ProfileComponent implements OnInit {
     email: new FormControl({value: '', disabled: this.edit}),
     address: new FormControl({value: '', disabled: this.edit})
    });
-   photoForm = new FormGroup({
-    fileSource: new FormControl('')
+    photoForm = new FormGroup({
+      fileSource: new FormControl('')
    })
   ngOnInit(): void {
     this.deleteModal = new window.bootstrap.Modal(
@@ -85,10 +88,11 @@ export class ProfileComponent implements OnInit {
     return this.photoForm.controls;
   }
   getProfileInfo(){
+    this.error = '';
+    this.sucMsg = '';
     this.userSub = this.profileService.profileInfo()
     .subscribe({
       next:(userDetails: Profile)=>{
-        // console.log(userDetails)
         this.userData = userDetails;
         this.userForm = new FormGroup({
           name: new FormControl({value:this.userData.data.name,disabled: this.edit}),
@@ -96,11 +100,21 @@ export class ProfileComponent implements OnInit {
           birthdate: new FormControl({value:this.userData.data.birth_date,disabled: this.edit}),
           email: new FormControl({value:this.userData.data.email,disabled: this.edit}),
           address: new FormControl({value:'',disabled: this.edit})
-         })
+        })
+      },
+      error: (err: HttpErrorResponse)=>{
+        if(err.error.data){
+          this.error = err.error.data;
+        }else{
+          this.error = err.statusText;
+        }
+        this.faildModel.show();
       }
     })
   }
   submitEdit(){ 
+    this.error = '';
+    this.sucMsg = '';
   const nameval = this.userForm.get('name')?.value;
   const emailval = this.userForm.get('email')?.value;
   const birthval = this.userForm.get('birthdate')?.value;
@@ -109,16 +123,21 @@ export class ProfileComponent implements OnInit {
     this.userSub = this.profileService
     .editProfile(nameval, emailval,phoneval,birthval)
     .subscribe({
-      next: (res)=>{
+      next: (res:ResponseSuccess)=>{
         this.loadProfile = false;
+        this.sucMsg = res.data
         this.successModal.show();
         this.edit = true;
         this.changeBtn = false;
-
       },
-      error: (err)=>{
-        this.loadProfile = false;
+      error: (err: HttpErrorResponse)=>{
+        if(err.error.data){
+          this.error = err.error.data;
+        }else{
+          this.error = err.statusText;
+        }
         this.faildModel.show();
+        this.loadProfile = false;
         this.edit = true;
         this.changeBtn = false;
       }
@@ -137,65 +156,35 @@ export class ProfileComponent implements OnInit {
     this.deleteModal.show();
   }
   confirmDel(){
+    this.error = '';
+    this.sucMsg = '';
     this.userSub = this.profileService.deleteAccount()
     .subscribe({
-      next: res=>{
-        console.log(res)
+      next: (res: ResponseSuccess)=>{
+        this.sucMsg = res.data
+        this.successModal.show();
+        setTimeout(()=>{
+        this.successModal.hide();
+        localStorage.clear();
+        window.location.reload();
+        }, 1000);
       },
-      error: err=>{
-        console.log(err)
+      error: (err: HttpErrorResponse)=>{
+        if(err.error.data){
+          this.error = err.error.data;
+        }else{
+          this.error = err.statusText;
+        }
+        this.faildModel.show();
       }
     })
   }
-  
   public toggleFormState() {
     const state = this.edit ? 'disable' : 'enable';
 
     Object.keys(this.userForm.controls).forEach((formControlName) => {
         this.userForm.controls[formControlName][state](); 
     });
-  }
-  
-  onFileChange(event:any) {
-    // const reader = new FileReader();
-    // reader.readAsDataURL(event.target.files[0]);
-    // reader.onload=()=>{
-    //   this.imageUrl = reader.result;
-    // } 
-    // this.userSub = this.profileService.updatePhoto(this.imageUrl).subscribe({
-    //   next: res=>{
-    //     console.log(res)
-    //   },
-    //   error: err=>{
-    //     console.log(err)
-    //   }
-    // })
-    this.imageUrl =<File>event.target.files[0]
-    let imgData = new FormData();
-    imgData.append('image',this.imageUrl,this.imageUrl.name)
-   this.userSub = this.profileService.updatePhoto(imgData).subscribe({
-      next: res=>{
-        console.log(imgData) 
-        console.log(res)
-      },
-      error: err=>{
-        console.log(err)
-      }
-    })
-  }
-  upload(){
-    let imgData = new FormData();
-    imgData.append('image',this.imageUrl.name,this.imageUrl)
-    console.log(this.imageUrl)
-    // this.userSub = this.profileService.updatePhoto(imgData).subscribe({
-    //   next: res=>{
-    //     console.log(imgData) 
-    //     console.log(res)
-    //   },
-    //   error: err=>{
-    //     console.log(err)
-    //   }
-    // })
   }
   editImgProfile(imgSrc: string){
     this.dialogRef.open(DialogImageComponent,{

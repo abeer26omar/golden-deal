@@ -21,13 +21,14 @@ export interface Portfolio{
         cover: string,
         sum_of_ratings: number,
         ratings_count: number,
-        reviews: [],
+        reviews: Array<Reviews>,
+        provider_ratings: Array<Reviews>,
         image_url: string,
         cover_url: string,
         products: Array<Products>
     }
 }
-interface Products{
+export interface Products{
         id: number,
         name: string,
         desc: string,
@@ -38,6 +39,14 @@ interface Products{
         created_since: string,
         default_image: string,
         ownership_image_url: string
+}
+interface Reviews{
+    id: number,
+    user_id: number,
+    provider_id: number,
+    desc: string,
+    value: number,
+    created_since: string
 }
 export interface Orders{
     id: number,
@@ -113,4 +122,7 @@ interface ProviderRate{
     desc: string,
     value: number,
     created_since: string
+}
+export interface ResponseSuccess{
+    data: string;
 }

@@ -2,8 +2,8 @@
     <div class="header justify-content-center">
       <h5 class="title text-center" id="staticBackdropLabel">تاكيد الحذف</h5>
     </div>
-    <!-- <mat-progress-bar mode="indeterminate" class="my-3"  id="addprog"></mat-progress-bar> -->
-
+    <p *ngIf="sucMsg" class="text-center text-success">{{sucMsg}}</p>
+    <p *ngIf="failMsg" class="text-center text-danger">{{failMsg}}</p>
     <div class="body">
         <button type="button" class="btn btn-yes m-3" (click)="deleteAdd()">نعم</button>
 

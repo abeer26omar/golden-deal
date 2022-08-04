@@ -23,118 +23,115 @@
                     </div>
                 </div>
             </div>
-            <div class="card-body row g-5" *ngIf="step == 2">
-                <!-- <div class="col-12">
-                    <label for="file" class="file-upload">
-                        <input
-                            formControlName="fileSource"
-                            id="file"
-                            type="file"
-                            class="form-control"
-                            multiple
-                            (change)="onFileChange($event)">
-                            <div class="text-center">
-                                <img src="../../../assets/images/product-imgs.svg" alt="product-imgs">
-                                <p>اضافه صور المنتج</p>
-                                <img *ngFor='let url of images'  [src]="url" height="150" width="200px" style="margin: 3px;">
-                            </div>
-                        </label>
-                        <div *ngIf="submitted && f['fileSource'].errors" class="text-danger text-center pt-1">يجب اضافه صور للمنتج </div>
-                </div> -->
-                <div class="col-md-6">
-                    <label for="productName" class="form-label">اسم المنتج</label>
-                    <input type="text" class="form-control" id="productName" 
-                    placeholder=" سياره بي ام"
-                    formControlName="name">
-                    <div *ngIf="f['name'].touched && f['name'].errors" class="text-danger">يجب كتابه اسم للمنتج</div>  
-                </div>
-                <div class="col-md-6">
-                    <label for="productCategory" class="form-label">التصنيف</label>
-                    <select class="form-select" id="productCategory" 
-                    formControlName="productCategory" (ngModelChange)="getCategoryFilter($event)">
-                        <option  [value]="category.slug" 
-                        *ngFor="let category of categories" [disabled]="category.title == 'الكل'">{{category.title == 'الكل'? 'اختر تصنيف' : category.title}}</option>
-                      </select>
-                      <div *ngIf="f['productCategory'].touched && f['productCategory'].errors" class="text-danger">يجب تحديد تصنيف للمنتج</div>  
-                </div>
-                <div class="col-md-6">
-                    <label for="phone" class="form-label">رقم البائع</label>
-                    <input type="text" 
-                    class="form-control" 
-                    id="phone"
-                    formControlName="seller_phone">
-                    <div *ngIf="f['seller_phone'].touched && f['seller_phone'].errors" class="text-danger">يجب اضافه رقم الهاتف</div>
-                </div>
-                <div class="col-md-6">
-                    <label for="productStatus" class="form-label">حاله المنتج</label>
-                    <select class="form-select" id="productStatus" formControlName="productStatus">
-                        <option value="1">منتج جديد</option>
-                        <option value="2">منتج مستخدم</option>
-                      </select>
-                      <div *ngIf="f['productStatus'].touched && f['productStatus'].errors" class="text-danger">يجب تحديد حالة المنتج</div>  
-                </div>
-                <div class="col-md-6" *ngFor="let filter of filters.data.filters">
-                    <input type="checkbox" class="form-check-input mx-2"  *ngIf="filter.type == 'check'" >
-                    <label for="productMark" class="form-label">{{filter.name_ar}}</label>
-                    <select class="form-select" id="productMark" 
-                    [formControlName]="filter.slug_name" *ngIf="filter.type == 'select'">
-                        <option value="{{filterOption.name}}" *ngFor="let filterOption of filter.filter_options">{{filterOption.name}}</option>
-                    </select>
-                      <!-- <div *ngIf="f['productMark'].touched && f['productMark'].errors" class="text-danger">يجب تحديد العلامه التجاريه</div>   -->
-                </div>
-                <div class="col-md-6">
-                    <label for="productPrice" class="form-label">السعر</label>
-                    <input type="text" class="form-control" id="productPrice" 
-                    placeholder="4000"
-                    formControlName="productPrice">
-                    <div *ngIf="f['productPrice'].touched && f['productPrice'].errors" class="text-danger">يجب تحديد سعر  للمنتج</div>  
-
-                </div>
-                <div class="col-md-6">
-                    <label for="productSeller" class="form-label">عن البائع</label>
-                    <textarea type="text" class="form-control" id="productSeller" 
-                    placeholder="عن البائع عن البائع" formControlName="about_seller"></textarea>
-                    <div *ngIf="f['about_seller'].touched && f['about_seller'].errors" class="text-danger">يجب اضافه معلومات عن البائع </div> 
-
-                </div>
-                <div class="col-md-6">
-                    <label for="sellerinfo" class="form-label">ملاحظات التواصل</label>
-                    <textarea type="text" class="form-control" id="sellerinfo" 
-                    placeholder="معلومات لاتصال" formControlName="sellerinfo"></textarea>
-                    <div *ngIf="f['sellerinfo'].touched && f['sellerinfo'].errors" class="text-danger">يجب اضافه ملاحظات للتواصل</div>  
-
-                </div>
-                <div class="col-md-6">
-                    <label for="productDesc" class="form-label">وصف المنتج</label>
-                    <textarea type="text" class="form-control" id="productDesc" 
-                    placeholder="سياره بي ام سياره بي ام" formControlName="productDesc"></textarea>
-                    <div *ngIf="f['productDesc'].touched && f['productDesc'].errors" class="text-danger">يجب اضافه وصف للمنتج</div>  
-
-                </div>
-                <div class="col-md-6">
-                    <label for="productMaterial" class="form-label">خامات المنتج</label>
-                    <textarea type="text" class="form-control" id="productMaterial" 
-                    placeholder="سياره بي ام سياره بي ام" formControlName="productMaterial"></textarea>
-                    <div *ngIf="f['productMaterial'].touched && f['productMaterial'].errors" class="text-danger">يجب وصف خامات المنتج</div>  
-                </div>
-                <!-- <div class="d-flex justify-content-center align-items-center">
-                    <label for="file2" id="label-file">
-                        <input type="file" id="file2" formControlName="file" class="form-control" style="height: 0px">
-                        <div class="d-flex justify-content-between py-2 px-3">
-                            <span>اضافه وثيقه المنتج</span>
-                            <img src="../../../assets/images/upload-docs.svg" alt="upload-docs">
+                <div class="card-body row g-4" *ngIf="step == 2">
+                        <div class="col-12">
+                            <label  class="file-upload" (click)="openImgDialog()">
+                                    <div class="text-center">
+                                        <img src="../../../assets/images/product-imgs.svg" alt="product-imgs">
+                                        <p>اضافه صور المنتج</p>
+                                        <img *ngFor="let url of images" [src]="url" height="150" width="200px" style="margin: 3px;">
+                                    </div>
+                            </label>
                         </div>
-                    </label>
-                </div> -->
-                <mat-progress-bar mode="indeterminate" class="my-3" *ngIf="load" id="addprog"></mat-progress-bar>
-            </div>
+                        <div class="col-md-6">
+                            <label for="productName" class="form-label">اسم المنتج</label>
+                            <input type="text" class="form-control" id="productName" 
+                            placeholder=" سياره بي ام"
+                            formControlName="name">
+                            <div *ngIf="f['name'].touched && f['name'].errors" class="text-danger">يجب كتابه اسم للمنتج</div>  
+                        </div>
+                        <div class="col-md-6">
+                            <label for="productCategory" class="form-label">التصنيف</label>
+                            <select class="form-select" id="productCategory" 
+                            formControlName="productCategory" (ngModelChange)="getCategoryFilter($event)">
+                                <option  [value]="category.slug"
+                                *ngFor="let category of categories"
+                                [disabled]="category.title == 'الكل'">{{category.title == 'الكل'? 'اختر تصنيف' : category.title}}</option>
+                            </select>
+                            <div *ngIf="f['productCategory'].touched && f['productCategory'].errors" class="text-danger">يجب تحديد تصنيف للمنتج</div>  
+                        </div>
+                        <div class="col-md-6">
+                            <label for="phone" class="form-label">رقم البائع</label>
+                            <input type="text" 
+                            class="form-control" 
+                            id="phone"
+                            formControlName="seller_phone">
+                            <div *ngIf="f['seller_phone'].touched && f['seller_phone'].errors" class="text-danger">يجب اضافه رقم الهاتف</div>
+                        </div>
+                        <!-- <div class="col-md-6">
+                            <label for="productStatus" class="form-label">حاله المنتج</label>
+                            <select class="form-select" id="productStatus" formControlName="productStatus">
+                                <option value="1">منتج جديد</option>
+                                <option value="2">منتج مستخدم</option>
+                            </select>
+                            <div *ngIf="f['productStatus'].touched && f['productStatus'].errors" class="text-danger">يجب تحديد حالة المنتج</div>  
+                        </div> -->
+                        <div class="col-md-6" *ngFor="let filter of filters.data.filters">
+                            <input type="checkbox" class="form-check-input mx-2" [formControlName]="filter.slug_name" *ngIf="filter.type == 'check'" >
+                            <label for="productMark" class="form-label">{{filter.name_ar}}</label>
+                            <select class="form-select" id="productMark" 
+                            [formControlName]="filter.slug_name" *ngIf="filter.type == 'select'">
+                                <option value="{{filterOption.name}}" *ngFor="let filterOption of filter.filter_options">{{filterOption.name}}</option>
+                            </select>
+                            <div *ngIf="f[filter.slug_name].touched && f[filter.slug_name].errors" class="text-danger">يجب تحديد العلامه التجاريه</div>  
+                        </div>
+                        <div class="col-md-6">
+                            <label for="productPrice" class="form-label">السعر</label>
+                            <input type="text" class="form-control" id="productPrice" 
+                            placeholder="4000"
+                            formControlName="price">
+                            <div *ngIf="f['price'].touched && f['price'].errors" class="text-danger">يجب تحديد سعر  للمنتج</div>  
+        
+                        </div>
+                        <div class="col-md-6">
+                            <label for="productSeller" class="form-label">عن البائع</label>
+                            <textarea type="text" class="form-control" id="productSeller" 
+                            placeholder="عن البائع عن البائع" formControlName="about_seller"></textarea>
+                            <div *ngIf="f['about_seller'].touched && f['about_seller'].errors" class="text-danger">يجب اضافه معلومات عن البائع </div> 
+        
+                        </div>
+                        <div class="col-md-6">
+                            <label for="sellerinfo" class="form-label">ملاحظات التواصل</label>
+                            <textarea type="text" class="form-control" id="sellerinfo" 
+                            placeholder="معلومات لاتصال" formControlName="delivery_notes"></textarea>
+                            <div *ngIf="f['delivery_notes'].touched && f['delivery_notes'].errors" class="text-danger">يجب اضافه ملاحظات للتواصل</div>  
+        
+                        </div>
+                        <div class="col-md-6">
+                            <label for="productDesc" class="form-label">وصف المنتج</label>
+                            <textarea type="text" class="form-control" id="productDesc" 
+                            placeholder="سياره بي ام سياره بي ام" formControlName="desc"></textarea>
+                            <div *ngIf="f['desc'].touched && f['desc'].errors" class="text-danger">يجب اضافه وصف للمنتج</div>  
+        
+                        </div>
+                        <div class="col-md-6">
+                            <label for="productMaterial" class="form-label">خامات المنتج</label>
+                            <textarea type="text" class="form-control" id="productMaterial" 
+                            placeholder="سياره بي ام سياره بي ام" formControlName="materials"></textarea>
+                            <div *ngIf="f['materials'].touched && f['materials'].errors" class="text-danger">يجب وصف خامات المنتج</div>  
+                        </div>
+                        <div class="d-flex justify-content-center align-items-center">
+                            <label for="file2" id="label-file">
+                                <input type="file" id="file2" 
+                                formControlName="ownership_image" 
+                                (change)="onFile($event)"
+                                class="form-control" style="height: 0px">
+                                <div class="d-flex justify-content-between py-2 px-3">
+                                    <span>اضافه وثيقه المنتج</span>
+                                    <img src="../../../assets/images/upload-docs.svg" alt="upload-docs">
+                                    <p *ngIf="ownership">{{ownership}}</p>
+                                </div>
+                            </label>
+                        </div>
+                        <mat-progress-bar mode="indeterminate" class="my-3" *ngIf="load" id="addprog"></mat-progress-bar>
+                </div>
             <div class="d-flex justify-content-center align-items-center pt-5 pb-3">
                 <button class="btn btn-next btn-prim" type="submit">التالى</button>
             </div>
         </div>
     </form>
 </div>
-
+<!-- success Modal -->
 <div id="modelSuccessNewProduct" 
 class="modal fade"
 tabindex="-1"
@@ -161,6 +158,89 @@ aria-hidden="true"
                         <p class="pp-3"><span>ملاحظه:</span>سيتم ارسال اشعار في حاله الموافقه علي الطلب</p>
                     </div>                   
                 </div>
+			</div>
+		</div>
+	</div>
+</div>     
+<!-- modal add images -->
+<div id="modelAddImages" 
+class="modal fade"
+tabindex="-1"
+aria-labelledby="exampleModalLabel"
+aria-hidden="true"
+>
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-header justify-content-center">
+                <h5 class="title text-center" id="staticBackdropLabel">اضافه صور المنتج</h5>
+			</div>
+            <mat-progress-bar mode="indeterminate" class="my-3" *ngIf="load" id="addprog"></mat-progress-bar>
+			<div class="modal-body text-center">
+                <div class="row g-3">
+                    <div class="col-sm-4">
+                        <label for="file1" class="file-upload">
+                            <input
+                                id="file1"
+                                type="file"
+                                class="form-control"
+                                hidden
+                                (change)="onFileChange1($event)">
+                                <div class="text-center">
+                                    <img  [src]="imgSrc1" height="150" width="200px" style="margin: 3px;">
+                                    <p>اضافه صور المنتج</p>
+                                </div>
+                        </label>
+                    </div>
+                    <div class="col-sm-4">
+                        <label for="file3" class="file-upload">
+                            <input
+                                id="file3"
+                                type="file"
+                                class="form-control"
+                                hidden
+                                (change)="onFileChange3($event)">
+                                <div class="text-center">
+                                    <img   [src]="imgSrc3" height="150" width="200px" style="margin: 3px;">
+                                    <p>اضافه صور المنتج</p>
+                                </div>
+                        </label>
+                    </div>
+                    <div class="col-sm-4">
+                        <label for="file" class="file-upload">
+                            <input
+                                id="file"
+                                type="file"
+                                class="form-control"
+                                hidden
+                                (change)="onFileChange($event)">
+                                <div class="text-center">
+                                    <img  [src]="imgSrc" height="150" width="200px" style="margin: 3px;">
+                                    <p>اضافه صور المنتج</p>
+                                </div>
+                        </label>
+                    </div>
+                </div>
+                <div class="footer text-center">
+                    <button type="button" class="btn btn-prim m-3">اضافه</button>
+                </div>
+            </div>
+			</div>
+		</div>
+</div>
+<!-- add faild -->
+<div id="addFaild" 
+class="modal fade"
+tabindex="-1"
+aria-labelledby="exampleModalLabel"
+aria-hidden="true"
+>
+	<div class="modal-dialog modal-dialog-centered modal-sm">
+		<div class="modal-content">
+			<div class="modal-header justify-content-center">
+                <img src="../../assets/images/faild-mark.svg" alt="faild-mark" width="67px">
+			</div>
+			<div class="modal-body text-center">
+                <p>{{error}}</p>
 			</div>
 		</div>
 	</div>

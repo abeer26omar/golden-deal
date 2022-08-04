@@ -1,6 +1,8 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit,Inject } from '@angular/core';
 import { MatDialogClose, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
+import { ResponseSuccess } from 'src/app/models/actions.model';
 import { AddressesService } from 'src/app/services/addresses.service';
 
 @Component({
@@ -11,6 +13,8 @@ import { AddressesService } from 'src/app/services/addresses.service';
 export class DialogMajorComponent implements OnInit {
   id!: number;
   load: boolean = false;
+  sucMsg: string = '';
+  failMsg: string= '';
   private addSub: Subscription = new Subscription;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data:any,
@@ -24,14 +28,17 @@ export class DialogMajorComponent implements OnInit {
   setPrimary(){
     this.load = true
     this.addSub = this.addService.setPrimary(this.id).subscribe({
-      next: res=>{
+      next: (res: ResponseSuccess)=>{
       this.load = false;
-      this.dialogRef.close();
-      // this.data.toast.show()
+      this.sucMsg = res.data;
       },
-      error: err=>{
+      error: (err: HttpErrorResponse)=>{
       this.load = false;
-      this.dialogRef.close();
+      if(err.error.data){
+        this.failMsg = err.error.data;
+      }else{
+        this.failMsg = err.statusText;
+      }
       }
     })
   }

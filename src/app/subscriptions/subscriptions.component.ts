@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
@@ -13,6 +14,8 @@ declare var window: any;
 export class SubscriptionsComponent implements OnInit {
   paymentModal: any;
   reviewModal: any;
+  faildSubscribtion: any;
+  errMsg: string = '';
   public subscriptions: Array<Subscriptions> = [];
   private subscriptionSub: Subscription = new Subscription;
   subscribtionForm = new FormGroup({
@@ -35,16 +38,19 @@ export class SubscriptionsComponent implements OnInit {
     this.reviewModal = new window.bootstrap.Modal(
       document.getElementById('review')
     );
+    this.faildSubscribtion = new window.bootstrap.Modal(
+      document.getElementById('faildSubscribtion')
+    );
     this.getSubscriptionTypes()
   }
   getSubscriptionTypes(){
     this.subscriptionSub = this.actionService.getSubscribtionsType().subscribe({
       next: (resData: APIresponse<Subscriptions>)=>{
         this.subscriptions = resData.data;
-        // console.log(this.subscriptions)
       },
-      error: err=>{
-        console.log(err)
+      error:(err: HttpErrorResponse)=>{
+        this.faildSubscribtion.show();
+        this.errMsg = err.error.data;
       }
     })
   }

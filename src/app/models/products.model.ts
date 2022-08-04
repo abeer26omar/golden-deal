@@ -123,3 +123,70 @@ export interface NewProduct{
         msg: string
     }
 }
+export interface EditProduct{
+    data: {
+        id: number,
+        parent_id: null,
+        name: string,
+        desc: string,
+        materials: string,
+        about_seller: string,
+        delivery_notes: string,
+        owner_id: number,
+        category_id: number,
+        seller_phone: number,
+        price: number,
+        status: string,
+        active: number,
+        sold_to: null,
+        created_since: string,
+        default_image: string,
+        category_slug: string,
+        ownership_image_url: string,
+        product_images: [
+            {
+                id: number,
+                product_id: number,
+                image_key: string,
+                image: string,
+                image_url: string
+            }
+        ]
+    }
+}
+export interface EditProductFilters{
+    id: number,
+    category_id: number,
+    name_ar: string,
+    name_en: string,
+    type: string,
+    required: number,
+    slug_name: string,
+    sort: number,
+    active: number,
+    has_filters: boolean,
+    filter_options: [
+        {
+            id: number,
+            filter_id: number,
+            name: string,
+            sort: number
+        }
+    ],
+    filter_value:
+        {
+            id: number,
+            filter_id: number,
+            product_id: number,
+            filter_value: string
+        }
+}
+export interface APIResponse4<T>{
+    data: Array<T>
+}
+export interface Update{
+    data: {
+        order_code: number,
+        msg: string
+    }
+}

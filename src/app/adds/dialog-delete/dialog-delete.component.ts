@@ -10,6 +10,8 @@ import { ProductsRequestService } from 'src/app/services/products-request.servic
 export class DialogDeleteComponent implements OnInit {
   id!: number;
   load: boolean = false;
+  sucMsg: string = '';
+  failMsg: string = '';
   private delSub: Subscription = new Subscription;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data:any,
@@ -27,10 +29,10 @@ export class DialogDeleteComponent implements OnInit {
     this.load = true;
     this.delSub = this.productService.deleteProduct(this.id).subscribe({
       next:res=>{
-        console.log(res);
+        this.sucMsg = 'تم الحذف بنجاح';
       },
       error: err=>{
-        console.log(err);
+        this.failMsg = 'لم ينجح الحذف';
       }
     })
    

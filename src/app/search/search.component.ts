@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Router , NavigationExtras} from '@angular/router';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Products} from '../models/products.model';
 import { ActionsService } from '../services/actions.service';
 import { map, startWith} from 'rxjs/operators';
+import { HttpErrorResponse } from '@angular/common/http';
 
 
 @Component({
@@ -14,53 +15,20 @@ import { map, startWith} from 'rxjs/operators';
 })
 export class SearchComponent implements OnInit {
  public data: Array<Products> = [];
+ key: string = '';
   constructor(private route: Router,
     private actionService: ActionsService) { }
-
-    myControl = new FormControl('');
-    options: string[] = [];
-    resultName:any = [];
-    filteredOptions!: Observable<string[]>;
+    
   
-    ngOnInit() {
-      this.filteredOptions = this.myControl.valueChanges.pipe(
-        startWith(''),
-        map(value => this._filter(value || '')),
-      );
-      // this.search('');
-    }
-  
-    private _filter(value: string): string[] {
-      const filterValue = value.toLowerCase();
-  
-      return this.options.filter(option => option.toLowerCase().includes(filterValue));
-    }
+  ngOnInit() {
+  }
   search(name: any){
-    const key = name.target.value;
-    this.actionService.search(key).subscribe({
-      next: (res)=>{
-        this.data = res.data
-        console.log(this.data);
-        
-        res.data.forEach(e=>{
-          this.resultName.push(e.name)
-        })
-        this.options = this.resultName
-      }
-    })
+    this.key = name.target.value;
   }
   goLittleRockStar(){
     this.route.navigate(['/new-add'])
   }
-  getSearchRes(){
-    
-    const navigationExtras: NavigationExtras ={
-      queryParams:{
-        res: JSON.stringify(this.data)
-      }
-    }
-    // console.log(navigationExtras)
-    this.route.navigate(['/search-result', navigationExtras])
-
+  getSearchResult(){
+    this.route.navigate([`/search-result`,{ key: this.key }])
   }
 }

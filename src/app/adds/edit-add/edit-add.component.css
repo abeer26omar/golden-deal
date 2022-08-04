@@ -89,7 +89,7 @@ select:focus{
     background-color: #F7F9FD;
     box-shadow: 0px 2.13473px 4.26945px rgba(0, 0, 0, 0.25);
 }
-input,select{
+input:not([type= 'checkbox']),select{
     height: 50px;
 }
 textarea{
@@ -118,4 +118,38 @@ select{
 }
 #label-file span{
     color: var(--org-color);
+}
+.modal-header{
+    border-bottom: none;
+}
+#modelAddImages .modal-header h5{
+    font-family: var(--font-family);
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--primary-color);
+}
+#modelAddImages .modal-body .content{
+    display: flex!important;
+    justify-content: center;
+    align-items: center;
+}
+@media screen and (max-width: 575px) {
+    #modelAddImages .modal-body .content{
+        flex-direction: column;
+    }
+}
+#modelAddImages .modal-body label.file-upload{
+    box-shadow: 0px 3.75926px 18.7963px rgba(0, 0, 0, 0.25);
+    width: 100%;
+    height: 180px;
+    border-radius: 0;
+    background-color: var(--white);
+}
+#modelAddImages .modal-body .col-sm-6{
+    display: flex;
+    justify-content: center;
+}
+#addFaild .p{
+    color: var(--primary-color);
+    font-size: 1.33rem;
 }

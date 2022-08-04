@@ -1,4 +1,5 @@
 <div class="img-banner">
+  <p class="alert alert-danger text-center" *ngIf="error">{{error}}</p>
   <ngb-carousel>
     <ng-template ngbSlide *ngFor="let add of adds">
       <div class="picsum-img-wrapper">

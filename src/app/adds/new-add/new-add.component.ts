@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { APIResponse2, Category, CategoryFilter, NewProduct} from '../../models/products.model';
@@ -17,10 +17,17 @@ declare var window: any;
 export class NewAddComponent implements OnInit {
   step: any = 1;
   modelSuccessNewProduct: any;
+  modelAddImages: any;
+  addFaild: any;
   images : string[] = [];
   filtersArr: any = [];
   error: string = '';
   load: boolean = false;
+  file!: File;
+  imgSrc: any;
+  imgSrc1: any;
+  imgSrc3: any;
+  ownership: any;
   newFormControl!: any;
   public categories : Array<Category> = [];
   filters: CategoryFilter = {
@@ -36,61 +43,87 @@ export class NewAddComponent implements OnInit {
   submitted = false;
   catergoryId!:number;
   ownerId = localStorage.getItem('userId');
-  // productMark: string = '';
   NewProductRes: NewProduct = {
     data:{
       order_code: 0,
       msg: ''
     }
   }
-  myForm = new FormGroup({
-    agrement: new FormControl('', [Validators.required]),
-    // fileSource: new FormControl('', [Validators.required]),
-    seller_phone: new FormControl('', [Validators.required]),
-    productStatus: new FormControl('', [Validators.required]),
-    productCategory: new FormControl('', [Validators.required]),
-    name: new FormControl('', [Validators.required]),
-    productPrice: new FormControl('', [Validators.required]),
-    about_seller: new FormControl('', [Validators.required]),
-    sellerinfo: new FormControl('', [Validators.required]),
-    productDesc: new FormControl('', [Validators.required]),
-    productMaterial: new FormControl('', [Validators.required]),
-    // file: new FormControl('', [Validators.required]),
-  });
+ 
   private categorySub : Subscription = new Subscription;
-
+  private filterSub : Subscription = new Subscription;
+  private sendSub: Subscription = new Subscription;
   constructor(private httpService: ProductsRequestService,
     private route: ActivatedRoute,
-    private router: Router,
-    private fb: FormBuilder) { 
+    private router: Router) { }
+    
+    myForm = new FormGroup({
+      agrement: new FormControl('', [Validators.required]),
+      seller_phone: new FormControl('', [Validators.required]),
+      productCategory: new FormControl('', [Validators.required]),
+      name: new FormControl('', [Validators.required]),
+      price: new FormControl('', [Validators.required]),
+      about_seller: new FormControl('', [Validators.required]),
+      delivery_notes: new FormControl('', [Validators.required]),
+      desc: new FormControl('', [Validators.required]),
+      materials: new FormControl('', [Validators.required]),
+      owner_id: new FormControl(this.ownerId),
+      category_id: new FormControl(''),
+      ownership_image: new FormControl(''),
+      product_image_1: new FormControl(''),
+      product_image_2: new FormControl(''),
+      product_image_3: new FormControl('')
+    })
+    get f(){
+      return this.myForm.controls;
     }
-  get f(){
-    return this.myForm.controls;
+  ngOnInit(): void {
+      this.getCategories();
+      this.modelSuccessNewProduct = new window.bootstrap.Modal(
+        document.getElementById('modelSuccessNewProduct')
+      );  
+      this.modelAddImages = new window.bootstrap.Modal(
+        document.getElementById('modelAddImages')
+      );
+      this.addFaild = new window.bootstrap.Modal(
+        document.getElementById('addFaild')
+      )
   }
   onFileChange(event:any) {
-    if ((event.target.files && event.target.files[0]) || '') {
-        var filesAmount = event.target.files.length;
-        for (let i = 0; i < filesAmount; i++) {
-                var reader = new FileReader();
-                reader.onload = (event:any) => {
-                  // console.log(event.target.result);
-                   this.images.push(event.target.result); 
-    
-                   this.myForm.patchValue({
-                      fileSource: this.images
-                   });
-                }
-                reader.readAsDataURL(event.target.files[i]);
-              }
-            }else{
-      this.myForm.controls['fileSource'].setValidators([Validators.required])
+    let reader = new FileReader();
+    reader.readAsDataURL(event.target.files[0]);
+    this.file =<File>event.target.files[0];
+    reader.onload = ()=>{
+      this.imgSrc = reader.result;
+      this.images.push(this.imgSrc)
     }
+    this.myForm.get('product_image_1')?.patchValue(this.file,this.file.name);
   }
-  ngOnInit(): void {
-    this.getCategories();
-    this.modelSuccessNewProduct = new window.bootstrap.Modal(
-      document.getElementById('modelSuccessNewProduct')
-    );  
+  onFileChange3(event:any) {
+    let reader = new FileReader();
+    reader.readAsDataURL(event.target.files[0]);
+    this.file =<File>event.target.files[0];
+    reader.onload = ()=>{
+      this.imgSrc3 = reader.result;
+      this.images.push(this.imgSrc3);
+    }
+    this.myForm.get('product_image_2')?.patchValue(this.file,this.file.name);
+  }
+  onFileChange1(event:any) {
+    let reader = new FileReader();
+    reader.readAsDataURL(event.target.files[0]);
+    this.file =<File>event.target.files[0];
+    reader.onload = ()=>{
+      this.imgSrc1 = reader.result;
+      this.images.push(this.imgSrc1)
+    }
+    this.myForm.get('product_image_3')?.patchValue(this.file,this.file.name);
+  }
+  onFile(event:any) {
+    let reader = new FileReader();
+    reader.readAsDataURL(event.target.files[0]);
+    this.file =<File>event.target.files[0];
+    this.ownership = this.file.name
   }
   getCategories(){
     this.categorySub = this.httpService.
@@ -102,25 +135,30 @@ export class NewAddComponent implements OnInit {
       error:(error : HttpErrorResponse)=>{
         if(error){
           this.error = 'An unknown Error Occurred Check your Internet Connection Or Reload Your Page';
+          this.addFaild.show();
         }
       }
     })
   }
-  getCategoryFilter(categoryName: any){    
-    this.categorySub = this.httpService.getCategoryFilters(categoryName).subscribe({
+  getCategoryFilter(categoryName: any){ 
+    this.categories.forEach(ele=>{
+      if(ele.slug == categoryName){
+        this.catergoryId = ele.id;
+        this.myForm.get('category_id')?.patchValue(ele.id)
+      }
+    })
+    this.filterSub = this.httpService.getCategoryFilters(categoryName).subscribe({
       next: (res: CategoryFilter)=>{
-        this.filters = res;
+        this.filters = res;        
         this.filters.data.filters.forEach(filter=>{
-          // console.log(filter);
           this.newFormControl = filter.slug_name;
           this.myForm.addControl(filter.slug_name, new FormControl('')) 
           this.filtersArr.push(this.newFormControl)
-        })        
-        console.log(this.filtersArr);
-        
+        })                
       },
       error: err=>{
-        console.log(err);
+        this.error = 'حدث خطا';
+        this.addFaild.show();
       }
     })
   }
@@ -135,49 +173,34 @@ export class NewAddComponent implements OnInit {
       }
       this.getProductCategoryId();   
       const formData = new FormData();
-      let formArr = []
-      for (const field in this.myForm.controls) { 
-        // console.log(this.myForm.controls[field].value);
-        let value = this.myForm.controls[field].value
-        let obj = {
-           field,value
-        }
-        formArr.push(obj)
-        
-        formData.append(field, this.myForm.controls[field].value) 
-        // console.log('done');
+      for (const field in this.myForm.controls) {
+        formData.append(field, this.myForm.controls[field].value);
       }
-      // console.log(...formArr);
-      
-      
       if(this.myForm.valid){
-        this.sendFormData();
-        // this.httpService.http.post<NewProduct>(`${env.api_url}/products/store-new-product`,{
-          
-        // }
-        // ,this.httpService.httpOptions)
-        // .subscribe({
-        //   next: (res: NewProduct)=>{
-        //     this.load = false;
-        //     this.NewProductRes = res;
-        //     this.modelSuccessNewProduct.show();
-        //     console.log(res);
-        //   },
-        //   error: err=>{
-        //     this.load = false;
-        //     console.log(err);
-        //   }
-        // })   
+        this.load = true;
+      this.sendSub = this.httpService.http.post<NewProduct>(`${env.api_url}/products/store-new-product`,
+          formData,
+        this.httpService.httpOptions)
+        .subscribe({
+          next: (res: NewProduct)=>{
+            this.load = false;
+            this.NewProductRes = res;
+            this.modelSuccessNewProduct.show();
+            setTimeout(()=>{
+              this.modelSuccessNewProduct.hide();
+              this.router.navigate([`/adds/${this.ownerId}`])
+            },1000) 
+          },
+          error: err=>{
+            this.load = false;
+            this.error = 'لم ينجح الحفظ';
+            this.addFaild.show();
+          }
+        })   
       } else{
         return;
       }
     }
-
-  }
-  ngOnDestory() :void{
-    if(this.categorySub){
-      this.categorySub.unsubscribe();
-    } 
   }
   getProductCategoryId(){
     const productCategory = this.myForm.get('productCategory')?.value;
@@ -187,36 +210,19 @@ export class NewAddComponent implements OnInit {
       }
     })
   }
-  sendFormData(){
-    this.load = true
-    const fileSource = this.myForm.get('fileSource')?.value;
-    const phone = this.myForm.get('seller_phone')?.value;
-    const productName = this.myForm.get('name')?.value;
-    const productPrice = this.myForm.get('productPrice')?.value;
-    const productSeller = this.myForm.get('productSeller')?.value;
-    const sellerinfo = this.myForm.get('sellerinfo')?.value;
-    const productDesc = this.myForm.get('productDesc')?.value;
-    const productMaterial = this.myForm.get('productMaterial')?.value;
-    const file = this.myForm.get('file')?.value;
-    this.filtersArr.forEach((ele: any)=>{
-      if(this.myForm.contains(ele)){
-        console.log(this.myForm.controls[ele].value);
-        
-      }
-    })
-     this.httpService.addNewProduct(phone,productSeller,this.catergoryId,productName
-      ,productDesc,sellerinfo,productPrice,this.ownerId,productMaterial, )
-       .subscribe({
-            next: (res: NewProduct)=>{
-              this.load = false;
-              this.NewProductRes = res;
-              this.modelSuccessNewProduct.show();
-              console.log(res);
-            },
-            error: err=>{
-              this.load = false;
-              console.log(err);
-            }
-          })   
+  openImgDialog(){
+    this.modelAddImages.show();
+  }
+  ngOnDestory() :void{
+    if(this.categorySub){
+      this.categorySub.unsubscribe();
+    } 
+    if(this.filterSub){
+      this.filterSub.unsubscribe();
+    } 
+    if(this.sendSub){
+      this.sendSub.unsubscribe();
+    } 
+    
   }
 }

@@ -1,5 +1,7 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit ,Inject} from '@angular/core';
 import { MatDialogClose, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { ResponseSuccess } from 'src/app/models/actions.model';
 import { ProfileService } from 'src/app/services/profile.service';
 
 @Component({
@@ -11,6 +13,8 @@ export class DialogImageComponent implements OnInit {
   imgSrc: any;
   load: boolean = false;
   file!: File;
+  error: string = '';
+  resSuc: string = '';
   constructor(@Inject(MAT_DIALOG_DATA) public data:any,
   public dialogRef: MatDialogRef<MatDialogClose>,
   private profileService: ProfileService) {
@@ -28,16 +32,23 @@ export class DialogImageComponent implements OnInit {
     }
   }
   update(){
+    this.load = true;
+    this.resSuc = '';
+    this.error = '';
     let formData = new FormData();
     formData.append('image',this.file,this.file.name);
     this.profileService.updatePhoto(formData).subscribe({
-      next: res=>{
-        console.log(res);
-        
+      next: (res: ResponseSuccess)=>{
+        this.load = false;
+        this.resSuc = res.data        
       },
-      error: err=>{
-        console.log(err);
-        
+      error: (err: HttpErrorResponse)=>{
+        this.load = false;
+        if(err.error.data){
+          this.error = err.error.data;
+        }else{
+          this.error = err.statusText;
+        }
       }
     })
   }

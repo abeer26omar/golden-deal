@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { CommonModule } from '@angular/common';  
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpHeadersInterceptor } from './interceptors/http-headers.interceptor';
 import { HttpErrorInterceptor } from './interceptors/http-errors.interceptor';
@@ -30,7 +31,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSliderModule } from '@angular/material/slider';
 import { NzSliderModule } from 'ng-zorro-antd/slider';
-import { MatAutocompleteModule } from '@angular/material/autocomplete'
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 //components
 import { HeaderComponent } from './header/header.component';
@@ -59,6 +60,7 @@ import { DialogMajorComponent } from './address/dialog-major/dialog-major.compon
 import { DialogDeleteComponent } from './address/dialog-delete/dialog-delete.component';
 import { DialogSolidComponent } from './adds/dialog-solid/dialog-solid.component';
 import { DialogImageComponent } from './profile/dialog-image/dialog-image.component';
+import { DialogCoverComponent } from './adds/dialog-cover/dialog-cover.component';
 
 @NgModule({
   declarations: [
@@ -89,9 +91,11 @@ import { DialogImageComponent } from './profile/dialog-image/dialog-image.compon
     DialogDeleteComponent,
     DialogSolidComponent,
     DialogImageComponent,
+    DialogCoverComponent,
   ],
   imports: [
     BrowserModule,
+    CommonModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     CarouselModule,

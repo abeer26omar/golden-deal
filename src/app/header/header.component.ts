@@ -1,9 +1,12 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { ResponseSuccess } from '../models/actions.model';
 import { Category,APIResponse2 } from '../models/products.model';
 import { AuthService } from '../services/auth.service';
 import { ProductsRequestService } from '../services/products-request.service'
+declare var window: any;
 
 @Component({
   selector: 'app-header',
@@ -15,47 +18,67 @@ export class HeaderComponent implements OnInit {
   httpService: any;
   public categories : Array<Category> = [];
   userId!: any;
+  error: string = '';
+  msgSucess: string = '';
+  toastSuccess: any;
+  toastFaild: any;
   constructor(public authService: AuthService,
     private route: Router,
-    private categoryService: ProductsRequestService ) { 
+    private categoryService: ProductsRequestService) { 
     this.userId = localStorage.getItem('userId')
   }
   ngOnInit(): void { 
     this.getCategories();
-    // console.log()
+    this.toastSuccess = new window.bootstrap.Toast(
+      document.getElementById('toastSuccess')
+    )
+    this.toastFaild = new window.bootstrap.Toast(
+      document.getElementById('toastFaild')
+    )
   }
   private categorySub : Subscription = new Subscription;
 
   getCategories(){
     this.categorySub = this.categoryService.
     getProductsCategories().
-    subscribe((categoryList: APIResponse2<Category>)=>{ 
-      this.categories = categoryList.data;
-      // console.log(categoryList.data);
+    subscribe({
+      next:(categoryList: APIResponse2<Category>)=>{ 
+        this.categories = categoryList.data;
+      },
+      error: (err: HttpErrorResponse)=>{
+        this.toastFaild.show();
+        if(err.error.data){
+          this.error = err.error.data;
+        }else{
+          this.error = err.statusText;
+        }
+      }
     })
   }
   logOut(){
     this.authService.logOut().subscribe({
-      next:(res)=>{
-        console.log(res)
+      next:(res: ResponseSuccess)=>{
+        this.toastSuccess.show();
+        this.msgSucess = res.data
         localStorage.clear();
-        window.location.reload()
+        window.location.reload();
       },
-      error: (err)=>{
-        console.log(err)
+      error: (err: HttpErrorResponse)=>{
+        this.toastFaild.show();
+        if(err.error.data){
+          this.error = err.error.data;
+        }else{
+          this.error = err.statusText;
+        }
       }
     })
   }
   termsCondition(slug: string){
     this.route.navigate(['/termsandconditions',slug])
   }
-  prop(event: any){
-    event.stopPropagation();  
-  }
   ngOnDestory() :void{
    if(this.categorySub){
      this.categorySub.unsubscribe();
    }
-   
   }
 }

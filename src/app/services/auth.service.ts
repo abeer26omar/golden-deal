@@ -3,6 +3,7 @@ import { HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http'
 import { throwError, catchError, tap,BehaviorSubject, Subject} from 'rxjs';
 import { environment as env } from 'src/environments/environment';
 import { Register, Login} from '../models/user.model';
+import { ResponseSuccess } from '../models/actions.model';
 @Injectable({
   providedIn: 'root'
 })
@@ -36,7 +37,6 @@ export class AuthService {
   }
   httpOptions = {
     headers: new HttpHeaders({
-      'Content-Type': 'application/json',
       'Authorization': `Bearer ${localStorage.getItem('token')}`
     })}
 
@@ -57,7 +57,7 @@ export class AuthService {
     }))
   }
   logOut(){
-    return this.http.get(`${env.api_url}/auth/logout`, this.httpOptions)
+    return this.http.get<ResponseSuccess>(`${env.api_url}/auth/logout`, this.httpOptions)
   }
   private handelError(errorRes: HttpErrorResponse){
     let errorMsg = 'An unknown Error Occurred';

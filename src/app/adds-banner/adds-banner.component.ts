@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit} from '@angular/core';
 import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Adds, APIResponse3} from '../models/products.model';
 import { HomeAddsService } from '../services/home-adds.service';
@@ -15,26 +14,30 @@ import { HomeAddsService } from '../services/home-adds.service';
 export class AddsBannerComponent implements OnInit , OnDestroy{
   public adds : Array<Adds> = [];
   private addSub: Subscription = new Subscription;
-
+  error: string = '' ;
   constructor(config: NgbCarouselConfig,
-    private httpService: HomeAddsService, 
-    private route: ActivatedRoute,
-    private router: Router) {
+    private httpService: HomeAddsService) {
     config.interval = 5000;
     config.keyboard = true;
     config.pauseOnHover = true;
     config.animation = true;
    }
- 
-
   ngOnInit(): void {
     this.getAdds();
   }
   getAdds(){
     this.addSub = this.httpService.getAdds()
-    .subscribe((addList: APIResponse3<Adds>)=>{
-      this.adds = addList.data;
-      console.log(this.adds);
+    .subscribe({
+      next:(addList: APIResponse3<Adds>)=>{
+        this.adds = addList.data;
+      },
+      error: (err: HttpErrorResponse)=>{
+        if(err.error.data){
+          this.error = err.error.data;
+        }else{
+          this.error = err.statusText;
+        }
+      }
     })
   }
   ngOnDestroy(): void {

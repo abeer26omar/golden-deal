@@ -4,6 +4,8 @@ import { Router,ActivatedRoute, Params } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AddressesService } from 'src/app/services/addresses.service';
 import { Address } from 'src/app/models/user.model';
+import { ResponseSuccess } from 'src/app/models/actions.model';
+import { HttpErrorResponse } from '@angular/common/http';
 declare var window: any;
 
 @Component({
@@ -17,6 +19,7 @@ export class AddEditAddressComponent implements OnInit {
   faildAdd: any;
   loaderAdd:boolean = false;
   addId!: number;
+  msg: string = '';
   addRes: Address = {
     data: {
       address_type: '',
@@ -71,16 +74,22 @@ export class AddEditAddressComponent implements OnInit {
       this.addSub = this.addService
       .updateAddress(this.addId,title,addKind,city,streetNo,buildingNo)
       .subscribe({
-        next: res=>{
-          this.loaderAdd = false
+        next: (res: ResponseSuccess)=>{
+          this.loaderAdd = false;
+          this.msg = res.data;
           this.successAdd.show();
           setTimeout(()=>{
             this.successAdd.hide()
             this.route.navigate(['/address'])
           },1000)
         }, 
-        error: err=>{
+        error: (err: HttpErrorResponse)=>{
           this.loaderAdd = false;
+          if(err.error.data){
+            this.msg = err.error.data;
+          }else{
+            this.msg = err.statusText;
+          }
           this.faildAdd.show()
         }
       })
@@ -91,8 +100,9 @@ export class AddEditAddressComponent implements OnInit {
         this.addSub = this.addService
         .addNewAddress(title, addKind,city,streetNo,buildingNo)
         .subscribe({
-          next: res=>{
+          next: (res: ResponseSuccess)=>{
             this.loaderAdd = false;
+            this.msg = res.data;
             this.successAdd.show();
             this.addForm.reset();
             setTimeout(()=>{
@@ -100,8 +110,13 @@ export class AddEditAddressComponent implements OnInit {
               this.route.navigate(['/address'])
             },1000)
           },
-          error: err=>{
+          error: (err: HttpErrorResponse)=>{
             this.loaderAdd = false;
+            if(err.error.data){
+              this.msg = err.error.data;
+            }else{
+              this.msg = err.statusText;
+            }
             this.faildAdd.show();
           }
         })
@@ -121,12 +136,24 @@ export class AddEditAddressComponent implements OnInit {
           streetNo: new FormControl(this.addRes.data.street),
           buildingNo: new FormControl(this.addRes.data.building)
         })
+      },
+      error: (err: HttpErrorResponse)=>{
+        this.loaderAdd = false;
+        if(err.error.data){
+          this.msg = err.error.data;
+        }else{
+          this.msg = err.statusText;
+        }
+        this.faildAdd.show()
       }
     })
   }
   ngOnDestory() :void{
     if(this.addSub){
       this.addSub.unsubscribe();
+    }
+    if(this.routeSub){
+      this.routeSub.unsubscribe();
     }
   }
 }

@@ -118,7 +118,7 @@ p.pref{
     transition-delay: 0s;
   }
  .form.active .sign-up-form {
-    left: -300%;
+    left: -500%;
   }
   .form p.agree{
     color: var( --light-grey);

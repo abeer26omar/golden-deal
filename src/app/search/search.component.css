@@ -19,19 +19,18 @@
     padding-right: .8rem;
     font-weight: 500;
 }
-/* input{
+input{
     padding: 0.7rem 0.75rem;
     padding-right: 3rem;
     
     color: var(--gray);
     font-weight: 400;
-} */
+}
 .btn-search{
     position: absolute;
     color: var(--white);
     padding: 0.6rem;
     background-color: var(--org-color);
-    border-radius: 0px 10px 10px 0px;
 }
 .btn-search:hover{
     transform: none;

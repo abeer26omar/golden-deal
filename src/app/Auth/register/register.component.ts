@@ -68,7 +68,7 @@ export class RegisterComponent implements OnInit {
   constructor(private auth: AuthService, 
     private route: ActivatedRoute,
     private router: Router) { 
-      this.auth.refresh.subscribe((res)=>{
+      this.auth.refresh.subscribe(()=>{
         this.submitData();
         this.submitLogin();
       })
@@ -114,8 +114,7 @@ export class RegisterComponent implements OnInit {
       .subscribe({
         next: resData =>{
             this.loader = false;
-            this.openOtpModal();
-            localStorage.setItem('token', resData.data.token);
+            this.openOtpModal();            
         },
         error: errorMsg =>{
             this.loader = false;
@@ -137,8 +136,7 @@ export class RegisterComponent implements OnInit {
         next: (resData: Login) =>{
           this.loaderLogin = false;
           this.userData = resData;
-          localStorage.setItem('token', this.userData.data.token);
-          localStorage.setItem('userId', JSON.stringify(this.userData.data.user.id));
+          this.openOtpModal();
          },
         error: ()=>{
           this.loaderLogin = false;
@@ -162,7 +160,6 @@ export class RegisterComponent implements OnInit {
   onOtpChange(otp:any) {
     this.otp = otp;
     if(otp.length == 4){
-      // console.log(otp)
       this.subOtp = !this.subOtp;
     }
   }
@@ -184,15 +181,18 @@ export class RegisterComponent implements OnInit {
     next:()=>{
       this.loaderOtp = false;
       this.openSuccessModal();
+      localStorage.setItem('token', this.userData.data.token);
+      localStorage.setItem('userId', JSON.stringify(this.userData.data.user.id));
       setTimeout(()=>{
         this.successModal.hide();
         this.router.navigate(['/home'])
       },1000)
-      window.location.reload()
+      window.location.reload();
     },
     error: () =>{
       this.loaderOtp = false;
       this.errorOtp = 'الكود الذى ادخلته غير صحيح';
+      localStorage.clear();
     }
    })
   }
@@ -218,7 +218,7 @@ export class RegisterComponent implements OnInit {
       },
       error: error=>{
         this.loaderOtp = false;
-        console.log(error)
+        localStorage.clear()
       }
     })
   }

@@ -10,7 +10,6 @@ intercept(req: HttpRequest<any>,
 
     return next.handle(req)
     .pipe(catchError((err) => {
-        // console.log(err);
         return throwError(() => err);
     }))
 }

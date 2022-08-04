@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { HomeAddsService } from '../services/home-adds.service';
 import { APIResponse4, Pages } from '../models/user.model';
+import { HttpErrorResponse } from '@angular/common/http';
+declare var window: any;
 
 @Component({
   selector: 'app-terms-conditions',
@@ -16,9 +18,10 @@ export class TermsConditionsComponent implements OnInit {
   pageSlug: string = '';
   title: string = '';
   desc: string = '';
+  faildTerms: any;
+  errMsg: string = '';
   constructor(private homeAddService: HomeAddsService,
-    private route: ActivatedRoute,
-    private router: Router) { 
+    private route: ActivatedRoute) { 
       this.homeAddService.refresh.subscribe((res)=>{
         this.getPages(this.pageSlug)
       })
@@ -28,20 +31,25 @@ export class TermsConditionsComponent implements OnInit {
     this.routeSub = this.route.params.subscribe((params: Params) => {
     this.pageSlug = params['slug'];
     });
-    
-    this.getPages(this.pageSlug)
+    this.getPages(this.pageSlug);
+    this.faildTerms = new window.bootstrap.Modal(
+      document.getElementById('faildTerms')
+    );
   }
   getPages(slug: string){
    this.pageSub = this.homeAddService.getStaticPages().subscribe({
       next: (respages: APIResponse4<Pages>)=>{
         this.pages = respages.data
-        // console.log(this.pages)
         this.pages.forEach((e)=>{
           if(e.slug == slug){
             this.title = e.title;
             this.desc = e.desc;
           }
         })
+      },
+      error:(err: HttpErrorResponse)=>{
+        this.faildTerms.show();
+        this.errMsg = err.error.data;
       }
     })
   }
@@ -49,6 +57,9 @@ export class TermsConditionsComponent implements OnInit {
     if(this.pageSub){
      this.pageSub.unsubscribe();
     }
+    if(this.routeSub){
+      this.routeSub.unsubscribe();
+     }
    }
 }
 

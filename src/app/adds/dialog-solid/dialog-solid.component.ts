@@ -11,6 +11,8 @@ import { ProductsRequestService } from 'src/app/services/products-request.servic
 export class DialogSolidComponent implements OnInit {
   id!: number;
   load: boolean = false;
+  sucMsg: string = '';
+  failMsg: string = '';
   private solidSub: Subscription = new Subscription;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data:any,
@@ -24,12 +26,12 @@ export class DialogSolidComponent implements OnInit {
     this.load = true;
     this.solidSub = this.productService.setAsSolid(this.id).subscribe({
       next:res=>{
-        this.load = false
-        console.log(res);
+        this.load = false;
+        this.sucMsg = 'تم التحديد كمباع';
       },
       error:err=>{
-        this.load = false
-        console.log(err);
+        this.load = false;
+        this.failMsg = 'حدث خطا';
       }
     })
   }

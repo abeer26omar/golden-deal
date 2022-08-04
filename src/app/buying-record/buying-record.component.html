@@ -25,6 +25,8 @@
                   </div>
               </div> 
               <p class="text-danger text-center" *ngIf="records.length == 0">لا يوجد مشتريات</p>
+              <p class="alert alert-danger text-center" *ngIf="error">{{error}}</p>
+
         </div>
     </section>
   <app-testimonial></app-testimonial>

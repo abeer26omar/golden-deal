@@ -8,16 +8,16 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./search-result.component.css']
 })
 export class SearchResultComponent implements OnInit {
-  arrayOfValues: Array<object> = [];
-
-private routeSub: Subscription = new Subscription;
-  constructor(private route: ActivatedRoute) { 
-  const myArray = this.route.queryParams.subscribe((result) => {
-    // console.log(result)
-  })
-} 
+  key: string = '';
+  private routeSub: Subscription = new Subscription;
+  constructor(private route: ActivatedRoute) { } 
 
   ngOnInit(): void {
+    this.routeSub = this.route.queryParams.subscribe((params) => {
+      this.key = params['key'];
+    });
+    console.log(this.key);
+    
   }
 
 }

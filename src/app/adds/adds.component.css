@@ -182,3 +182,7 @@
     font-size: 1.3rem;
     text-align: center;
 }
+#faild .p{
+    color: var(--primary-color);
+    font-size: 1.33rem;
+}

@@ -45,27 +45,48 @@
                         </ul>
                       </div>
                     </li>
-                    <li><a class="" href="#"><img class="ps-2" src="../../assets/images/fav.svg" alt="">المفضله</a></li>
-                    <li class="spec"><a class="" routerLink="/address"><img class="ps-2" src="../../assets/images/address.svg" alt="">
-                      قائمه العناوين</a></li>
-                    <li><a class="" routerLink="/subscriptions"><img class="ps-2" src="../../assets/images/subscribtion.svg" alt="">
-                      الاشتراكات</a></li>
-                    <li><a class="" routerLink="/new-add"><img class="ps-2" src="../../assets/images/newAdd.svg" alt="">
-                      اضافه اعلان</a></li>
-                    <li><a class="" href="#"><img class="ps-2" src="../../assets/images/support.svg" alt="">
-                      الدعم</a></li>
+                    <li>
+                      <a  [routerLink]="['/adds',userId]">
+                        <img class="ps-2" src="../../assets/images/fav.svg" alt="">المفضله</a>
+                    </li>
+                    <li class="spec">
+                      <a  routerLink="/address">
+                        <img class="ps-2" src="../../assets/images/address.svg" alt="">قائمه العناوين</a>
+                    </li>
+                    <li>
+                      <a  routerLink="/subscriptions">
+                        <img class="ps-2" src="../../assets/images/subscribtion.svg" alt="">الاشتراكات</a>
+                    </li>
+                    <li>
+                      <a  routerLink="/new-add">
+                        <img class="ps-2" src="../../assets/images/newAdd.svg" alt="">اضافه اعلان</a>
+                    </li>
+                    <li>
+                      <a [routerLink]="['/chat']">
+                        <img class="ps-2" src="../../assets/images/support.svg" alt="">الدعم</a>
+                    </li>
                   </div>
                   <div class="col-6">
-                    <li class="spec"><a class="" routerLink="/profile"><img class="ps-2" src="../../assets/images/accountSetting.svg" alt="">
-                      اعدادت الحساب</a></li>
-                    <li><a class="" (click)="termsCondition('privacy_policy')"><img class="ps-2" src="../../assets/images/whoweAre.svg" alt="">
-                      من نحن</a></li>
-                    <li><a class="" href="#"><img class="ps-2" src="../../assets/images/myorders.svg" alt="">
-                      طلباتى</a></li>
-                    <li class="spec"><a class="" (click)="termsCondition('terms_conditions')"><img class="ps-2" src="../../assets/images/termsConditions.svg" alt="">
-                      الشروط والاحكام</a></li>
-                    <li><a class="" (click)="logOut()"><img class="ps-2" src="../../assets/images/exit.svg" alt="">
-                      تسجيل خروج</a></li>
+                    <li class="spec" *ngIf="authService.isRegister | async">
+                      <a  routerLink="/profile">
+                        <img class="ps-2" src="../../assets/images/accountSetting.svg" alt="">اعدادت الحساب</a>
+                    </li>
+                    <li>
+                      <a  (click)="termsCondition('privacy_policy')">
+                        <img class="ps-2" src="../../assets/images/whoweAre.svg" alt="">من نحن</a>
+                    </li>
+                    <li>
+                      <a  [routerLink]="['/adds',userId]">
+                        <img class="ps-2" src="../../assets/images/myorders.svg" alt="">طلباتى</a>
+                    </li>
+                    <li class="spec">
+                      <a class="" (click)="termsCondition('terms_conditions')">
+                        <img class="ps-2" src="../../assets/images/termsConditions.svg" alt="">الشروط والاحكام</a>
+                    </li>
+                    <li *ngIf="authService.isRegister | async">
+                      <a  (click)="logOut()">
+                        <img class="ps-2" src="../../assets/images/exit.svg" alt="">تسجيل خروج</a>
+                    </li>
                   </div>
                 </div>
               </ul>
@@ -78,12 +99,34 @@
             </li>
             <li class="nav-item" *ngIf="authService.isRegister | async">
               <a class="nav-link" routerLink="/profile">
-                <img src="../../assets/images/profile-icon.svg" alt="profile-icon"></a>
+                <img src="../../assets/images/profile-icon.svg" alt="profile-icon">
+              </a>
             </li>
             <li class="nav-item" *ngIf="authService.isRegister | async">
-              <a class="nav-link" (click)="logOut()"><img src="../../assets/images/exit.svg" alt="exit"></a>
+              <a class="nav-link" (click)="logOut()">
+                <img src="../../assets/images/exit.svg" alt="exit">
+              </a>
             </li>
           </ul>
       </div>
     </div>
   </nav>
+  <div class="toast align-items-center text-white bg-success border-0" 
+  role="alert" aria-live="assertive" aria-atomic="true" id="toastSuccess">
+    <div class="d-flex">
+      <div class="toast-body">
+        {{msgSucess}}
+      </div>
+      <button type="button" class="btn-close btn-close-white ms-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+  </div>
+  <div class="toast align-items-center text-white bg-danger border-0" 
+  role="alert" aria-live="assertive" aria-atomic="true" id="toastFaild">
+    <div class="d-flex">
+      <div class="toast-body">
+        {{error}}
+      </div>
+      <button type="button" class="btn-close btn-close-white ms-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+  </div>
+  

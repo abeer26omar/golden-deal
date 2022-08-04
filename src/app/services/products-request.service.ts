@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders} from '@angular/common/http';
 import { Observable, Subject, tap} from 'rxjs';
 import { environment as env } from 'src/environments/environment';
-import { Products , APIResponse , Product ,APIResponse2 , Category, CategoryFilter, NewProduct} from '../models/products.model';
+import { Products , APIResponse , Product ,
+  APIResponse2 , Category, CategoryFilter, NewProduct, EditProduct, APIResponse4, EditProductFilters, Update} from '../models/products.model';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,6 @@ import { Products , APIResponse , Product ,APIResponse2 , Category, CategoryFilt
 export class ProductsRequestService {
   httpOptions = {
     headers: new HttpHeaders({
-      'Content-Type': 'application/json',
       'Authorization': `Bearer ${localStorage.getItem('token')}`
     })}
     private _refresh = new Subject<void>();
@@ -50,17 +50,24 @@ export class ProductsRequestService {
   getCategoryFilters(catergory_name: string){
     return this.http.get<CategoryFilter>(`${env.api_url}/filters/get-category-filters/${catergory_name}`,this.httpOptions)
   }
-  addNewProduct(seller_phone: string,about_seller:string,
-    category_id:number,name:string,desc:string,
-    delivery_notes:string,price: string,owner_id:any,
-    materials:string){
-      return this.http.post<NewProduct>(`${env.api_url}/products/store-new-product`,{
-        seller_phone,about_seller,
-        category_id,name,
-        desc,delivery_notes,
-        price,owner_id,
-        materials
-      }
+  addNewProduct(body: any){
+      return this.http.post<NewProduct>(`${env.api_url}/products/store-new-product`,body
       ,this.httpOptions)
+  }
+  getEditAddInfo(id: number){
+    return this.http.get<EditProduct>(`${env.api_url}/products/edit-product-info/${id}`,this.httpOptions).pipe(tap(()=>{
+      this._refresh.next();
+    }))
+  }
+  getEditFilters(id: number, category: string){
+    return this.http.get<APIResponse4<EditProductFilters>>(`${env.api_url}/filters/edit-product-filters-info/${id}/${category}`,this.httpOptions).pipe(tap(()=>{
+      this._refresh.next();
+    }))
+  }
+  updateAdd(id: number,body: any){
+    return this.http.post<Update>(`${env.api_url}/products/update-product/${id}`,
+    body,this.httpOptions).pipe(tap(()=>{
+      this._refresh.next();
+    }))
   }
 }

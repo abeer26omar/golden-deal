@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ProfileService } from '../services/profile.service';
 import { APIResponse2, Purchases } from '../models/user.model';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-buying-record',
@@ -12,10 +12,8 @@ import { APIResponse2, Purchases } from '../models/user.model';
 export class BuyingRecordComponent implements OnInit {
   private recordSub: Subscription = new Subscription;
   public records: Array<Purchases> = [];
-
-  constructor(private profileService: ProfileService,
-    private route: ActivatedRoute,
-    private router: Router) { }
+  error: string = '';
+  constructor(private profileService: ProfileService) { }
 
   ngOnInit(): void {
     this.getAllPurchases()
@@ -24,12 +22,20 @@ export class BuyingRecordComponent implements OnInit {
     this.recordSub = this.profileService.buyingRecord().subscribe({
       next: (resData: APIResponse2<Purchases>)=>{
         this.records = resData.data;
-        // console.log(resData)
       },
-      error: err=>{
-        console.log(err)
+      error: (err: HttpErrorResponse)=>{
+        if(err.error.data){
+          this.error = err.error.data;
+        }else{
+          this.error = err.statusText;
+        }
       }
     })
+  }
+  ngOnDestroy(): void {
+    if(this.recordSub){
+      this.recordSub.unsubscribe();
+    }
   }
 
 }

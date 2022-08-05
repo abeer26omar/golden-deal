@@ -125,6 +125,7 @@ data-bs-backdrop="static"
         <div class="modal-body">
             <p class="send">تم ارسال رمز التحقق الي الرقم</p>
             <p class="number">{{fRegister['phone'].value}}</p>
+            <p class="number">{{fLogin['phone'].value}}</p>
                 <ng-otp-input  (onInputChange)="onOtpChange($event)"   [config]="config"></ng-otp-input>
                 <div>
                     <a class="resend" [ngClass]="{'pe-none': resend}"
@@ -135,20 +136,3 @@ data-bs-backdrop="static"
       </div>
   </div>
 </div>
-<!-- modal success -->
-<div id="success" 
-class="modal fade"
-tabindex="-1"
-aria-labelledby="exampleModalLabel"
-aria-hidden="true"
->
-	<div class="modal-dialog modal-dialog-centered modal-sm">
-		<div class="modal-content">
-			
-			<div class="modal-body text-center">
-                <img src="../../assets/images/sucess-mark.svg" alt="sucess-mark" width="67px">
-				<p class="py-4">تم التسجبل بنجاح</p>
-			</div>
-		</div>
-	</div>
-</div>  

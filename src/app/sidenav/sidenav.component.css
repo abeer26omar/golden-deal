@@ -1,0 +1,44 @@
+.close {
+   color: var(--primary-color);
+   margin: 0.5rem;
+}
+ul.main-nv{
+    padding: 1rem 0;
+}
+ul,ul.more-list,
+ul.adds-list{
+    list-style: none;
+}
+ul.main-nv li.nav-item,
+ul.more-list li{
+    padding: .5rem 0;
+}
+ul.main-nv li.nav-item a.nav-link,
+ul.main-nv li.nav-item .ps-1{
+    color: var(--primary-color);
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+ ul.main-nv a.nav-link:hover,
+ ul.main-nv li.nav-item a.active,
+ ul.main-nv a.nav-link:hover .ps-1{
+    color: var(--org-color);
+}
+ul.more-list li a,
+ul.more-list li .ps-2{
+    color: var(--primary-color);
+    font-size: 1rem;
+    font-weight: 500;
+}
+ul.adds-list li a{
+    color: var(--sec-text);
+    font-weight: 400;
+}
+.create-account{
+    background-color: var(--org-color);
+    border-radius: 10px;
+    padding: .8rem 2rem;
+    color: var(--white);
+    font-weight: 500;
+    font-size: 1.2rem;
+}

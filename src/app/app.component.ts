@@ -9,11 +9,15 @@ import { AuthService } from './services/auth.service';
 })
 export class AppComponent {
   title = 'Golden-deal';
-  // loadMatSpinner :boolean = true;
+  sidebarOpen = true;
+
+  toggle(){
+    this.sidebarOpen = !this.sidebarOpen;
+  }
+  close(){
+    this.sidebarOpen = !this.sidebarOpen;
+  }
   constructor(public authService: AuthService){
-    // setTimeout(() => {
-    //   this.loadMatSpinner = false;
-    // }, 1000);
   }
   
 }

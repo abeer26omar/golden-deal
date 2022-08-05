@@ -6,6 +6,7 @@ import { ProductsRequestService } from '../../services/products-request.service'
 import { NgForm } from '@angular/forms';
 import { ActionsService } from 'src/app/services/actions.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { ResponseSuccess } from 'src/app/models/actions.model';
 declare var window: any;
 
 @Component({
@@ -51,6 +52,7 @@ export class ProductDetailsComponent implements OnInit {
   success:any;
   faild: any;
   errMsg: string = '';
+  sucessMsg: string = '';
   private routeSub: Subscription = new Subscription;
   private productSub: Subscription = new Subscription;
   
@@ -59,7 +61,7 @@ export class ProductDetailsComponent implements OnInit {
     private actionService : ActionsService) { }
 
   ngOnInit(): void {
-      this.routeSub = this.route.params.subscribe((params: Params) => {
+    this.routeSub = this.route.params.subscribe((params: Params) => {
       this.ProductId = params['id'];
       this.getProductDetails(this.ProductId);
     });
@@ -93,12 +95,21 @@ export class ProductDetailsComponent implements OnInit {
   }
   addToFav(){
     this.actionService.addToFav(this.singleProduct.data.id).subscribe({
-      next:res=>{
+      next:(res:ResponseSuccess)=>{
+        this.sucessMsg = res.data;
         this.success.show();
       },
       error:(err: HttpErrorResponse)=>{
         this.faild.show();
-        this.errMsg = err.error.data;
+        if(err.error.data){
+          this.errMsg = err.error.data;
+        } else{
+          if(err.statusText == 'Unauthorized'){
+            this.errMsg = 'يجب انشاء حساب اولا';
+          }else{
+            this.errMsg = err.statusText;
+          }
+        }
       }
     })
   }
@@ -117,19 +128,28 @@ export class ProductDetailsComponent implements OnInit {
       const desc = form.value.userdesc;
       const value = form.value.userrate;
       this.httpService.addRate(providerid , desc , value).subscribe({
-        next: (res)=>{
+        next: (res: ResponseSuccess)=>{
           this.loaderAdd = false;
           this.formModal2.hide();
+          this.sucessMsg = res.data;
           this.success.show();
         },
         error: (err: HttpErrorResponse)=>{
           this.loaderAdd = false;
           this.formModal2.hide();
           this.faild.show();
-          this.errMsg = err.error.data;
+          if(err.error.data){
+            this.errMsg = err.error.data;
+          } else{
+            if(err.statusText == 'Unauthorized'){
+              this.errMsg = 'يجب انشاء حساب اولا';
+            }else{
+              this.errMsg = err.statusText;
+            }
+          }
         }
       })
-      form.reset()
+      form.reset();
       this.formModal.hide();
   }
   onBuy(){

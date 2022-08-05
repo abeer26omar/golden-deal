@@ -31,7 +31,8 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSliderModule } from '@angular/material/slider';
 import { NzSliderModule } from 'ng-zorro-antd/slider';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatListModule } from '@angular/material/list'
 
 //components
 import { HeaderComponent } from './header/header.component';
@@ -61,6 +62,7 @@ import { DialogDeleteComponent } from './address/dialog-delete/dialog-delete.com
 import { DialogSolidComponent } from './adds/dialog-solid/dialog-solid.component';
 import { DialogImageComponent } from './profile/dialog-image/dialog-image.component';
 import { DialogCoverComponent } from './adds/dialog-cover/dialog-cover.component';
+import { SidenavComponent } from './sidenav/sidenav.component';
 
 @NgModule({
   declarations: [
@@ -92,6 +94,7 @@ import { DialogCoverComponent } from './adds/dialog-cover/dialog-cover.component
     DialogSolidComponent,
     DialogImageComponent,
     DialogCoverComponent,
+    SidenavComponent,
   ],
   imports: [
     BrowserModule,
@@ -123,7 +126,8 @@ import { DialogCoverComponent } from './adds/dialog-cover/dialog-cover.component
     MatDialogModule,
     MatSliderModule,
     NzSliderModule,
-    MatAutocompleteModule
+    MatSidenavModule,
+    MatListModule
     ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

@@ -1,5 +1,13 @@
-<app-header></app-header>
-<div class="container-fluid">
-    <router-outlet></router-outlet>
-</div>
-<app-footer></app-footer>
+<mat-sidenav-container>
+    <mat-sidenav #sidenav mode='over' [opened]='!sidebarOpen' 
+    fixedInViewport="true">
+      <app-sidenav (closeSideNav)="close()"></app-sidenav>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <app-header (toggleSideBar)= "toggle()"></app-header>
+      <div class="container-fluid">
+        <router-outlet></router-outlet>
+      </div>
+    <app-footer></app-footer>
+    </mat-sidenav-content>
+</mat-sidenav-container>

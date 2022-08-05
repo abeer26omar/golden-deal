@@ -29,6 +29,6 @@ export class SearchComponent implements OnInit {
     this.route.navigate(['/new-add'])
   }
   getSearchResult(){
-    this.route.navigate([`/search-result`,{ key: this.key }])
+    this.route.navigate([`/search-result`,{key: this.key}])
   }
 }

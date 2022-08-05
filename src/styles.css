@@ -306,3 +306,12 @@ input.star:checked ~ label.star:before {
 #search .mat-form-field-underline {
     width: 0 !important;
 }
+.mat-drawer {
+    width: 30%;
+    transition: all;
+}
+@media screen and (max-width: 575px) {
+    .mat-drawer {
+        width: 100%;
+    }
+}

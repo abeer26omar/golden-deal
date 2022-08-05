@@ -9,12 +9,13 @@ import { ProductsRequestService } from '../services/products-request.service'
 declare var window: any;
 
 @Component({
-  selector: 'app-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css']
+  selector: 'app-sidenav',
+  templateUrl: './sidenav.component.html',
+  styleUrls: ['./sidenav.component.css']
 })
-export class HeaderComponent implements OnInit {
-  @Output() toggleSideBar: EventEmitter<any> = new EventEmitter();
+export class SidenavComponent implements OnInit {
+  @Output() closeSideNav:EventEmitter<any> = new EventEmitter();
+
   panelOpenState = false;
   httpService: any;
   public categories : Array<Category> = [];
@@ -23,12 +24,13 @@ export class HeaderComponent implements OnInit {
   msgSucess: string = '';
   toastSuccess: any;
   toastFaild: any;
+  
   constructor(public authService: AuthService,
     private route: Router,
     private categoryService: ProductsRequestService) { 
-    this.userId = localStorage.getItem('userId')
-  }
-  ngOnInit(): void { 
+    this.userId = localStorage.getItem('userId');
+    }
+  ngOnInit(): void {
     this.getCategories();
     this.toastSuccess = new window.bootstrap.Toast(
       document.getElementById('toastSuccess')
@@ -36,6 +38,9 @@ export class HeaderComponent implements OnInit {
     this.toastFaild = new window.bootstrap.Toast(
       document.getElementById('toastFaild')
     )
+  }
+  closeNav(){
+    this.closeSideNav.emit();
   }
   private categorySub : Subscription = new Subscription;
 
@@ -77,12 +82,10 @@ export class HeaderComponent implements OnInit {
   termsCondition(slug: string){
     this.route.navigate(['/termsandconditions',slug])
   }
-  toggleSidebar(){
-    this.toggleSideBar.emit();
-  }
   ngOnDestory() :void{
    if(this.categorySub){
      this.categorySub.unsubscribe();
    }
   }
+
 }

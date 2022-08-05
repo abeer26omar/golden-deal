@@ -9,6 +9,11 @@ import { ResponseSuccess } from '../models/actions.model';
 })
 export class AuthService {
   auth_token: any;
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('token')}`
+    })
+  }
   private _isRegister = new BehaviorSubject<boolean>(false);
   isRegister = this._isRegister.asObservable();
   private _refresh = new Subject<void>();
@@ -29,13 +34,7 @@ export class AuthService {
       birth_date: birth_date,
       phone: phone
     })
-    .pipe(catchError(this.handelError))
   }
-  httpOptions = {
-    headers: new HttpHeaders({
-      'Authorization': `Bearer ${localStorage.getItem('token')}`
-    })}
-
   otpVerify(otp: number,token: any,id?:any){
     const headers = new HttpHeaders ({
       'Authorization': `Bearer ${token}`
@@ -60,18 +59,5 @@ export class AuthService {
   logOut(){
     return this.http.get<ResponseSuccess>(`${env.api_url}/auth/logout`, this.httpOptions)
   }
-  private handelError(errorRes: HttpErrorResponse){
-    let errorMsg = 'An unknown Error Occurred';
-
-      if(errorRes.error.data == 'الهاتف لابد ان يكون ارقام'){
-          errorMsg = 'الهاتف لابد ان يكون ارقام'
-          // console.log(errorMsg)
-        return throwError(errorMsg);
-      } 
-      else (errorRes.error.data == 'رقم الهاتف موجود بالفعل') 
-         errorMsg = `رقم الهاتف موجود بالفعل` 
-          //  return console.log(errorMsg)
-        return throwError(errorMsg);
-  }
-  }
+}
   

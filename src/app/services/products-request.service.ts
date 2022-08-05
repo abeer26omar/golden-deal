@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders} from '@angular/common/http';
 import { Observable, Subject, tap} from 'rxjs';
 import { environment as env } from 'src/environments/environment';
 import { Products , APIResponse , Product ,
-  APIResponse2 , Category, CategoryFilter, NewProduct, EditProduct, APIResponse4, EditProductFilters, Update} from '../models/products.model';
+  APIResponse2 , Category, CategoryFilter, NewProduct, EditProduct, APIResponse4, EditProductFilters, Update, APIResponse5, Search} from '../models/products.model';
 import { ResponseSuccess } from '../models/actions.model';
 
 @Injectable({
@@ -30,7 +30,7 @@ export class ProductsRequestService {
     return this.http.get<APIResponse2<Category>>(`${env.api_url}/categories`)
   }
   addRate(provider_id :number, desc: string, value: number){
-    return this.http.post(`${env.api_url}/rating/new`,{
+    return this.http.post<ResponseSuccess>(`${env.api_url}/rating/new`,{
       provider_id: provider_id,
       desc: desc,
       value: value
@@ -74,6 +74,11 @@ export class ProductsRequestService {
   applayFilter(body: any){
     return this.http.post<ResponseSuccess>(`${env.api_url}/filters/submit-filters`,
     body,this.httpOptions).pipe(tap(()=>{
+      this._refresh.next();
+    }))
+  }
+  searchResult(key: string){
+    return this.http.get<APIResponse5<Search>>(`${env.api_url}/products/search-products/search-with-key?key=${key}`,this.httpOptions).pipe(tap(()=>{
       this._refresh.next();
     }))
   }

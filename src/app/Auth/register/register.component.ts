@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgOtpInputConfig } from 'ng-otp-input';
 import { AuthService } from 'src/app/services/auth.service';
 import { Login, Verify } from 'src/app/models/user.model';
+import { HttpErrorResponse } from '@angular/common/http';
 declare var window: any;
 
 @Component({
@@ -35,7 +36,6 @@ export class RegisterComponent implements OnInit {
   }
   }
   otpModal: any;
-  successModal: any;
   signin: any;
   signup: any;
   formbox: any;
@@ -84,9 +84,6 @@ export class RegisterComponent implements OnInit {
     this.otpModal = new window.bootstrap.Modal(
       document.getElementById('otpModel')
     );
-    this.successModal = new window.bootstrap.Modal(
-      document.getElementById('success')
-    )
     this.signin = document.getElementById('signin');
     this.signup = document.getElementById('signup');
     this.formbox = document.querySelector('.form');
@@ -117,10 +114,14 @@ export class RegisterComponent implements OnInit {
             this.loader = false;
             this.openOtpModal(); 
         },
-        error: errorMsg =>{
+        error: (err: HttpErrorResponse) =>{
             this.loader = false;
-            this.error = errorMsg;
-            localStorage.clear()
+            if(err.error.data){
+              this.error = err.error.data;
+            } else{
+              this.error = err.statusText;
+            }
+            localStorage.clear();
           }
       })  
     }
@@ -141,9 +142,13 @@ export class RegisterComponent implements OnInit {
           this.userData = resData;
           this.openOtpModal(); 
         },
-        error: ()=>{
+        error: (err: HttpErrorResponse)=>{
           this.loaderLogin = false;
-          this.errorLogin =" هذا الحساب غير موجود";
+          if(err.error.data){
+            this.errorLogin = err.error.data;
+          } else{
+            this.errorLogin = err.statusText;
+          }
           localStorage.clear();
         }
       })
@@ -166,7 +171,6 @@ export class RegisterComponent implements OnInit {
       this.subOtp = !this.subOtp;
     }
   }
-  
   //timer to resend
   startTimer() {
     this.interval = setInterval(() => {
@@ -192,9 +196,13 @@ export class RegisterComponent implements OnInit {
         this.router.navigate(['/home'])
       },1500)
     },
-    error: (err) =>{
+    error: (err: HttpErrorResponse) =>{
       this.loaderOtp = false;
-      this.errorOtp = 'الكود الذى ادخلته غير صحيح';
+      if(err.error.data){
+        this.errorOtp = err.error.data;
+      } else{
+        this.errorOtp = err.statusText;
+      }
       localStorage.clear();
     }
    })
@@ -203,14 +211,11 @@ export class RegisterComponent implements OnInit {
     this.otpModal.show();
     this.startTimer();
   }
-  openSuccessModal(){
-    this.otpModal.hide();
-    this.successModal.show();
-  }
   resendOtp(){
     this.loaderOtp = true;
     this.auth.resendOtp(this.token).subscribe({
-      next: (res)=>{
+      next: (res: Verify)=>{
+        this.succMsg = res.data;
         this.resMsg = true ;
         this.loaderOtp = false;
         setTimeout(()=>{
@@ -219,8 +224,13 @@ export class RegisterComponent implements OnInit {
           this.timeLeft = 60;
         },1500)
       },
-      error: error=>{
+      error: (err: HttpErrorResponse)=>{
         this.loaderOtp = false;
+        if(err.error.data){
+          this.errorOtp = err.error.data;
+        } else{
+          this.errorOtp = err.statusText;
+        }
         localStorage.clear()
       }
     })

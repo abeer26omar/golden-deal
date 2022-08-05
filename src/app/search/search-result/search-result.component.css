@@ -13,3 +13,24 @@ span.title{
     font-size: 1.3rem;
    
 }
+.text{
+    color: var(--sec-text);
+    font-size: 1.3rem;
+    font-weight: 500;
+}
+input{
+    padding: 0.7rem 0.75rem;
+    padding-right: 3rem;
+    border-radius: 10px;
+    color: var(--gray);
+    font-weight: 400;
+}
+.btn-search{
+    position: absolute;
+    color: var(--white);
+    padding: 0.6rem;
+    background-color: var(--org-color); 
+}
+.btn-search:hover{
+    transform: none;
+}

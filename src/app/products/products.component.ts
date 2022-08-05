@@ -150,5 +150,8 @@ export class ProductsComponent implements OnInit {
     if(this.categorySub){
       this.categorySub.unsubscribe();
     }
+    if(this.filterSub){
+      this.filterSub.unsubscribe();
+    }
   }
 }

@@ -1,30 +1,53 @@
-<app-search></app-search>
-<app-adds-banner></app-adds-banner>
+<!-- <app-search></app-search> -->
+<div class="">
+  <div class="row justify-content-center align-items-center pt-5 pb-4">
+      <div class="col-sm-12 col-md-8" id="search">
+              <input class="form-control" (input)="search($event)" type="search" placeholder="البحث" aria-label="Search">
+      </div>
+  </div>
+</div>
 <section class="buy-record mt-5 mb-5">
     <div class="header ">
         <span class="title"><img src="../../assets/images/left-arrow.svg" class="ps-2">نتائج البحث</span>
     </div>
-    <div class="my-prods pt-5 pb-5">
+    <div class="my-prods pt-5 pb-5 text-center">
+
+      <div class="loader pt-5 pb-5" *ngIf="loader" dir="ltr">
+        <svg version="1.1" id="L3" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+      viewBox="0 0 100 100" width="70px" height="70px" enable-background="new 0 0 0 0" xml:space="preserve">
+      <circle fill="none" stroke="#E29547" stroke-width="4" cx="50" cy="50" r="44" style="opacity:0.7;"/>
+      <circle fill="#E29547" stroke="#FFEEDD" stroke-width="3" cx="8" cy="54" r="6" >
+        <animateTransform
+          attributeName="transform"
+          dur="1s"
+          type="rotate"
+          from="0 50 48"
+          to="360 50 52"
+          repeatCount="indefinite" />
+      </circle>
+      </svg>
+      </div>
+      <p class="text-danger text-center"  *ngIf="error && searchRes.length == 0 ">{{errMsg}}</p>
+      <p class="text text-center" *ngIf="(!error) && searchRes.length == 0 ">لا يوجد منتجات</p>
         <div class="products-row row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4 justify-content-start">
-              <div class="col wow fadeIn" 
-               data-wow-duration="1.3s"  style="visibility: visible; animation-duration: 1.3s; 
-               animation-name: fadeIn;" >
+              <div class="col wow" *ngFor="let add of searchRes">
                 <div class="card h-100">
                   <div class="card-header text-center" >
-                    <!-- <img *ngIf="record.default_image" src="{{record.default_image}}" alt="car" width="100%" height="200px !important"> -->
-                    <img  src="../../assets/images/placeholderimg.jpg" alt="placeholderimg" width="100%" height="200px !important">                
+                    <img *ngIf="add.default_image" src="{{add.default_image}}" alt="car" width="100%" height="200px !important">
+                    <img *ngIf="!add.default_image" src="../../assets/images/placeholderimg.jpg" alt="placeholderimg" width="100%" height="200px !important">                
                   </div>
                   <div class="card-body text-center">
                     <a style="cursor: pointer;">
-                      <!-- <h4>{{(record.name.length > 20)? (record.name | slice:0:20)+'..':(record.name)}}</h4> -->
+                      <h4>{{(add.name.length > 20)? (add.name | slice:0:20)+'..':(add.name)}}</h4>
                     </a>
-                    <!-- <p class="discription">{{(record.desc.length > 40)? (record.desc| slice:0:40)+'..': (record.desc)}}</p> -->
-                    <!-- <p class="time"><img src="../../assets/images/clock.svg" alt="clock"><span>{{record.created_since}}</span></p> -->
+                    <p class="discription">{{(add.desc.length > 40)? (add.desc| slice:0:40)+'..': (add.desc)}}</p>
+                    <p class="time">
+                      <img src="../../assets/images/clock.svg" alt="clock"><span>{{add.created_since}}</span>
+                    </p>
                   </div>
                 </div>
               </div>
           </div> 
-          <!-- <p class="text-danger text-center" *ngIf="records.length == 0">لا يوجد مشتريات</p> -->
     </div>
 </section>
 <app-testimonial></app-testimonial>

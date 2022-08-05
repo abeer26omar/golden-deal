@@ -35,15 +35,4 @@ input{
 .btn-search:hover{
     transform: none;
 }
-.search-list{
-    position: absolute;
-    width: initial;
-    background-color: var(--bg-color);
-    z-index: 99;
-}
-.mat-form-field {
-    width: 100% !important;
-    border: 1px solid var();
-    border-radius: 10px;
-    border: 1px solid var(--gray);
-}
+

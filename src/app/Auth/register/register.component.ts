@@ -194,6 +194,9 @@ export class RegisterComponent implements OnInit {
       setTimeout(()=>{
         this.otpModal.hide();
         this.router.navigate(['/home'])
+        setTimeout(()=>{
+          window.location.reload();
+        },500)
       },1500)
     },
     error: (err: HttpErrorResponse) =>{

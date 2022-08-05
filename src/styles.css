@@ -309,9 +309,19 @@ input.star:checked ~ label.star:before {
 .mat-drawer {
     width: 30%;
     transition: all;
+    z-index: 9999 !important;
 }
 @media screen and (max-width: 575px) {
     .mat-drawer {
         width: 100%;
     }
+}
+.mat-drawer-container {
+    position: static !important;
+}
+.mat-drawer-content {
+    position: static !important;
+}
+.mat-drawer-backdrop {
+    z-index: 9999 !important;
 }

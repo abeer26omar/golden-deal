@@ -62,7 +62,10 @@ export class HeaderComponent implements OnInit {
         this.toastSuccess.show();
         this.msgSucess = res.data
         localStorage.clear();
-        window.location.reload();
+        this.route.navigate(['/home'])
+        setTimeout(()=>{
+          window.location.reload();
+        },500)
       },
       error: (err: HttpErrorResponse)=>{
         this.toastFaild.show();

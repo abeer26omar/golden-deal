@@ -32,6 +32,9 @@ input{
     padding: 0.6rem;
     background-color: var(--org-color);
 }
+.btn-search.mac{
+    padding: .8rem .6rem;
+}
 .btn-search:hover{
     transform: none;
 }

@@ -25,10 +25,11 @@
 
 body { 
     margin: 0; 
+    padding: 0;
     direction: rtl;
 }
 *{
-    font-family: var(--font-family);
+    font-family: var(--font-family) !important;
 }
 .container-fluid {
     padding-right: var(--bs-gutter-x,3rem);

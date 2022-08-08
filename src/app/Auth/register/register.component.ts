@@ -59,13 +59,12 @@ export class RegisterComponent implements OnInit {
     name: new FormControl('', [Validators.required]),
     gender: new FormControl('', [Validators.required]),
     dateOfBirth: new FormControl('', [Validators.required]),
-    phone: new FormControl('', [Validators.required]),
-    // , Validators.pattern('^[6-9]\d{9}$')
+    phone: new FormControl('', [Validators.required, Validators.pattern("[0-9]{9}")]),
   });
   
   //login
   loginForm = new FormGroup({
-    phone: new FormControl('',[Validators.required])
+    phone: new FormControl('',[Validators.required, Validators.pattern("[0-9]{9}")])
   });
 
   constructor(private auth: AuthService, 
@@ -101,7 +100,7 @@ export class RegisterComponent implements OnInit {
     const userName = this.registerForm.get('name')?.value;
     const userGender = this.registerForm.get('gender')?.value;
     const userDateOfBirth = this.registerForm.get('dateOfBirth')?.value;
-    const userPhone = this.registerForm.get('phone')?.value;
+    const userPhone = '+966' + this.registerForm.get('phone')?.value;
     if(this.registerForm.valid){
       this.loader = true;
       this.error = '';
@@ -130,7 +129,7 @@ export class RegisterComponent implements OnInit {
     }    
   }
   submitLogin(){
-    const phoneNo = this.loginForm.get('phone')?.value;
+    const phoneNo = '+966' + this.loginForm.get('phone')?.value  ;
     if(this.loginForm.valid){
       this.loaderLogin = true;
       this.errorLogin = '';    

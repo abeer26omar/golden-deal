@@ -58,10 +58,19 @@
                                             </mat-datepicker-toggle>
                                             <mat-datepicker #picker></mat-datepicker>
                                           </mat-form-field> 
-                                          <mat-form-field appearance="legacy">
+                                          
+                                        <mat-form-field appearance="legacy" style="width: 70%;">
                                             <mat-label>رقم الهاتف</mat-label>
-                                            <input type="tel" matInput placeholder="+966 1234 5678" formControlName="phone">
-                                        </mat-form-field>
+                                            <input matInput 
+                                                type="tel" 
+                                                placeholder="رقم الهاتف" 
+                                                formControlName="phone">
+                                          </mat-form-field>
+                                          <mat-form-field appearance="legacy" style="width: 30%;">
+                                            <input matInput readonly>
+                                            <span matPrefix>+966 &nbsp;</span>
+                                            <mat-icon matSuffix><img src="../../../assets/images/suadi.svg" alt="suadi-flag" width="40px"></mat-icon>
+                                          </mat-form-field>
                                         <span *ngIf="fRegister['phone'].touched && fRegister['phone'].invalid" class="text-danger m-0">
                                             ارقام سعوديه فقط
                                         </span>
@@ -81,10 +90,23 @@
                                         {{errorLogin}}
                                       </div>
                                     <form [formGroup]="loginForm" (ngSubmit)="submitLogin()" class="row  g-3">
-                                          <mat-form-field appearance="legacy">
+                                          <mat-form-field appearance="legacy" style="width: 70%;">
                                             <mat-label>رقم الهاتف</mat-label>
-                                            <input matInput placeholder="رقم الهاتف" formControlName="phone">
+                                            <input matInput 
+                                                type="tel" 
+                                                placeholder="رقم الهاتف" 
+                                                formControlName="phone">
                                           </mat-form-field>
+                                          <mat-form-field appearance="legacy" style="width: 30%;">
+                                            <input matInput readonly>
+                                            <span matPrefix>+966 &nbsp;</span>
+                                            <mat-icon matSuffix>
+                                                <img src="../../../assets/images/suadi.svg" alt="suadi-flag" width="40px">
+                                            </mat-icon>
+                                          </mat-form-field>
+                                          <span *ngIf="fLogin['phone'].touched && fLogin['phone'].invalid" class="text-danger m-0">
+                                            ارقام سعوديه فقط
+                                        </span>
                                           <p class="agree">بالنقر فوق تسجيل الدخول ، فإنك توافق على شروطنا. تعرف على كيفية معالجة بياناتك في سياسة الخصوصية وسياسة ملفات تعريف الارتباط. بالنقر فوق تسجيل الدخول ، فإنك توافق على شروطنا. تعرف على كيفية معالجة بياناتك في سياسة الخصوصية وملفات تعريف الارتباط الخاصة بنا </p>
                                           <div class="d-flex justify-content-center pt-3">
                                               <button class="btn btn-prim" type="submit">تسجيل الدخول</button>

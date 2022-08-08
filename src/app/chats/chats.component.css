@@ -16,6 +16,9 @@ p.title{
     padding: 0;
     margin: 0;
 }
+.side-chat .card-body .chats{
+    cursor: pointer;
+}
 .side-chat .card-body .chats img{
     width: 48px;
     height: 48px;
@@ -335,4 +338,11 @@ h4.card-title {
 
 .text-info {
     color: #48b0f7 !important;
+}
+.nav-link {
+    padding: 0; 
+}
+.nav-pills .nav-link.active , .nav-pills .show>.nav-link {
+    color: #fff;
+    background-color: hsl(0, 0%, 97%);
 }

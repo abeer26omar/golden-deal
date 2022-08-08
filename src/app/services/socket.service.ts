@@ -1,44 +1,34 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { HttpClient, HttpHeaders} from '@angular/common/http';
 import { environment as env } from 'src/environments/environment';
+import { BehaviorSubject, Observable, Subject,tap } from 'rxjs';
 import { io } from "socket.io-client";
+import { ResponseSuccess } from '../models/actions.model';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class SocketService {
-  public message$: BehaviorSubject<string> = new BehaviorSubject('');
-
-  constructor() { }
-  socket = io(env.socket_url);
-
-  // connected(data :any): void{
-  //   this.socket.emit('user_connected' , data)
-  // }
-  // sendMsg(data :any): void{
-  //   this.socket.emit('send_message' , data)
-  // }
-  // getMsg(): Observable<any>{
-  //   return new Observable<{user: string, message: string}>((observer:any) =>{
-  //     this.socket.on('new_message', (data:any)=>{
-  //       observer.next(data);
-  //     })
-  //     return ()=>{
-  //       this.socket.disconnect()
-  //     }
-  //   })
-  // }
-  
-  public sendMessage(message: any) {
-    this.socket.emit('send_message', message);
-  }
-
-  public getNewMessage = () => {
-    this.socket.on('new_message', (message) =>{
-      this.message$.next(message);
-    });
-    
-    return this.message$.asObservable();
-  };
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('token')}`
+    })}
+  constructor(private http: HttpClient) { }
+    private _refresh = new Subject<void>();
+    get refresh(){
+      return this._refresh;
+    }
+    sendSupportMsg(message: any){
+      return this.http.post<ResponseSuccess>(`${env.api_url}/support/send-message`,
+      message,this.httpOptions).pipe(tap(()=>{
+        this._refresh.next();
+      }))
+    }
+    getAllSupportMsg(){
+      return this.http.get<ResponseSuccess>(`${env.api_url}/support/get-messages`,
+      this.httpOptions).pipe(tap(()=>{
+        this._refresh.next();
+      }))
+    }
 }

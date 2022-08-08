@@ -17,28 +17,77 @@
                                 </div>
                                 <small class="time">منذ 4 ابام</small>
                             </div>
+                            
+                            <mat-divider class="my-3"></mat-divider>
+                        </div>
+                        <div class="column">
+                            <div class="chats d-flex justify-content-between">
+                                <div class="avatar avatar-online">
+                                    <img src="../../assets/images/suportChat.svg" alt="avatar-img">
+                                </div>
+                                <div class="chat">
+                                    <p class="chat-name">الدعم</p>
+                                    <p class="chat-desc">سياره جديده-سياره جديده</p>
+                                </div>
+                                <small class="time">منذ 4 ابام</small>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="col-xl-9 col-lg-8 col-12">
-            <div class="chat-content">
-                <div class="card">
-                    <div class="card-header d-flex justify-content-center">
-                        <p class="user-name"> المدير</p>
-                        <button  type="button" >
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                          </button>
+            <div class="page-content page-container" id="page-content">
+                <div class="row d-flex justify-content-center">
+                    <div class="card card-bordered">
+                        <div class="card-header">
+                            <h4 class="card-title"><strong>الدعم</strong></h4>
+                        </div>
+                        <div class="ps-container ps-theme-default ps-active-y" id="chat-content" style="overflow-y: scroll !important; height:400px !important;">
+                            <div class="media media-chat media-chat-reverse">
+                              <div class="media-body">
+                                <div class="d-flex p-2 flex-row-reverse media-2">
+                                    <img class="avatar" src="https://img.icons8.com/color/36/000000/administrator-male.png" alt="...">
+                                    <p>السلام عليكم كيق يمكسيتاب تبيتنابابا</p>
+                                </div>
+                                <p>Do you have pictures of Matley Marriage?</p>
+                                <p>Do you have pictures of Matley Marriage?</p>
+                                <p>Do you have pictures of Matley Marriage?</p>
+                              </div>
+                            </div>
+            
+                            <div class="media media-chat">
+                                <div class="media-body">
+                                    <div class="d-flex p-2 media-1">
+                                        <img class="avatar" src="https://img.icons8.com/color/36/000000/administrator-male.png" alt="...">
+                                        <p>السلام عليكم كيق يمكسيتاب تبيتنابابا</p>
+                                    </div>
+                                    <p>Do you have pictures of Matley Marriage?</p>
+                              </div>
+                            </div>
+            
+            
+                          <div class="ps-scrollbar-x-rail" style="left: 0px; bottom: 0px;"><div class="ps-scrollbar-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps-scrollbar-y-rail" style="top: 0px; height: 0px; right: 2px;"><div class="ps-scrollbar-y" tabindex="0" style="top: 0px; height: 2px;"></div></div></div>
+            
+                          <form action="">
+                          <div class="publisher">
+                            <div class="outer">
+                                <div class="d-flex align-items-center">
+                                    <img class="avatar avatar-xs" src="../../assets/images/smiliy.svg" alt="smiliy">
+                                    <input class="publisher-input form-control" 
+                                    type="text" placeholder="اكتب هنا"
+                                    [(ngModel)]="newMessage" (keyup)="$event.keyCode == 13 && sendMessage()">
+                                </div>
+                                <label class="file-group">
+                                  <img src="../../assets/images/attach.svg" alt="attach">
+                                  <input type="file" hidden width="1px">
+                                </label>
+                            </div>
+                                <button class="btn text-info" (click)="sendMessage()"><img src="../../assets/images/send.svg" alt="" style="width: 50px;"></button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-<!-- <div class="layout overflow-hidden">
-    <aside class="sidebar">
-        <div class="tab-content-h-100" role="tablist"></div>
-    </aside>
-</div> -->

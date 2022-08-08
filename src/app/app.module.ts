@@ -32,8 +32,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatSliderModule } from '@angular/material/slider';
 import { NzSliderModule } from 'ng-zorro-antd/slider';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatListModule } from '@angular/material/list'
-
+import { MatListModule } from '@angular/material/list';
 //components
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
@@ -127,7 +126,7 @@ import { SidenavComponent } from './sidenav/sidenav.component';
     MatSliderModule,
     NzSliderModule,
     MatSidenavModule,
-    MatListModule
+    MatListModule,
     ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

@@ -32,6 +32,7 @@
     "ngx-star-rating": "^2.1.0",
     "ngx-wow": "^2.0.1",
     "rxjs": "~7.5.0",
+    "socket.io-client": "^4.5.1",
     "tslib": "^2.4.0",
     "zone.js": "~0.11.4"
   },

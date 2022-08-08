@@ -11,15 +11,7 @@ export class SocketService {
   public message$: BehaviorSubject<string> = new BehaviorSubject('');
 
   constructor() { }
-  socket = io(env.socket_url,{
-    withCredentials: true,
-    extraHeaders: {
-      "Access-Control-Allow-Origin": "*", 
-      'Access-Control-Allow-Credentials': 'true' ,
-      "Access-Control-Allow-Methods" : 'OPTIONS, GET, POST',
-      "Access-Control-Allow-Headers": "Content-Type, Depth, User-Agent, X-File-Size, X-Requested-With, If-Modified-Since, X-File-Name, Cache-Control"   
-    }
-  });
+  socket = io(env.socket_url);
 
   // connected(data :any): void{
   //   this.socket.emit('user_connected' , data)

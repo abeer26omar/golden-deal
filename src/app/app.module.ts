@@ -63,6 +63,7 @@ import { DialogSolidComponent } from './adds/dialog-solid/dialog-solid.component
 import { DialogImageComponent } from './profile/dialog-image/dialog-image.component';
 import { DialogCoverComponent } from './adds/dialog-cover/dialog-cover.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
+import { ChatSupportComponent } from './chats/chat-support/chat-support.component';
 
 @NgModule({
   declarations: [
@@ -95,6 +96,7 @@ import { SidenavComponent } from './sidenav/sidenav.component';
     DialogImageComponent,
     DialogCoverComponent,
     SidenavComponent,
+    ChatSupportComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,60 +1,8 @@
-.chat-content,
-.side-chat{
+.chat-content{
     box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.15);
     border-radius: 15px;
     background-color: var(--white);
 }
-.side-chat .card-header{
-    border-bottom: none;
-    padding: 1.5rem;
-    background-color: transparent;
-}
-p.title{
-    font-weight: 600;
-    color: var(--black);
-    font-size: 1.3rem;
-    padding: 0;
-    margin: 0;
-}
-.side-chat .card-body .chats{
-    cursor: pointer;
-}
-.side-chat .card-body .chats img{
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-}
-.avatar-offline::after, 
-.avatar-online::after {
-    position: relative;
-    border-radius: 50%;
-    display: block;
-    content: "";
-    height: 10px;
-    top: -11px;
-    left: -34px;
-    width: 10px;
-}
-.avatar-online::after {
-    background-color: var(--online);
-}
-.avatar-offline::after{
-    background-color: var(--offline);
-}
-.side-chat .card-body p.chat-name{
-    margin: 0;
-    padding: 0;
-    color: var(--primary-color);
-    font-weight: 600;
-}
-.side-chat .card-body p.chat-desc{
-    color: var(--primary-color);
-}
-.side-chat .card-body small.time{
-    font-size: 0.7em;
-    color: var(--sec-text);
-}
-/* 888888888888888888888888888888888 */
 .card-bordered {
     border: 1px solid #ebebeb;
 }
@@ -76,17 +24,19 @@ p.title{
 body {
     background-color: #f9f9fa
 }
-
+h4.card-title{
+    color: var(--primary-color);
+    font-size: 1.4rem;
+    font-weight: 500;
+}
 .card-header:first-child {
     border-radius: calc(.25rem - 1px) calc(.25rem - 1px) 0 0;
 }
-
-
 .card-header {
     display: -webkit-box;
     display: flex;
     -webkit-box-pack: justify;
-    justify-content: space-between;
+    justify-content: center;
     -webkit-box-align: center;
     align-items: center;
     padding: 15px 20px;
@@ -132,9 +82,6 @@ h4.card-title {
 
 
 .card-title {
-    font-family: Roboto,sans-serif;
-    font-weight: 300;
-    line-height: 1.5;
     margin-bottom: 0;
     padding: 15px 20px;
     border-bottom: 1px solid rgba(77,82,89,0.07);
@@ -306,9 +253,6 @@ h4.card-title {
 .publisher-input:focus{
     box-shadow: none;
 }
-/* .publisher-input::placeholder{
-    vertical-align:middle
-} */
 
 .publisher-btn {
     background-color: transparent;
@@ -332,9 +276,6 @@ h4.card-title {
     transition: .2s linear;
 } 
 
-.file-group input[type="file"] {
-    visibility: hidden;
-}
 
 .text-info {
     color: #48b0f7 !important;

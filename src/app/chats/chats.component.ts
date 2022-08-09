@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
+
 import { ChatService } from '../services/chat.service';
 
 @Component({
@@ -8,30 +9,31 @@ import { ChatService } from '../services/chat.service';
   styleUrls: ['./chats.component.css']
 })
 export class ChatsComponent implements OnInit {
-  public chatSub: Subscription = new Subscription;
-  chatType: boolean = false;
+  userId = localStorage.getItem('userId');
+  message: string = '';
+  messageArr: {user: string, msg: string}[] = []
+  currUser: any
+  
   constructor(private chatService: ChatService) { 
   }
-
   ngOnInit(): void {
-    this.join()
+    this.connect();
+    this.getAllPreMsgList()
   }
-  join(){
-    this.chatService.userConnected('abeer')
+  connect(){
+    this.chatService.connect(this.userId)
   }
-  // sendSupport(){
-  //   const formdata = new FormData();
-  //   this.chatSub = this.chatService.sendSupportMsg(formdata).subscribe({
-  //   })
-  // }
-  // getAllMsg(){
-  //   this.chatSub = this.chatService.getAllSupportMsg().subscribe({
-
-  //   })
-  // }
-  // ngOnDestory() :void{
-  //   if(this.chatSub){
-  //     this.chatSub.unsubscribe();
-  //   }
-  // }
+  getAllPreMsgList(){
+    this.chatService.getAllPreMsgList(this.userId).subscribe({
+      next: res=>{
+        console.log(res);
+        
+      },
+      error: err=>{
+        console.log(err);
+        
+      }
+    })
+  }
+  
 }

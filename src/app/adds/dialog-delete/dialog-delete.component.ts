@@ -1,6 +1,8 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit ,Inject} from '@angular/core';
 import { MatDialogClose, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
+import { ResponseSuccess } from 'src/app/models/actions.model';
 import { ProductsRequestService } from 'src/app/services/products-request.service';
 @Component({
   selector: 'app-dialog-delete',
@@ -28,11 +30,16 @@ export class DialogDeleteComponent implements OnInit {
   deleteAdd(){
     this.load = true;
     this.delSub = this.productService.deleteProduct(this.id).subscribe({
-      next:res=>{
-        this.sucMsg = 'تم الحذف بنجاح';
+      next:(res: ResponseSuccess)=>{
+        this.sucMsg = res.data;
       },
-      error: err=>{
-        this.failMsg = 'لم ينجح الحذف';
+      error: (err: HttpErrorResponse)=>{
+        this.load = false;
+        if(err.error.data){
+          this.failMsg = err.error.data;
+        }else{
+          this.failMsg = err.statusText;
+        }
       }
     })
    

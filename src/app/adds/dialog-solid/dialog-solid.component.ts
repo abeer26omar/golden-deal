@@ -1,6 +1,8 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogClose, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
+import { ResponseSuccess } from 'src/app/models/actions.model';
 import { AddressesService } from 'src/app/services/addresses.service';
 import { ProductsRequestService } from 'src/app/services/products-request.service';
 @Component({
@@ -25,13 +27,17 @@ export class DialogSolidComponent implements OnInit {
   setAsSolid(){
     this.load = true;
     this.solidSub = this.productService.setAsSolid(this.id).subscribe({
-      next:res=>{
+      next:(res:ResponseSuccess)=>{
         this.load = false;
-        this.sucMsg = 'تم التحديد كمباع';
+        this.sucMsg = res.data;
       },
-      error:err=>{
+      error: (err: HttpErrorResponse)=>{
         this.load = false;
-        this.failMsg = 'حدث خطا';
+        if(err.error.data){
+          this.failMsg = err.error.data;
+        }else{
+          this.failMsg = err.statusText;
+        }
       }
     })
   }

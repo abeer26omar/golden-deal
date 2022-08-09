@@ -146,9 +146,10 @@ data-bs-backdrop="static"
         </div>
         <div class="modal-body">
             <p class="send">تم ارسال رمز التحقق الي الرقم</p>
-            <p class="number">{{fRegister['phone'].value}}</p>
-            <p class="number">{{fLogin['phone'].value}}</p>
-                <ng-otp-input  (onInputChange)="onOtpChange($event)"   [config]="config"></ng-otp-input>
+            <p class="number" *ngIf="!login">{{'+966' + fRegister['phone'].value}}</p>
+            <p class="number">{{'+966' + fLogin['phone'].value}}</p>
+                <ng-otp-input  (onInputChange)="onOtpChange($event)" 
+                  [config]="config"></ng-otp-input>
                 <div>
                     <a class="resend" [ngClass]="{'pe-none': resend}"
                     (click)="resendOtp()">اعاده ارسال الرمز بعد</a><span>0:{{timeLeft}}</span>

@@ -1,5 +1,5 @@
 <mat-nav-list>
-    <a class="close" (click)="closeNav()"><mat-icon>close</mat-icon></a>
+    <a class="close" (click)="closeNav()"><img src="../../assets/images/close.svg" alt="close"></a>
     <div class="logo py-4 d-flex align-items-center justify-content-center">
         <a (click)="closeNav()" routerLink="/home">
             <img src="../../assets/images/header-logo.svg" alt="header-logo" width="100%">
@@ -43,7 +43,9 @@
                     <div class="collapse" id="forms-collapse2" >
                       <ul class="adds-list p-0">
                           <li *ngFor="let category of categories">
-                            <a [routerLink]="['/home']" fragment="{{category.slug}}}" class="d-inline-flex align-items-center rounded">{{category.title}}</a>
+                            <a [routerLink]="['/home']" 
+                            fragment="{{category.slug}}}" 
+                            class="d-inline-flex align-items-center rounded" (click)="closeNav()">{{category.title}}</a>
                           </li>
                       </ul>
                     </div>

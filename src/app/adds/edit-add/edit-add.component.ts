@@ -1,7 +1,7 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup} from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
 import { APIResponse2, APIResponse4, Category, EditProduct, EditProductFilters, Update } from 'src/app/models/products.model';
 import { ProductsRequestService } from 'src/app/services/products-request.service';
@@ -144,9 +144,13 @@ export class EditAddComponent implements OnInit {
       next: (categoryList: APIResponse2<Category>)=>{ 
         this.categories = categoryList.data;
       },
-      error: err=>{
-          this.error = 'An unknown Error Occurred Check your Internet Connection Or Reload Your Page';
-          this.addFaild.show();
+      error: (err: HttpErrorResponse)=>{
+        if(err.error.data){
+          this.error = err.error.data;
+        }else{
+          this.error = err.statusText;
+        }
+        this.addFaild.show();
       }
     })
   }
@@ -158,9 +162,6 @@ export class EditAddComponent implements OnInit {
         this.Add.data.product_images.forEach(ele=>{
          this.images.push(ele.image_url)
         })
-        // this.imgSrc = this.Add.data.product_images[0].image_url;
-        // this.imgSrc1 = this.Add.data.product_images[1].image_url;
-        // this.imgSrc3 = this.Add.data.product_images[2].image_url;
         this.myForm = new FormGroup({
           seller_phone: new FormControl(this.Add.data.seller_phone),
           productCategory: new FormControl(this.Add.data.category_slug),
@@ -176,8 +177,12 @@ export class EditAddComponent implements OnInit {
         });
         this.getAddFilters();
       },
-      error: err=>{
-        this.error = 'حدث خطا';
+      error: (err: HttpErrorResponse)=>{
+        if(err.error.data){
+          this.error = err.error.data;
+        }else{
+          this.error = err.statusText;
+        }
         this.addFaild.show();
       }
     })
@@ -190,8 +195,12 @@ export class EditAddComponent implements OnInit {
           this.myForm.addControl(ele.slug_name,new FormControl(ele.filter_value.filter_value))
         })
       },
-      error: err=>{
-        this.error = 'حدث خطا';
+      error: (err: HttpErrorResponse)=>{
+        if(err.error.data){
+          this.error = err.error.data;
+        }else{
+          this.error = err.statusText;
+        }
         this.addFaild.show();
       }
     })
@@ -209,11 +218,18 @@ export class EditAddComponent implements OnInit {
         this.updateProduct = res;
         this.modelSuccessNewProduct.show()
       },
-      error: err=>{
-        this.error = 'حدث خطا';
+      error: (err: HttpErrorResponse)=>{
+        if(err.error.data){
+          this.error = err.error.data;
+        }else{
+          this.error = err.statusText;
+        }
         this.addFaild.show();
       }
     })
+  }
+  close(){
+    this.modelAddImages.hide()
   }
   ngOnDestory() :void{
     if(this.editSub){

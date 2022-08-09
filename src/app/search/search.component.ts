@@ -37,9 +37,7 @@ export class SearchComponent implements OnInit {
       if(userAgent.match(/safari/i)){
         browserName = "safari";
         
-      } else {
-        // console.log('la blah blah');
-        
+      } else {        
       }
       
       if (window.navigator.userAgent.indexOf("Mac") != -1) {

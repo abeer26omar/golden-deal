@@ -1,5 +1,7 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit ,Inject} from '@angular/core';
 import { MatDialogClose, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { ResponseSuccess } from 'src/app/models/actions.model';
 import { ProfileService } from 'src/app/services/profile.service';
 
 @Component({
@@ -33,13 +35,17 @@ export class DialogCoverComponent implements OnInit {
     let formData = new FormData();
     formData.append('cover',this.file,this.file.name);
     this.profileService.updateCover(formData).subscribe({
-      next: res=>{
+      next: (res: ResponseSuccess)=>{
         this.load = false;
-        this.msg = 'تم التغيير بنجاح';
+        this.msg = res.data;
       },
-      error: err=>{
+      error: (err: HttpErrorResponse)=>{
         this.load = false;
-        this.msgErr = 'حدث خطا';
+        if(err.error.data){
+          this.msgErr = err.error.data;
+        }else{
+          this.msgErr = err.statusText;
+        }
       }
     })
   }

@@ -134,6 +134,7 @@ aria-hidden="true"
 >
 	<div class="modal-dialog modal-dialog-centered">
 		<div class="modal-content">
+            <a (click)="close()"><img src="../../../assets/images/close.svg" alt="close"></a>
 			<div class="modal-header justify-content-center">
                 <h5 class="title text-center" id="staticBackdropLabel">تعديل صور المنتج</h5>
 			</div>
@@ -164,7 +165,7 @@ aria-hidden="true"
                                 (change)="onFileChange3($event)">
                                 <div class="text-center">
                                     <img   [src]="imgSrc3" height="150" width="200px" style="margin: 3px;">
-                                    <p>اضافه صور المنتج</p>
+                                    <p>تعديل صور المنتج</p>
                                 </div>
                         </label>
                     </div>
@@ -178,13 +179,13 @@ aria-hidden="true"
                                 (change)="onFileChange($event)">
                                 <div class="text-center">
                                     <img  [src]="imgSrc" height="150" width="200px" style="margin: 3px;">
-                                    <p>اضافه صور المنتج</p>
+                                    <p>تعديل صور المنتج</p>
                                 </div>
                         </label>
                     </div>
                 </div>
                 <div class="footer text-center">
-                    <button type="button" class="btn btn-prim m-3">اضافه</button>
+                    <button type="button" class="btn btn-prim m-3" (click)="close()">اضافه</button>
                 </div>
             </div>
 			</div>

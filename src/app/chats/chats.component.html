@@ -5,9 +5,10 @@
                     <div class="card-header">
                         <p class="title text-center">المحادثات</p>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body ps-container ps-theme-default ps-active-y" 
+                     style="overflow-y: scroll !important; height:400px !important;">
                         <ul ngbNav #nav="ngbNav" 
-                             class="nav-pills p-0" orientation="vertical">
+                            class="nav-pills p-0" orientation="vertical">
                             <li ngbNavItem="">
                               <a ngbNavLink>
                                 <div class="column">
@@ -84,7 +85,7 @@
                               <a ngbNavLink>
                                 <div class="column">
                                     <div class="chats d-flex justify-content-between"
-                                    (click)="getAllMsg()"
+                                    
                                     >
                                         <div class="avatar avatar-online">
                                             <img src="../../assets/images/suportChat.svg" alt="avatar-img">
@@ -116,7 +117,6 @@
                                                     <p>Do you have pictures of Matley Marriage?</p>
                                                   </div>
                                                 </div>
-                                
                                                 <div class="media media-chat">
                                                     <div class="media-body">
                                                         <div class="d-flex p-2 media-1">
@@ -126,10 +126,13 @@
                                                         <p>Do you have pictures of Matley Marriage?</p>
                                                   </div>
                                                 </div>
-                                
-                                
-                                              <div class="ps-scrollbar-x-rail" style="left: 0px; bottom: 0px;"><div class="ps-scrollbar-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps-scrollbar-y-rail" style="top: 0px; height: 0px; right: 2px;"><div class="ps-scrollbar-y" tabindex="0" style="top: 0px; height: 2px;"></div></div></div>
-                                
+                                              <div class="ps-scrollbar-x-rail" style="left: 0px; bottom: 0px;">
+                                                <div class="ps-scrollbar-x" tabindex="0" style="left: 0px; width: 0px;"></div>
+                                              </div>
+                                              <div class="ps-scrollbar-y-rail" style="top: 0px; height: 0px; right: 2px;">
+                                                <div class="ps-scrollbar-y" tabindex="0" style="top: 0px; height: 2px;"></div>
+                                              </div>
+                                            </div>
                                             <form >
                                               <div class="publisher">
                                                 <div class="outer">
@@ -144,7 +147,7 @@
                                                       <input type="file" hidden width="1px">
                                                     </label>
                                                 </div>
-                                                    <button class="btn text-info" (click)="sendSupport()"><img src="../../assets/images/send.svg" alt="" style="width: 50px;"></button>
+                                                    <button class="btn text-info" ><img src="../../assets/images/send.svg" alt="" style="width: 50px;"></button>
                                                 </div>
                                             </form> 
                                         </div>

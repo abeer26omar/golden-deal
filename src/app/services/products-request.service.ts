@@ -39,12 +39,12 @@ export class ProductsRequestService {
     }))
   }
   setAsSolid(id: number){
-    return this.http.get(`${env.api_url}/products/set-product-as-sold/${id}`,this.httpOptions).pipe(tap(()=>{
+    return this.http.get<ResponseSuccess>(`${env.api_url}/products/set-product-as-sold/${id}`,this.httpOptions).pipe(tap(()=>{
       this._refresh.next();
     }))
   }
   deleteProduct(id: number){
-    return this.http.get(`${env.api_url}/products/delete-product/${id}`,this.httpOptions).pipe(tap(()=>{
+    return this.http.get<ResponseSuccess>(`${env.api_url}/products/delete-product/${id}`,this.httpOptions).pipe(tap(()=>{
       this._refresh.next();
     }))
   }

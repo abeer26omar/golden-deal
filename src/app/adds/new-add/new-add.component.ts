@@ -132,11 +132,13 @@ export class NewAddComponent implements OnInit {
       next: (categoryList: APIResponse2<Category>)=>{ 
         this.categories = categoryList.data;
       },
-      error:(error : HttpErrorResponse)=>{
-        if(error){
-          this.error = 'An unknown Error Occurred Check your Internet Connection Or Reload Your Page';
-          this.addFaild.show();
+      error: (err: HttpErrorResponse)=>{
+        if(err.error.data){
+          this.error = err.error.data;
+        }else{
+          this.error = err.statusText;
         }
+        this.addFaild.show();
       }
     })
   }
@@ -156,8 +158,12 @@ export class NewAddComponent implements OnInit {
           this.filtersArr.push(this.newFormControl)
         })                
       },
-      error: err=>{
-        this.error = 'حدث خطا';
+      error: (err: HttpErrorResponse)=>{
+        if(err.error.data){
+          this.error = err.error.data;
+        }else{
+          this.error = err.statusText;
+        }
         this.addFaild.show();
       }
     })
@@ -191,9 +197,13 @@ export class NewAddComponent implements OnInit {
               this.router.navigate([`/adds/${this.ownerId}`])
             },1000) 
           },
-          error: err=>{
+          error: (err: HttpErrorResponse)=>{
             this.load = false;
-            this.error = 'لم ينجح الحفظ';
+            if(err.error.data){
+              this.error = err.error.data;
+            }else{
+              this.error = err.statusText;
+            }
             this.addFaild.show();
           }
         })   

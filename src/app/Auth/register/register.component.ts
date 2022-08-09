@@ -53,6 +53,7 @@ export class RegisterComponent implements OnInit {
   token: any;
   id: any;
   succMsg: string = '';
+  login: boolean = false;
 
   //register
   registerForm = new FormGroup({
@@ -140,6 +141,7 @@ export class RegisterComponent implements OnInit {
           this.loaderLogin = false;
           this.userData = resData;
           this.openOtpModal(); 
+          this.login = true;
         },
         error: (err: HttpErrorResponse)=>{
           this.loaderLogin = false;
@@ -188,6 +190,7 @@ export class RegisterComponent implements OnInit {
     next:(res: Verify)=>{
       this.succMsg = res.data;
       this.loaderOtp = false;
+      this.login = true;
       localStorage.setItem('token', this.token);
       localStorage.setItem('userId', JSON.stringify(this.id));
       setTimeout(()=>{

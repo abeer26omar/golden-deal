@@ -217,3 +217,23 @@ p.pref{
 #success .modal-header{
     border: none;
 }
+.phone{
+  width: 70% ;
+}
+.phone-prefix{
+  width: 30% ;
+}
+.phone span{
+  display: none;
+}
+@media screen and (max-width: 400px) {
+  .phone{
+    width: 100% ;
+  }
+  .phone span{
+    display: block !important;
+  }
+  .phone-prefix{
+    display: none;
+  }
+}

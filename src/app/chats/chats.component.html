@@ -5,23 +5,25 @@
                     <div class="card-header">
                         <p class="title text-center">المحادثات</p>
                     </div>
-                    <div class="card-body ps-container ps-theme-default ps-active-y" 
+                    <mat-progress-bar mode="indeterminate"  *ngIf="loader" id="addprog"></mat-progress-bar>
+                    <div class="card-body ps-container mt-2 ps-theme-default ps-active-y" 
                      style="overflow-y: scroll !important; height:400px !important;">
                         <ul ngbNav #nav="ngbNav" 
                             class="nav-pills p-0" orientation="vertical">
-                            <li ngbNavItem="">
-                              <a ngbNavLink>
+                            <li ngbNavItem *ngFor="let user of msgUsersList">
+                              <a ngbNavLink (click)="getChat(user.sender, user.receiver.id)">
                                 <div class="column">
                                     <div class="chats d-flex justify-content-between">
-                                        <div class=" avatar-online">
-                                            <img src="../../../assets/images/caradd.svg" 
-                                            alt="avatar-img">
+                                        <div class="avatar-online">
+                                            <img [src]="(user.receiver.image_url == 
+                                            'https://deal.qbizns.com/storage/users/avatar/default.png' || !user.receiver.image_url) ?
+                                             '../../assets/images/Portrait_Placeholder.png' : user.receiver.image_url" alt="">
                                         </div>
                                         <div class="chat">
-                                            <p class="chat-name">مريم على</p>
-                                            <p class="chat-desc">سياره جديده-سياره جديده</p>
+                                            <p class="chat-name">{{user.receiver.name}}</p>
+                                            <p class="chat-desc">{{user.message}}</p>
                                         </div>
-                                        <small class="time">منذ 4 ابام</small>
+                                        <small class="time">منذ {{user.seen_at}} ابام</small>
                                     </div>
                                     <mat-divider class="my-3"></mat-divider>
                                 </div>
@@ -30,33 +32,27 @@
                                 <div class="page-content page-container" id="page-content">
                                     <div class="row d-flex justify-content-center">
                                         <div class="card card-bordered">
-                                            <div class="card-header">
-                                                <h4 class="card-title"><strong>الدعم</strong></h4>
+                                            <div class="card-header justify-content-center">
+                                                <h4 class="card-title"><strong>{{user.receiver.name}}</strong></h4>
                                             </div>
-                                            <div class="ps-container ps-theme-default ps-active-y" id="chat-content" style="overflow-y: scroll !important; height:400px !important;">
-                                                <div class="media media-chat media-chat-reverse">
+                                            <mat-progress-bar mode="indeterminate"  *ngIf="load" id="addprog"></mat-progress-bar>
+                                            <div class="ps-container ps-theme-default ps-active-y mt-2" id="chat-content" style="overflow-y: scroll !important; height:400px !important;">
+                                                <div class="media media-chat" 
+                                                [ngClass]="{'media-chat-reverse' : user.sender === msg.receiver.id}"
+                                                    *ngFor="let msg of usersMsg">
                                                   <div class="media-body">
-                                                    <div class="d-flex p-2 flex-row-reverse media-2">
-                                                        <img class="avatar" src="https://img.icons8.com/color/36/000000/administrator-male.png" alt="...">
-                                                        <p>السلام عليكم كيق يمكسيتاب تبيتنابابا</p>
+                                                    <div class="d-flex p-2 m-1 media-1 media-2">
+                                                        <img *ngIf="user.sender === msg.receiver.id" class="avatar" [src]="(msg.receiver.image_url == 
+                                                        'https://deal.qbizns.com/storage/users/avatar/default.png' || !msg.receiver.image_url) ?
+                                                         '../../assets/images/Portrait_Placeholder.png' : msg.receiver.image_url" alt="...">
+                                                         <img *ngIf="!(user.receiver.id === msg.receiver.id)" class="avatar" [src]="(msg.sender.image_url == 
+                                                        'https://deal.qbizns.com/storage/users/avatar/default.png' || !msg.sender.image_url) ?
+                                                         '../../assets/images/Portrait_Placeholder.png' : msg.receiver.image_url" alt="...">
+                                                        <p>{{msg.message}}</p>
                                                     </div>
-                                                    <p>Do you have pictures of Matley Marriage?</p>
-                                                    <p>Do you have pictures of Matley Marriage?</p>
-                                                    <p>Do you have pictures of Matley Marriage?</p>
                                                   </div>
                                                 </div>
-                                
-                                                <div class="media media-chat">
-                                                    <div class="media-body">
-                                                        <div class="d-flex p-2 media-1">
-                                                            <img class="avatar" src="https://img.icons8.com/color/36/000000/administrator-male.png" alt="...">
-                                                            <p>السلام عليكم كيق يمكسيتاب تبيتنابابا</p>
-                                                        </div>
-                                                        <p>Do you have pictures of Matley Marriage?</p>
-                                                  </div>
-                                                </div>
-                                
-                                
+                                                <p class="text-danger text-center" *ngIf="errorTxt">{{errorTxt}}</p>
                                               <div class="ps-scrollbar-x-rail" style="left: 0px; bottom: 0px;"><div class="ps-scrollbar-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps-scrollbar-y-rail" style="top: 0px; height: 0px; right: 2px;"><div class="ps-scrollbar-y" tabindex="0" style="top: 0px; height: 2px;"></div></div></div>
                                 
                                               <form action="">
@@ -65,15 +61,17 @@
                                                     <div class="d-flex align-items-center">
                                                         <img class="avatar avatar-xs" src="../../assets/images/smiliy.svg" alt="smiliy">
                                                         <input class="publisher-input form-control" 
-                                                        type="text" placeholder="اكتب هنا"
+                                                        type="text" 
+                                                        placeholder="اكتب هنا"
+                                                        [(ngModel)]="messageTxt"
+                                                        [ngModelOptions]="{standalone: true}"
+                                                        (keyup)="$event.keyCode === 13 && sendMsg(user.sender, user.receiver.id, messageTxt)"
                                                         >
                                                     </div>
-                                                    <label class="file-group">
-                                                      <img src="../../assets/images/attach.svg" alt="attach">
-                                                      <input type="file" hidden width="1px">
-                                                    </label>
                                                 </div>
-                                                    <button class="btn text-info"><img src="../../assets/images/send.svg" alt="" style="width: 50px;"></button>
+                                                    <button class="btn text-info" (click)="sendMsg(user.sender, user.receiver.id, messageTxt)">
+                                                        <img src="../../assets/images/send.svg" alt="" style="width: 50px;">
+                                                    </button>
                                                 </div>
                                             </form>
                                         </div>
@@ -81,18 +79,16 @@
                                 </div>
                               </ng-template>
                             </li>
+                            <p class="text-center text-danger" *ngIf="errorlist">{{errorlist}}</p>
                             <li ngbNavItem="support">
                               <a ngbNavLink >
                                 <div class="column">
-                                    <div class="chats d-flex justify-content-between"
-
-                                    >
+                                    <div class="chats d-flex justify-content-between">
                                         <div class=" avatar-online">
                                             <img src="../../assets/images/suportChat.svg" alt="avatar-img">
                                         </div>
-                                        <div class="chat">
+                                        <div class="chat ">
                                             <p class="chat-name">الدعم</p>
-                                            <p class="chat-desc">سياره جديده-سياره جديده</p>
                                         </div>
                                         <small class="time">منذ 4 ابام</small>
                                     </div>

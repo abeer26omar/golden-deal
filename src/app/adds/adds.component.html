@@ -209,7 +209,7 @@
                                 </div>
                               </div>
                         </div>
-                        <p class="none" *ngIf="!orders">لا يوجد طلبات</p>
+                        <p class="none" *ngIf="errorder !== ''">{{errorder}}</p>
                       </ng-template>
                     </li>
                   </ul>

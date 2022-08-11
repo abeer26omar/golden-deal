@@ -25,6 +25,7 @@ export class AddsComponent implements OnInit {
   portfolioId!: number;
   error: string = '';
   errFav: string = '';
+  errorder: string = '';
   successMsg: string = '';
   loadding: boolean = false;
   result: string = '';
@@ -178,6 +179,11 @@ export class AddsComponent implements OnInit {
       next:(resData: APIresponse2<Orders>)=>{
         this.loadding = false;
         this.orders = resData.data;
+        if(this.orders.length == 0){
+          this.errorder = 'لا يوجد طلبات';
+        }else{
+          this.errorder = '';
+        }
       },
       error: (err: HttpErrorResponse)=>{
         this.loadding = false;

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
-
 import { ChatService } from '../services/chat.service';
+import { APIResponse6, MessagesList ,Messages, APIResponse7} from '../models/chat.model';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-chats',
@@ -12,28 +13,68 @@ export class ChatsComponent implements OnInit {
   userId = localStorage.getItem('userId');
   message: string = '';
   messageArr: {user: string, msg: string}[] = []
-  currUser: any
-  
+  currUser: any;
+  messageTxt: string = '';
+  errorTxt: string = '';
+  errorlist: string = '';
+  senderMsg: any = [];
+  recieverMsg: any = [];
+  load: boolean = false;
+  loader: boolean = false;
+
+  public msgUsersList: Array<MessagesList> = []
+  public usersMsg: Array<Messages> = []
+
+  public chatSub: Subscription = new Subscription;
   constructor(private chatService: ChatService) { 
   }
   ngOnInit(): void {
-    this.connect();
+    // this.connect();
     this.getAllPreMsgList()
   }
-  connect(){
-    this.chatService.connect(this.userId)
+  // connect(){
+  //   this.chatService.connect(this.userId)
+  // }
+  sendMsg(sender: any, receiver: any, message: any){
+    // console.log(sender, receiver,message);
   }
   getAllPreMsgList(){
-    this.chatService.getAllPreMsgList(this.userId).subscribe({
-      next: res=>{
-        console.log(res);
-        
+    this.loader = true;
+    this.chatService.getAllPreMsgList().subscribe({
+      next: (res: APIResponse6<MessagesList>)=>{
+        this.loader = false;
+        this.msgUsersList = res.data;        
+      },
+      error: (err: HttpErrorResponse)=>{
+        this.loader = false;
+        if(err.error.data){
+          this.errorlist = err.error.data;
+        }else{
+          this.errorlist = err.statusText;
+        }        
+      }
+    })
+  } 
+  getChat(senderId: number, receiverId: number){
+    this.load = true;
+    this.chatSub = this.chatService.getAllMessages(senderId,receiverId).subscribe({
+      next: (res: APIResponse7<Messages>)=>{
+        this.load = false;
+        this.usersMsg = res.data  
       },
       error: err=>{
-        console.log(err);
-        
+        this.load = false;
+          if(err.error.data){
+            this.errorTxt = err.error.data;
+          }else{
+            this.errorTxt = err.statusText;
+          }        
       }
     })
   }
-  
+  ngOnDestory() :void{
+    if(this.chatSub){
+      this.chatSub.unsubscribe();
+    }
+  } 
 }

@@ -14,12 +14,42 @@ export interface Support{
     }
 }
 export interface MessagesList{
-    userid: number,
-    username: string,
-    avatar: string,
-    message: string,
-    last_message_date: string
+            id: number,
+            sender: number,
+            receiver: {
+                id: number,
+                name: string,
+                image_url: string,
+                cover_url: string
+            },
+            message: string,
+            seen_at: number,
+            created_at: string,
+            updated_at: string
 }
 export interface APIResponse6<T>{
+    data: Array<T>
+}
+export interface Messages{
+            id: number,
+            sender: {
+                id: number,
+                name: string,
+                image_url: string,
+                cover_url: string
+            },
+            receiver: {
+                id: number,
+                name: string,
+                image_url: string,
+                cover_url: string
+            },
+            message: string,
+            seen_at: number,
+            created_at: string,
+            updated_at: string
+        
+}
+export interface APIResponse7<T>{
     data: Array<T>
 }

@@ -59,16 +59,17 @@
                                             <mat-datepicker #picker></mat-datepicker>
                                           </mat-form-field> 
                                           
-                                        <mat-form-field appearance="legacy" style="width: 70%;">
+                                        <mat-form-field appearance="legacy" class="phone">
                                             <mat-label>رقم الهاتف</mat-label>
                                             <input matInput 
-                                                type="tel" 
-                                                placeholder="رقم الهاتف" 
-                                                formControlName="phone">
-                                          </mat-form-field>
-                                          <mat-form-field appearance="legacy" style="width: 30%;">
-                                            <input matInput readonly>
+                                            type="tel" 
+                                            placeholder="رقم الهاتف" 
+                                            formControlName="phone">
                                             <span matPrefix>+966 &nbsp;</span>
+                                          </mat-form-field>
+                                          <mat-form-field appearance="legacy" class="phone-prefix">
+                                            <input matInput readonly>
+                                            <span matPrefix>966+ &nbsp;</span>
                                             <mat-icon matSuffix><img src="../../../assets/images/suadi.svg" alt="suadi-flag" width="40px"></mat-icon>
                                           </mat-form-field>
                                         <span *ngIf="fRegister['phone'].touched && fRegister['phone'].invalid" class="text-danger m-0">
@@ -90,16 +91,17 @@
                                         {{errorLogin}}
                                       </div>
                                     <form [formGroup]="loginForm" (ngSubmit)="submitLogin()" class="row  g-3">
-                                          <mat-form-field appearance="legacy" style="width: 70%;">
+                                        <mat-form-field appearance="legacy" class="phone">
                                             <mat-label>رقم الهاتف</mat-label>
+                                            <span matPrefix>966+ &nbsp;</span>
                                             <input matInput 
-                                                type="tel" 
-                                                placeholder="رقم الهاتف" 
-                                                formControlName="phone">
+                                            type="tel" 
+                                            placeholder="رقم الهاتف" 
+                                            formControlName="phone">
                                           </mat-form-field>
-                                          <mat-form-field appearance="legacy" style="width: 30%;">
+                                          <mat-form-field appearance="legacy" class="phone-prefix">
                                             <input matInput readonly>
-                                            <span matPrefix>+966 &nbsp;</span>
+                                            <span matPrefix>966+ &nbsp;</span>
                                             <mat-icon matSuffix>
                                                 <img src="../../../assets/images/suadi.svg" alt="suadi-flag" width="40px">
                                             </mat-icon>
@@ -124,14 +126,15 @@
 <div class="modal fade"
 id="otpModel"
 tabindex="-1"
-aria-labelledby="exampleModalLabel"
 aria-hidden="true"
 data-bs-backdrop="static"
+data-bs-keyboard="false" 
+aria-labelledby="staticBackdropLabel" 
 >
   <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
-        <div class="close">
-            <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close">
+        <div class="close" id="staticBackdropLabel">
+            <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close" (click)="closeOtp()">
                 <img src="../../../assets/images/close.svg" alt="close">
             </button>
         </div>
@@ -146,8 +149,8 @@ data-bs-backdrop="static"
         </div>
         <div class="modal-body">
             <p class="send">تم ارسال رمز التحقق الي الرقم</p>
-            <p class="number" *ngIf="!login">{{'+966' + fRegister['phone'].value}}</p>
-            <p class="number">{{'+966' + fLogin['phone'].value}}</p>
+            <p class="number" *ngIf="!login">{{'966' + fRegister['phone'].value}}</p>
+            <p class="number" *ngIf="login">{{'966' + fLogin['phone'].value}}</p>
                 <ng-otp-input  (onInputChange)="onOtpChange($event)" 
                   [config]="config"></ng-otp-input>
                 <div>

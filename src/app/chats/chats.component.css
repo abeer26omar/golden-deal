@@ -128,7 +128,11 @@ h4.card-title {
     color:#fff !important;
 }
 
-
+.card-header h4.card-title{
+    color: var(--primary-color);
+    font-size: 1.4rem;
+    font-weight: 500;
+}
 
 
 .card-title {
@@ -192,7 +196,7 @@ h4.card-title {
     background-color: var(--primary-color);
     border-radius: 22.0238px;
 }
-.media-chat .media-body .media-2{
+.media-chat.media-chat-reverse .media-body .media-2{
     background-color: var(--bg-color);
     border-radius: 22.0238px;
 }

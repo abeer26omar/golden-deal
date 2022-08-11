@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { APIResponse5, Search } from 'src/app/models/products.model';
 import { ProductsRequestService } from 'src/app/services/products-request.service';
@@ -20,8 +20,8 @@ export class SearchResultComponent implements OnInit {
   public searchRes : Array<Search> = [];
 
   constructor(private route: ActivatedRoute,
-    private productService: ProductsRequestService) { 
-
+    private productService: ProductsRequestService,
+    private router: Router) { 
     } 
     
     ngOnInit(): void {
@@ -51,6 +51,12 @@ export class SearchResultComponent implements OnInit {
     this.errMsg = '';
     this.getSearchResult(this.key2);
   }
-  goAgain(){
+  productDetails(id: number){
+    this.router.navigate(['product-details', id])
+  }
+  ngOnDestory() :void{
+    if(this.routeSub){
+      this.routeSub.unsubscribe();
+    }
   }
 }

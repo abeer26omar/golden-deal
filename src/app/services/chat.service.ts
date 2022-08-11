@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { environment as env } from 'src/environments/environment';
 import { io, Socket } from 'socket.io-client';
-import { Observable, Subject, tap } from 'rxjs';
+import { Subject, tap } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { APIResponse6, MessagesList, Support } from '../models/chat.model';
+import { APIResponse6, APIResponse7, Messages, MessagesList, Support } from '../models/chat.model';
 import { ResponseSuccess } from '../models/actions.model';
 
 @Injectable({
@@ -14,6 +14,10 @@ export class ChatService {
   httpOptions = {
     headers: new HttpHeaders({
       'Authorization': `Bearer ${localStorage.getItem('token')}`,
+    })
+  }
+  httpHeader = {
+    headers: new HttpHeaders({
       'Access-Control-Allow-Origin': '*'
     })
   }
@@ -24,29 +28,35 @@ export class ChatService {
   constructor(private http: HttpClient) { 
     this.socket = io(env.socket_url)
   }
-  connect(data: any): void{
-    this.socket.emit('user_connected', data)
+  // connect(data: any): void{
+  //   this.socket.emit('user_connected', data)
+  // }
+  // sendMessage(data: any): void{
+  //   this.socket.emit('send_message', data)
+  // }
+  // getMessage() : Observable<any>{
+  //   return new Observable<{sender: string, receiver: string, message: string}>(observer =>{
+  //     this.socket.on('new_message', (data)=>{
+  //       observer.next(data)
+  //     })
+  //     return ()=>{
+  //       this.socket.disconnect();
+  //     }
+  //   })
+  // }
+  getAllPreMsgList(){
+    return this.http.get<APIResponse6<MessagesList>>(`${env.api_url}/chat/get-conversation-list`,
+    this.httpOptions)
   }
-  sendMessage(data: any): void{
-    this.socket.emit('send_message', data)
-  }
-  getMessage() : Observable<any>{
-    return new Observable<any>(observer =>{
-      this.socket.on('new_message', (data)=>{
-        observer.next(data)
-      })
-      return ()=>{
-        this.socket.disconnect();
-      }
-    })
-  }
-  getAllPreMsgList(sender: any){
-    return this.http.post<APIResponse6<MessagesList>>(`${env.socket_url}get_conversation_list`,{
-     'sender': JSON.parse(sender)
-    })
+  getAllMessages(receiver: any, sender: any){
+    return this.http.post<APIResponse7<Messages>>(`${env.api_url}/chat/get-messages`,{
+      receiver: receiver,
+      sender: sender
+    },this.httpOptions)
   }
   getAllSupportMsg(){
-    return this.http.get<Support>(`${env.api_url}/support/get-messages`,this.httpOptions).pipe(tap(()=>{
+    return this.http.get<Support>(`${env.api_url}/support/get-messages`,
+    this.httpOptions).pipe(tap(()=>{
       this._refresh.next();
     }))
   }

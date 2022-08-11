@@ -240,4 +240,8 @@ export class RegisterComponent implements OnInit {
       }
     })
   }
+  closeOtp(){
+    this.timeLeft = 60;
+    this.otpModal.hide();
+  }
 }

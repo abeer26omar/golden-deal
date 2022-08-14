@@ -152,6 +152,12 @@ input.star:checked ~ label.star:before {
     box-shadow: 0px 1.86006px 7.44023px rgba(0, 0, 0, 0.25);
     caret-color: var(--org-color);
 }
+/* #otpModel .modal-body .otp-input:not(.ng-pristine){
+    border: 1px solid var(--org-color);
+} */
+#otpModel .modal-body .otp-input:focus {
+    border: 1px solid var(--org-color) !important;
+}
 .mat-progress-spinner,
 .mat-progress-spinner svg {
     width: 40px !important;

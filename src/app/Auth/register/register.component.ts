@@ -158,13 +158,16 @@ export class RegisterComponent implements OnInit {
   //otp input
   otp!: number ;
   showOtpComponent = true;
-  @ViewChild('ngOtpInput', { static: false}) ngOtpInput: any;
+  // @ViewChild('ngOtpInput', { static: false}) ngOtpInput: any;
   config:NgOtpInputConfig = {
     allowNumbersOnly: true,
     length: 4,
     isPasswordInput: false,
     disableAutoFocus: false,
-    placeholder: ''
+    placeholder: '',
+    containerStyles:{
+      'direction': 'ltr'
+    }  
   };
   onOtpChange(otp:any) {
     this.otp = otp;

@@ -45,7 +45,6 @@ export class SearchComponent implements OnInit {
         this.mac =  true;
 
       } else{
-        console.log('fgfhdh')
         this.mac =  false;
       } 
   }

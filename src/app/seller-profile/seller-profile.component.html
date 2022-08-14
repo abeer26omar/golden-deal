@@ -1,0 +1,163 @@
+<div class="add-content mt-5 mb-5">
+    <div class="card">
+        <div class="card-header">
+          <img class="imgCover" *ngIf="!portfolio.data.cover_url" src="../../assets/images/coverPlaceholder.png" alt="cover" >
+          <img class="imgCover" *ngIf="portfolio.data.cover_url" src="{{portfolio.data.cover_url}}" alt="cover">
+        </div>
+        <div class="card-body">
+            <div class="user-profile">
+                <div class="profile-img">
+                    <img *ngIf="portfolio.data.image_url" src="{{portfolio.data.image_url}}" alt="profile">
+                    <img *ngIf="!portfolio.data.image_url" src="../../assets/images/profilePlacholder.png" alt="profile">
+                </div>
+                <div class="row justify-content-center my-info">
+                    <div class="user-data text-center col-sm-5 col-12 ">
+                        <p class="user-name">{{portfolio.data.name}}</p>
+                        <div class="d-flex justify-content-evenly pt-5 align-items-center">
+                            <div class="crown">
+                                <img src="../../assets/images/profile-crown.svg" alt="profile-crown">
+                                <p class="user-rate">{{(portfolio.data.sum_of_ratings / portfolio.data.ratings_count)}}</p>
+                            </div>
+                            <img src="../../assets/images/divider-1.svg" alt="divider-1" class="divider">
+                            <div class="rate">
+                                <img src="../../assets/images/chat-msg.svg" alt="chat-msg">
+                                <p class="user-rate">{{portfolio.data.ratings_count}} تقيم</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="user-info p-3">
+                  <ul ngbNav #nav="ngbNav" class="nav-tabs">
+                    <li [ngbNavItem]="1">
+                      <a ngbNavLink>التقيمات</a>
+                      <ng-template ngbNavContent>
+                        <div class="loader text-center pt-5 pb-5" *ngIf="loadding" dir="ltr">
+                          <svg version="1.1" id="L3" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                        viewBox="0 0 100 100" width="70px" height="70px" enable-background="new 0 0 0 0" xml:space="preserve">
+                        <circle fill="none" stroke="#E29547" stroke-width="4" cx="50" cy="50" r="44" style="opacity:0.7;"/>
+                        <circle fill="#E29547" stroke="#FFEEDD" stroke-width="3" cx="8" cy="54" r="6" >
+                          <animateTransform
+                            attributeName="transform"
+                            dur="1s"
+                            type="rotate"
+                            from="0 50 48"
+                            to="360 50 52"
+                            repeatCount="indefinite" />
+                        </circle>
+                        </svg>
+                        </div>
+                        <div class="rating-row row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 g-4 justify-content-center pt-5 pb-5" >
+                            <div class="col wow" 
+                             *ngFor="let rate of portfolio.data.provider_ratings">
+                              <div class="card h-100 card-rate">
+                                <div class="card-body text-center">
+                                  <div class="client-img">
+                                    <img src="../../assets/images/profile-img.svg" alt="profile">
+                                  </div>
+                                  <div class="client-name pt-1">
+                                      <p>ندا على</p>
+                                  </div>
+                                  <div class="rate d-flex justify-content-center">
+                                    <ng-container *ngFor="let _ of [].constructor(rate.value)">
+                                      <img src="../../../../assets/images/ratestar.svg" alt="ratestar" width="13%">
+                                    </ng-container>
+                                  </div>
+                                  <div class="desc pt-2">
+                                      <p>{{(rate.desc.length)? (rate.desc | slice:0:20)+'...':(rate.desc)}}</p>
+                                      <small>منذ {{rate.created_since}} ايام</small>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                        </div>
+                        <p class="none" *ngIf="!portfolio.data.reviews">لا يوجد تقيميات</p>
+                      </ng-template>
+                    </li>
+                    <li [ngbNavItem]="2">
+                      <a ngbNavLink>الاعلانات</a>
+                      <ng-template ngbNavContent>
+                        <div class="filter d-flex justify-content-between align-items-center pt-3">
+                            <p class="all">الكل</p>
+                            <a (click)="openFilterModal()">
+                              <img src="../../assets/images/filter.svg" alt="filter" width="50px">
+                            </a>
+                        </div>
+                        <p class="filter-result"><span class="ps-2">نشطه</span></p>
+                        <div class="products-row row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4 justify-content-start">
+                              <div class="col wow" 
+                                *ngFor="let product of portfolio.data.products">
+                                <div class="card h-100">
+                                  <div class="card-header text-center" >
+                                    <img  class="img-raduis" *ngIf="product.default_image" src="{{product.default_image}}" alt="car" width="100%" height="200px !important">
+                                    <img class="img-raduis" *ngIf="!product.default_image" src="../../assets/images/ring.svg" alt="placeholderimg" width="100%" height="200px !important">                
+                                  </div>
+                                  <div class="card-body text-center">
+                                    <a (click)="productDetails(product.id)" style="cursor: pointer;">
+                                      <h4 class="mb-0 p-2">{{(product.name.length > 20)? (product.name | slice:0:20)+'...':(product.name)}}</h4>
+                                    </a>
+                                    <p class="discription">{{(product.desc.length > 40)? (product.desc | slice:0:40)+'...':(product.desc)}}</p>
+                                    <p class="time"><img src="../../assets/images/timerlightblue.svg" alt="timerlightblue"><span>{{product.created_since}} ايام</span></p>
+                                    <p class="price">{{product.price}}</p>
+                                  </div>
+                                </div>
+                              </div>
+                        </div>
+                        <p class="none" *ngIf="portfolio.data.products.length == 0">لا يوجد اعلانات</p>
+                      </ng-template>
+                    </li>
+                  </ul>
+                  <div [ngbNavOutlet]="nav" class="mt-2 px-3"></div>
+            </div> 
+        </div>
+    </div>
+</div>
+<!-- filter modal -->
+<div class="modal fade"
+id="myModalFilter"
+tabindex="-1"
+aria-labelledby="exampleModalLabel"
+aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-sm">
+      <div class="modal-content">
+        <div class="modal-header justify-content-center">
+          <h5 class="modal-title text-center" >اضافه فلتر</h5>
+        </div>
+        <mat-progress-bar mode="indeterminate" class="my-3" *ngIf="load" id="addprog"></mat-progress-bar>
+        <p class="text-center" *ngIf="result">{{result}}</p>
+        <p class="text-danger" *ngIf="error">{{error}}</p>
+        <div class="modal-body">
+            <div class="sort py-2">
+                <select class="form-select" 
+                  aria-label="Default select example" 
+                  #status (change)="onSelected(status.value)">
+                    <option value="0">منتهية</option>
+                    <option value="1">نشطه</option>
+                </select>
+            </div>
+        </div>
+        <div class="modal-footer justify-content-center">
+          <button type="button" class="btn btn-save">تأكيد</button>
+        </div>
+      </div>
+  </div>
+</div>
+<!-- faild  -->
+<div id="faildAdds" 
+class="modal fade"
+tabindex="-1"
+aria-labelledby="exampleModalLabel"
+aria-hidden="true"
+>
+	<div class="modal-dialog modal-dialog-centered modal-sm">
+		<div class="modal-content">
+			<div class="modal-header justify-content-center">
+        <img src="../../assets/images/faild-mark.svg" alt="faild-mark" width="67px">
+			</div>
+			<div class="modal-body text-center">
+                <p>{{error}}</p>
+			</div>
+		</div>
+	</div>
+</div>     

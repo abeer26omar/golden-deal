@@ -26,8 +26,9 @@
 .nav-tabs .nav-link:not(.all):hover,
 .nav-tabs .nav-item.show .nav-link:not(.all), 
 .nav-tabs .nav-link:not(.all).active {
-    border-color: var(--white)  var(--white) var(--org-color) ;
+    border-color: transparent  transparent var(--org-color) ;
     color: var(--org-color);
+    background-color: transparent;
 }
 
 .nav-tabs a{

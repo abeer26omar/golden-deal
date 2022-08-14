@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment as env } from 'src/environments/environment';
 import { io, Socket } from 'socket.io-client';
-import { Subject, tap } from 'rxjs';
+import { Observable, Subject, tap } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { APIResponse6, APIResponse7, Messages, MessagesList, Support } from '../models/chat.model';
 import { ResponseSuccess } from '../models/actions.model';
@@ -16,34 +16,29 @@ export class ChatService {
       'Authorization': `Bearer ${localStorage.getItem('token')}`,
     })
   }
-  httpHeader = {
-    headers: new HttpHeaders({
-      'Access-Control-Allow-Origin': '*'
-    })
-  }
   private _refresh = new Subject<void>();
   get refresh(){
     return this._refresh;
   }
-  constructor(private http: HttpClient) { 
+  constructor(private http: HttpClient) {
     this.socket = io(env.socket_url)
   }
-  // connect(data: any): void{
-  //   this.socket.emit('user_connected', data)
-  // }
-  // sendMessage(data: any): void{
-  //   this.socket.emit('send_message', data)
-  // }
-  // getMessage() : Observable<any>{
-  //   return new Observable<{sender: string, receiver: string, message: string}>(observer =>{
-  //     this.socket.on('new_message', (data)=>{
-  //       observer.next(data)
-  //     })
-  //     return ()=>{
-  //       this.socket.disconnect();
-  //     }
-  //   })
-  // }
+  connect(userId: number): void{
+    this.socket.emit('user_connected', userId)
+  }
+  sendMessage(senderId: number, receiverId: number , message: string): void{
+    this.socket.emit('send_message', senderId,receiverId,message)
+  }
+  getMessage() : Observable<any>{
+    return new Observable<{sender: string, receiver: string, message: string}>(observer =>{
+      this.socket.on('new_message', (data:any)=>{
+        observer.next(data)
+      })
+      return ()=>{
+        this.socket.disconnect();
+      }
+    })
+  }
   getAllPreMsgList(){
     return this.http.get<APIResponse6<MessagesList>>(`${env.api_url}/chat/get-conversation-list`,
     this.httpOptions)

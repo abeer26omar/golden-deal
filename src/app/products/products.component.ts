@@ -29,10 +29,12 @@ export class ProductsComponent implements OnInit {
   public categories : Array<Category> = [];
 
   loadding = false;
+  load: boolean = false;
   error: string = '';
   formModal: any;
   faildProducts: any;
   errMsg: string = '';
+  errfilter: string = '';
   errorLength = '';
   productsDefId : any;
   private routeSub: Subscription = new Subscription;
@@ -50,8 +52,7 @@ export class ProductsComponent implements OnInit {
   })
 
   constructor(private httpService: ProductsRequestService, 
-    private router: Router) {
-     }
+    private router: Router) {}
 
   ngOnInit(): void {
     this.formModal = new window.bootstrap.Modal(
@@ -82,7 +83,15 @@ export class ProductsComponent implements OnInit {
       },
       error:(err: HttpErrorResponse)=>{
         this.faildProducts.show();
-        this.errMsg = err.error.data;
+        if(err.error.data){
+          this.errMsg = err.error.data;
+        } else{
+          if(err.statusText == 'Unauthorized'){
+            this.errMsg = 'يجب انشاء حساب اولا';
+          }else{
+            this.errMsg = err.statusText;
+          }
+        }
       }
     })
   }
@@ -95,7 +104,15 @@ export class ProductsComponent implements OnInit {
       },
       error:(err: HttpErrorResponse)=>{
         this.faildProducts.show();
-        this.errMsg = err.error.data;
+        if(err.error.data){
+          this.errMsg = err.error.data;
+        } else{
+          if(err.statusText == 'Unauthorized'){
+            this.errMsg = 'يجب انشاء حساب اولا';
+          }else{
+            this.errMsg = err.statusText;
+          }
+        }
       }
     })
   }
@@ -107,32 +124,52 @@ export class ProductsComponent implements OnInit {
         this.valueMax = this.filters.data.price.max
         this.filters.data.filters.forEach(filter=>{
           this.formFilter.addControl(filter.slug_name, new FormControl('')) 
-        })
-         
+        }) 
       },
       error:(err: HttpErrorResponse)=>{
         this.faildProducts.show();
-        this.errMsg = err.error.data;
+        if(err.error.data){
+          this.errMsg = err.error.data;
+        } else{
+          if(err.statusText == 'Unauthorized'){
+            this.errMsg = 'يجب انشاء حساب اولا';
+          }else{
+            this.errMsg = err.statusText;
+          }
+        }
       }
     })
   }
   productDetails(id: number){
     this.router.navigate(['product-details', id])
   }
+  sellerProfile(id:number){
+    this.router.navigate(['seller-profile',id])
+  }
   onApplayFilters(){
+    this.load = true;
     this.formFilter.get('min_price')?.setValue(this.valueMin);
     this.formFilter.get('max_price')?.setValue(this.valueMax);
     const formData = new FormData()
       for (const field in this.formFilter.controls) { 
         formData.append(field,this.formFilter.controls[field].value)
-      }  
+      }        
      this.filterSub = this.httpService.applayFilter(formData).subscribe({
       next: res=>{
         console.log(res);
-        
+        this.load = false;
       },
-      error:err=>{
-        console.log(err);
+      error:(err: HttpErrorResponse)=>{
+        this.load = false;
+        if(err.error.data){
+          this.errfilter = err.error.data;
+        } else{
+          if(err.statusText == 'Unauthorized'){
+            this.errfilter = 'يجب انشاء حساب اولا';
+          }else{
+            this.errfilter = err.statusText;
+          }
+        }
         
       }
      })

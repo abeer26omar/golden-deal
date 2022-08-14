@@ -17,6 +17,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { AddressComponent } from './address/address.component';
 import { AddEditAddressComponent } from './address/add-edit-address/add-edit-address.component';
 import { AuthGuardGuard } from './Guards/auth-guard.guard';
+import { SellerProfileComponent } from './seller-profile/seller-profile.component';
 
 
 
@@ -26,6 +27,7 @@ const routes: Routes = [
   { path:'search-result',component: SearchResultComponent},
   { path:'search-result/:key',component: SearchResultComponent},
   { path:'product-details/:id', component:ProductDetailsComponent},
+  { path:'seller-profile/:id', component:SellerProfileComponent},
   { path:'chat', component:ChatsComponent,canActivate:[AuthGuardGuard]},
   { path:'adds/:id', component:AddsComponent, canActivate:[AuthGuardGuard]},
   { path:'new-add', component:NewAddComponent,canActivate:[AuthGuardGuard]},

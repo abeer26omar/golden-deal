@@ -65,11 +65,11 @@
                                                         placeholder="اكتب هنا"
                                                         [(ngModel)]="messageTxt"
                                                         [ngModelOptions]="{standalone: true}"
-                                                        (keyup)="$event.keyCode === 13 && sendMsg(user.sender, user.receiver.id, messageTxt)"
+                                                        (keyup)="$event.keyCode === 13 && sendMsg(user.sender, user.receiver.id)"
                                                         >
                                                     </div>
                                                 </div>
-                                                    <button class="btn text-info" (click)="sendMsg(user.sender, user.receiver.id, messageTxt)">
+                                                    <button class="btn text-info" (click)="sendMsg(user.sender, user.receiver.id)">
                                                         <img src="../../assets/images/send.svg" alt="" style="width: 50px;">
                                                     </button>
                                                 </div>

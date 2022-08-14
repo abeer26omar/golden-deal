@@ -48,7 +48,6 @@ export interface Messages{
             seen_at: number,
             created_at: string,
             updated_at: string
-        
 }
 export interface APIResponse7<T>{
     data: Array<T>

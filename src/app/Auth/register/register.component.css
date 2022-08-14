@@ -226,6 +226,7 @@ p.pref{
 .phone span{
   display: none;
 }
+
 @media screen and (max-width: 400px) {
   .phone{
     width: 100% ;

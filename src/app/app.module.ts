@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpHeadersInterceptor } from './interceptors/http-headers.interceptor';
 import { HttpErrorInterceptor } from './interceptors/http-errors.interceptor';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -64,6 +63,7 @@ import { DialogImageComponent } from './profile/dialog-image/dialog-image.compon
 import { DialogCoverComponent } from './adds/dialog-cover/dialog-cover.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { ChatSupportComponent } from './chats/chat-support/chat-support.component';
+import { SellerProfileComponent } from './seller-profile/seller-profile.component';
 
 @NgModule({
   declarations: [
@@ -97,6 +97,7 @@ import { ChatSupportComponent } from './chats/chat-support/chat-support.componen
     DialogCoverComponent,
     SidenavComponent,
     ChatSupportComponent,
+    SellerProfileComponent,
   ],
   imports: [
     BrowserModule,

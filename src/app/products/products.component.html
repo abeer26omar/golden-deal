@@ -31,7 +31,9 @@
                       <div class="person d-flex align-items-center">
                           <img *ngIf="product.owner.image_url" src="{{product.owner.image_url}}" alt="profile" width="30px" height="30px">
                           <img *ngIf="!product.owner.image_url" src="../../assets/images/Portrait_Placeholder.png" alt="profile" width="30px" height="30px">
-                          <p class="name">{{product.owner.name}}</p>
+                          <a (click)="sellerProfile(product.owner_id)" style="cursor: pointer;">
+                            <p class="name">{{product.owner.name}}</p>
+                          </a>                      
                       </div>
                     </div>
                   </div>
@@ -89,7 +91,9 @@ viewBox="0 0 100 100" width="70px" height="70px" enable-background="new 0 0 0 0"
               <div class="person d-flex align-items-center">
                   <img *ngIf="product.owner.image_url" src="{{product.owner.image_url}}" alt="profile" width="30px" height="30px">
                   <img *ngIf="!product.owner.image_url" src="../../assets/images/Portrait_Placeholder.png" alt="profile" width="30px" height="30px">
-                  <p class="name">{{product.owner.name}}</p>
+                  <a (click)="sellerProfile(product.owner_id)" style="cursor: pointer;">
+                    <p class="name">{{product.owner.name}}</p>
+                  </a>
               </div>
             </div>
           </div>
@@ -112,6 +116,8 @@ aria-hidden="true"
           </button>
           <h5 class="modal-title text-center col-10" id="staticBackdropLabel">فلتر</h5>
         </div>
+        <mat-progress-bar mode="indeterminate" class="my-3" *ngIf="load" id="addprog"></mat-progress-bar>
+        <p class="text-danger text-center" *ngIf="errfilter">{{errfilter}}</p>
         <div class="modal-body">
           <form [formGroup]="formFilter">
             <div class="pb-4 " *ngFor="let filter of filters.data.filters">
@@ -150,7 +156,7 @@ aria-hidden="true"
 		<div class="modal-content">
 			
 			<div class="modal-body text-center">
-                <img src="../../../assets/images/faild-mark.svg" alt="faild-mark" width="67px">
+        <img src="../../../assets/images/faild-mark.svg" alt="faild-mark" width="67px">
 				<p class="py-4">{{errMsg}}</p>
 			</div>
 		</div>

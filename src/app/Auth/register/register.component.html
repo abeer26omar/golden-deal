@@ -69,8 +69,11 @@
                                           </mat-form-field>
                                           <mat-form-field appearance="legacy" class="phone-prefix">
                                             <input matInput readonly>
-                                            <span matPrefix>966+ &nbsp;</span>
-                                            <mat-icon matSuffix><img src="../../../assets/images/suadi.svg" alt="suadi-flag" width="40px"></mat-icon>
+                                            <span matPrefix [ngClass]="{'mac': mac}">966+ &nbsp;</span>
+                                            <mat-icon matSuffix [ngClass]="{'mac': mac}">
+                                                <img src="../../../assets/images/suadi.svg" class="pb-1"
+                                                alt="suadi-flag" width="40px">
+                                            </mat-icon>
                                           </mat-form-field>
                                         <span *ngIf="fRegister['phone'].touched && fRegister['phone'].invalid" class="text-danger m-0">
                                             ارقام سعوديه فقط
@@ -101,8 +104,8 @@
                                           </mat-form-field>
                                           <mat-form-field appearance="legacy" class="phone-prefix">
                                             <input matInput readonly>
-                                            <span matPrefix>966+ &nbsp;</span>
-                                            <mat-icon matSuffix>
+                                            <span matPrefix [ngClass]="{'mac': mac}">966+ &nbsp;</span>
+                                            <mat-icon matSuffix [ngClass]="{'mac': mac}">
                                                 <img src="../../../assets/images/suadi.svg" alt="suadi-flag" width="40px">
                                             </mat-icon>
                                           </mat-form-field>

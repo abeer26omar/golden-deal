@@ -26,10 +26,13 @@ ul{
         padding-bottom: 3rem;
     }
 }
-.rights{
+.rights, .rights a{
     color: var(--white);
     font-weight: 400;
     font-size: 1rem;
+}
+.rights a:hover{
+    color: var(--primary-color);
 }
 @media screen and (max-width: 767px) {
     .lastwidget{

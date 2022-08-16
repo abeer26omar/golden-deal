@@ -11,6 +11,7 @@ import { Subscription } from 'rxjs';
 })
 export class ChatsComponent implements OnInit {
   userId = localStorage.getItem('userId');
+  receiverId: any;
   message: string = '';
   messageArr: {user: string, msg: string}[] = []
   currUser: any;
@@ -31,13 +32,25 @@ export class ChatsComponent implements OnInit {
   ngOnInit(): void {
     this.getAllPreMsgList()
   }
-  sendMsg(senderId: number, receiverId: number){
-    this.chatService.sendMessage(senderId, receiverId, this.messageTxt)
+  sendMsg(){
+    const data = {
+      sender: this.userId,
+      receiver: this.receiverId,
+      message: this.messageTxt
+    }
+    this.chatService.sendMessage(data);
     this.messageTxt = '';
+    this.getNewMsg()
   }
   getNewMsg(){
-    this.chatService.getMessage().subscribe(({senderId, receiverId, message})=>{
-      this.usersMsg.push(senderId, receiverId, message)
+    const data = {
+      sender: this.userId,
+      receiver: this.receiverId,
+      message: this.messageTxt
+    }
+    this.chatService.getMessage().subscribe((data)=>{
+      this.usersMsg.push(data)
+      // console.log(data);
     })
   }
   getAllPreMsgList(){
@@ -59,11 +72,12 @@ export class ChatsComponent implements OnInit {
   } 
   getChat(senderId: number, receiverId: number){
     this.load = true;
+    this.receiverId = receiverId;    
     this.chatSub = this.chatService.getAllMessages(senderId,receiverId).subscribe({
       next: (res: APIResponse7<Messages>)=>{
         this.load = false;
         this.usersMsg = res.data 
-        console.log(this.usersMsg);
+        // console.log(this.usersMsg);
       },
       error: err=>{
         this.load = false;

@@ -238,3 +238,7 @@ p.pref{
     display: none;
   }
 }
+.mac{
+  position: relative;
+  top: -7px;
+}

@@ -28,7 +28,7 @@
       </div>
       <p class="text-danger text-center"  *ngIf="error && searchRes.length == 0 ">{{errMsg}}</p>
       <p class="text text-center" *ngIf="(!error) && searchRes.length == 0 ">لا يوجد منتجات</p>
-        <div class="products-row row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4 justify-content-start">
+        <div class="products-row row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4 justify-content-start">
               <div class="col wow" *ngFor="let add of searchRes">
                 <div class="card h-100">
                   <div class="card-header text-center" >
@@ -49,4 +49,4 @@
           </div> 
     </div>
 </section>
-<app-testimonial></app-testimonial>
+<!-- <app-testimonial></app-testimonial> -->

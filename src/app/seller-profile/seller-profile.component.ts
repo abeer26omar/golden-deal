@@ -94,7 +94,7 @@ export class SellerProfileComponent implements OnInit {
           if(ele.active == status){
             this.productsStatus.push(ele);
             if(this.productsStatus.length == 0){
-              this.result = 'لايوجد عناصر'
+              this.result = 'لايوجد عناصر'  
             }
           }
           console.log(this.productsStatus);

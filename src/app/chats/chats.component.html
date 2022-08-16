@@ -42,12 +42,16 @@
                                                     *ngFor="let msg of usersMsg">
                                                   <div class="media-body">
                                                     <div class="d-flex p-2 m-1 media-1 media-2">
-                                                        <img *ngIf="user.sender === msg.receiver.id" class="avatar" [src]="(msg.receiver.image_url == 
+                                                        <!-- <img *ngIf="user.sender === msg.receiver.id" 
+                                                        class="avatar" 
+                                                        [src]="(msg.receiver.image_url == 
                                                         'https://deal.qbizns.com/storage/users/avatar/default.png' || !msg.receiver.image_url) ?
                                                          '../../assets/images/Portrait_Placeholder.png' : msg.receiver.image_url" alt="...">
-                                                         <img *ngIf="!(user.receiver.id === msg.receiver.id)" class="avatar" [src]="(msg.sender.image_url == 
+                                                         <img *ngIf="!(user.sender === msg.receiver.id)"
+                                                          class="avatar" 
+                                                          [src]="(msg.sender.image_url == 
                                                         'https://deal.qbizns.com/storage/users/avatar/default.png' || !msg.sender.image_url) ?
-                                                         '../../assets/images/Portrait_Placeholder.png' : msg.receiver.image_url" alt="...">
+                                                         '../../assets/images/Portrait_Placeholder.png' : msg.sender.image_url" alt="..."> -->
                                                         <p>{{msg.message}}</p>
                                                     </div>
                                                   </div>
@@ -65,11 +69,10 @@
                                                         placeholder="اكتب هنا"
                                                         [(ngModel)]="messageTxt"
                                                         [ngModelOptions]="{standalone: true}"
-                                                        (keyup)="$event.keyCode === 13 && sendMsg(user.sender, user.receiver.id)"
-                                                        >
+                                                        (keyup)="$event.keyCode === 13">
                                                     </div>
                                                 </div>
-                                                    <button class="btn text-info" (click)="sendMsg(user.sender, user.receiver.id)">
+                                                    <button class="btn text-info" (click)="sendMsg()">
                                                         <img src="../../assets/images/send.svg" alt="" style="width: 50px;">
                                                     </button>
                                                 </div>

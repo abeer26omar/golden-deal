@@ -46,7 +46,6 @@
     color: var(--primary-color);
 }
 .loader {
-       /* transform: translate3d(-50%, -50%, 0); */
        display: flex;
        justify-content: center;
   }

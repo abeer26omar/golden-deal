@@ -54,7 +54,7 @@ export class RegisterComponent implements OnInit {
   id: any;
   succMsg: string = '';
   login: boolean = false;
-
+  mac: boolean = false;
   //register
   registerForm = new FormGroup({
     name: new FormControl('', [Validators.required]),
@@ -95,7 +95,8 @@ export class RegisterComponent implements OnInit {
       e.preventDefault();
         this.formbox.classList.remove('active');
     })
-
+    this.detectBrowser()
+    this.operatingSysDetect()
   }
   submitData() {
     const userName = this.registerForm.get('name')?.value;
@@ -246,5 +247,33 @@ export class RegisterComponent implements OnInit {
   closeOtp(){
     this.timeLeft = 60;
     this.otpModal.hide();
+  }
+  detectBrowser(){
+    const agent = window.navigator.userAgent.toLowerCase()
+    switch (true) {
+      case agent.indexOf('edge') > -1:
+        return 'edge';
+      case agent.indexOf('opr') > -1 && !!(<any>window).opr:
+        return 'opera';
+      case agent.indexOf('chrome') > -1 && !!(<any>window).chrome:
+        return 'chrome';
+      case agent.indexOf('trident') > -1:
+        return 'ie';
+      case agent.indexOf('firefox') > -1:
+        this.mac = true;
+        console.log('firefox');
+        return 'firefox';
+      case agent.indexOf('safari') > -1:
+        this.mac = true;
+        return 'safari';
+      default:
+        return 'other';
+    }
+  }
+  operatingSysDetect(){      
+    if (window.navigator.userAgent.indexOf("Mac") != -1) {
+      this.mac = true;
+      // console.log("OS is Mac/iOS");
+    } 
   }
 }

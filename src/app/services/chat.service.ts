@@ -10,7 +10,7 @@ import { ResponseSuccess } from '../models/actions.model';
   providedIn: 'root'
 })
 export class ChatService {
-  private socket: Socket;
+  private socket!: Socket;
   httpOptions = {
     headers: new HttpHeaders({
       'Authorization': `Bearer ${localStorage.getItem('token')}`,
@@ -26,12 +26,12 @@ export class ChatService {
   connect(userId: number): void{
     this.socket.emit('user_connected', userId)
   }
-  sendMessage(senderId: number, receiverId: number , message: string): void{
-    this.socket.emit('send_message', senderId,receiverId,message)
+  sendMessage(data: any){
+    this.socket.emit('send_message', data)
   }
   getMessage() : Observable<any>{
     return new Observable<{sender: string, receiver: string, message: string}>(observer =>{
-      this.socket.on('new_message', (data:any)=>{
+      this.socket.on('send_message', (data:any)=>{
         observer.next(data)
       })
       return ()=>{

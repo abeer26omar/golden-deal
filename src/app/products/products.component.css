@@ -14,6 +14,7 @@
 .nav-item:nth-child(1){
     padding: 0.5rem 0rem 0.5rem 2rem;
 }
+
  .nav-link{
     padding: 1rem 0rem;
 }
@@ -44,6 +45,20 @@
 }
 .nav-tabs a.all:hover,a.all:focus{
     color: var(--primary-color);
+}
+@media screen and (max-width: 575px) {
+    .nav-item{
+        padding: 0.5rem .5rem;
+    }
+    .nav-item:nth-child(1){
+        padding: 0.5rem 0rem 0.5rem 1rem;
+    }
+    .nav-tabs a{
+        font-size: 1.1rem;
+    }
+    .nav-link.all{
+        padding: 1rem 0.5rem;
+    }
 }
 .loader {
        display: flex;

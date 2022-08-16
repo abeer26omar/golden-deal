@@ -21,7 +21,8 @@ export class ChatService {
     return this._refresh;
   }
   constructor(private http: HttpClient) {
-    this.socket = io(env.socket_url)
+    // this.socket = io(env.socket_url)
+    this.socket = io()
   }
   connect(userId: number): void{
     this.socket.emit('user_connected', userId)

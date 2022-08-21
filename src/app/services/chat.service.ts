@@ -21,8 +21,8 @@ export class ChatService {
     return this._refresh;
   }
   constructor(private http: HttpClient) {
-    // this.socket = io(env.socket_url)
-    this.socket = io()
+    this.socket = io(env.socket_url)
+    // this.socket = io()
   }
   connect(userId: number): void{
     this.socket.emit('user_connected', userId)
@@ -32,23 +32,29 @@ export class ChatService {
   }
   getMessage() : Observable<any>{
     return new Observable<{sender: string, receiver: string, message: string}>(observer =>{
-      this.socket.on('send_message', (data:any)=>{
+      this.socket.emit('new_message', (data:any)=>{
         observer.next(data)
       })
       return ()=>{
         this.socket.disconnect();
       }
-    })
+    }).pipe(tap(()=>{
+      this._refresh.next();
+    }))
   }
   getAllPreMsgList(){
     return this.http.get<APIResponse6<MessagesList>>(`${env.api_url}/chat/get-conversation-list`,
-    this.httpOptions)
+    this.httpOptions).pipe(tap(()=>{
+      this._refresh.next();
+    }))
   }
   getAllMessages(receiver: any, sender: any){
     return this.http.post<APIResponse7<Messages>>(`${env.api_url}/chat/get-messages`,{
       receiver: receiver,
       sender: sender
-    },this.httpOptions)
+    },this.httpOptions).pipe(tap(()=>{
+      this._refresh.next();
+    }))
   }
   getAllSupportMsg(){
     return this.http.get<Support>(`${env.api_url}/support/get-messages`,

@@ -28,6 +28,7 @@ export class ChatsComponent implements OnInit {
 
   public chatSub: Subscription = new Subscription;
   constructor(private chatService: ChatService) { 
+    
   }
   ngOnInit(): void {
     this.getAllPreMsgList()
@@ -40,7 +41,7 @@ export class ChatsComponent implements OnInit {
     }
     this.chatService.sendMessage(data);
     this.messageTxt = '';
-    this.getNewMsg()
+    this.getNewMsg();
   }
   getNewMsg(){
     const data = {
@@ -50,8 +51,8 @@ export class ChatsComponent implements OnInit {
     }
     this.chatService.getMessage().subscribe((data)=>{
       this.usersMsg.push(data)
-      // console.log(data);
     })
+    this.getChat(data.sender,data.receiver)
   }
   getAllPreMsgList(){
     this.loader = true;
@@ -70,14 +71,13 @@ export class ChatsComponent implements OnInit {
       }
     })
   } 
-  getChat(senderId: number, receiverId: number){
+  getChat(senderId: any, receiverId: any){
     this.load = true;
     this.receiverId = receiverId;    
     this.chatSub = this.chatService.getAllMessages(senderId,receiverId).subscribe({
       next: (res: APIResponse7<Messages>)=>{
         this.load = false;
         this.usersMsg = res.data 
-        // console.log(this.usersMsg);
       },
       error: err=>{
         this.load = false;

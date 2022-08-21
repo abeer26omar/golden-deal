@@ -69,6 +69,8 @@ export class HeaderComponent implements OnInit {
       },
       error: (err: HttpErrorResponse)=>{
         this.toastFaild.show();
+        localStorage.clear();
+        window.location.reload();
         if(err.error.data){
           this.error = err.error.data;
         }else{

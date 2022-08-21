@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "serve": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -13,6 +14,7 @@
     "axios": "^0.27.2",
     "express": "^4.18.1",
     "mysql-await": "^2.2.2",
+    "nodemon": "^2.0.19",
     "socket.io": "^4.5.1"
   }
 }

@@ -248,8 +248,8 @@ aria-hidden="true"
             <p class="prod-name">{{singleProduct.data.name}}</p>
         </div>
         <div class="modal-footer justify-content-evenly">
-          <button type="button" class="btn btn-prim">اتصال <img src="../../../assets/images/call.svg" alt="call"></button>
-          <button type="button" class="btn btn-sec">محادثه <img src="../../../assets/images/chat.svg" alt="chat"></button>
+          <a  href="tel:+{{singleProduct.data.seller_phone}}" class="btn btn-prim">اتصال <img src="../../../assets/images/call.svg" alt="call"></a>
+          <a routerLink="/chat" class="btn btn-sec" data-bs-dismiss="modal">محادثه <img src="../../../assets/images/chat.svg" alt="chat"></a>
         </div>
       </div>
   </div>

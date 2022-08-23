@@ -55,6 +55,8 @@ export class RegisterComponent implements OnInit {
   succMsg: string = '';
   login: boolean = false;
   mac: boolean = false;
+  backdrops = Array.from(document.getElementsByClassName('modal-backdrop') as HTMLCollectionOf<HTMLElement>) 
+
   //register
   registerForm = new FormGroup({
     name: new FormControl('', [Validators.required]),

@@ -11,7 +11,7 @@ declare var window: any;
 export class AppComponent {
   title = 'Golden-deal';
   sidebarOpen = true;
-
+  backdrops = Array.from(document.getElementsByClassName('modal-backdrop') as HTMLCollectionOf<HTMLElement>) 
   toggle(){
     this.sidebarOpen = !this.sidebarOpen;
   }
@@ -19,6 +19,11 @@ export class AppComponent {
     this.sidebarOpen = !this.sidebarOpen;
   }
   constructor(public authService: AuthService){
+    this.hidebackdrop()
   }
-  
+  hidebackdrop(){
+    this.backdrops.forEach(element => {
+      element.style.opacity = '1';
+    });
+  }
 }

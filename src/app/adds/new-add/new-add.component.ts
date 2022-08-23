@@ -63,8 +63,8 @@ export class NewAddComponent implements OnInit {
       productCategory: new FormControl('', [Validators.required]),
       name: new FormControl('', [Validators.required]),
       price: new FormControl('', [Validators.required]),
-      about_seller: new FormControl('', [Validators.required]),
-      delivery_notes: new FormControl('', [Validators.required]),
+      about_seller: new FormControl(''),
+      delivery_notes: new FormControl(''),
       desc: new FormControl('', [Validators.required]),
       materials: new FormControl('', [Validators.required]),
       owner_id: new FormControl(this.ownerId),
@@ -95,7 +95,7 @@ export class NewAddComponent implements OnInit {
     this.file =<File>event.target.files[0];
     reader.onload = ()=>{
       this.imgSrc = reader.result;
-      this.images.push(this.imgSrc)
+      this.images.splice(0,1,this.imgSrc)
     }
     this.myForm.get('product_image_1')?.patchValue(this.file,this.file.name);
   }
@@ -105,8 +105,8 @@ export class NewAddComponent implements OnInit {
     this.file =<File>event.target.files[0];
     reader.onload = ()=>{
       this.imgSrc3 = reader.result;
-      this.images.push(this.imgSrc3);
-    }
+      this.images.splice(1,1,this.imgSrc3)
+    }    
     this.myForm.get('product_image_2')?.patchValue(this.file,this.file.name);
   }
   onFileChange1(event:any) {
@@ -115,7 +115,7 @@ export class NewAddComponent implements OnInit {
     this.file =<File>event.target.files[0];
     reader.onload = ()=>{
       this.imgSrc1 = reader.result;
-      this.images.push(this.imgSrc1)
+      this.images.splice(2,1,this.imgSrc1)
     }
     this.myForm.get('product_image_3')?.patchValue(this.file,this.file.name);
   }
@@ -192,10 +192,6 @@ export class NewAddComponent implements OnInit {
             this.load = false;
             this.NewProductRes = res;
             this.modelSuccessNewProduct.show();
-            setTimeout(()=>{
-              this.modelSuccessNewProduct.hide();
-              this.router.navigate([`/adds/${this.ownerId}`])
-            },1000) 
           },
           error: (err: HttpErrorResponse)=>{
             this.load = false;
@@ -211,6 +207,12 @@ export class NewAddComponent implements OnInit {
         return;
       }
     }
+  }
+  close(){
+    this.modelSuccessNewProduct.hide();
+    setTimeout(()=>{
+      this.router.navigate([`/adds/${this.ownerId}`])
+    },500) 
   }
   getProductCategoryId(){
     const productCategory = this.myForm.get('productCategory')?.value;

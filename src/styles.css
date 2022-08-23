@@ -344,3 +344,6 @@ input.star:checked ~ label.star:before {
 .mat-drawer-backdrop {
     z-index: 9999 !important;
 }
+.mat-radio-label-content{
+    padding-left: 0 !important;
+}

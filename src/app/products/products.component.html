@@ -92,7 +92,7 @@ viewBox="0 0 100 100" width="70px" height="70px" enable-background="new 0 0 0 0"
                   <img *ngIf="product.owner.image_url" src="{{product.owner.image_url}}" alt="profile" width="30px" height="30px">
                   <img *ngIf="!product.owner.image_url" src="../../assets/images/Portrait_Placeholder.png" alt="profile" width="30px" height="30px">
                   <a (click)="sellerProfile(product.owner_id)" style="cursor: pointer;">
-                    <p class="name">{{product.owner.name}}</p>
+                    <p class="name pe-2">{{product.owner.name}}</p>
                   </a>
               </div>
             </div>

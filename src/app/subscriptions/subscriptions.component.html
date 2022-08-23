@@ -10,7 +10,7 @@
     <div class="container pt-5 pb-5">
         <form [formGroup] ="subscribtionForm"  (ngSubmit)="submit()">
             <mat-radio-group aria-label="Select an option" formControlName="subscribe">
-            <div class="row row-cols-1 row-cols-md-3 row-cols-xl-4 g-4 justify-content-center">
+            <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 g-4 justify-content-center">
                     <div class="col" *ngFor="let subscription of subscriptions">
                     <mat-radio-button value="{{subscription.id}}" [checked]="subscription.slug == 'gold' ? 'true':'false'">
                         <div class="card h-100">

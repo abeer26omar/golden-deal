@@ -29,7 +29,7 @@
                                     <div class="text-center">
                                         <img src="../../../assets/images/product-imgs.svg" alt="product-imgs">
                                         <p>اضافه صور المنتج</p>
-                                        <img *ngFor="let url of images" [src]="url" height="150" width="200px" style="margin: 3px;">
+                                            <img *ngFor="let url of images" [src]="url" height="150" width="200px" style="margin: 3px;">
                                     </div>
                             </label>
                         </div>
@@ -58,14 +58,6 @@
                             formControlName="seller_phone">
                             <div *ngIf="f['seller_phone'].touched && f['seller_phone'].errors" class="text-danger">يجب اضافه رقم الهاتف</div>
                         </div>
-                        <!-- <div class="col-md-6">
-                            <label for="productStatus" class="form-label">حاله المنتج</label>
-                            <select class="form-select" id="productStatus" formControlName="productStatus">
-                                <option value="1">منتج جديد</option>
-                                <option value="2">منتج مستخدم</option>
-                            </select>
-                            <div *ngIf="f['productStatus'].touched && f['productStatus'].errors" class="text-danger">يجب تحديد حالة المنتج</div>  
-                        </div> -->
                         <div class="col-md-6" *ngFor="let filter of filters.data.filters">
                             <input type="checkbox" class="form-check-input mx-2" [formControlName]="filter.slug_name" *ngIf="filter.type == 'check'" >
                             <label for="productMark" class="form-label">{{filter.name_ar}}</label>
@@ -86,16 +78,12 @@
                         <div class="col-md-6">
                             <label for="productSeller" class="form-label">عن البائع</label>
                             <textarea type="text" class="form-control" id="productSeller" 
-                            placeholder="عن البائع عن البائع" formControlName="about_seller"></textarea>
-                            <div *ngIf="f['about_seller'].touched && f['about_seller'].errors" class="text-danger">يجب اضافه معلومات عن البائع </div> 
-        
+                            placeholder="عن البائع عن البائع" formControlName="about_seller"></textarea>        
                         </div>
                         <div class="col-md-6">
                             <label for="sellerinfo" class="form-label">ملاحظات التواصل</label>
                             <textarea type="text" class="form-control" id="sellerinfo" 
-                            placeholder="معلومات لاتصال" formControlName="delivery_notes"></textarea>
-                            <div *ngIf="f['delivery_notes'].touched && f['delivery_notes'].errors" class="text-danger">يجب اضافه ملاحظات للتواصل</div>  
-        
+                            placeholder="معلومات لاتصال" formControlName="delivery_notes"></textarea>        
                         </div>
                         <div class="col-md-6">
                             <label for="productDesc" class="form-label">وصف المنتج</label>
@@ -140,8 +128,11 @@ aria-hidden="true"
 >
 	<div class="modal-dialog modal-dialog-centered">
 		<div class="modal-content">
+            <a (click)="close()">
+                <img src="../../../assets/images/close.svg" alt="close">
+            </a>
 			<div class="modal-header justify-content-center">
-                    <img src="../../assets/images/sucess-mark.svg" alt="sucess-mark" width="67px">
+                <img src="../../assets/images/sucess-mark.svg" alt="sucess-mark" width="67px">
 			</div>
 			<div class="modal-body text-center p-0">
 				<p class="review">سيتم مراجعه طلبك وسنقوم بالرد عليك فى خلال ساعات</p>
@@ -171,10 +162,12 @@ aria-hidden="true"
 >
 	<div class="modal-dialog modal-dialog-centered">
 		<div class="modal-content">
-			<div class="modal-header justify-content-center">
+            <div class="modal-header justify-content-center">
+                <!-- <button type="button" class="btn text-right p-0" data-bs-dismiss="modal" aria-label="Close" >
+                    <img src="../../../assets/images/close.svg" alt="close">
+                </button> -->
                 <h5 class="title text-center" id="staticBackdropLabel">اضافه صور المنتج</h5>
 			</div>
-            <mat-progress-bar mode="indeterminate" class="my-3" *ngIf="load" id="addprog"></mat-progress-bar>
 			<div class="modal-body text-center">
                 <div class="row g-3">
                     <div class="col-sm-4">
@@ -186,7 +179,7 @@ aria-hidden="true"
                                 hidden
                                 (change)="onFileChange1($event)">
                                 <div class="text-center">
-                                    <img  [src]="imgSrc1" height="150" width="200px" style="margin: 3px;">
+                                    <img  [src]="imgSrc1 ? imgSrc1 : '../../../assets/images/product-imgs.svg'" height="150" width="200px" style="margin: 3px;">
                                     <p>اضافه صور المنتج</p>
                                 </div>
                         </label>
@@ -200,7 +193,7 @@ aria-hidden="true"
                                 hidden
                                 (change)="onFileChange3($event)">
                                 <div class="text-center">
-                                    <img   [src]="imgSrc3" height="150" width="200px" style="margin: 3px;">
+                                    <img   [src]="imgSrc3 ? imgSrc3 : '../../../assets/images/product-imgs.svg'" height="150" width="200px" style="margin: 3px;">
                                     <p>اضافه صور المنتج</p>
                                 </div>
                         </label>
@@ -214,14 +207,14 @@ aria-hidden="true"
                                 hidden
                                 (change)="onFileChange($event)">
                                 <div class="text-center">
-                                    <img  [src]="imgSrc" height="150" width="200px" style="margin: 3px;">
+                                    <img  [src]="imgSrc ? imgSrc : '../../../assets/images/product-imgs.svg'" height="150" width="200px" style="margin: 3px;">
                                     <p>اضافه صور المنتج</p>
                                 </div>
                         </label>
                     </div>
                 </div>
                 <div class="footer text-center">
-                    <button type="button" class="btn btn-prim m-3">اضافه</button>
+                    <button type="button" class="btn btn-prim m-3" data-bs-dismiss="modal" aria-label="Close" >اضافه</button>
                 </div>
             </div>
 			</div>

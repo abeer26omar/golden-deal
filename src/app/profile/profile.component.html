@@ -70,13 +70,15 @@
                         >
                     </mat-form-field>   
                 </div>
-                <div class="col-12 col-sm-6  d-flex justify-content-center">
-                    <button type="button" class="btn btn-prim mx-3" *ngIf="!changeBtn" (click)="allowEdit()">تعديل</button>
-                    <button type="button" class="btn btn-prim mx-3" *ngIf="changeBtn" (click)="submitEdit()">حفظ</button>
-                </div>
-                <div class="col-12 col-sm-6  d-flex justify-content-center">
-                    <button type="button" class="btn btn-sec mx-3" (click)="deleteAcc()">حذف الحساب</button>
-                </div>
+                    <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-3 justify-content-center">
+                        <div class="col d-flex justify-content-center">
+                            <button type="button" class="btn btn-prim" *ngIf="!changeBtn" (click)="allowEdit()">تعديل</button>
+                            <button type="button" class="btn btn-prim" *ngIf="changeBtn" (click)="submitEdit()">حفظ</button>
+                        </div>
+                        <div class="col d-flex justify-content-center">
+                            <button type="button" class="btn btn-sec" (click)="deleteAcc()">حذف الحساب</button>
+                        </div>
+                    </div>
             </form>
         </div>
 </div>
@@ -123,7 +125,6 @@ aria-hidden="true"
   </div>
 </div>
 <!-- edit success -->
-
 <div id="editSuccess" 
 class="modal fade"
 tabindex="-1"

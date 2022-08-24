@@ -49,7 +49,6 @@ import { ChatsComponent } from './chats/chats.component';
 import { AddsComponent } from './adds/adds.component';
 import { NewAddComponent } from './adds/new-add/new-add.component';
 import { BuyingRecordComponent } from './buying-record/buying-record.component';
-import { SearchproductsPipe } from './pipes/searchproducts.pipe';
 import { RegisterComponent } from './Auth/register/register.component';
 import { EditAddComponent } from './adds/edit-add/edit-add.component';
 import { SubscriptionsComponent } from './subscriptions/subscriptions.component';
@@ -83,7 +82,6 @@ import { SellerProfileComponent } from './seller-profile/seller-profile.componen
     AddsComponent,
     NewAddComponent,
     BuyingRecordComponent,
-    SearchproductsPipe,
     RegisterComponent,
     EditAddComponent,
     SubscriptionsComponent,

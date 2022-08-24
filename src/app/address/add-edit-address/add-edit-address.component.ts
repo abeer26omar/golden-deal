@@ -6,6 +6,7 @@ import { AddressesService } from 'src/app/services/addresses.service';
 import { Address } from 'src/app/models/user.model';
 import { ResponseSuccess } from 'src/app/models/actions.model';
 import { HttpErrorResponse } from '@angular/common/http';
+import { MacPrefixService } from 'src/app/services/mac-prefix.service';
 declare var window: any;
 
 @Component({
@@ -45,15 +46,16 @@ export class AddEditAddressComponent implements OnInit {
   })
   constructor(private addService: AddressesService,
     private route: Router,
-    private router: ActivatedRoute) { }
+    private router: ActivatedRoute,
+    private macService: MacPrefixService) { }
   get f() { return this.addForm.controls; }
 
   ngOnInit(): void {
     this.successAdd = new window.bootstrap.Modal(
-      document.getElementById('successAdd')
+      document.getElementById('successAdd'),{backdrop: this.macService.backdrop}
     );
     this.faildAdd = new window.bootstrap.Modal(
-      document.getElementById('faildAdd')
+      document.getElementById('faildAdd'),{backdrop: this.macService.backdrop}
     );
     this.routeSub = this.router.params.subscribe((params: Params) => {
     this.addId = params['id'];

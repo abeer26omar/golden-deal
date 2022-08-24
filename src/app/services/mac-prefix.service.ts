@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 })
 export class MacPrefixService {
   macphone: boolean = false;
+  macsearch: boolean = false;
   backdrop: boolean = true;
 
   constructor(private platform: Platform) {
@@ -26,9 +27,11 @@ export class MacPrefixService {
         return 'ie';
       case agent.indexOf('firefox') > -1:
         this.macphone = true;
+        this.macsearch = true;
         return 'firefox';
       case agent.indexOf('safari') > -1:
         this.macphone = true;
+        this.macsearch = true;
         return 'safari';
       default:
         return 'other';
@@ -38,6 +41,7 @@ export class MacPrefixService {
     const agent = window.navigator.userAgent.toLowerCase()
     if ((window.navigator.userAgent.indexOf("Mac") != -1) && !(agent.indexOf('chrome') > -1 && !!(<any>window).chrome)) {
       this.macphone = true;
+      this.macsearch = true;
     } 
     if(this.platform.IOS){
       this.backdrop = false

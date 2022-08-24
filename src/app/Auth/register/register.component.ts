@@ -1,6 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { NgOtpInputConfig } from 'ng-otp-input';
 import { AuthService } from 'src/app/services/auth.service';
 import { Login, Verify } from 'src/app/models/user.model';
@@ -72,7 +72,6 @@ export class RegisterComponent implements OnInit {
   constructor(private auth: AuthService, 
     private router: Router,
     private macService: MacPrefixService) { 
-      this.mac = this.macService.macphone
     }
     //get forms controls
     get fRegister(){
@@ -96,6 +95,7 @@ export class RegisterComponent implements OnInit {
       e.preventDefault();
         this.formbox.classList.remove('active');
     })
+    this.mac = this.macService.macphone
   }
   submitData() {
     const userName = this.registerForm.get('name')?.value;

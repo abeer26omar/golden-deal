@@ -4,6 +4,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { APIResponse, Products , APIResponse2, Category, CategoryFilter} from '../models/products.model';
+import { MacPrefixService } from '../services/mac-prefix.service';
 import { ProductsRequestService } from '../services/products-request.service';
 declare var window: any;
 
@@ -52,14 +53,15 @@ export class ProductsComponent implements OnInit {
   })
 
   constructor(private httpService: ProductsRequestService, 
-    private router: Router) {}
+    private router: Router,
+    private macService: MacPrefixService) {}
 
   ngOnInit(): void {
     this.formModal = new window.bootstrap.Modal(
-      document.getElementById('filterModal')
+      document.getElementById('filterModal'),{backdrop: this.macService.backdrop}
     );
     this.faildProducts = new window.bootstrap.Modal(
-      document.getElementById('faildProducts')
+      document.getElementById('faildProducts'),{backdrop: this.macService.backdrop}
     );
     this.productsDefId = document.getElementById('products-def');
     this.getCategories();

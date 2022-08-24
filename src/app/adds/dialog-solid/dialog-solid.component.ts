@@ -3,7 +3,6 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogClose, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { ResponseSuccess } from 'src/app/models/actions.model';
-import { AddressesService } from 'src/app/services/addresses.service';
 import { ProductsRequestService } from 'src/app/services/products-request.service';
 @Component({
   selector: 'app-dialog-solid',

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 import { ProfileService } from '../services/profile.service';
@@ -9,6 +8,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DialogImageComponent } from './dialog-image/dialog-image.component';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ResponseSuccess } from '../models/actions.model';
+import { MacPrefixService } from '../services/mac-prefix.service';
 
 declare var window: any;
 
@@ -49,7 +49,7 @@ export class ProfileComponent implements OnInit {
   sucMsg: string = '';
   private userSub: Subscription = new Subscription;
   constructor(public authService: AuthService,
-    private route: Router,
+    private macService: MacPrefixService,
     private profileService: ProfileService,
     private dialogRef: MatDialog) {
       this.profileService.refresh.subscribe(()=>{
@@ -68,16 +68,16 @@ export class ProfileComponent implements OnInit {
    })
   ngOnInit(): void {
     this.deleteModal = new window.bootstrap.Modal(
-      document.getElementById('modalRemove')
+      document.getElementById('modalRemove'),{backdrop: this.macService.backdrop}
     );
     this.editModal = new window.bootstrap.Modal(
-      document.getElementById('modalEdit')
+      document.getElementById('modalEdit'),{backdrop: this.macService.backdrop}
     );
     this.successModal = new window.bootstrap.Modal(
-      document.getElementById('editSuccess')
+      document.getElementById('editSuccess'),{backdrop: this.macService.backdrop}
     );
     this.faildModel = new window.bootstrap.Modal(
-      document.getElementById('editFaild')
+      document.getElementById('editFaild'),{backdrop: this.macService.backdrop}
     );
     this.getProfileInfo();
   }

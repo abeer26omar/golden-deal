@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DialogMajorComponent } from './dialog-major/dialog-major.component';
 import { DialogDeleteComponent } from './dialog-delete/dialog-delete.component';
 import { HttpErrorResponse } from '@angular/common/http';
+import { MacPrefixService } from '../services/mac-prefix.service';
 declare var window: any;
 
 @Component({
@@ -23,7 +24,8 @@ export class AddressComponent implements OnInit {
   constructor(private route: ActivatedRoute,
     private router: Router,
     private addService: AddressesService,
-    private dialogRef: MatDialog) { 
+    private dialogRef: MatDialog,
+    private macService: MacPrefixService) { 
       this.addService.refresh.subscribe(()=>{
         this.getAdds();
       })
@@ -32,7 +34,7 @@ export class AddressComponent implements OnInit {
   ngOnInit(): void {
       this.getAdds();
       this.faildAddress = new window.bootstrap.Modal(
-        document.getElementById('faildAddress')
+        document.getElementById('faildAddress'),{backdrop: this.macService.backdrop}
       );
   }
   getAdds(){

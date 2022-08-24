@@ -4,6 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { APIresponse, Subscriptions } from '../models/actions.model';
 import { ActionsService } from '../services/actions.service';
+import { MacPrefixService } from '../services/mac-prefix.service';
 declare var window: any;
 
 @Component({
@@ -24,7 +25,8 @@ export class SubscriptionsComponent implements OnInit {
   payForm = new FormGroup({
     chosePay : new FormControl('',[Validators.required])
   });
-  constructor(private actionService: ActionsService) { }
+  constructor(private actionService: ActionsService,
+    private macService: MacPrefixService) { }
   get f(){
     return this.subscribtionForm.controls;
   }
@@ -33,13 +35,13 @@ export class SubscriptionsComponent implements OnInit {
   }
   ngOnInit(): void {
     this.paymentModal = new window.bootstrap.Modal(
-      document.getElementById('payment')
+      document.getElementById('payment'),{backdrop: this.macService.backdrop}
     );
     this.reviewModal = new window.bootstrap.Modal(
-      document.getElementById('review')
+      document.getElementById('review'),{backdrop: this.macService.backdrop}
     );
     this.faildSubscribtion = new window.bootstrap.Modal(
-      document.getElementById('faildSubscribtion')
+      document.getElementById('faildSubscribtion'),{backdrop: this.macService.backdrop}
     );
     this.getSubscriptionTypes()
   }

@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { APIResponse2, Category, CategoryFilter, NewProduct} from '../../models/products.model';
 import { ProductsRequestService } from 'src/app/services/products-request.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { environment as env } from 'src/environments/environment';
+import { MacPrefixService } from 'src/app/services/mac-prefix.service';
 
 declare var window: any;
 
@@ -54,8 +55,8 @@ export class NewAddComponent implements OnInit {
   private filterSub : Subscription = new Subscription;
   private sendSub: Subscription = new Subscription;
   constructor(private httpService: ProductsRequestService,
-    private route: ActivatedRoute,
-    private router: Router) { }
+    private router: Router,
+    private macService: MacPrefixService) { }
     
     myForm = new FormGroup({
       agrement: new FormControl('', [Validators.required]),
@@ -80,13 +81,13 @@ export class NewAddComponent implements OnInit {
   ngOnInit(): void {
       this.getCategories();
       this.modelSuccessNewProduct = new window.bootstrap.Modal(
-        document.getElementById('modelSuccessNewProduct')
+        document.getElementById('modelSuccessNewProduct'),{backdrop: this.macService.backdrop}
       );  
       this.modelAddImages = new window.bootstrap.Modal(
-        document.getElementById('modelAddImages')
+        document.getElementById('modelAddImages'),{backdrop: this.macService.backdrop}
       );
       this.addFaild = new window.bootstrap.Modal(
-        document.getElementById('addFaild')
+        document.getElementById('addFaild'),{backdrop: this.macService.backdrop}
       )
   }
   onFileChange(event:any) {

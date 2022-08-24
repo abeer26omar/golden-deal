@@ -8,6 +8,7 @@ import { ActionsService } from 'src/app/services/actions.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ResponseSuccess } from 'src/app/models/actions.model';
 import { AdminService } from 'src/app/services/admin.service';
+import { MacPrefixService } from 'src/app/services/mac-prefix.service';
 declare var window: any;
 
 @Component({
@@ -70,7 +71,8 @@ export class ProductDetailsComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private actionService : ActionsService,
-    private adminService: AdminService) { }
+    private adminService: AdminService,
+    private macService: MacPrefixService) { }
 
   ngOnInit(): void {
     this.routeSub = this.route.params.subscribe((params: Params) => {
@@ -78,19 +80,19 @@ export class ProductDetailsComponent implements OnInit {
       this.getProductDetails(this.ProductId);
     });
     this.formModal = new window.bootstrap.Modal(
-      document.getElementById('myModal')
+      document.getElementById('myModal'),{backdrop: this.macService.backdrop}
     );
     this.formModal2 = new window.bootstrap.Modal(
-      document.getElementById('staticBackdrop')
+      document.getElementById('staticBackdrop'),{backdrop: this.macService.backdrop}
     );
     this.buyModal = new window.bootstrap.Modal(
-      document.getElementById('buyModal')
+      document.getElementById('buyModal'),{backdrop: this.macService.backdrop}
     );
     this.success = new window.bootstrap.Modal(
-      document.getElementById('success')
+      document.getElementById('success'),{backdrop: this.macService.backdrop}
     );
     this.faild = new window.bootstrap.Modal(
-      document.getElementById('faild')
+      document.getElementById('faild'),{backdrop: this.macService.backdrop}
     );
   }
   getProductDetails(id: string){

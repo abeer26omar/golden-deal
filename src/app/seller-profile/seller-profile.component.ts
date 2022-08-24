@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { Portfolio, Products, ResponseSuccess } from '../models/actions.model';
+import { Portfolio, Products } from '../models/actions.model';
 import { ActionsService } from '../services/actions.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { MacPrefixService } from '../services/mac-prefix.service';
 
 declare var window: any;
 
@@ -43,18 +44,19 @@ export class SellerProfileComponent implements OnInit {
   
   constructor(private router: Router,
     private route: ActivatedRoute,
-    private actionService: ActionsService) { 
-      this.actionService.refresh.subscribe((res)=>{
+    private actionService: ActionsService,
+    private macService: MacPrefixService) { 
+      this.actionService.refresh.subscribe(()=>{
         this.getPortfolioInfo(this.portfolioId);
       })
     }
 
   ngOnInit(): void {
     this.filterModal = new window.bootstrap.Modal(
-      document.getElementById('myModalFilter')
+      document.getElementById('myModalFilter'),{backdrop: this.macService.backdrop}
     );
     this.faildAdds = new window.bootstrap.Modal(
-      document.getElementById('faildAdds')
+      document.getElementById('faildAdds'),{backdrop: this.macService.backdrop}
     )
     this.routeSub = this.route.params.subscribe((params: Params) => {
       this.portfolioId = params['id'];

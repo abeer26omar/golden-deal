@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { HomeAddsService } from '../services/home-adds.service';
 import { APIResponse4, Pages } from '../models/user.model';
 import { HttpErrorResponse } from '@angular/common/http';
+import { MacPrefixService } from '../services/mac-prefix.service';
 declare var window: any;
 
 @Component({
@@ -21,8 +22,9 @@ export class TermsConditionsComponent implements OnInit {
   faildTerms: any;
   errMsg: string = '';
   constructor(private homeAddService: HomeAddsService,
-    private route: ActivatedRoute) { 
-      this.homeAddService.refresh.subscribe((res)=>{
+    private route: ActivatedRoute,
+    private macService: MacPrefixService) { 
+      this.homeAddService.refresh.subscribe(()=>{
         this.getPages(this.pageSlug)
       })
     }
@@ -33,7 +35,7 @@ export class TermsConditionsComponent implements OnInit {
     });
     this.getPages(this.pageSlug);
     this.faildTerms = new window.bootstrap.Modal(
-      document.getElementById('faildTerms')
+      document.getElementById('faildTerms'),{backdrop: this.macService.backdrop}
     );
   }
   getPages(slug: string){

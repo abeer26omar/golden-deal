@@ -14,7 +14,9 @@ export class BuyingRecordComponent implements OnInit {
   public records: Array<Purchases> = [];
   error: string = '';
   loadding: boolean = false;
-  constructor(private profileService: ProfileService) { }
+  mac: boolean = false;
+  constructor(private profileService: ProfileService) { 
+    }
 
   ngOnInit(): void {
     this.getAllPurchases()

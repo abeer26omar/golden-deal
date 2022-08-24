@@ -6,6 +6,7 @@ import { ResponseSuccess } from '../models/actions.model';
 import { Category,APIResponse2 } from '../models/products.model';
 import { AuthService } from '../services/auth.service';
 import { ProductsRequestService } from '../services/products-request.service'
+import { MacPrefixService } from '../services/mac-prefix.service';
 declare var window: any;
 
 @Component({
@@ -25,16 +26,17 @@ export class HeaderComponent implements OnInit {
   toastFaild: any;
   constructor(public authService: AuthService,
     private route: Router,
-    private categoryService: ProductsRequestService) { 
+    private categoryService: ProductsRequestService,
+    private macService: MacPrefixService) { 
     this.userId = localStorage.getItem('userId')
   }
   ngOnInit(): void { 
     this.getCategories();
     this.toastSuccess = new window.bootstrap.Toast(
-      document.getElementById('toastSuccess')
+      document.getElementById('toastSuccess'),{backdrop: this.macService.backdrop}
     )
     this.toastFaild = new window.bootstrap.Toast(
-      document.getElementById('toastFaild')
+      document.getElementById('toastFaild'),{backdrop: this.macService.backdrop}
     )
   }
   private categorySub : Subscription = new Subscription;

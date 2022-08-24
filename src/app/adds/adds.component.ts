@@ -8,6 +8,7 @@ import { DialogSolidComponent } from './dialog-solid/dialog-solid.component';
 import { DialogDeleteComponent } from './dialog-delete/dialog-delete.component';
 import { DialogCoverComponent } from './dialog-cover/dialog-cover.component';
 import { HttpErrorResponse } from '@angular/common/http';
+import { MacPrefixService } from '../services/mac-prefix.service';
 
 declare var window: any;
 
@@ -64,8 +65,9 @@ export class AddsComponent implements OnInit {
   constructor(private router: Router,
     private route: ActivatedRoute,
     private actionService: ActionsService,
-    private dialogRef: MatDialog) { 
-      this.actionService.refresh.subscribe((res)=>{
+    private dialogRef: MatDialog,
+    private macService: MacPrefixService) { 
+      this.actionService.refresh.subscribe(()=>{
         this.getMyFav();
         this.getMyOrders();
         this.getPortfolioInfo(this.portfolioId);
@@ -73,13 +75,13 @@ export class AddsComponent implements OnInit {
     }
   ngOnInit(): void {
     this.filterModal = new window.bootstrap.Modal(
-      document.getElementById('myModalFilter')
+      document.getElementById('myModalFilter'),{backdrop: this.macService.backdrop}
     );
     this.faildAdds = new window.bootstrap.Modal(
-      document.getElementById('faildAdds')
+      document.getElementById('faildAdds'),{backdrop: this.macService.backdrop}
     )
     this.successAdds = new window.bootstrap.Modal(
-      document.getElementById('successAdds')
+      document.getElementById('successAdds'),{backdrop: this.macService.backdrop}
     )
     this.routeSub = this.route.params.subscribe((params: Params) => {
       this.portfolioId = params['id'];

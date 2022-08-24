@@ -5,6 +5,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
 import { APIResponse2, APIResponse4, Category, EditProduct, EditProductFilters, Update } from 'src/app/models/products.model';
 import { ProductsRequestService } from 'src/app/services/products-request.service';
+import { MacPrefixService } from 'src/app/services/mac-prefix.service';
 declare var window: any;
 
 @Component({
@@ -86,8 +87,8 @@ export class EditAddComponent implements OnInit {
 
 
   constructor(private productService: ProductsRequestService,
-    private route: Router,
-    private router: ActivatedRoute) { }
+    private router: ActivatedRoute,
+    private macService: MacPrefixService) { }
   get f(){
     return this.myForm.controls;
   }
@@ -98,13 +99,13 @@ export class EditAddComponent implements OnInit {
     this.getAddInfo(this.addId);
     this.getCategories();
     this.modelSuccessNewProduct = new window.bootstrap.Modal(
-      document.getElementById('modelSuccessNewProduct')
+      document.getElementById('modelSuccessNewProduct'),{backdrop: this.macService.backdrop}
     );  
     this.modelAddImages = new window.bootstrap.Modal(
-      document.getElementById('modelAddImages')
+      document.getElementById('modelAddImages'),{backdrop: this.macService.backdrop}
     );
     this.addFaild = new window.bootstrap.Modal(
-      document.getElementById('addFaild')
+      document.getElementById('addFaild'),{backdrop: this.macService.backdrop}
     );
   }
   onFileChange(event:any) {

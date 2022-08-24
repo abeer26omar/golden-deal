@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Product} from '../../models/products.model';
-import { ActivatedRoute, Params } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { skip, Subscription } from 'rxjs';
 import { ProductsRequestService } from '../../services/products-request.service';
 import { NgForm } from '@angular/forms';
 import { ActionsService } from 'src/app/services/actions.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ResponseSuccess } from 'src/app/models/actions.model';
+import { AdminService } from 'src/app/services/admin.service';
 declare var window: any;
 
 @Component({
@@ -39,6 +40,14 @@ export class ProductDetailsComponent implements OnInit {
           image_url: '',
           cover_url: '',
       },
+      admin_details:{
+        cover_url: '',
+        id: 0,
+        image: '',
+        image_url: '',
+        name: '',
+        phone: ''
+    },
       product_images:[],
       owner_ratings: []
     }
@@ -53,12 +62,15 @@ export class ProductDetailsComponent implements OnInit {
   faild: any;
   errMsg: string = '';
   sucessMsg: string = '';
+  admin: any;
   private routeSub: Subscription = new Subscription;
   private productSub: Subscription = new Subscription;
   
   constructor(private httpService: ProductsRequestService, 
     private route: ActivatedRoute,
-    private actionService : ActionsService) { }
+    private router: Router,
+    private actionService : ActionsService,
+    private adminService: AdminService) { }
 
   ngOnInit(): void {
     this.routeSub = this.route.params.subscribe((params: Params) => {
@@ -86,6 +98,7 @@ export class ProductDetailsComponent implements OnInit {
     .subscribe({
       next:(productDetails: Product)=>{
         this.singleProduct = productDetails;
+        // this.admin = this.singleProduct.data.admin_details.id
       },
       error:(err: HttpErrorResponse)=>{
         this.faild.show();
@@ -155,6 +168,10 @@ export class ProductDetailsComponent implements OnInit {
   onBuy(){
     this.buyModal.show()
   } 
+  chat(data:any){
+    this.router.navigate([`/chat`])
+    this.adminService.setOption(data)
+  }
   ngOnDestory() :void{
     if(this.productSub){
       this.productSub.unsubscribe();

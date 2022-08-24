@@ -3,6 +3,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ChatService } from '../services/chat.service';
 import { APIResponse6, MessagesList ,Messages, APIResponse7} from '../models/chat.model';
 import { Subscription } from 'rxjs';
+import { AdminService } from '../services/admin.service';
 
 @Component({
   selector: 'app-chats',
@@ -12,6 +13,7 @@ import { Subscription } from 'rxjs';
 export class ChatsComponent implements OnInit {
   userId = localStorage.getItem('userId');
   receiverId: any;
+  admin: any;
   message: string = '';
   messageArr: {user: string, msg: string}[] = []
   currUser: any;
@@ -22,15 +24,16 @@ export class ChatsComponent implements OnInit {
   recieverMsg: any = [];
   load: boolean = false;
   loader: boolean = false;
-
   public msgUsersList: Array<MessagesList> = []
   public usersMsg: Array<Messages> = []
 
   public chatSub: Subscription = new Subscription;
-  constructor(private chatService: ChatService) { 
+  constructor(private chatService: ChatService,
+    private adminService: AdminService) { 
     
   }
   ngOnInit(): void {
+    this.admin = this.adminService.getOption();
     this.getAllPreMsgList()
   }
   sendMsg(){
@@ -52,7 +55,7 @@ export class ChatsComponent implements OnInit {
     this.chatService.getMessage().subscribe((data)=>{
       this.usersMsg.push(data)
     })
-    this.getChat(data.sender,data.receiver)
+    this.getChat(data.sender)
   }
   getAllPreMsgList(){
     this.loader = true;
@@ -71,10 +74,10 @@ export class ChatsComponent implements OnInit {
       }
     })
   } 
-  getChat(senderId: any, receiverId: any){
+  getChat(senderId: any){
     this.load = true;
-    this.receiverId = receiverId;    
-    this.chatSub = this.chatService.getAllMessages(senderId,receiverId).subscribe({
+    this.receiverId = this.admin.id;    
+    this.chatSub = this.chatService.getAllMessages(senderId,this.receiverId).subscribe({
       next: (res: APIResponse7<Messages>)=>{
         this.load = false;
         this.usersMsg = res.data 

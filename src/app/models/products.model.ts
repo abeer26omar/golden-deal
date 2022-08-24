@@ -27,6 +27,14 @@ export interface Product{
         materials: string;
         about_seller: string;
         delivery_notes: string;
+        admin_details:{
+            cover_url: string,
+            id: number,
+            image: string,
+            image_url: string,
+            name: string,
+            phone: string
+        }
         owner_id: number;
         category_id: number;
         seller_phone: string;

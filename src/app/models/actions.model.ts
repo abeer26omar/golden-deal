@@ -47,7 +47,7 @@ interface Reviews{
     desc: string,
     value: number,
     created_since: string
-}
+} 
 export interface Orders{
     id: number,
     order_code: string,

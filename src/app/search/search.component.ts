@@ -52,8 +52,9 @@ export class SearchComponent implements OnInit {
         return 'other';
     }
   }
-  operatingSysDetect(){      
-    if (window.navigator.userAgent.indexOf("Mac") != -1) {
+  operatingSysDetect(){    
+    const agent = window.navigator.userAgent.toLowerCase()
+    if (window.navigator.userAgent.indexOf("Mac") != -1 && (agent.indexOf('chrome') > -1 && !!(<any>window).chrome)) {
       console.log("OS is Mac/iOS");
       this.mac =  true;
     } else{

@@ -40,12 +40,12 @@
             </div>
             <form [formGroup]="formSupport" (ngSubmit)="sendSupport()">
               <div class="publisher">
-                <div class="outer">
-                    <div class="d-flex align-items-center">
+                <div class="outer" >
+                    <div class="d-flex align-items-center" style="width: 100%;">
                         <img class="avatar avatar-xs" src="../../assets/images/smiliy.svg" alt="smiliy">
-                        <input class="publisher-input form-control" 
+                        <textarea class="publisher-input form-control" 
                         type="text" placeholder="اكتب هنا"
-                        formControlName='message'>
+                        formControlName='message'></textarea>
                     </div>
                 </div>
                     <button class="btn text-info" type="submit">

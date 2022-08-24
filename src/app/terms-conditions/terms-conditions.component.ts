@@ -50,6 +50,11 @@ export class TermsConditionsComponent implements OnInit {
       error:(err: HttpErrorResponse)=>{
         this.faildTerms.show();
         this.errMsg = err.error.data;
+        if(err.error.data){
+          this.errMsg = err.error.data;
+        }else{
+          this.errMsg = err.statusText;
+        }
       }
     })
   }
@@ -60,6 +65,6 @@ export class TermsConditionsComponent implements OnInit {
     if(this.routeSub){
       this.routeSub.unsubscribe();
      }
-   }
+  }
 }
-
+ 

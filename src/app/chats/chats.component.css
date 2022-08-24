@@ -18,11 +18,19 @@ p.title{
 }
 .side-chat .card-body .chats{
     cursor: pointer;
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    align-content: center;
 }
 .side-chat .card-body .chats img{
     width: 40px;
     height: 40px;
     border-radius: 50%;
+}
+.side-chat .card-body .chats .chat{
+    width: -webkit-fill-available;
+    text-align: center;
 }
 .avatar-offline::after, 
 .avatar-online::after {

@@ -11,7 +11,7 @@
                         <ul ngbNav #nav="ngbNav" 
                             class="nav-pills p-0" orientation="vertical">
                             <li ngbNavItem *ngFor="let user of msgUsersList">
-                              <a ngbNavLink (click)="getChat(user.sender, user.receiver.id)">
+                              <a ngbNavLink (click)="getChat(user.sender)">
                                 <div class="column">
                                     <div class="chats d-flex justify-content-between">
                                         <div class="avatar-online">
@@ -64,12 +64,19 @@
                                                 <div class="outer">
                                                     <div class="d-flex align-items-center">
                                                         <img class="avatar avatar-xs" src="../../assets/images/smiliy.svg" alt="smiliy">
-                                                        <input class="publisher-input form-control" 
+                                                        <!-- <input class="publisher-input form-control" 
                                                         type="text" 
                                                         placeholder="اكتب هنا"
                                                         [(ngModel)]="messageTxt"
                                                         [ngModelOptions]="{standalone: true}"
-                                                        (keyup)="$event.keyCode === 13">
+                                                        (keyup)="$event.keyCode === 13"> -->
+                                                        <textarea class="publisher-input form-control" 
+                                                            type="text" 
+                                                            placeholder="اكتب هنا"
+                                                            [(ngModel)]="messageTxt"
+                                                            [ngModelOptions]="{standalone: true}"
+                                                            (keyup)="$event.keyCode === 13">
+                                                        </textarea>
                                                     </div>
                                                 </div>
                                                     <button class="btn text-info" (click)="sendMsg()">
@@ -86,14 +93,13 @@
                             <li ngbNavItem="support">
                               <a ngbNavLink >
                                 <div class="column">
-                                    <div class="chats d-flex justify-content-between">
-                                        <div class=" avatar-online">
+                                    <div class="chats">
+                                        <div class="avatar">
                                             <img src="../../assets/images/suportChat.svg" alt="avatar-img">
                                         </div>
                                         <div class="chat ">
                                             <p class="chat-name">الدعم</p>
                                         </div>
-                                        <small class="time">منذ 4 ابام</small>
                                     </div>
                                 </div>
                               </a>

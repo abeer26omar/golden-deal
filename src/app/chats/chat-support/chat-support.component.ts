@@ -27,7 +27,6 @@ export class ChatSupportComponent implements OnInit {
     return this.formSupport.controls;
   }
   constructor(private chatService: ChatService) { 
-   
   }
 
   ngOnInit(): void {
@@ -63,7 +62,12 @@ export class ChatSupportComponent implements OnInit {
         this.formSupport.reset()
       },
       error: (err: HttpErrorResponse)=>{
-        console.log(err);
+        this.load = false;
+        if(err.error.data){
+          this.supportErr = err.error.data;
+        }else{
+          this.supportErr = err.statusText;
+        }
       }
     })
   }

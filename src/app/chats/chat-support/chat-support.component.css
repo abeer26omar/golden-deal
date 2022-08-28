@@ -134,11 +134,12 @@ h4.card-title {
 .media-chat .media-body {
     -webkit-box-flex: initial;
     flex: initial;
-    /* display: table; */
 }
 .media-chat .media-body .media-1{
     background-color: var(--primary-color);
     border-radius: 22.0238px;
+    max-width: 80%;
+    display: inline-block;
 }
 .media-chat .media-body .media-2{
     background-color: var(--bg-color);

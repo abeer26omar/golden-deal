@@ -105,6 +105,7 @@ h4.card-title {
 }
 
 .media {
+    display: flex;
     padding: 16px 12px;
     -webkit-transition: background-color .2s linear;
     transition: background-color .2s linear;
@@ -133,7 +134,7 @@ h4.card-title {
 .media-chat .media-body {
     -webkit-box-flex: initial;
     flex: initial;
-    display: table;
+    /* display: table; */
 }
 .media-chat .media-body .media-1{
     background-color: var(--primary-color);

@@ -17,8 +17,12 @@
                 <div class="media media-chat">
                     <div class="media-body">
                         <div class="d-flex p-2 media-1 m-1" *ngFor="let msg of messages">
+                          <div class="media-avatar">
                             <img class="avatar" src="{{supportData.image_url}}" alt="...">
+                          </div>
+                          <div class="media-msg">
                             <p>{{msg.message}}</p>
+                          </div>
                         </div>
                         <div class="alert alert-danger" *ngIf="supportErr">{{supportErr}}</div>
                   </div>
@@ -26,8 +30,12 @@
                 <div class="media media-chat media-chat-reverse" *ngIf="supportRes">
                     <div class="media-body">
                       <div class="d-flex p-2 flex-row-reverse media-2">
+                        <div class="media-avatar">
                           <img class="avatar" src="../../../assets/images/suportChat.svg" alt="suportChat">
+                        </div>
+                        <div class="media-msg">
                           <p>{{supportRes}}</p>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -38,17 +46,18 @@
                 <div class="ps-scrollbar-y" tabindex="0" style="top: 0px; height: 2px;"></div>
               </div>
             </div>
-            <form [formGroup]="formSupport" (ngSubmit)="sendSupport()">
+            <form [formGroup]="formSupport" (ngSubmit)="sendSupport()" (keyup)="$event.keyCode === 13">
               <div class="publisher">
                 <div class="outer" >
                     <div class="d-flex align-items-center" style="width: 100%;">
                         <img class="avatar avatar-xs" src="../../assets/images/smiliy.svg" alt="smiliy">
                         <textarea class="publisher-input form-control" 
-                        type="text" placeholder="اكتب هنا"
+                        type="text" 
+                        placeholder="اكتب هنا"
                         formControlName='message'></textarea>
                     </div>
                 </div>
-                    <button class="btn text-info" type="submit">
+                    <button class="btn text-info" type="submit" >
                       <img src="../../assets/images/send.svg" alt="" style="width: 50px;">
                     </button>
                 </div>

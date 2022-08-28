@@ -101,19 +101,23 @@ ul.more-dropdown{
   min-width: 28rem;
   text-align: right;
 }
-#forms-collapse{
+.dropdown-menu{
   position: absolute;
-  top: 70px;
+  top: 55px;
+  left: unset;
   z-index: 9999;
   width: 370px;
   padding: .5rem 1rem;
   background-color: white;
   box-shadow: 0px 5.82143px 17.4643px rgba(0, 0, 0, 0.25);
   border-radius: 7.27679px;
+  margin-top: 0;
 }
 .more-list{
   list-style: none;
-  padding: 1rem ;
+  padding: 0 !important;
+  margin: 0 !important;
+  text-align: right;
 }
 .adds{
   padding: 0;
@@ -124,6 +128,7 @@ ul.more-dropdown{
   list-style: none;
   padding: 0;
   padding-right: .5rem;
+  text-align: right;
 }
 ul.more-list li{
   padding: .7rem 0;

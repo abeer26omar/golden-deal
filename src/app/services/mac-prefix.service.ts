@@ -39,7 +39,7 @@ export class MacPrefixService {
   }
   operatingSysDetect(){      
     const agent = window.navigator.userAgent.toLowerCase()
-    if ((window.navigator.userAgent.indexOf("Mac") != -1) && !(agent.indexOf('chrome') > -1 && !!(<any>window).chrome)) {
+    if ((window.navigator.userAgent.indexOf("Mac") != -1) && (agent.indexOf('safari') != -1)){
       this.macphone = true;
       this.macsearch = true;
     } 

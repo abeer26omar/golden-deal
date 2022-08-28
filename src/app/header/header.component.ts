@@ -40,7 +40,9 @@ export class HeaderComponent implements OnInit {
     )
   }
   private categorySub : Subscription = new Subscription;
-
+  stopPropagation(event: any){
+    event.stopPropagation();
+  }
   getCategories(){
     this.categorySub = this.categoryService.
     getProductsCategories().

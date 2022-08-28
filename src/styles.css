@@ -298,6 +298,7 @@ input.star:checked ~ label.star:before {
     .products-row .card-body{
         top: 0;
         margin: 0;
+        padding: 1rem 0.5rem;
     }
     .products-row .card-header {
         width: 50%;

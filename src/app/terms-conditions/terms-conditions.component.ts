@@ -24,9 +24,6 @@ export class TermsConditionsComponent implements OnInit {
   constructor(private homeAddService: HomeAddsService,
     private route: ActivatedRoute,
     private macService: MacPrefixService) { 
-      this.homeAddService.refresh.subscribe(()=>{
-        this.getPages(this.pageSlug)
-      })
     }
 
   ngOnInit(): void {
@@ -42,6 +39,8 @@ export class TermsConditionsComponent implements OnInit {
    this.pageSub = this.homeAddService.getStaticPages().subscribe({
       next: (respages: APIResponse4<Pages>)=>{
         this.pages = respages.data
+        console.log(respages);
+        
         this.pages.forEach((e)=>{
           if(e.slug == slug){
             this.title = e.title;

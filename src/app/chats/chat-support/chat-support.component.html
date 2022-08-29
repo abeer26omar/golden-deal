@@ -1,42 +1,27 @@
 <div class="page-content page-container" id="page-content">
-    <div class="row d-flex justify-content-center">
-        <div class="card card-bordered">
+        <div class="card">
             <div class="card-header">
-                <h4 class="card-title"><strong>الدعم</strong></h4>
+                <p class="card-title"><strong>الدعم</strong></p>
             </div>
             <mat-progress-bar mode="indeterminate"  *ngIf="load" id="addprog"></mat-progress-bar>
-            <div class="ps-container ps-theme-default ps-active-y mt-2" id="chat-content" style="overflow-y: scroll !important; height:400px !important;">
+            <div class="ps-container ps-theme-default ps-active-y mt-2" id="chat-content">
                 <div class="media media-chat media-chat-reverse">
-                  <div class="media-body">
-                    <div class=" p-2 flex-row-reverse media-2">
+                    <div class="p-2 media-2">
                         <img class="avatar" src="../../../assets/images/suportChat.svg" alt="suportChat">
-                        <p>مرحبا هل تحتاج مساعدة؟ <br>اتصل بنا هنا. سوف نجيب علي <br>استفسارك في أقرب وقت ممكن</p>
+                        <p class="msg-txt">مرحبا هل تحتاج مساعدة؟ <br>اتصل بنا هنا. سوف نجيب علي <br>استفسارك في أقرب وقت ممكن</p>
                     </div>
-                  </div>
                 </div>
                 <div class="media media-chat">
-                    <div class="media-body">
-                        <div class=" p-2 media-1 m-1" *ngFor="let msg of messages">
-                          <div class="media-avatar">
-                            <img class="avatar" src="{{supportData.image_url}}" alt="...">
-                          </div>
-                          <div class="media-msg">
-                            <p>{{msg.message}}</p>
-                          </div>
+                        <div class="p-2 media-1 m-1" *ngFor="let msg of messages">
+                              <img class="avatar" src="{{supportData.image_url}}" alt="...">
+                              <p class="msg-txt">{{msg.message}}</p>
                         </div>
                         <div class="alert alert-danger" *ngIf="supportErr">{{supportErr}}</div>
-                  </div>
                 </div>
                 <div class="media media-chat media-chat-reverse" *ngIf="supportRes">
-                    <div class="media-body">
-                      <div class="d-flex p-2 flex-row-reverse media-2">
-                        <div class="media-avatar">
+                      <div class="p-2 flex-row-reverse media-2">
                           <img class="avatar" src="../../../assets/images/suportChat.svg" alt="suportChat">
-                        </div>
-                        <div class="media-msg">
-                          <p>{{supportRes}}</p>
-                        </div>
-                      </div>
+                          <p class="msg-txt">{{supportRes}}</p>
                     </div>
                   </div>
               <div class="ps-scrollbar-x-rail" style="left: 0px; bottom: 0px;">
@@ -63,5 +48,4 @@
                 </div>
             </form> 
         </div>
-    </div>
 </div>

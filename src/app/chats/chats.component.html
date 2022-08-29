@@ -1,20 +1,20 @@
     <div class="chat-row row g-4 justify-content-center pt-5 pb-5">
         <div class="col-xl-3 col-lg-4 col-12">
             <div class="side-chat">
-                <div class="card">
+                <div class="card h-100">
                     <div class="card-header">
                         <p class="title text-center">المحادثات</p>
                     </div>
                     <mat-progress-bar mode="indeterminate"  *ngIf="loader" id="addprog"></mat-progress-bar>
                     <div class="card-body ps-container mt-2 ps-theme-default ps-active-y" 
-                     style="overflow-y: scroll !important; height:477px !important;">
+                     style="overflow-y: scroll !important;height:477px !important;">
                         <ul ngbNav #nav="ngbNav" 
                             class="nav-pills p-0" orientation="vertical">
                             <li ngbNavItem *ngFor="let user of msgUsersList">
-                              <a ngbNavLink (click)="getChat(user.sender)">
+                              <a ngbNavLink (click)="getChat(user.sender,user.receiver.id)">
                                 <div class="column">
-                                    <div class="chats d-flex justify-content-between">
-                                        <div class="avatar-online">
+                                    <div class="chats">
+                                        <div class="avatar">
                                             <img [src]="(user.receiver.image_url == 
                                             'https://deal.qbizns.com/storage/users/avatar/default.png' || !user.receiver.image_url) ?
                                              '../../assets/images/Portrait_Placeholder.png' : user.receiver.image_url" alt="">
@@ -23,53 +23,41 @@
                                             <p class="chat-name">{{user.receiver.name}}</p>
                                             <p class="chat-desc">{{user.message}}</p>
                                         </div>
-                                        <small class="time">منذ {{user.seen_at}} ابام</small>
                                     </div>
-                                    <mat-divider class="my-3"></mat-divider>
                                 </div>
-                              </a>
+                            </a>
                               <ng-template ngbNavContent>
                                 <div class="page-content page-container" id="page-content">
-                                    <div class="row d-flex justify-content-center">
-                                        <div class="card card-bordered">
+                                        <div class="card">
                                             <div class="card-header justify-content-center">
                                                 <h4 class="card-title"><strong>{{user.receiver.name}}</strong></h4>
                                             </div>
                                             <mat-progress-bar mode="indeterminate"  *ngIf="load" id="addprog"></mat-progress-bar>
-                                            <div class="ps-container ps-theme-default ps-active-y mt-2" id="chat-content" style="overflow-y: scroll !important; height:400px !important;">
+                                            <div class="ps-container ps-theme-default ps-active-y mt-2" id="chat-content">
                                                 <div class="media media-chat" 
                                                 [ngClass]="{'media-chat-reverse' : user.sender === msg.receiver.id}"
                                                     *ngFor="let msg of usersMsg">
-                                                  <div class="media-body">
-                                                    <div class="d-flex p-2 m-1 media-1 media-2">
-                                                        <!-- <img *ngIf="user.sender === msg.receiver.id" 
-                                                        class="avatar" 
-                                                        [src]="(msg.receiver.image_url == 
-                                                        'https://deal.qbizns.com/storage/users/avatar/default.png' || !msg.receiver.image_url) ?
-                                                         '../../assets/images/Portrait_Placeholder.png' : msg.receiver.image_url" alt="...">
-                                                         <img *ngIf="!(user.sender === msg.receiver.id)"
-                                                          class="avatar" 
-                                                          [src]="(msg.sender.image_url == 
+                                                    <div class="p-2 m-1 media-1 media-2">
+                                                        <img class="avatar" [src]="user.sender === msg.receiver.id ? (msg.sender.image_url == 
                                                         'https://deal.qbizns.com/storage/users/avatar/default.png' || !msg.sender.image_url) ?
-                                                         '../../assets/images/Portrait_Placeholder.png' : msg.sender.image_url" alt="..."> -->
-                                                        <p>{{msg.message}}</p>
+                                                         '../../assets/images/Portrait_Placeholder.png' : msg.sender.image_url : (msg.receiver.image_url == 
+                                                        'https://deal.qbizns.com/storage/users/avatar/default.png' || !msg.receiver.image_url) ?
+                                                         '../../assets/images/Portrait_Placeholder.png' : msg.receiver.image_url" alt="">
+                                                        <p class="msg-txt">{{msg.message}}</p>
                                                     </div>
-                                                  </div>
                                                 </div>
                                                 <p class="text-danger text-center" *ngIf="errorTxt">{{errorTxt}}</p>
-                                              <div class="ps-scrollbar-x-rail" style="left: 0px; bottom: 0px;"><div class="ps-scrollbar-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps-scrollbar-y-rail" style="top: 0px; height: 0px; right: 2px;"><div class="ps-scrollbar-y" tabindex="0" style="top: 0px; height: 2px;"></div></div></div>
-                                
+                                              <div class="ps-scrollbar-x-rail" style="left: 0px; bottom: 0px;">
+                                                <div class="ps-scrollbar-x" tabindex="0" style="left: 0px; width: 0px;"></div>
+                                            </div>
+                                            <div class="ps-scrollbar-y-rail" style="top: 0px; height: 0px; right: 2px;">
+                                                <div class="ps-scrollbar-y" tabindex="0" style="top: 0px; height: 2px;"></div>
+                                            </div>
+                                        </div>
                                               <form action="">
                                               <div class="publisher">
                                                 <div class="outer">
                                                     <div class="d-flex align-items-center">
-                                                        <img class="avatar avatar-xs" src="../../assets/images/smiliy.svg" alt="smiliy">
-                                                        <!-- <input class="publisher-input form-control" 
-                                                        type="text" 
-                                                        placeholder="اكتب هنا"
-                                                        [(ngModel)]="messageTxt"
-                                                        [ngModelOptions]="{standalone: true}"
-                                                        (keyup)="$event.keyCode === 13"> -->
                                                         <textarea class="publisher-input form-control" 
                                                             type="text" 
                                                             placeholder="اكتب هنا"
@@ -85,10 +73,10 @@
                                                 </div>
                                             </form>
                                         </div>
-                                    </div>
                                 </div>
                               </ng-template>
                             </li>
+                            <mat-divider class="my-3"></mat-divider>
                             <p class="text-center text-danger" *ngIf="errorlist">{{errorlist}}</p>
                             <li ngbNavItem="support">
                               <a ngbNavLink >

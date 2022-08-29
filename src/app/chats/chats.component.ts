@@ -55,7 +55,7 @@ export class ChatsComponent implements OnInit {
     this.chatService.getMessage().subscribe((data)=>{
       this.usersMsg.push(data)
     })
-    this.getChat(data.sender)
+    this.getChat(data.sender, data.receiver)
   }
   getAllPreMsgList(){
     this.loader = true;
@@ -74,9 +74,10 @@ export class ChatsComponent implements OnInit {
       }
     })
   } 
-  getChat(senderId: any){
+  getChat(senderId: any, reciever: any){
     this.load = true;
-    this.receiverId = this.admin.id;    
+    this.receiverId = this.admin.id; 
+    this.receiverId =  reciever;
     this.chatSub = this.chatService.getAllMessages(senderId,this.receiverId).subscribe({
       next: (res: APIResponse7<Messages>)=>{
         this.load = false;

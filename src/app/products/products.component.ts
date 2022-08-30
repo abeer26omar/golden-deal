@@ -73,15 +73,13 @@ export class ProductsComponent implements OnInit {
     .getProductsList(categorySlug)
     .subscribe({
       next:(productsList: APIResponse<Products>)=>{
-        setTimeout(() => {
-          this.loadding = false;
+        this.loadding = false;
           this.products = productsList.data;
           if(this.products.length == 0){
             this.errorLength = 'لا يوجد منتجات';
           }else{
             this.errorLength = '';
           }
-        }, 0);
       },
       error:(err: HttpErrorResponse)=>{
         this.faildProducts.show();
@@ -157,9 +155,17 @@ export class ProductsComponent implements OnInit {
         formData.append(field,this.formFilter.controls[field].value)
       }        
      this.filterSub = this.httpService.applayFilter(formData).subscribe({
-      next: res=>{
-        console.log(res);
-        this.load = false;
+      next: (res: APIResponse<Products>)=>{
+          this.load = false;
+          console.log(res);
+          
+          this.formModal.hide();
+          this.products = res.data;
+          if(this.products.length == 0){
+            this.errorLength = 'لا يوجد منتجات';
+          }else{
+            this.errorLength = '';
+          }
       },
       error:(err: HttpErrorResponse)=>{
         this.load = false;

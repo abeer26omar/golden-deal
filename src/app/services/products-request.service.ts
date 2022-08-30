@@ -72,7 +72,7 @@ export class ProductsRequestService {
     }))
   }
   applayFilter(body: any){
-    return this.http.post<ResponseSuccess>(`${env.api_url}/filters/submit-filters`,
+    return this.http.post<APIResponse<Products>>(`${env.api_url}/filters/submit-filters`,
     body,this.httpOptions).pipe(tap(()=>{
       this._refresh.next();
     }))

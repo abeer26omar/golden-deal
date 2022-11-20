@@ -100,8 +100,8 @@
             </div>
           </li>
         </ul>
-        <ul class="navbar-nav main-nv mb-2 mb-lg-0   align-items-center">
-            <li class="nav-item" *ngIf="!(authService.isRegister | async)">
+        <ul class="navbar-nav main-nv mb-2 mb-lg-0  p-0 align-items-center">
+            <li class="nav-item p-0" *ngIf="!(authService.isRegister | async)">
               <button class="btn create-account" routerLink="register">تسجيل الدخول</button>
             </li>
             <li class="nav-item" *ngIf="authService.isRegister | async">

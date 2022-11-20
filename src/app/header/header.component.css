@@ -35,8 +35,8 @@ nav ul .nav-item a.active svg path{
     border-radius: 10px;
     padding: .8rem 2rem;
     color: var(--white);
-    font-weight: 500;
-    font-size: 1.2rem;
+    font-weight: 400;
+    font-size: 1.1rem;
 }
   nav .navbar-toggler{
     width: 25px;

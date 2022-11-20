@@ -7,7 +7,7 @@ import { HttpErrorInterceptor } from './interceptors/http-errors.interceptor';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { CarouselModule } from 'ngx-owl-carousel-o';
+// import { CarouselModule } from 'ngx-owl-carousel-o';
 import { NgwWowModule } from 'ngx-wow';
 import { FormsModule , ReactiveFormsModule } from '@angular/forms';
 import { NgxStarRatingModule } from 'ngx-star-rating';
@@ -102,7 +102,7 @@ import { SellerProfileComponent } from './seller-profile/seller-profile.componen
     CommonModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    CarouselModule,
+    // CarouselModule,
     HttpClientModule,
     NgwWowModule,
     FormsModule,

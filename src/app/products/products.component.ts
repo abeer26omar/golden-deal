@@ -3,9 +3,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { APIResponse, Products , APIResponse2, Category, CategoryFilter} from '../models/products.model';
+import { APIResponse, Products , APIResponse2, Category, CategoryFilter,BrandFilter} from '../models/products.model';
 import { MacPrefixService } from '../services/mac-prefix.service';
 import { ProductsRequestService } from '../services/products-request.service';
+import SwiperCore, { SwiperOptions } from 'swiper';
 declare var window: any;
 
 @Component({
@@ -23,7 +24,19 @@ export class ProductsComponent implements OnInit {
         }
     }
   }
+  brands: BrandFilter = {
+    data: {
+      id: 0,
+      category_id: 0,
+      slug_name: '',
+      name_ar: '',
+      name_en: '',
+      has_filters: false,
+      filter_options: []
+    }
+  }
   filterOptions :any= [];
+  brandsOptions :any= [];
   searchText: any;
   public sort: string = '';
   public products: Array<Products> = [];
@@ -38,9 +51,11 @@ export class ProductsComponent implements OnInit {
   errfilter: string = '';
   errorLength = '';
   productsDefId : any;
+  activeClass: boolean = false;
   private routeSub: Subscription = new Subscription;
   private productSub: Subscription = new Subscription;
   private categorySub : Subscription = new Subscription;
+  private brandSub : Subscription = new Subscription;
   private filterSub : Subscription = new Subscription;
 
   valueMin: number = 1000;
@@ -55,7 +70,13 @@ export class ProductsComponent implements OnInit {
   constructor(private httpService: ProductsRequestService, 
     private router: Router,
     private macService: MacPrefixService) {}
-
+    config: SwiperOptions = {
+      slidesPerView: 10,
+      spaceBetween: 0,
+      navigation: false,
+      pagination: false,
+      scrollbar: false
+    };
   ngOnInit(): void {
     this.formModal = new window.bootstrap.Modal(
       document.getElementById('filterModal'),{backdrop: this.macService.backdrop}
@@ -146,6 +167,30 @@ export class ProductsComponent implements OnInit {
   sellerProfile(id:number){
     this.router.navigate(['seller-profile',id])
   }
+  getBrandFilter(categoryName: any){   
+    if(categoryName =='all'){
+      this.brandsOptions = [];
+    } else{
+      this.brandSub = this.httpService.getBrandFilters(categoryName).subscribe({
+        next: (res: BrandFilter)=>{
+          this.brands = res;
+          this.brandsOptions = this.brands.data.filter_options;
+        },
+        error:(err: HttpErrorResponse)=>{
+          this.faildProducts.show();
+          if(err.error.data){
+            this.errMsg = err.error.data;
+          } else{
+            if(err.statusText == 'Unauthorized'){
+              this.errMsg = 'يجب انشاء حساب اولا';
+            }else{
+              this.errMsg = err.statusText;
+            }
+          }
+        }
+      })
+    }
+  }
   onApplayFilters(){
     this.load = true;
     this.formFilter.get('min_price')?.setValue(this.valueMin);
@@ -157,8 +202,7 @@ export class ProductsComponent implements OnInit {
      this.filterSub = this.httpService.applayFilter(formData).subscribe({
       next: (res: APIResponse<Products>)=>{
           this.load = false;
-          console.log(res);
-          
+          // console.log(res);
           this.formModal.hide();
           this.products = res.data;
           if(this.products.length == 0){
@@ -178,7 +222,33 @@ export class ProductsComponent implements OnInit {
             this.errfilter = err.statusText;
           }
         }
-        
+      }
+     })
+  }
+  onApplayBrandFilters(filter_key: string,filter_value: string){
+    this.load = true;   
+    // this.activeClass = !this.activeClass
+    this.filterSub = this.httpService.applayBarndFilter(filter_key,filter_value).subscribe({
+      next: (res: APIResponse<Products>)=>{
+          this.load = false;
+          this.products = res.data;
+          if(this.products.length == 0){
+            this.errorLength = 'لا يوجد منتجات';
+          }else{
+            this.errorLength = '';
+          }
+      },
+      error:(err: HttpErrorResponse)=>{
+        this.load = false;
+        if(err.error.data){
+          this.errfilter = err.error.data;
+        } else{
+          if(err.statusText == 'Unauthorized'){
+            this.errfilter = 'يجب انشاء حساب اولا';
+          }else{
+            this.errfilter = err.statusText;
+          }
+        }
       }
      })
     }
@@ -197,6 +267,9 @@ export class ProductsComponent implements OnInit {
     }
     if(this.filterSub){
       this.filterSub.unsubscribe();
+    }
+    if(this.brandSub){
+      this.brandSub.unsubscribe();
     }
   }
 }

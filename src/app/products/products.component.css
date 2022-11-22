@@ -26,7 +26,8 @@
 .nav-tabs .nav-link:not(.all):focus, 
 .nav-tabs .nav-link:not(.all):hover,
 .nav-tabs .nav-item.show .nav-link:not(.all), 
-.nav-tabs .nav-link:not(.all).active {
+.nav-tabs .nav-link:not(.all).active,
+swiper .brand a.click {
     border-color: transparent  transparent var(--org-color) ;
     color: var(--org-color);
     background-color: transparent;

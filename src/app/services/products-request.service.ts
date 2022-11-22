@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders} from '@angular/common/http';
 import { Observable, Subject, tap} from 'rxjs';
 import { environment as env } from 'src/environments/environment';
 import { Products , APIResponse , Product ,
-  APIResponse2 , Category, CategoryFilter, NewProduct, EditProduct, APIResponse4, EditProductFilters, Update, APIResponse5, Search} from '../models/products.model';
+  APIResponse2 , Category, CategoryFilter, NewProduct, EditProduct, APIResponse4, EditProductFilters, Update, APIResponse5, Search,BrandFilter} from '../models/products.model';
 import { ResponseSuccess } from '../models/actions.model';
 
 @Injectable({
@@ -82,4 +82,16 @@ export class ProductsRequestService {
       this._refresh.next();
     }))
   }
-}
+  getBrandFilters(catergory_name: string){
+    return this.http.get<BrandFilter>(`${env.api_url}/filters/get-category-brands/${catergory_name}`,this.httpOptions)
+  }
+  applayBarndFilter(filter_key: string,filter_value:string){
+    return this.http.post<APIResponse<Products>>(`${env.api_url}/filters/submit-brand-filters`,
+    {
+      filter_key: filter_key,
+      filter_value: filter_value
+    },this.httpOptions).pipe(tap(()=>{
+      this._refresh.next();
+    }))
+  }
+} 

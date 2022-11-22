@@ -7,7 +7,6 @@ import { HttpErrorInterceptor } from './interceptors/http-errors.interceptor';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-// import { CarouselModule } from 'ngx-owl-carousel-o';
 import { NgwWowModule } from 'ngx-wow';
 import { FormsModule , ReactiveFormsModule } from '@angular/forms';
 import { NgxStarRatingModule } from 'ngx-star-rating';
@@ -32,6 +31,7 @@ import { MatSliderModule } from '@angular/material/slider';
 import { NzSliderModule } from 'ng-zorro-antd/slider';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
+import { SwiperModule } from 'swiper/angular';
 
 //components
 import { HeaderComponent } from './header/header.component';
@@ -102,7 +102,6 @@ import { SellerProfileComponent } from './seller-profile/seller-profile.componen
     CommonModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    // CarouselModule,
     HttpClientModule,
     NgwWowModule,
     FormsModule,
@@ -128,8 +127,9 @@ import { SellerProfileComponent } from './seller-profile/seller-profile.componen
     MatSliderModule,
     NzSliderModule,
     MatSidenavModule,
-    MatListModule
-    ],
+    MatListModule,
+    SwiperModule
+    ], 
   providers: [{
     provide: HTTP_INTERCEPTORS,
     useClass: HttpHeadersInterceptor,

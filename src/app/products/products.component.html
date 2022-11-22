@@ -3,7 +3,7 @@
     <ng-container *ngFor="let category of categories; let i = index">
       <li [ngbNavItem]="i" id="{{category.slug}}">
         <a ngbNavLink [ngClass]="{'all': category.id == 0}" 
-        (click)="getProducts(category.slug);productsDefId.style.display = 'none';getCategoryFilter(category.slug)"> 
+        (click)="getProducts(category.slug);productsDefId.style.display = 'none';getCategoryFilter(category.slug);getBrandFilter(category.slug)"> 
           <img src="../../assets/images/left-arrow.svg" class="ps-2" 
           *ngIf="category.id == 0" >{{category.title}}</a>
         <ng-template ngbNavContent>
@@ -51,6 +51,14 @@
     </a>
   </div>
 </div>
+<swiper [config]="config">
+      <ng-template swiperSlide *ngFor="let brand of brandsOptions">
+        <div class="brand">
+          <a [ngClass]="{'click': activeClass}"  
+          (click)="onApplayBrandFilters(brands.data.slug_name,brand.name)">{{brand.name}}</a>
+        </div>
+      </ng-template>
+    </swiper>
 <div class="loader pt-5 pb-5" *ngIf="loadding" dir="ltr">
   <svg version="1.1" id="L3" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 viewBox="0 0 100 100" width="70px" height="70px" enable-background="new 0 0 0 0" xml:space="preserve">

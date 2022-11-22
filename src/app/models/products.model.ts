@@ -218,3 +218,20 @@ export interface Search{
 export interface APIResponse5<T>{
     data: Array<T>;
 }
+export interface BrandFilter{
+    data: {
+        id: number,
+        category_id: number,
+        slug_name: string,
+        name_ar: string,
+        name_en: string,
+        has_filters: boolean,
+        filter_options: Array<Brands>
+    }
+}
+interface Brands{
+    id: number,
+    filter_id: number,
+    name: string,
+    sort: number
+}

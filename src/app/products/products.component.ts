@@ -75,7 +75,15 @@ export class ProductsComponent implements OnInit {
       spaceBetween: 0,
       navigation: false,
       pagination: false,
-      scrollbar: false
+      scrollbar: false,
+      breakpoints: {
+        1024: {
+          slidesPerView: 5,
+        },
+        320: {
+          slidesPerView: 3,
+        }
+    }
     };
   ngOnInit(): void {
     this.formModal = new window.bootstrap.Modal(

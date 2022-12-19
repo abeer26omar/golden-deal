@@ -13,14 +13,16 @@ const fs = require('fs');
 const mysql = require('mysql-await');
 const express = require('express');
 const app = express()
-const port = 3000;
+const port = process.env.port || 3000;
 http = require('http').Server(app),
 io = require('socket.io')(http,{
-    cors: {
-      origin: "*"
-    }
-  }),
+  cors: {
+    origin: "*"
+  }
+}),
 app.use(express.static(__dirname + '/public')); 
+const cors = require('cors');
+app.use(cors())
 var axios = require('axios');
 var FormData = require('form-data');
 const participants = [];

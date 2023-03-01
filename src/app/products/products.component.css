@@ -6,6 +6,7 @@
 .nav-tabs {
     padding: 0;
     border-bottom: none;
+    align-items: center;
 }
  .nav-item{
     padding: 0.5rem 1.5rem;
@@ -26,25 +27,43 @@
 .nav-tabs .nav-link:not(.all):focus, 
 .nav-tabs .nav-link:not(.all):hover,
 .nav-tabs .nav-item.show .nav-link:not(.all), 
-.nav-tabs .nav-link:not(.all).active,
-swiper .brand a.click {
-    border-color: transparent  transparent var(--org-color) ;
+.nav-tabs .nav-link:not(.all).active{
     color: var(--org-color);
-    background-color: transparent;
+    background-color: var(--primary-color);
 }
-
 .nav-tabs a{
-    color: var(--primary-color);
-    font-size: 1.5rem;
+    color: var(--sec-text);
+    font-size: 1.2rem;
     font-weight: 500;
     display: flex;
+    padding: .3rem .8rem;
+    background-color: var(--gray-color);
+    border-radius: 8px;
+}
+.brand_all a,swiper .brand a {
+    color: var( --bg-color);
+    font-size: 1.2rem;
+    font-weight: 500;
+    height: 90px;
+    width: 90px;
+    background-color: var(--primary-color);
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+swiper .brand a {
+    background-color: var(--gray-color);
 }
 .nav-tabs a.all{
     background-color: var(--bg-color);
     box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.25);
     font-weight: 900;
+    padding: 1rem;
 }
-.nav-tabs a.all:hover,a.all:focus{
+.nav-tabs a.all:hover,
+a.all:focus,
+a.all.active{
     color: var(--primary-color);
 }
 @media screen and (max-width: 575px) {

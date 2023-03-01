@@ -77,20 +77,28 @@ export class ProductsRequestService {
       this._refresh.next();
     }))
   }
+  applayFilterKeys(brand_filter?: string, brand_Subfilter?: string){
+    return this.http.post<APIResponse<Products>>(`${env.api_url}/filters/submit-filters`,
+    {
+      min_price: '0',
+      max_price: '8584040',
+      car_brand_filter_1: brand_filter,
+      car_class_sub_filter_1: brand_Subfilter
+    },this.httpOptions).pipe(tap(()=>{
+      this._refresh.next();
+    }))
+  }
   searchResult(key: string){
     return this.http.get<APIResponse5<Search>>(`${env.api_url}/products/search-products/search-with-key?key=${key}`,this.httpOptions).pipe(tap(()=>{
       this._refresh.next();
     }))
   }
-  getBrandFilters(catergory_name: string){
-    return this.http.get<BrandFilter>(`${env.api_url}/filters/get-category-brands/${catergory_name}`,this.httpOptions)
+  getBrandFilters(){
+    return this.http.get<BrandFilter>(`${env.api_url}/get-cars-brands`,this.httpOptions)
   }
-  applayBarndFilter(filter_key: string,filter_value:string){
-    return this.http.post<APIResponse<Products>>(`${env.api_url}/filters/submit-brand-filters`,
-    {
-      filter_key: filter_key,
-      filter_value: filter_value
-    },this.httpOptions).pipe(tap(()=>{
+  applayBarndFilter(filter_id: number){
+    return this.http.get<APIResponse<Products>>(`${env.api_url}/filters/get-sub-filter-options?filter_option_id=${filter_id}`,
+    this.httpOptions).pipe(tap(()=>{
       this._refresh.next();
     }))
   }

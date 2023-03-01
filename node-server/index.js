@@ -63,7 +63,8 @@ io.on('connection', function(socket) {
 });
 
 app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/public/index.html');
+  // res.sendFile(__dirname + '/public/index.html');
+  res.send(`<h1>hello socket.io</h1>`)
 })
 
 app.use(express.json());

@@ -17,7 +17,7 @@ export class AddsBannerComponent implements OnInit , OnDestroy{
   error: string = '' ;
   constructor(config: NgbCarouselConfig,
     private httpService: HomeAddsService) {
-    config.interval = 5000;
+    config.interval = 50000;
     config.keyboard = true;
     config.pauseOnHover = true;
     config.animation = true;

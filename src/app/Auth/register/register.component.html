@@ -6,7 +6,7 @@
                         <div class="overlay">
                             <div class="sign-in">
                                 <div class="logo">
-                                    <img src="../../../assets/images/logofooter.svg" alt="logofooter" width="100%">
+                                    <img src="../../../assets/images/login_logo_new.svg" alt="login_logo_new" width="100%">
                                 </div>
                                <div class="title text-center py-lg-5">
                                 <p class="ask pt-3 pt-sm-5 pb-2 pb-sm-4 ">هل تريد انشاء حساب ؟</p>
@@ -18,7 +18,7 @@
                             </div>
                             <div class="sign-up">
                                 <div class="logo">
-                                    <img src="../../../assets/images/logofooter.svg" alt="logofooter" width="100%">
+                                    <img src="../../../assets/images/login_logo_new.svg" alt="login_logo_new" width="100%">
                                 </div>
                                <div class="title text-center py-lg-5">
                                 <p class="ask pt-5 pb-4">قمت بالتسجيل بالفعل؟</p>
@@ -40,18 +40,18 @@
                                         {{error}}
                                     </p>
                                     <form [formGroup]="registerForm" (ngSubmit)="submitData()" class="row  g-3">
-                                        <mat-form-field appearance="legacy">
+                                        <mat-form-field appearance="outline">
                                             <mat-label>الاسم</mat-label>
                                             <input matInput  formControlName="name">
                                         </mat-form-field>   
-                                        <mat-form-field appearance="legacy">
+                                        <mat-form-field appearance="outline">
                                             <mat-label>النوع</mat-label>
                                             <mat-select formControlName="gender">
                                               <mat-option value="female">انثى</mat-option>
                                               <mat-option value="male">ذكر</mat-option>
                                             </mat-select>
                                           </mat-form-field>
-                                          <mat-form-field class="example-full-width" appearance="legacy">
+                                          <mat-form-field class="example-full-width" appearance="outline">
                                             <mat-label>تاريخ الميلاد</mat-label>
                                             <input matInput [matDatepicker]="picker" formControlName="dateOfBirth">
                                             <mat-datepicker-toggle matSuffix [for]="picker">
@@ -59,7 +59,7 @@
                                             <mat-datepicker #picker></mat-datepicker>
                                           </mat-form-field> 
                                           
-                                        <mat-form-field appearance="legacy" class="phone">
+                                        <mat-form-field appearance="outline" class="phone">
                                             <mat-label>رقم الهاتف</mat-label>
                                             <input matInput 
                                             type="tel" 
@@ -67,7 +67,7 @@
                                             formControlName="phone">
                                             <span matPrefix>+966 &nbsp;</span>
                                           </mat-form-field>
-                                          <mat-form-field appearance="legacy" class="phone-prefix">
+                                          <mat-form-field appearance="outline" class="phone-prefix">
                                             <input matInput readonly>
                                             <span matPrefix [ngClass]="{'mac': mac}">966+ &nbsp;</span>
                                             <mat-icon matSuffix [ngClass]="{'mac': mac}">
@@ -94,7 +94,7 @@
                                         {{errorLogin}}
                                       </div>
                                     <form [formGroup]="loginForm" (ngSubmit)="submitLogin()" class="row  g-3">
-                                        <mat-form-field appearance="legacy" class="phone">
+                                        <mat-form-field appearance="outline" class="phone">
                                             <mat-label>رقم الهاتف</mat-label>
                                             <span matPrefix>966+ &nbsp;</span>
                                             <input matInput 
@@ -102,7 +102,7 @@
                                             placeholder="رقم الهاتف" 
                                             formControlName="phone">
                                           </mat-form-field>
-                                          <mat-form-field appearance="legacy" class="phone-prefix">
+                                          <mat-form-field appearance="outline" class="phone-prefix">
                                             <input matInput readonly>
                                             <span matPrefix [ngClass]="{'mac': mac}">966+ &nbsp;</span>
                                             <mat-icon matSuffix [ngClass]="{'mac': mac}">

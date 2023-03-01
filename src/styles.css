@@ -3,8 +3,11 @@
 :root{
     --font-family: 'Cairo', sans-serif;
     --bg-color: #F7F9FD;
-    --org-color: #E29547;
-    --primary-color: #12004C;
+    /* --org-color: #E29547; */
+    --org-color: #FA9C44;
+    /* --primary-color: #12004C; */
+    --primary-color: #11014D;
+    --newColor: #11014D;
     --sec-color: #145097;
     --black: #000;
     --gray: #BABABA;
@@ -20,6 +23,7 @@
     --header-bg: #D9D9D9;
     --light-grey: #8C8C8C;
     --light-blue: #039AEE;
+    --gray-color: #E4E4E4;
 }
 /* html, body { height: 100%;} */
 
@@ -251,18 +255,14 @@ input.star:checked ~ label.star:before {
     border-radius: 11.4835px 11.4835px 0px 0px;
 } 
 .products-row .card-body{
-    position: relative;
     background-color: var(--bg-color);
-    top: -40px;
-    z-index: 99;
     border-radius: 15.3114px;
-    margin: 0 1rem;
 }
 .products-row .card-body h4{
     font-family: var(--font-family);
     color: var(--primary-color);
     font-weight: 600;
-    font-size: 1rem;
+    font-size: 1.2rem;
 }
 .products-row .card-body .discription{
     color: var(--sec-text);
@@ -270,27 +270,27 @@ input.star:checked ~ label.star:before {
     font-size: 1rem;
 }
 .products-row .card-body .time span{
-    color: var(--primary-color);
+    color: var(--black);
     font-weight: 400;
-    font-size: .8rem;
+    font-size: 1rem;
     padding-right: .3rem;
 }
 .products-row .card-body .evaluation  p{
     margin-bottom: 0 !important;
     padding-bottom: 0 !important;
-    color: var(--primary-color);
-    font-weight: 600;
+    color: var(--black);
+    font-weight: 400;
     font-size: 1rem;
 }
 .products-row .card-body .evaluation  p.name{
-    font-size: .8rem;
+    font-size: 1rem;
 }
 
-.products-row .card-body .person img{
+/* .products-row .card-body .person img{
     width: 35px;
     height: 35px;
     border-radius: 50%;
-}
+} */
 @media screen and (max-width: 575px) {
     .products-row .card {
         flex-direction: row-reverse;
@@ -347,4 +347,7 @@ input.star:checked ~ label.star:before {
 }
 .mat-radio-label-content{
     padding-left: 0 !important;
+}
+.swiper-wrapper{
+    align-items: center;
 }

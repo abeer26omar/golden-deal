@@ -35,13 +35,14 @@ export class ProductsComponent implements OnInit {
       filter_options: []
     }
   }
-  filterOptions :any= [];
+  filterbrandsOptions :any= [];
   brandsOptions :any= [];
   searchText: any;
   public sort: string = '';
   public products: Array<Products> = [];
   public categories : Array<Category> = [];
-
+  active = 0;
+  show:boolean = false;
   loadding = false;
   load: boolean = false;
   error: string = '';
@@ -50,7 +51,6 @@ export class ProductsComponent implements OnInit {
   errMsg: string = '';
   errfilter: string = '';
   errorLength = '';
-  productsDefId : any;
   activeClass: boolean = false;
   private routeSub: Subscription = new Subscription;
   private productSub: Subscription = new Subscription;
@@ -58,8 +58,8 @@ export class ProductsComponent implements OnInit {
   private brandSub : Subscription = new Subscription;
   private filterSub : Subscription = new Subscription;
 
-  valueMin: number = 1000;
-  valueMax: number = 98898;
+  valueMin: number = 0;
+  valueMax: number = 8584040;
   value = [this.valueMin, this.valueMax];
   
   formFilter = new FormGroup({
@@ -77,11 +77,20 @@ export class ProductsComponent implements OnInit {
       pagination: false,
       scrollbar: false,
       breakpoints: {
+        1440: {
+          slidesPerView: 10,
+        },
         1024: {
+          slidesPerView: 7,
+        },
+        992: {
           slidesPerView: 5,
         },
+        786: {
+          slidesPerView: 4,
+        },
         320: {
-          slidesPerView: 3,
+          slidesPerView: 2,
         }
     }
     };
@@ -92,7 +101,6 @@ export class ProductsComponent implements OnInit {
     this.faildProducts = new window.bootstrap.Modal(
       document.getElementById('faildProducts'),{backdrop: this.macService.backdrop}
     );
-    this.productsDefId = document.getElementById('products-def');
     this.getCategories();
     this.getProducts('all');
   }
@@ -129,7 +137,7 @@ export class ProductsComponent implements OnInit {
     getProductsCategories().
     subscribe({
       next: (categoryList: APIResponse2<Category>)=>{ 
-        this.categories = categoryList.data;
+        this.categories = categoryList.data;       
       },
       error:(err: HttpErrorResponse)=>{
         this.faildProducts.show();
@@ -149,8 +157,8 @@ export class ProductsComponent implements OnInit {
     this.categorySub = this.httpService.getCategoryFilters(categoryName).subscribe({
       next: (res: CategoryFilter)=>{
         this.filters = res;
-        this.valueMin = this.filters.data.price.min
-        this.valueMax = this.filters.data.price.max
+        this.valueMin = this.filters.data.price.min;
+        this.valueMax = this.filters.data.price.max;
         this.filters.data.filters.forEach(filter=>{
           this.formFilter.addControl(filter.slug_name, new FormControl('')) 
         }) 
@@ -176,16 +184,20 @@ export class ProductsComponent implements OnInit {
     this.router.navigate(['seller-profile',id])
   }
   getBrandFilter(categoryName: any){   
-    if(categoryName =='all'){
+    if(categoryName =='all' || categoryName =='car_plates'){
       this.brandsOptions = [];
+      this.filterbrandsOptions = [];
+      this.show = false;
     } else{
-      this.brandSub = this.httpService.getBrandFilters(categoryName).subscribe({
+      this.brandSub = this.httpService.getBrandFilters().subscribe({
         next: (res: BrandFilter)=>{
           this.brands = res;
-          this.brandsOptions = this.brands.data.filter_options;
+          this.brandsOptions = this.brands.data;
+          this.show = true;
         },
         error:(err: HttpErrorResponse)=>{
           this.faildProducts.show();
+          this.show = false;
           if(err.error.data){
             this.errMsg = err.error.data;
           } else{
@@ -210,7 +222,6 @@ export class ProductsComponent implements OnInit {
      this.filterSub = this.httpService.applayFilter(formData).subscribe({
       next: (res: APIResponse<Products>)=>{
           this.load = false;
-          // console.log(res);
           this.formModal.hide();
           this.products = res.data;
           if(this.products.length == 0){
@@ -233,12 +244,12 @@ export class ProductsComponent implements OnInit {
       }
      })
   }
-  onApplayBrandFilters(filter_key: string,filter_value: string){
-    this.load = true;   
-    // this.activeClass = !this.activeClass
-    this.filterSub = this.httpService.applayBarndFilter(filter_key,filter_value).subscribe({
+  onApplayFiltersKeys(brand_filter?: string, brand_Subfilter?: string){
+    this.load = true;
+     this.filterSub = this.httpService.applayFilterKeys(brand_filter,brand_Subfilter).subscribe({
       next: (res: APIResponse<Products>)=>{
           this.load = false;
+          this.formModal.hide();
           this.products = res.data;
           if(this.products.length == 0){
             this.errorLength = 'لا يوجد منتجات';
@@ -258,8 +269,32 @@ export class ProductsComponent implements OnInit {
           }
         }
       }
+     })    
+  }
+  onApplayBrandFilters(filter_key: number){
+    this.loadding = true;   
+    this.filterbrandsOptions = [];
+    this.filterSub = this.httpService.applayBarndFilter(filter_key).subscribe({
+      next: (res: any)=>{
+          this.loadding = false;
+          if(res.data != null){
+            this.filterbrandsOptions = res.data.filter_options;
+          }
+      },
+      error:(err: HttpErrorResponse)=>{
+        this.loadding = false;
+        if(err.error.data){
+          this.errfilter = err.error.data;
+        } else{
+          if(err.statusText == 'Unauthorized'){
+            this.errfilter = 'يجب انشاء حساب اولا';
+          }else{
+            this.errfilter = err.statusText;
+          }
+        }
+      }
      })
-    }
+  }
   openFormModal() {
     this.formModal.show();
   }

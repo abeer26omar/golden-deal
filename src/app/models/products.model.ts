@@ -2,7 +2,7 @@ export interface Products{
     
         id: number;
         name: string;
-        desc: string;
+        desc: string; 
         owner_id: number;
         owner_ratings_count: number;
         created_since: string;
@@ -14,7 +14,44 @@ export interface Products{
             image_url: string;
             cover_url: string;
         };
-    
+        category_id: number,
+        negotiable: number,
+        price: number,
+        activated_at: string,
+        product_fav: boolean,
+        properties: Array<Product_Properties>,
+        activated_since: string,
+        owner_area: null,
+        category_slug: string,    
+}
+interface Product_Properties{
+        id: number,
+        parent_id: null,
+        category_id: number,
+        name_ar: string,
+        name_en: string,
+        type: string,
+        required: number,
+        slug_name: string,
+        sort: number,
+        active: number,
+        has_filters: boolean,
+        filter_options: Array<filter_options_new>,
+        filter_value: {
+            id: number,
+            filter_id: number,
+            product_id: number,
+            filter_value: string
+        }
+}
+interface filter_options_new{
+    id: number,
+    filter_id: number,
+    name: string,
+    sort: number,
+    logo: string,
+    image: string,
+    sub_filter: []
 }
 export interface APIResponse<T>{
     data: Array<T>;

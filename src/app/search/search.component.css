@@ -24,12 +24,16 @@ input{
     padding-right: 3rem;
     color: var(--gray);
     font-weight: 400;
+    border-radius: 10px;
+}
+input::placeholder{
+    color: var(--gray);
 }
 .btn-search{
     position: absolute;
-    color: var(--white);
+    color: var(--gray);
     padding: 0.6rem;
-    background-color: var(--org-color);
+    background-color: transparent;
 }
 .btn-search.mac{
     padding: .8rem .6rem;

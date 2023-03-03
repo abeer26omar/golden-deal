@@ -7,6 +7,7 @@ import { APIResponse, Products , APIResponse2, Category, CategoryFilter,BrandFil
 import { MacPrefixService } from '../services/mac-prefix.service';
 import { ProductsRequestService } from '../services/products-request.service';
 import SwiperCore, { SwiperOptions } from 'swiper';
+import { ActionsService } from '../services/actions.service';
 declare var window: any;
 
 @Component({
@@ -69,7 +70,12 @@ export class ProductsComponent implements OnInit {
 
   constructor(private httpService: ProductsRequestService, 
     private router: Router,
-    private macService: MacPrefixService) {}
+    private macService: MacPrefixService,
+    public actionService: ActionsService) {
+      this.httpService.refresh.subscribe(()=>{
+        this.getProducts('all');
+      })
+    }
     config: SwiperOptions = {
       slidesPerView: 10,
       spaceBetween: 0,
@@ -112,6 +118,8 @@ export class ProductsComponent implements OnInit {
       next:(productsList: APIResponse<Products>)=>{
         this.loadding = false;
           this.products = productsList.data;
+          console.log(this.products);
+          
           if(this.products.length == 0){
             this.errorLength = 'لا يوجد منتجات';
           }else{

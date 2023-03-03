@@ -26,10 +26,10 @@
                       <a (click)="productDetails(product.id)" style="cursor: pointer;" class="m-0">
                         <h4>{{(product.name.length > 20)? (product.name | slice:0:20)+'..':(product.name)}}</h4>
                       </a>
-                      <a href="" class="btn add_fav p-0" *ngIf="product.product_fav == true">
+                      <a (click)="actionService.removeFav(product.id)" class="btn add_fav p-0" *ngIf="product.product_fav == true">
                        <img src="../../assets/images/already_fav_icon.svg" alt="already_fav_icon" srcset="../../assets/images/already_fav_icon.svg">
                       </a>
-                      <a href="" class="btn add_fav p-0" *ngIf="product.product_fav == false">
+                      <a (click)="actionService.addToFav(product.id)" class="btn add_fav p-0" *ngIf="product.product_fav == false">
                         <img src="../../assets/images/favorite_icon.svg" alt="addToFav" srcset="../../assets/images/favorite_icon.svg">                         
                       </a>
                     </div>
@@ -37,10 +37,10 @@
                       <ng-template #t let-fill="fill">
                           <img src="../../assets/images/rate_star_icon.svg" alt="">
                       </ng-template>
-                      <ngb-rating [max]="product.owner_ratings_count == 0 ? 1: product.owner_ratings_count" 
+                      <!-- <ngb-rating [max]="product.owner_ratings_count == 0 ? 1: product.owner_ratings_count" 
                       [rate]="product.owner_ratings_count" 
                       [readonly]="true"
-                      [starTemplate]="t"></ngb-rating>
+                      [starTemplate]="t"></ngb-rating> -->
                     </div>
                     <p class="time"><img src="../../assets/images/clock.svg" alt="clock"><span>{{product.created_since}}ايام</span></p>
                     <div class="evaluation d-flex justify-content-between align-items-center">
@@ -48,7 +48,7 @@
                       <div class="person d-flex align-items-center">
                           <img class="ps-1" src="../../assets/images/profile_icon.svg" alt="profile_icon" width="100%" >
                           <a (click)="sellerProfile(product.owner_id)" style="cursor: pointer;">
-                            <p class="name">{{product.owner.name}}</p>
+                            {{product.owner.name}}
                           </a>                      
                       </div>
                     </div>

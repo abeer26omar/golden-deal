@@ -2,11 +2,11 @@
 .main-card{
     box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.15);
     border-radius: 15px;
-    background-color: var(--white);
+    /* background-color: var(--white); */
+    background-color: var(--bg-color);
 }
 .main-card .card-header{
-    background-color: var(--bg-color);
-    border-radius: 12px 12px 0px 0px;
+    border-radius: 15px 15px  0 0;
 }
 .prod-name{
     color: var(--primary-color);
@@ -14,12 +14,13 @@
     font-size: 1.8rem;
 }
 .prod-desc{
-    color: var(--sec-text);
+    color: var(--black);
     font-weight: 400;
     font-size: 1.3rem;
     padding-top: .5rem;
 }
 p.time, p.p-rate, span.name{
+    color: var(--black);
     padding-bottom: 0;
     margin-bottom: 0;
     font-size: 1rem;
@@ -91,18 +92,18 @@ span.name{
     border: 1px solid var(--primary-color);
 }
 .btn{
-    padding: 1rem 1.5rem;
+    padding: 0.5rem 2.5rem;
 }
 @media screen and (max-width: 357px) {
     .btn{
         padding: 0.375rem 0.75rem;
     }
 }
-.prod-details .owner img{
+/* .prod-details .owner img{
     width: 35px;
     height: 35px;
     border-radius: 50%;
-}
+} */
 .ownership-desc{
     display: flex;
     justify-content: center;
@@ -233,6 +234,15 @@ input:focus , textarea:focus{
 #buyModal .modal-header,
 #buyModal .modal-footer{
     border: 0;
+}
+#buyModal .modal-header{
+    background-color: var(--sec-text);
+}
+#buyModal .modal-header p{
+    color: var(--white);
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin: 0;
 }
 #buyModal .modal-body{
     display: flex;

@@ -5,11 +5,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    /* background-color: var(--bg-color); */
-    background-image: url(../../assets/images/profile-Eclipse.svg);
+    background-color: var(--primary-color);
+    border-radius: 8px 8px 0px 0px;
+    /* background-image: url(../../assets/images/profile-Eclipse.svg);
     background-repeat: no-repeat;
     background-position: center top;
-    background-size: cover;
+    background-size: cover; */
     position: relative;
     top: -1px;
 } 
@@ -60,7 +61,9 @@ div.container p{
 }
 .btn-sec{
     padding: .7rem 2.9rem;
-    color: red;
+    color: var(--white) !important;
+    background-color: var(--semi-red) !important;
+    border: none !important;
 }
 #editSuccess .modal-body p{
     color: var(--primary-color);

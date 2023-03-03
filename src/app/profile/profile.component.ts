@@ -9,13 +9,15 @@ import { DialogImageComponent } from './dialog-image/dialog-image.component';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ResponseSuccess } from '../models/actions.model';
 import { MacPrefixService } from '../services/mac-prefix.service';
+import { DatePipe } from '@angular/common';
 
 declare var window: any;
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.css']
+  styleUrls: ['./profile.component.css'],
+  providers:[DatePipe]
 })
 export class ProfileComponent implements OnInit {
   userData : Profile = {
@@ -51,7 +53,8 @@ export class ProfileComponent implements OnInit {
   constructor(public authService: AuthService,
     private macService: MacPrefixService,
     private profileService: ProfileService,
-    private dialogRef: MatDialog) {
+    private dialogRef: MatDialog,
+    private datePipe: DatePipe) {
       this.profileService.refresh.subscribe(()=>{
         this.getProfileInfo();
       })
@@ -117,7 +120,7 @@ export class ProfileComponent implements OnInit {
     this.sucMsg = '';
   const nameval = this.userForm.get('name')?.value;
   const emailval = this.userForm.get('email')?.value;
-  const birthval = this.userForm.get('birthdate')?.value;
+  const birthval = this.datePipe.transform(this.userForm.get('birthdate')?.value,"yyyy-MM-dd");
   const phoneval = this.userForm.get('phone')?.value;
   this.loadProfile = true;
     this.userSub = this.profileService

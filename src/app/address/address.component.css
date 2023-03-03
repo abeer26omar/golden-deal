@@ -26,8 +26,9 @@
     border-radius: 10px;
 }
 .card .btn-sec{
-    border: 1px solid ;
-    color: var(--semi-red);
+    border: none !important;
+    background-color: var(--semi-red) !important;
+    color: var(--white) !important;
 }
 .card .add-address p{
     color: var(--primary-color);

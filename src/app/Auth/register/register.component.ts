@@ -6,12 +6,14 @@ import { AuthService } from 'src/app/services/auth.service';
 import { Login, Verify } from 'src/app/models/user.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MacPrefixService } from 'src/app/services/mac-prefix.service';
+import { DatePipe } from '@angular/common';
 declare var window: any;
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  styleUrls: ['./register.component.css'],
+  providers:[DatePipe]
 })
 export class RegisterComponent implements OnInit {
   userData : Login = {
@@ -71,7 +73,8 @@ export class RegisterComponent implements OnInit {
 
   constructor(private auth: AuthService, 
     private router: Router,
-    private macService: MacPrefixService) { 
+    private macService: MacPrefixService,
+    private datePipe: DatePipe) { 
     }
     //get forms controls
     get fRegister(){
@@ -100,11 +103,11 @@ export class RegisterComponent implements OnInit {
   submitData() {
     const userName = this.registerForm.get('name')?.value;
     const userGender = this.registerForm.get('gender')?.value;
-    const userDateOfBirth = this.registerForm.get('dateOfBirth')?.value;
+    const userDateOfBirth = this.datePipe.transform(this.registerForm.get('dateOfBirth')?.value,"yyyy-MM-dd");
     const userPhone = '+966' + this.registerForm.get('phone')?.value;
     if(this.registerForm.valid){
       this.loader = true;
-      this.error = '';
+      this.error = '';      
       this.auth
       .signUp(userName, userGender, userDateOfBirth, userPhone)
       .subscribe({

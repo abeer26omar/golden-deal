@@ -32,6 +32,7 @@ import { NzSliderModule } from 'ng-zorro-antd/slider';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { SwiperModule } from 'swiper/angular';
+import { NgxGalleryModule } from 'ngx-gallery-9';
 
 //components
 import { HeaderComponent } from './header/header.component';
@@ -63,6 +64,7 @@ import { DialogCoverComponent } from './adds/dialog-cover/dialog-cover.component
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { ChatSupportComponent } from './chats/chat-support/chat-support.component';
 import { SellerProfileComponent } from './seller-profile/seller-profile.component';
+import { ResponseModalComponent } from './response-modal/response-modal.component';
 
 @NgModule({
   declarations: [
@@ -96,6 +98,7 @@ import { SellerProfileComponent } from './seller-profile/seller-profile.componen
     SidenavComponent,
     ChatSupportComponent,
     SellerProfileComponent,
+    ResponseModalComponent,
   ],
   imports: [
     BrowserModule,
@@ -128,7 +131,8 @@ import { SellerProfileComponent } from './seller-profile/seller-profile.componen
     NzSliderModule,
     MatSidenavModule,
     MatListModule,
-    SwiperModule
+    SwiperModule,
+    NgxGalleryModule
     ], 
   providers: [{
     provide: HTTP_INTERCEPTORS,

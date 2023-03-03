@@ -27,7 +27,7 @@ export class AuthService {
   IsloggedIn(){
     return !!localStorage.getItem('token')
   }
-  signUp(name: string,gender: string, birth_date:string ,phone: string){
+  signUp(name: string,gender: string, birth_date:any ,phone: string){
     return this.http.post<Register>(`${env.api_url}/auth/register`,{
       name: name,
       gender: gender,

@@ -31,6 +31,7 @@ body {
     margin: 0; 
     padding: 0;
     direction: rtl;
+    overflow-x: hidden;
 }
 *{
     font-family: var(--font-family) !important;
@@ -46,24 +47,27 @@ body {
     }
 }
 .btn:focus,
-input:focus,button:focus{
+.btn:active,
+input:focus,
+button:focus{
     box-shadow: none !important;
     outline: none;
+}
+.btn:active{
+    border: none;
 }
 .btn:not(.custom):hover{
     transform: scale(.97);
 }
 .btn-prim{
-    background-color: var(--primary-color);
-    color: var(--white);
+    background-color: var(--primary-color) !important;
+    color: var(--white) !important;
 }
-.btn-prim:hover{
-    color: var(--white);
-}
+/*  */
 .btn-sec{
-    background-color: transparent;
-    border: 1px solid var(--primary-color);
-    color: var(--primary-color);
+    background-color: transparent !important;
+    border: 1px solid var(--primary-color) !important;
+    color: var(--primary-color) !important;
 }
 a{
     text-decoration: none;
@@ -123,7 +127,7 @@ input.star:checked ~ label.star:before {
     background-color: var(--primary-color);
 }
 
-.mat-form-field-type-mat-select .mat-form-field-label {
+.mat-form-field-type-mat-select .mat-form-field-label{
     width: 100% !important;
 }
 .mat-form-field-appearance-legacy.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label, 
@@ -133,8 +137,13 @@ input.star:checked ~ label.star:before {
 {
     width: 133.3333333333% !important;
 }
-
-.mat-form-field-appearance-legacy .mat-form-field-infix , 
+.mat-select-trigger {
+    flex-direction: row-reverse;
+}
+.mat-select-value {
+    text-align: end;
+}
+/* .mat-form-field-appearance-legacy .mat-form-field-infix , 
 .mat-form-field-appearance-fill .mat-form-field-infix{
     padding: 0.7em 0;
 }
@@ -143,6 +152,19 @@ input.star:checked ~ label.star:before {
 }
 .mat-form-field:nth-child(4){
     direction: ltr;
+} */
+.mat-sidenav-container, .mat-sidenav-content, .mat-tab-body-content {
+    transform: none !important;
+}
+.mat-form-field.mat-form-field-invalid .mat-form-field-label svg path{
+    fill: #f44336;
+}
+.phone_login .mat-form-field-appearance-outline .mat-form-field-outline {
+    flex-direction: row-reverse !important;
+}
+.mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label, 
+.mat-form-field-appearance-outline.mat-form-field-can-float .mat-input-server:focus+.mat-form-field-label-wrapper .mat-form-field-label {
+    padding-right: 13px;
 }
 #otpModel .modal-body .otp-input{
     width: 50px;
@@ -207,7 +229,7 @@ input.star:checked ~ label.star:before {
 }
 .yesORno .modal-header,
 .yesORno .header{
-    background-color: var(--org-color);
+    background-color: var(--primary-color);
     color: var(--white);
     border-radius: 23.16px 23.16px 0px 0px;
 }
@@ -350,4 +372,32 @@ input.star:checked ~ label.star:before {
 }
 .swiper-wrapper{
     align-items: center;
+}
+/* nz-slider */
+.ant-slider-track{
+    background-color: var(--primary-color);
+}
+.ant-slider:hover .ant-slider-track {
+    background-color: var(--primary-color)
+}
+.ant-slider-handle {
+    background-color: var(--primary-color);
+    border: none;
+}
+
+.ngx-gallery-thumbnail,
+.ngx-gallery-image-wrapper{
+    border-radius: 8px;
+}
+.ngx-gallery-thumbnail.ng-star-inserted.ngx-gallery-active.ngx-gallery-clickable{
+    border: 1px solid var(--org-color);
+}
+.ngx-gallery-icon {
+    color: var(--primary-color);
+}
+.profile .mat-form-field-label{
+    color: var(--primary-color);
+}
+.profile .mat-form-field:not(.mat-form-field-disabled) .mat-form-field-label svg path{
+    fill: var(--primary-color);
 }

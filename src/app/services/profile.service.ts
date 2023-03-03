@@ -21,7 +21,7 @@ export class ProfileService {
     profileInfo(){
       return this.http.get<Profile>(`${env.api_url}/profile/info`, this.httpOptions)
     }
-    editProfile(name:string, email:string, phone: string, birthdate: string){
+    editProfile(name:string, email:string, phone: string, birthdate: any){
       return this.http.post<ResponseSuccess>(`${env.api_url}/profile/update`,{
         name: name,
         email: email,

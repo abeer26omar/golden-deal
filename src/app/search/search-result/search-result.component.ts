@@ -8,7 +8,7 @@ import { ProductsRequestService } from 'src/app/services/products-request.servic
 @Component({
   selector: 'app-search-result',
   templateUrl: './search-result.component.html',
-  styleUrls: ['./search-result.component.css']
+  styleUrls: ['../search.component.css','./search-result.component.css']
 })
 export class SearchResultComponent implements OnInit {
   key: any;
@@ -53,6 +53,9 @@ export class SearchResultComponent implements OnInit {
   }
   productDetails(id: number){
     this.router.navigate(['product-details', id])
+  }
+  goLittleRockStar(){
+    this.router.navigate(['/new-add'])
   }
   ngOnDestory() :void{
     if(this.routeSub){

@@ -9,6 +9,8 @@ import { DialogDeleteComponent } from './dialog-delete/dialog-delete.component';
 import { DialogCoverComponent } from './dialog-cover/dialog-cover.component';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MacPrefixService } from '../services/mac-prefix.service';
+import { APIResponse2, Purchases } from '../models/user.model';
+import { ProfileService } from '../services/profile.service';
 
 declare var window: any;
 
@@ -27,6 +29,7 @@ export class AddsComponent implements OnInit {
   error: string = '';
   errFav: string = '';
   errorder: string = '';
+  errrecord: string = '';
   successMsg: string = '';
   loadding: boolean = false;
   result: string = '';
@@ -58,15 +61,18 @@ export class AddsComponent implements OnInit {
   }
   productsStatus: Array<Products> = [];
   public orders: Array<Orders> = [];
+  private recordSub: Subscription = new Subscription;
+  public records: Array<Purchases> = [];
   private portSub : Subscription = new Subscription;
   private routeSub : Subscription = new Subscription;
   private favSub: Subscription = new Subscription;
   private orderSub: Subscription = new Subscription;
   constructor(private router: Router,
     private route: ActivatedRoute,
-    private actionService: ActionsService,
+    public actionService: ActionsService,
     private dialogRef: MatDialog,
-    private macService: MacPrefixService) { 
+    private macService: MacPrefixService,
+    private profileService: ProfileService) { 
       this.actionService.refresh.subscribe(()=>{
         this.getMyFav();
         this.getMyOrders();
@@ -156,24 +162,24 @@ export class AddsComponent implements OnInit {
     })
   }
   removeFav(id: number){
-    this.actionService.removeFav(id).subscribe({
-      next:(res: ResponseSuccess)=>{
-        this.successMsg = res.data
-        this.successAdds.show(); 
-        setTimeout(() => {
-        this.successAdds.hide(); 
-        }, 1000);               
-      },
-      error: (err: HttpErrorResponse)=>{
-        console.log(err);
-        if(err.error.data){
-          this.error = err.error.data;
-        }else{
-          this.error = err.statusText;
-        }
-        this.faildAdds.show();
-      }
-    })
+    // this.actionService.removeFav(id).subscribe({
+    //   next:(res: ResponseSuccess)=>{
+    //     this.successMsg = res.data
+    //     this.successAdds.show(); 
+    //     setTimeout(() => {
+    //     this.successAdds.hide(); 
+    //     }, 1000);               
+    //   },
+    //   error: (err: HttpErrorResponse)=>{
+    //     console.log(err);
+    //     if(err.error.data){
+    //       this.error = err.error.data;
+    //     }else{
+    //       this.error = err.statusText;
+    //     }
+    //     this.faildAdds.show();
+    //   }
+    // })
   }
   getMyOrders(){
     this.loadding = true;
@@ -195,6 +201,27 @@ export class AddsComponent implements OnInit {
           this.error = err.statusText;
         }
         this.faildAdds.show();
+      }
+    })
+  }
+  getMyRecord(){
+    this.recordSub = this.profileService.buyingRecord().subscribe({
+      next: (resData: APIResponse2<Purchases>)=>{
+        this.loadding = false;
+        this.records = resData.data;
+        if(this.records.length == 0){
+          this.errrecord = 'لا يوجد مشتريات'
+        }else{
+          this.errrecord = '';
+        }
+      },
+      error: (err: HttpErrorResponse)=>{
+        this.loadding = false;
+        if(err.error.data){
+          this.error = err.error.data;
+        }else{
+          this.error = err.statusText;
+        }
       }
     })
   }
@@ -243,6 +270,9 @@ export class AddsComponent implements OnInit {
     }
     if(this.orderSub){
       this.orderSub.unsubscribe();
+    }
+    if(this.recordSub){
+      this.recordSub.unsubscribe()
     }
   }
 }

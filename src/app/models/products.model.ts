@@ -272,3 +272,31 @@ interface Brands{
     name: string,
     sort: number
 }
+export interface Category_Filter{
+    data: {
+        filters: {
+            id: number,
+            parent_id: null,
+            category_id: number,
+            name_ar: string,
+            name_en: string,
+            type: string,
+            required: number,
+            slug_name: string,
+            sort: number,
+            active: number,
+            has_filters: boolean,
+            filter_options: [
+                {
+                    id: number,
+                    filter_id: number,
+                    name: string,
+                    sort: number,
+                    logo: string,
+                    image: string,
+                    sub_filter: []
+                }
+            ]
+        }
+    }
+}

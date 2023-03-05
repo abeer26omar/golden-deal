@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { APIResponse, Products , APIResponse2, Category, CategoryFilter,BrandFilter} from '../models/products.model';
+import { APIResponse, Products , APIResponse2, Category, CategoryFilter,BrandFilter, Category_Filter} from '../models/products.model';
 import { MacPrefixService } from '../services/mac-prefix.service';
 import { ProductsRequestService } from '../services/products-request.service';
 import SwiperCore, { SwiperOptions } from 'swiper';
@@ -38,6 +38,7 @@ export class ProductsComponent implements OnInit {
   }
   filterbrandsOptions :any= [];
   brandsOptions :any= [];
+  fiter_carPlates: any =[];
   searchText: any;
   public sort: string = '';
   public products: Array<Products> = [];
@@ -72,9 +73,9 @@ export class ProductsComponent implements OnInit {
     private router: Router,
     private macService: MacPrefixService,
     public actionService: ActionsService) {
-      this.httpService.refresh.subscribe(()=>{
-        this.getProducts('all');
-      })
+      // this.httpService.refresh.subscribe(()=>{
+      //   this.getProducts('all');
+      // })
     }
     config: SwiperOptions = {
       slidesPerView: 10,
@@ -192,11 +193,39 @@ export class ProductsComponent implements OnInit {
     this.router.navigate(['seller-profile',id])
   }
   getBrandFilter(categoryName: any){   
-    if(categoryName =='all' || categoryName =='car_plates'){
+    if(categoryName =='all'){
       this.brandsOptions = [];
       this.filterbrandsOptions = [];
+      this.fiter_carPlates = [];
       this.show = false;
-    } else{
+    } 
+    if(categoryName =='car_plates'){
+      this.brandsOptions = [];
+      this.filterbrandsOptions = [];
+      this.fiter_carPlates = [];
+      this.show = false;
+      this.brandSub = this.httpService.getCategoryFilter(categoryName).subscribe({
+        next: (res: Category_Filter)=>{
+          this.fiter_carPlates = res.data.filters         
+          console.log(this.fiter_carPlates);
+        },
+        error:(err: HttpErrorResponse)=>{
+          this.faildProducts.show();
+          this.show = false;
+          if(err.error.data){
+            this.errMsg = err.error.data;
+          } else{
+            if(err.statusText == 'Unauthorized'){
+              this.errMsg = 'يجب انشاء حساب اولا';
+            }else{
+              this.errMsg = err.statusText;
+            }
+          }
+        }
+      })
+    }
+    else{
+      this.fiter_carPlates = [];
       this.brandSub = this.httpService.getBrandFilters().subscribe({
         next: (res: BrandFilter)=>{
           this.brands = res;

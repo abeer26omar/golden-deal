@@ -1,10 +1,12 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { APIresponse, Subscriptions } from '../models/actions.model';
 import { ActionsService } from '../services/actions.service';
 import { MacPrefixService } from '../services/mac-prefix.service';
+import { PaymentDetailsDialogComponent } from './payment-details-dialog/payment-details-dialog.component';
 declare var window: any;
 
 @Component({
@@ -26,7 +28,8 @@ export class SubscriptionsComponent implements OnInit {
     chosePay : new FormControl('',[Validators.required])
   });
   constructor(private actionService: ActionsService,
-    private macService: MacPrefixService) { }
+    private macService: MacPrefixService,
+    private dialogRef: MatDialog) { }
   get f(){
     return this.subscribtionForm.controls;
   }
@@ -56,9 +59,13 @@ export class SubscriptionsComponent implements OnInit {
       }
     })
   }
-  submit(){
-    console.log(this.subscribtionForm.get('subscribe')?.value)
-    this.openFormModal();
+  choose(sub_id: number){
+        // this.openFormModal();
+    this.dialogRef.open(PaymentDetailsDialogComponent,{
+      data: {
+        subscription_method: sub_id
+      }
+    })
   }
   submitPay(){
     console.log(this.payForm.get('chosePay')?.value)

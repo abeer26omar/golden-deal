@@ -65,6 +65,7 @@ import { SidenavComponent } from './sidenav/sidenav.component';
 import { ChatSupportComponent } from './chats/chat-support/chat-support.component';
 import { SellerProfileComponent } from './seller-profile/seller-profile.component';
 import { ResponseModalComponent } from './response-modal/response-modal.component';
+import { PaymentDetailsDialogComponent } from './subscriptions/payment-details-dialog/payment-details-dialog.component';
 
 @NgModule({
   declarations: [
@@ -99,6 +100,7 @@ import { ResponseModalComponent } from './response-modal/response-modal.componen
     ChatSupportComponent,
     SellerProfileComponent,
     ResponseModalComponent,
+    PaymentDetailsDialogComponent,
   ],
   imports: [
     BrowserModule,

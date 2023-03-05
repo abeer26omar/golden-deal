@@ -1,0 +1,73 @@
+<div class="form p-4">
+    <form  [formGroup]="payForm" (ngSubmit)="submitPay()">
+          <p class="text-center">معلومات الدفع</p>
+          <mat-progress-bar mode="indeterminate" *ngIf="loader" class="mb-3"></mat-progress-bar>
+            <p class="text-danger text-center" *ngIf="error">{{errMsg}}</p>
+          <div class="pay_method py-3">
+            <p>اختر طريقه الدفع</p>
+            <mat-radio-group aria-label="Select an option" [selected]="visa">
+              <mat-radio-button #visa value="stc">
+                <img class="payment-logo" src="../../assets/images/stc.svg" width="60%">
+              </mat-radio-button>
+              <mat-radio-button value="visa">
+                <img class="payment-logo" src="../../assets/images/visa.svg" width="60%">
+              </mat-radio-button>
+            </mat-radio-group>
+          </div>
+        <div class="row g-3">
+          <div class="col-12">
+            <mat-form-field appearance="fill" >
+              <mat-label>رقم البطاقة</mat-label>
+              <input matInput #input maxlength="16" value="" formControlName="card_num"/>
+            </mat-form-field>
+          </div>
+          <div class="col-12">
+            <mat-form-field   appearance="fill">
+              <mat-label>اسم حامل البطاقة</mat-label>
+              <input type="text" matInput value=""  formControlName="owner_name"/>
+            </mat-form-field>
+          </div>
+          <div class="col-6">
+            <mat-form-field class="expire-month" dense>
+              <mat-label>Month</mat-label>
+              <select matNativeControl>
+                <option value="january">01</option>
+                <option value="february">02</option>
+                <option value="march">03</option>
+                <option value="april">04</option>
+                <option value="may">05</option>
+                <option value="june">06</option>
+                <option value="july">07</option>
+                <option value="august">08</option>
+                <option value="september">09</option>
+                <option value="october">10</option>
+                <option value="november">11</option>
+                <option value="december">12</option>
+              </select>
+            </mat-form-field>
+          </div>
+        <div class="col-6">
+          <mat-form-field class="expire-month" dense>
+            <mat-label>Year</mat-label>
+            <select matNativeControl>
+              <option value="january">2020</option>
+              <option value="february">2021</option>
+              <option value="march">2022</option>
+              <option value="april">2023</option>
+              <option value="april">2024</option>
+            </select>
+          </mat-form-field>
+        </div>
+        <div class="col-12">
+          <mat-form-field appearance="fill" >
+            <mat-label>CVC</mat-label>
+            <input type="text" matInput value="" formControlName="cvc_number"/>
+            <mat-hint>Behind your card</mat-hint>
+          </mat-form-field>
+        </div>
+        </div>
+        <div class="col-12 text-center">
+          <button type="submit" class="btn btn-prim">دفع</button>
+        </div>
+    </form>
+</div>

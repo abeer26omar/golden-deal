@@ -1,0 +1,15 @@
+.form{
+    width: 500px;
+    text-align: center;
+    direction: rtl;
+}
+p{
+    color: var(--primary-color);
+    font-weight: 600;
+}
+.pay_method{
+    text-align: start;
+}
+.btn-prim{
+    width: 50%;
+}

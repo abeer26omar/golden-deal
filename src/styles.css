@@ -24,6 +24,9 @@
     --light-grey: #8C8C8C;
     --light-blue: #039AEE;
     --gray-color: #E4E4E4;
+    --dark-gray: #969696;
+    --black-2: #141414;
+    --black-3: #333333;
 }
 /* html, body { height: 100%;} */
 
@@ -193,12 +196,12 @@ input.star:checked ~ label.star:before {
     width: 100% !important;
     height: 3px;
 }
-.container .mat-radio-container {
+/* .mat-radio-container {
     display: none !important;
-}
-.mat-radio-button.mat-accent.mat-radio-checked span .card{
+} */
+/* .mat-radio-button.mat-accent.mat-radio-checked .card a{
     border: 3px solid var(--light-blue) !important;
-}
+} */
 #payment .mat-radio-group{
     display: flex;
     flex-direction: column;
@@ -211,10 +214,10 @@ input.star:checked ~ label.star:before {
 #payment .mat-radio-button.mat-accent .mat-radio-inner-circle{
     background-color: var(--org-color);
 }
-#payment .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
-    border-color: var(--org-color);
+.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-label-content .card .payStyle{
+    background-color:  var(--black-3) !important;
 }
-.form-profile .mat-form-field{
+.form-profile .mat-form-field,.mat-form-field{
     width: 100%;
 }
  .mat-form-field-empty.mat-form-field-label, 

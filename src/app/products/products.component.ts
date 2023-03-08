@@ -8,6 +8,7 @@ import { MacPrefixService } from '../services/mac-prefix.service';
 import { ProductsRequestService } from '../services/products-request.service';
 import SwiperCore, { SwiperOptions } from 'swiper';
 import { ActionsService } from '../services/actions.service';
+import { AuthService } from '../services/auth.service';
 declare var window: any;
 
 @Component({
@@ -45,6 +46,7 @@ export class ProductsComponent implements OnInit {
   public categories : Array<Category> = [];
   active = 0;
   show:boolean = false;
+  showBtnAction: boolean = false;
   loadding = false;
   load: boolean = false;
   error: string = '';
@@ -68,11 +70,15 @@ export class ProductsComponent implements OnInit {
     min_price: new FormControl(''),
     max_price: new FormControl('')
   })
-
+  formPlatesFilter = new FormGroup({
+    min_price: new FormControl(''),
+    max_price: new FormControl('')
+  })
   constructor(private httpService: ProductsRequestService, 
     private router: Router,
     private macService: MacPrefixService,
-    public actionService: ActionsService) {
+    public actionService: ActionsService,
+    public authService: AuthService) {
       // this.httpService.refresh.subscribe(()=>{
       //   this.getProducts('all');
       // })
@@ -119,7 +125,6 @@ export class ProductsComponent implements OnInit {
       next:(productsList: APIResponse<Products>)=>{
         this.loadding = false;
           this.products = productsList.data;
-          console.log(this.products);
           
           if(this.products.length == 0){
             this.errorLength = 'لا يوجد منتجات';
@@ -193,25 +198,25 @@ export class ProductsComponent implements OnInit {
     this.router.navigate(['seller-profile',id])
   }
   getBrandFilter(categoryName: any){   
-    if(categoryName =='all'){
-      this.brandsOptions = [];
-      this.filterbrandsOptions = [];
-      this.fiter_carPlates = [];
-      this.show = false;
-    } 
     if(categoryName =='car_plates'){
       this.brandsOptions = [];
       this.filterbrandsOptions = [];
       this.fiter_carPlates = [];
       this.show = false;
+      this.showBtnAction = false;
       this.brandSub = this.httpService.getCategoryFilter(categoryName).subscribe({
         next: (res: Category_Filter)=>{
           this.fiter_carPlates = res.data.filters         
-          console.log(this.fiter_carPlates);
+          console.log(res.data);
+          this.showBtnAction = true;
+          this.fiter_carPlates.forEach((e: any)=>{
+            this.formPlatesFilter.addControl(e.slug_name, new FormControl('')) 
+          })
         },
         error:(err: HttpErrorResponse)=>{
           this.faildProducts.show();
           this.show = false;
+          this.showBtnAction = false;
           if(err.error.data){
             this.errMsg = err.error.data;
           } else{
@@ -224,8 +229,9 @@ export class ProductsComponent implements OnInit {
         }
       })
     }
-    else{
+    else if(categoryName =='cars'){
       this.fiter_carPlates = [];
+      this.showBtnAction = false;
       this.brandSub = this.httpService.getBrandFilters().subscribe({
         next: (res: BrandFilter)=>{
           this.brands = res;
@@ -246,6 +252,13 @@ export class ProductsComponent implements OnInit {
           }
         }
       })
+    }
+    else{
+      this.brandsOptions = [];
+      this.filterbrandsOptions = [];
+      this.fiter_carPlates = [];
+      this.show = false;
+      this.showBtnAction = false;
     }
   }
   onApplayFilters(){
@@ -320,6 +333,39 @@ export class ProductsComponent implements OnInit {
       },
       error:(err: HttpErrorResponse)=>{
         this.loadding = false;
+        if(err.error.data){
+          this.errfilter = err.error.data;
+        } else{
+          if(err.statusText == 'Unauthorized'){
+            this.errfilter = 'يجب انشاء حساب اولا';
+          }else{
+            this.errfilter = err.statusText;
+          }
+        }
+      }
+     })
+  }
+  onApplayPlatesFilters(){
+    this.load = true;
+    this.formPlatesFilter.get('min_price')?.setValue('0');
+    this.formPlatesFilter.get('max_price')?.setValue('8584040');
+    const formData = new FormData()
+      for (const field in this.formPlatesFilter.controls) { 
+        formData.append(field,this.formPlatesFilter.controls[field].value)
+      }        
+     this.filterSub = this.httpService.applayFilter(formData).subscribe({
+      next: (res: APIResponse<Products>)=>{
+          this.load = false;
+          this.formModal.hide();
+          this.products = res.data;
+          if(this.products.length == 0){
+            this.errorLength = 'لا يوجد منتجات';
+          }else{
+            this.errorLength = '';
+          }
+      },
+      error:(err: HttpErrorResponse)=>{
+        this.load = false;
         if(err.error.data){
           this.errfilter = err.error.data;
         } else{

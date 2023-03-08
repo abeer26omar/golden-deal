@@ -90,6 +90,8 @@ export interface Product{
         };
         product_images: Array<productImages>;
         owner_ratings: Array<ownerRatings>;
+        negotiable: number;
+        properties: Array<Product_Properties>
         }
 }
 export interface ownerRatings{

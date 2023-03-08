@@ -77,13 +77,20 @@ export class ProductsRequestService {
       this._refresh.next();
     }))
   }
-  applayFilterKeys(brand_filter?: string, brand_Subfilter?: string){
+  applayFilterKeys(brand_filter?: string, 
+    brand_Subfilter?: string, 
+    town_filter?: string,
+    plate_type_filter?: string,
+    plate_category_filter?: string){
     return this.http.post<APIResponse<Products>>(`${env.api_url}/filters/submit-filters`,
     {
       min_price: '0',
       max_price: '8584040',
       car_brand_filter_1: brand_filter,
-      car_class_sub_filter_1: brand_Subfilter
+      car_class_sub_filter_1: brand_Subfilter,
+      plate_town_filter_6: town_filter,
+      plate_type_filter_6: plate_type_filter,
+      plate_category_filter_6: plate_category_filter
     },this.httpOptions).pipe(tap(()=>{
       this._refresh.next();
     }))

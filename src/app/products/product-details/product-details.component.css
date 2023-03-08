@@ -25,6 +25,9 @@ p.time, p.p-rate, span.name{
     margin-bottom: 0;
     font-size: 1rem;
 }
+.plates{
+    position: relative;
+}
 .prod-details p{
     color: var(--primary-color);
 }
@@ -273,4 +276,32 @@ input:focus , textarea:focus{
 #buyModal .modal-footer .btn-prim,
 #buyModal .modal-footer .btn-sec{
     padding: 0.7rem 1.5rem;
+}
+.plates img{
+    width: 80%
+}
+.card_chars_ar{
+    position: absolute;
+    top: 23%;
+    right: 25%;
+}
+.card_num_ar{
+    position: absolute;
+    top: 24%;
+    left: 24%;
+}
+.card_chars_en{
+    position: absolute;
+    bottom: 12%;
+    right: 26%;
+}
+.card_num_en{
+    position: absolute;
+    bottom: 11%;
+    left: 24%;
+}
+@media screen and (max-width: 575px) {
+    .plates img{
+        width: 100%
+    }
 }

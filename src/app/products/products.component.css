@@ -123,3 +123,72 @@ a.all.active{
     border: none;
     background-color: var(--bg-color);
 }
+.card_num{
+    background-color: var(--header-bg);
+    color: var(--primary-color);
+    box-shadow: 0px 3px 17px rgba(0, 0, 0, 0.13);
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    width: fit-content;
+}
+.card_chars_ar{
+    position: absolute;
+    top: 18%;
+    right: 16%;
+}
+.card_num_ar{
+    position: absolute;
+    top: 18%;
+    left: 16%;
+}
+.card_chars_en{
+    position: absolute;
+    top: 30%;
+    right: 16%;
+}
+.card_num_en{
+    position: absolute;
+    top: 30%;
+    left: 16%;
+}
+.btn_find{
+    background-color: var(--primary-color);
+    color: var(--white);
+    border-radius: 8px;
+}
+.btn_remove{
+    color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+    border-radius: 8px;
+}
+.nego_icon{
+    position: relative;
+    left: 45%;
+    bottom: 49%;
+}
+/* @media screen and (max-width: 575px) {
+    .card_chars_en{
+        bottom: 36%;
+        left: 35.5%;
+        top: unset;
+        right: unset;
+    }
+    .card_chars_ar{
+        bottom: unset;
+        left: 34.5%;
+        top: 34%;
+        right: unset;
+    }
+    .card_num_en{
+        top: 34%;
+        left: 10%;
+        right: unset;
+        bottom: unset;
+    }
+    .card_num_ar{
+        top: unset;
+        left: 10%;
+        right: unset;
+        bottom: 36%;
+    }
+} */

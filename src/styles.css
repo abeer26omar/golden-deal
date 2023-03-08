@@ -278,7 +278,11 @@ input.star:checked ~ label.star:before {
 }
 .products-row .card-header img{
     border-radius: 11.4835px 11.4835px 0px 0px;
+    object-fit: cover;
 } 
+.products-row .card-header.plates img{
+    object-fit: unset;
+}
 .products-row .card-body{
     background-color: var(--bg-color);
     border-radius: 15.3114px;
@@ -317,7 +321,7 @@ input.star:checked ~ label.star:before {
     border-radius: 50%;
 } */
 @media screen and (max-width: 575px) {
-    .products-row .card {
+    /* .products-row .card {
         flex-direction: row-reverse;
     }
     .products-row .card-body{
@@ -330,7 +334,7 @@ input.star:checked ~ label.star:before {
     }
     .products-row .card-header img {
         border-radius: 11.4835px ;
-    }
+    } */
 }
 .mat-menu-panel {
     overflow: hidden !important;

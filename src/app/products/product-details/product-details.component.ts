@@ -59,7 +59,9 @@ export class ProductDetailsComponent implements OnInit {
         image: '',
         image_url: ''}
       ],
-      owner_ratings: []
+      owner_ratings: [],
+      negotiable: 0,
+      properties:[]
     }
   }
   error: string = '';
@@ -105,7 +107,7 @@ export class ProductDetailsComponent implements OnInit {
     );
     this.galleryOptions = [
       {
-          width: '80%',
+          width: '70%',
           height: '500px',
           thumbnailsColumns: 3,
           imageAnimation: NgxGalleryAnimation.Slide
@@ -134,6 +136,8 @@ export class ProductDetailsComponent implements OnInit {
     .subscribe({
       next:(productDetails: Product)=>{
         this.singleProduct = productDetails;
+        console.log(this.singleProduct.data);
+          
         [...productDetails.data.product_images].forEach(e=>{
           this.imgUrls.push({
               small: e.image_url,

@@ -4,6 +4,7 @@
             <div class="card-header">
                 <p class="header text-center">اتفاقيه الاعلان</p>
             </div>
+            <p class="text-center text-danger">{{errorAdd}}</p>
             <!-- <div class="card-body" *ngIf="step == 1">
                 <div class="aggrement p-sm-5 p-2 ">
                     <p class="title">إتفاقية العمولة <img src="../../../assets/images/arrows.svg" alt="arrows" class="pe-3"></p>
@@ -27,65 +28,75 @@
                         <div class="col-12" *ngIf="defaultImage_add">
                             <div class="row row-cols-md-4 row-cols-lg-6 g-3 justify-content-center">
                                 <div class="col">
-                                    <label for="file1" class="file-upload">
+                                    <label for="file1" class="file-upload"
+                                    [ngClass]="{'invalid': f['product_image_1'].touched && f['product_image_1'].errors}">
                                         <input
                                             id="file1"
                                             type="file"
                                             class="form-control"
-                                            hidden
-                                            (change)="onFileChange1($event)">
+                                            (change)="onFileChange(1,$event)"
+                                            accept="image/*"
+                                            formControlName="product_image_1">
                                             <div class="text-center">
                                                 <img  [src]="imgSrc1 ? imgSrc1 : '../../../assets/images/add_new_icon.svg'" height="150px" width="150px">
                                             </div>
                                     </label>
                                 </div>
                                 <div class="col">
-                                    <label for="file2" class="file-upload">
+                                    <label for="file2" class="file-upload"
+                                    [ngClass]="{'invalid': f['product_image_2'].touched && f['product_image_2'].errors}">
                                         <input
                                             id="file2"
                                             type="file"
                                             class="form-control"
-                                            hidden
-                                            (change)="onFileChange2($event)">
+                                            accept="image/*"
+                                            formControlName="product_image_2"
+                                            (change)="onFileChange(2,$event)">
                                             <div class="text-center">
                                                 <img  [src]="imgSrc2 ? imgSrc2 : '../../../assets/images/add_new_icon.svg'" height="150px" width="150px">
                                             </div>
                                     </label>
                                 </div>
                                 <div class="col">
-                                    <label for="file3" class="file-upload">
+                                    <label for="file3" class="file-upload"
+                                    [ngClass]="{'invalid': f['product_image_3'].touched && f['product_image_3'].errors}">
                                         <input
                                             id="file3"
                                             type="file"
                                             class="form-control"
-                                            hidden
-                                            (change)="onFileChange3($event)">
+                                            accept="image/*"
+                                            formControlName="product_image_3"
+                                            (change)="onFileChange(3,$event)">
                                             <div class="text-center">
                                                 <img  [src]="imgSrc3 ? imgSrc3 : '../../../assets/images/add_new_icon.svg'" height="150px" width="150px">
                                             </div>
                                     </label>
                                 </div>
                                 <div class="col">
-                                    <label for="file4" class="file-upload">
+                                    <label for="file4" class="file-upload"
+                                    [ngClass]="{'invalid': f['product_image_4'].touched && f['product_image_4'].errors}">
                                         <input
                                             id="file4"
                                             type="file"
                                             class="form-control"
-                                            hidden
-                                            (change)="onFileChange4($event)">
+                                            accept="image/*"
+                                            formControlName="product_image_4"
+                                            (change)="onFileChange(4,$event)">
                                             <div class="text-center">
                                                 <img  [src]="imgSrc4 ? imgSrc4 : '../../../assets/images/add_new_icon.svg'" height="150px" width="150px">
                                             </div>
                                     </label>
                                 </div>
                                 <div class="col">
-                                    <label for="file5" class="file-upload">
+                                    <label for="file5" class="file-upload"
+                                    [ngClass]="{'invalid': f['product_image_5'].touched && f['product_image_5'].errors}">
                                         <input
                                             id="file5"
                                             type="file"
                                             class="form-control"
-                                            hidden
-                                            (change)="onFileChange5($event)">
+                                            accept="image/*"
+                                            formControlName="product_image_5"
+                                            (change)="onFileChange(5,$event)">
                                             <div class="text-center">
                                                 <img  [src]="imgSrc5 ? imgSrc5 : '../../../assets/images/add_new_icon.svg'" height="150px" width="150px">
                                             </div>
@@ -100,10 +111,21 @@
                                     </div>
                             </label> -->
                         </div>
+                        <div class="d-flex justify-content-center mb-5 plates" *ngIf="!defaultImage_add">
+                            <img src="../../../assets/images/car_plates_icon.svg" alt="car_plates_icon" width="80%">
+                            <!-- <ng-container  *ngFor="let property of singleProduct.data.properties">
+                                <span  *ngIf="property.type == 'text'">
+                                    <span *ngIf="property.name_ar == 'حروف اللوحة عربي'" class="card_chars_ar">{{property.filter_value.filter_value}}</span>
+                                    <span *ngIf="property.name_ar == 'حروف اللوحة انجليزي'" class="card_chars_en">{{property.filter_value.filter_value}}</span>
+                                    <span *ngIf="property.name_ar == 'ارقام اللوحة عربي'" class="card_num_ar">{{property.filter_value.filter_value}}</span>
+                                    <span *ngIf="property.name_ar == 'ارقام اللوحة انجليزي'" class="card_num_en">{{property.filter_value.filter_value}}</span>
+                                </span>
+                                </ng-container> -->
+                        </div>
                         <div class="col-md-6">
                             <label for="productName" class="form-label">عنوان الإعلان</label>
                             <input type="text" class="form-control" id="productName" 
-                            placeholder=" سياره بي ام"
+                            placeholder=""
                             formControlName="name">
                             <div *ngIf="f['name'].touched && f['name'].errors" class="text-danger">يجب كتابه عنوان الإعلان </div>  
                         </div>
@@ -128,13 +150,46 @@
                         <div class="col-md-6" *ngFor="let filter of filters.data.filters">
                             <input type="checkbox" class="form-check-input mx-2" [formControlName]="filter.slug_name" *ngIf="filter.type == 'check'" >
                             <label for="productMark" class="form-label">{{filter.name_ar}}</label>
-                            <input type="text" class="form-control"
-                             [formControlName]="filter.slug_name" *ngIf="filter.type == 'text'" >
+                            <div class="row g-3" *ngIf="filter.type == 'text' && filter.name_ar == 'حروف اللوحة عربي' ">
+                                <div class="col-3">
+                                    <input  type="text" class="form-control" 
+                                         maxlength="1" 
+                                        (keyup)="getCardChar(1,$event)">
+                                </div>
+                                <div class="col-3">
+                                    <input  type="text" class="form-control" 
+                                        maxlength="1" 
+                                        (keyup)="getCardChar(2,$event)">
+                                </div>
+                                <div class="col-3">
+                                    <input  type="text" class="form-control" 
+                                        maxlength="1" 
+                                        (keyup)="getCardChar(3,$event)">
+                                </div>
+                                <p class="small text-muted">{{error_CarPlate}}</p> 
+                            </div>
+                            <div class="row g-3"  *ngIf="filter.type == 'text' && filter.name_ar == 'حروف اللوحة انجليزي' " >
+                                <div class="col-3">
+                                    <input  type="text" class="form-control" 
+                                        formControlName="plate_chars_en_1" maxlength="1" 
+                                        readonly >
+                                </div>
+                                <div class="col-3">
+                                    <input  type="text" class="form-control" 
+                                        formControlName="plate_chars_en_2" maxlength="1" 
+                                        readonly >
+                                </div>
+                                <div class="col-3">
+                                    <input  type="text" class="form-control" 
+                                        formControlName="plate_chars_en_3" maxlength="1" 
+                                        readonly >
+                                </div>
+                            </div>
                             <select class="form-select" id="productMark" (ngModelChange)="getValue($event,filter.name_ar)"
                             [formControlName]="filter.slug_name" *ngIf="filter.type == 'select'">
                                 <option value="{{filterOption.name}}" *ngFor="let filterOption of filter.filter_options">{{filterOption.name}}</option>
                             </select>
-                            <div *ngIf="f[filter.slug_name].touched && f[filter.slug_name].errors" class="text-danger">يجب تحديد العلامه التجاريه</div>  
+                            <div *ngIf="f[filter.slug_name].touched && f[filter.slug_name].value == ''" class="text-danger">يجب ادخال بيانات</div> 
                         </div>
                         <div class="col-md-6">
                                 <label for="productPrice" class="form-label">السعر</label>

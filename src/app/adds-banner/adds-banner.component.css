@@ -4,6 +4,7 @@
 }
 .picsum-img-wrapper img{
     position: relative;
+    object-fit: cover;
 }
 .picsum-img-wrapper img,
 .picsum-img-wrapper {

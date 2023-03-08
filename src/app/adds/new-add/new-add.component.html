@@ -1,10 +1,10 @@
-<div class="add-agrrement pt-5 pb-5">
+<div class="add-agrrement container py-5">
     <form [formGroup] ="myForm"  (ngSubmit)="submit()" class="row g-3">
         <div class="card">
             <div class="card-header">
                 <p class="header text-center">اتفاقيه الاعلان</p>
             </div>
-            <div class="card-body" *ngIf="step == 1">
+            <!-- <div class="card-body" *ngIf="step == 1">
                 <div class="aggrement p-sm-5 p-2 ">
                     <p class="title">إتفاقية العمولة <img src="../../../assets/images/arrows.svg" alt="arrows" class="pe-3"></p>
                     <div class="pt-4">
@@ -22,23 +22,90 @@
                         <div *ngIf="submitted && f['agrement'].errors && f['agrement'].invalid" class="text-danger">يجب التحديد</div>
                     </div>
                 </div>
-            </div>
-                <div class="card-body row g-4" *ngIf="step == 2">
-                        <div class="col-12">
-                            <label  class="file-upload" (click)="openImgDialog()">
+            </div> -->
+                <div class="card-body row g-4 add_images" *ngIf="step == 1">
+                        <div class="col-12" *ngIf="defaultImage_add">
+                            <div class="row row-cols-md-4 row-cols-lg-6 g-3 justify-content-center">
+                                <div class="col">
+                                    <label for="file1" class="file-upload">
+                                        <input
+                                            id="file1"
+                                            type="file"
+                                            class="form-control"
+                                            hidden
+                                            (change)="onFileChange1($event)">
+                                            <div class="text-center">
+                                                <img  [src]="imgSrc1 ? imgSrc1 : '../../../assets/images/add_new_icon.svg'" height="150px" width="150px">
+                                            </div>
+                                    </label>
+                                </div>
+                                <div class="col">
+                                    <label for="file2" class="file-upload">
+                                        <input
+                                            id="file2"
+                                            type="file"
+                                            class="form-control"
+                                            hidden
+                                            (change)="onFileChange2($event)">
+                                            <div class="text-center">
+                                                <img  [src]="imgSrc2 ? imgSrc2 : '../../../assets/images/add_new_icon.svg'" height="150px" width="150px">
+                                            </div>
+                                    </label>
+                                </div>
+                                <div class="col">
+                                    <label for="file3" class="file-upload">
+                                        <input
+                                            id="file3"
+                                            type="file"
+                                            class="form-control"
+                                            hidden
+                                            (change)="onFileChange3($event)">
+                                            <div class="text-center">
+                                                <img  [src]="imgSrc3 ? imgSrc3 : '../../../assets/images/add_new_icon.svg'" height="150px" width="150px">
+                                            </div>
+                                    </label>
+                                </div>
+                                <div class="col">
+                                    <label for="file4" class="file-upload">
+                                        <input
+                                            id="file4"
+                                            type="file"
+                                            class="form-control"
+                                            hidden
+                                            (change)="onFileChange4($event)">
+                                            <div class="text-center">
+                                                <img  [src]="imgSrc4 ? imgSrc4 : '../../../assets/images/add_new_icon.svg'" height="150px" width="150px">
+                                            </div>
+                                    </label>
+                                </div>
+                                <div class="col">
+                                    <label for="file5" class="file-upload">
+                                        <input
+                                            id="file5"
+                                            type="file"
+                                            class="form-control"
+                                            hidden
+                                            (change)="onFileChange5($event)">
+                                            <div class="text-center">
+                                                <img  [src]="imgSrc5 ? imgSrc5 : '../../../assets/images/add_new_icon.svg'" height="150px" width="150px">
+                                            </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <!-- <label  class="file-upload" (click)="openImgDialog()">
                                     <div class="text-center">
                                         <img src="../../../assets/images/product-imgs.svg" alt="product-imgs">
                                         <p>اضافه صور المنتج</p>
                                             <img *ngFor="let url of images" [src]="url" height="150" width="200px" style="margin: 3px;">
                                     </div>
-                            </label>
+                            </label> -->
                         </div>
                         <div class="col-md-6">
-                            <label for="productName" class="form-label">اسم المنتج</label>
+                            <label for="productName" class="form-label">عنوان الإعلان</label>
                             <input type="text" class="form-control" id="productName" 
                             placeholder=" سياره بي ام"
                             formControlName="name">
-                            <div *ngIf="f['name'].touched && f['name'].errors" class="text-danger">يجب كتابه اسم للمنتج</div>  
+                            <div *ngIf="f['name'].touched && f['name'].errors" class="text-danger">يجب كتابه عنوان الإعلان </div>  
                         </div>
                         <div class="col-md-6">
                             <label for="productCategory" class="form-label">التصنيف</label>
@@ -51,53 +118,57 @@
                             <div *ngIf="f['productCategory'].touched && f['productCategory'].errors" class="text-danger">يجب تحديد تصنيف للمنتج</div>  
                         </div>
                         <div class="col-md-6">
-                            <label for="phone" class="form-label">رقم البائع</label>
+                            <label for="phone" class="form-label">رقم الجوال</label>
                             <input type="text" 
                             class="form-control" 
                             id="phone"
                             formControlName="seller_phone">
-                            <div *ngIf="f['seller_phone'].touched && f['seller_phone'].errors" class="text-danger">يجب اضافه رقم الهاتف</div>
+                            <div *ngIf="f['seller_phone'].touched && f['seller_phone'].errors" class="text-danger">يجب اضافه رقم الجوال</div>
                         </div>
                         <div class="col-md-6" *ngFor="let filter of filters.data.filters">
                             <input type="checkbox" class="form-check-input mx-2" [formControlName]="filter.slug_name" *ngIf="filter.type == 'check'" >
                             <label for="productMark" class="form-label">{{filter.name_ar}}</label>
-                            <select class="form-select" id="productMark" 
+                            <input type="text" class="form-control"
+                             [formControlName]="filter.slug_name" *ngIf="filter.type == 'text'" >
+                            <select class="form-select" id="productMark" (ngModelChange)="getValue($event,filter.name_ar)"
                             [formControlName]="filter.slug_name" *ngIf="filter.type == 'select'">
                                 <option value="{{filterOption.name}}" *ngFor="let filterOption of filter.filter_options">{{filterOption.name}}</option>
                             </select>
                             <div *ngIf="f[filter.slug_name].touched && f[filter.slug_name].errors" class="text-danger">يجب تحديد العلامه التجاريه</div>  
                         </div>
                         <div class="col-md-6">
-                            <label for="productPrice" class="form-label">السعر</label>
-                            <input type="text" class="form-control" id="productPrice" 
-                            placeholder="4000"
-                            formControlName="price">
-                            <div *ngIf="f['price'].touched && f['price'].errors" class="text-danger">يجب تحديد سعر  للمنتج</div>  
-        
+                                <label for="productPrice" class="form-label">السعر</label>
+                                <div class="d-flex align-items-center">
+                                    <input type="text" class="form-control" id="productPrice" 
+                                    placeholder="4000"
+                                    formControlName="price" style="width: 60%;" [ngClass]="{'disabled': negotiable}">
+                                        <a (click)="onNegotiable()" class="btn btn_negotiable" [ngClass]="{'btndisabled': negotiable}">علي السوم</a>
+                                </div>
+                                <div *ngIf="f['price'].touched && f['price'].errors" class="text-danger">يجب تحديد سعر  للمنتج</div>  
                         </div>
-                        <div class="col-md-6">
+                        <!-- <div class="col-md-6">
                             <label for="productSeller" class="form-label">عن البائع</label>
                             <textarea type="text" class="form-control" id="productSeller" 
                             placeholder="عن البائع عن البائع" formControlName="about_seller"></textarea>        
-                        </div>
-                        <div class="col-md-6">
+                        </div> -->
+                        <!-- <div class="col-md-6">
                             <label for="sellerinfo" class="form-label">ملاحظات التواصل</label>
                             <textarea type="text" class="form-control" id="sellerinfo" 
                             placeholder="معلومات لاتصال" formControlName="delivery_notes"></textarea>        
-                        </div>
+                        </div> -->
                         <div class="col-md-6">
-                            <label for="productDesc" class="form-label">وصف المنتج</label>
+                            <label for="productDesc" class="form-label">الوصف</label>
                             <textarea type="text" class="form-control" id="productDesc" 
-                            placeholder="سياره بي ام سياره بي ام" formControlName="desc"></textarea>
+                            placeholder=""  formControlName="desc"></textarea>
                             <div *ngIf="f['desc'].touched && f['desc'].errors" class="text-danger">يجب اضافه وصف للمنتج</div>  
         
                         </div>
-                        <div class="col-md-6">
+                        <!-- <div class="col-md-6">
                             <label for="productMaterial" class="form-label">خامات المنتج</label>
                             <textarea type="text" class="form-control" id="productMaterial" 
                             placeholder="سياره بي ام سياره بي ام" formControlName="materials"></textarea>
                             <div *ngIf="f['materials'].touched && f['materials'].errors" class="text-danger">يجب وصف خامات المنتج</div>  
-                        </div>
+                        </div> -->
                         <div class="d-flex justify-content-center align-items-center">
                             <label for="file2" id="label-file">
                                 <input type="file" id="file2" 
@@ -168,7 +239,7 @@ aria-hidden="true"
                 </button> -->
                 <h5 class="title text-center" id="staticBackdropLabel">اضافه صور المنتج</h5>
 			</div>
-			<div class="modal-body text-center">
+			<!-- <div class="modal-body text-center">
                 <div class="row g-3">
                     <div class="col-sm-4">
                         <label for="file1" class="file-upload">
@@ -216,7 +287,7 @@ aria-hidden="true"
                 <div class="footer text-center">
                     <button type="button" class="btn btn-prim m-3" data-bs-dismiss="modal" aria-label="Close" >اضافه</button>
                 </div>
-            </div>
+            </div> -->
 			</div>
 		</div>
 </div>

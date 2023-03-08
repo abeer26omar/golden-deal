@@ -17,6 +17,8 @@ declare var window: any;
 })
 export class NewAddComponent implements OnInit {
   step: any = 1;
+  active = 0;
+  defaultImage_add: boolean = true;
   modelSuccessNewProduct: any;
   modelAddImages: any;
   addFaild: any;
@@ -25,10 +27,13 @@ export class NewAddComponent implements OnInit {
   error: string = '';
   load: boolean = false;
   file!: File;
-  imgSrc: any;
   imgSrc1: any;
+  imgSrc2: any;
   imgSrc3: any;
+  imgSrc4: any;
+  imgSrc5: any;
   ownership: any;
+  negotiable: boolean = false;
   newFormControl!: any;
   public categories : Array<Category> = [];
   filters: CategoryFilter = {
@@ -41,6 +46,7 @@ export class NewAddComponent implements OnInit {
     }
   }
   filterOptions :any= [];
+  valueArr: any = [];
   submitted = false;
   catergoryId!:number;
   ownerId = localStorage.getItem('userId');
@@ -59,7 +65,7 @@ export class NewAddComponent implements OnInit {
     private macService: MacPrefixService) { }
     
     myForm = new FormGroup({
-      agrement: new FormControl('', [Validators.required]),
+      negotiable: new FormControl(''),
       seller_phone: new FormControl('', [Validators.required]),
       productCategory: new FormControl('', [Validators.required]),
       name: new FormControl('', [Validators.required]),
@@ -73,7 +79,9 @@ export class NewAddComponent implements OnInit {
       ownership_image: new FormControl(''),
       product_image_1: new FormControl(''),
       product_image_2: new FormControl(''),
-      product_image_3: new FormControl('')
+      product_image_3: new FormControl(''),
+      product_image_4: new FormControl(''),
+      product_image_5: new FormControl('')
     })
     get f(){
       return this.myForm.controls;
@@ -90,15 +98,35 @@ export class NewAddComponent implements OnInit {
         document.getElementById('addFaild'),{backdrop: this.macService.backdrop}
       )
   }
-  onFileChange(event:any) {
+  onNegotiable(){
+    if(this.negotiable == false){
+      this.negotiable = true;
+      this.f['price'].disable()
+    }else{
+      this.negotiable = false;
+      this.f['price'].enable()
+    }
+    console.log(this.negotiable);
+  }
+  onFileChange1(event:any) {
     let reader = new FileReader();
     reader.readAsDataURL(event.target.files[0]);
     this.file =<File>event.target.files[0];
     reader.onload = ()=>{
-      this.imgSrc = reader.result;
-      this.images.splice(0,1,this.imgSrc)
+      this.imgSrc1 = reader.result;
+      this.images.splice(0,1,this.imgSrc1)
     }
     this.myForm.get('product_image_1')?.patchValue(this.file,this.file.name);
+  }
+  onFileChange2(event:any) {
+    let reader = new FileReader();
+    reader.readAsDataURL(event.target.files[0]);
+    this.file =<File>event.target.files[0];
+    reader.onload = ()=>{
+      this.imgSrc2 = reader.result;
+      this.images.splice(2,1,this.imgSrc2)
+    }
+    this.myForm.get('product_image_2')?.patchValue(this.file,this.file.name);
   }
   onFileChange3(event:any) {
     let reader = new FileReader();
@@ -108,23 +136,60 @@ export class NewAddComponent implements OnInit {
       this.imgSrc3 = reader.result;
       this.images.splice(1,1,this.imgSrc3)
     }    
-    this.myForm.get('product_image_2')?.patchValue(this.file,this.file.name);
+    this.myForm.get('product_image_3')?.patchValue(this.file,this.file.name);
   }
-  onFileChange1(event:any) {
+  onFileChange4(event:any) {
     let reader = new FileReader();
     reader.readAsDataURL(event.target.files[0]);
     this.file =<File>event.target.files[0];
     reader.onload = ()=>{
-      this.imgSrc1 = reader.result;
-      this.images.splice(2,1,this.imgSrc1)
+      this.imgSrc4 = reader.result;
+      this.images.splice(2,1,this.imgSrc4)
     }
-    this.myForm.get('product_image_3')?.patchValue(this.file,this.file.name);
+    this.myForm.get('product_image_4')?.patchValue(this.file,this.file.name);
+  }
+  onFileChange5(event:any) {
+    let reader = new FileReader();
+    reader.readAsDataURL(event.target.files[0]);
+    this.file =<File>event.target.files[0];
+    reader.onload = ()=>{
+      this.imgSrc5 = reader.result;
+      this.images.splice(2,1,this.imgSrc5)
+    }
+    this.myForm.get('product_image_5')?.patchValue(this.file,this.file.name);
   }
   onFile(event:any) {
     let reader = new FileReader();
     reader.readAsDataURL(event.target.files[0]);
     this.file =<File>event.target.files[0];
     this.ownership = this.file.name
+  }
+  getValue(event: any,slug_name: any){
+    let final_values:any = {}
+    final_values = {
+      slug_name:slug_name,
+      event:event
+    }
+    let final_arr;
+    this.valueArr.push(final_values);
+    final_arr = this.valueArr.find((name: any) => name.slug_name == slug_name);
+    if(slug_name == final_arr){
+      this.valueArr.push(final_arr);
+    }
+    console.log(this.valueArr);
+    // final_arr.push(final_values)
+    // console.log(final_arr);
+    // this.f['desc'].setValue(this.valueArr)
+    
+      // if(slug_name == final_values.slug_name){
+      //   final_values.event = event
+      // }
+      // else{
+      // }
+    // this.valueArr.forEach((e: any)=>{
+    //   // final_values.push({slug_name:slug_name,event:event}))
+    // })
+      
   }
   getCategories(){
     this.categorySub = this.httpService.
@@ -144,6 +209,12 @@ export class NewAddComponent implements OnInit {
     })
   }
   getCategoryFilter(categoryName: any){ 
+    if(categoryName == 'car_plates'){
+      this.defaultImage_add = false;
+    }
+    else{
+      this.defaultImage_add = true;
+    }
     this.categories.forEach(ele=>{
       if(ele.slug == categoryName){
         this.catergoryId = ele.id;
@@ -171,13 +242,14 @@ export class NewAddComponent implements OnInit {
   }
   submit(){
     this.submitted = true;    
-    if((this.myForm.get('agrement')?.invalid)){
-      return;
-    } else{
-      if(this.step == 1){
-        this.step = this.step + 1;
-        this.submitted = false;    
-      }
+    // if((this.myForm.get('agrement')?.invalid)){
+    //   return;
+    // } 
+    // else{
+      // if(this.step == 0){
+      //   this.step = this.step + 1;
+      //   this.submitted = false;    
+      // }
       this.getProductCategoryId();   
       const formData = new FormData();
       for (const field in this.myForm.controls) {
@@ -207,7 +279,7 @@ export class NewAddComponent implements OnInit {
       } else{
         return;
       }
-    }
+    // }
   }
   close(){
     this.modelSuccessNewProduct.hide();

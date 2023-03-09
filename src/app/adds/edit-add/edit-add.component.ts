@@ -22,9 +22,12 @@ export class EditAddComponent implements OnInit {
   modelAddImages: any;
   addFaild: any;
   file!: File;
-  imgSrc: any;
   imgSrc1: any;
+  imgSrc2: any;
   imgSrc3: any;
+  imgSrc4: any;
+  imgSrc5: any;
+  rest_images: any = [];
   Add : EditProduct = {
     data: {
       id: 0,
@@ -61,16 +64,14 @@ export class EditAddComponent implements OnInit {
     productCategory: new FormControl(''),
     name: new FormControl(''),
     price: new FormControl(''),
-    about_seller: new FormControl(''),
-    delivery_notes: new FormControl(''),
     desc: new FormControl(''),
-    materials: new FormControl(''),
     owner_id: new FormControl(''),
     category_id: new FormControl(''),
-    ownership_image: new FormControl(''),
     product_image_1: new FormControl(''),
     product_image_2: new FormControl(''),
-    product_image_3: new FormControl('')
+    product_image_3: new FormControl(''),
+    product_image_4: new FormControl(''),
+    product_image_5: new FormControl('')
   });
   updateProduct: Update = {
     data:{
@@ -108,35 +109,48 @@ export class EditAddComponent implements OnInit {
       document.getElementById('addFaild'),{backdrop: this.macService.backdrop}
     );
   }
-  onFileChange(event:any) {
+  onFileChange(key: number,event: any){
+    console.log(key);
     let reader = new FileReader();
     reader.readAsDataURL(event.target.files[0]);
     this.file =<File>event.target.files[0];
-    reader.onload = ()=>{
-      this.imgSrc = reader.result;
-      this.images.push(this.imgSrc)
+    switch(key){
+      case 1:
+        reader.onload = ()=>{
+          this.imgSrc1 = reader.result;
+          document.getElementById('imgSrc_1')?.setAttribute('src', this.imgSrc1)
+        }
+        this.myForm.get('product_image_1')?.patchValue(this.file,this.file.name);
+        break;
+      case 2:
+        reader.onload = ()=>{
+          this.imgSrc2 = reader.result;
+          document.getElementById('imgSrc_2')?.setAttribute('src', this.imgSrc2)
+        }
+        this.myForm.get('product_image_2')?.patchValue(this.file,this.file.name);
+      break;
+      case 3:
+        reader.onload = ()=>{
+          this.imgSrc3 = reader.result;
+          document.getElementById('imgSrc_3')?.setAttribute('src', this.imgSrc3)
+        }
+        this.myForm.get('product_image_3')?.patchValue(this.file,this.file.name);
+      break;
+      case 4:
+        reader.onload = ()=>{
+          this.imgSrc4 = reader.result;
+          document.getElementById('imgSrc_4')?.setAttribute('src', this.imgSrc4)
+        }
+        this.myForm.get('product_image_4')?.patchValue(this.file,this.file.name);
+      break;
+      case 5:
+        reader.onload = ()=>{
+          this.imgSrc5 = reader.result;
+          document.getElementById('imgSrc_5')?.setAttribute('src', this.imgSrc5)
+        }
+        this.myForm.get('product_image_5')?.patchValue(this.file,this.file.name);
+      break;
     }
-    this.myForm.get('product_image_1')?.patchValue(this.file,this.file.name);
-  }
-  onFileChange3(event:any) {
-    let reader = new FileReader();
-    reader.readAsDataURL(event.target.files[0]);
-    this.file =<File>event.target.files[0];
-    reader.onload = ()=>{
-      this.imgSrc3 = reader.result;
-      this.images.push(this.imgSrc3);
-    }
-    this.myForm.get('product_image_2')?.patchValue(this.file,this.file.name);
-  }
-  onFileChange1(event:any) {
-    let reader = new FileReader();
-    reader.readAsDataURL(event.target.files[0]);
-    this.file =<File>event.target.files[0];
-    reader.onload = ()=>{
-      this.imgSrc1 = reader.result;
-      this.images.push(this.imgSrc1)
-    }
-    this.myForm.get('product_image_3')?.patchValue(this.file,this.file.name);
   }
   getCategories(){
     this.categorySub = this.productService.
@@ -163,18 +177,17 @@ export class EditAddComponent implements OnInit {
         this.Add.data.product_images.forEach(ele=>{
          this.images.push(ele.image_url)
         })
+        for(let i=5; i > this.Add.data.product_images.length; i--){
+            this.rest_images.push(i)
+          }
         this.myForm = new FormGroup({
           seller_phone: new FormControl(this.Add.data.seller_phone),
           productCategory: new FormControl(this.Add.data.category_slug),
           name: new FormControl(this.Add.data.name),
           price: new FormControl(this.Add.data.price),
-          about_seller: new FormControl(this.Add.data.about_seller),
-          delivery_notes: new FormControl(this.Add.data.delivery_notes),
           desc: new FormControl(this.Add.data.desc),
-          materials: new FormControl(this.Add.data.materials),
           owner_id: new FormControl(this.Add.data.owner_id),
           category_id: new FormControl(this.Add.data.category_id),
-          ownership_image: new FormControl(this.Add.data.ownership_image_url),
         });
         this.getAddFilters();
       },
@@ -192,8 +205,12 @@ export class EditAddComponent implements OnInit {
     this.editSub = this.productService.getEditFilters(this.addId,this.addCategory).subscribe({
       next: (res: APIResponse4<EditProductFilters>)=>{
         this.EditFilter = res.data;
-        this.EditFilter.forEach(ele=>{
-          this.myForm.addControl(ele.slug_name,new FormControl(ele.filter_value.filter_value))
+        this.EditFilter.forEach(ele=>{    
+          if(ele.filter_value !== null){
+            this.myForm.addControl(ele.slug_name,new FormControl({value: ele.filter_value.filter_value}))
+          } else{
+            this.myForm.addControl(ele.slug_name,new FormControl({value: ''}))
+          }
         })
       },
       error: (err: HttpErrorResponse)=>{

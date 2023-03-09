@@ -33,6 +33,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { SwiperModule } from 'swiper/angular';
 import { NgxGalleryModule } from 'ngx-gallery-9';
+import { ClipboardModule } from 'ngx-clipboard';
 
 //components
 import { HeaderComponent } from './header/header.component';
@@ -134,7 +135,8 @@ import { PaymentDetailsDialogComponent } from './subscriptions/payment-details-d
     MatSidenavModule,
     MatListModule,
     SwiperModule,
-    NgxGalleryModule
+    NgxGalleryModule,
+    ClipboardModule
     ], 
   providers: [{
     provide: HTTP_INTERCEPTORS,

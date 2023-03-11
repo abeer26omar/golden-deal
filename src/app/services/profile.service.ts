@@ -11,7 +11,7 @@ import { ResponseSuccess } from '../models/actions.model';
 export class ProfileService {
   httpOptions = {
     headers: new HttpHeaders({
-      'Authorization': `Bearer ${localStorage.getItem('token')}`
+      'Authorization': `Bearer ${localStorage.getItem('token_deal')}`
     })}
   constructor(private http: HttpClient) { }
     private _refresh = new Subject<void>();

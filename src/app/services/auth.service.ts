@@ -11,7 +11,7 @@ export class AuthService {
   auth_token: any;
   httpOptions = {
     headers: new HttpHeaders({
-      'Authorization': `Bearer ${localStorage.getItem('token')}`
+      'Authorization': `Bearer ${localStorage.getItem('token_deal')}`
     })
   }
   private _isRegister = new BehaviorSubject<boolean>(false);
@@ -21,11 +21,11 @@ export class AuthService {
     return this._refresh;
   }
   constructor(private http: HttpClient) {
-    const TOKEN = localStorage.getItem('token');
+    const TOKEN = localStorage.getItem('token_deal');
     this._isRegister.next(!!TOKEN)
   }
   IsloggedIn(){
-    return !!localStorage.getItem('token')
+    return !!localStorage.getItem('token_deal')
   }
   signUp(name: string,gender: string, birth_date:any ,phone: string){
     return this.http.post<Register>(`${env.api_url}/auth/register`,{

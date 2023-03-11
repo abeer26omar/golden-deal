@@ -17,7 +17,7 @@ export class AddressesService {
   }
   httpOptions = {
     headers: new HttpHeaders({
-      'Authorization': `Bearer ${localStorage.getItem('token')}`
+      'Authorization': `Bearer ${localStorage.getItem('token_deal')}`
     })}
   getAllAddresses(){
     return this.http.get<APIResponse<Addresses>>(`${env.api_url}/address/info`

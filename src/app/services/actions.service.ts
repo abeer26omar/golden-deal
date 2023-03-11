@@ -19,7 +19,7 @@ export class ActionsService {
   }
   httpOptions = {
     headers: new HttpHeaders({
-      'Authorization': `Bearer ${localStorage.getItem('token')}`
+      'Authorization': `Bearer ${localStorage.getItem('token_deal')}`
     })
   }
   getSubscribtionsType(){

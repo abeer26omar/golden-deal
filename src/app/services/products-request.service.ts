@@ -12,7 +12,7 @@ import { ResponseSuccess } from '../models/actions.model';
 export class ProductsRequestService {
   httpOptions = {
     headers: new HttpHeaders({
-      'Authorization': `Bearer ${localStorage.getItem('token')}`
+      'Authorization': `Bearer ${localStorage.getItem('token_deal')}`
     })}
     private _refresh = new Subject<void>();
     get refresh(){

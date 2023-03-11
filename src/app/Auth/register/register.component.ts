@@ -196,7 +196,7 @@ export class RegisterComponent implements OnInit {
       this.succMsg = res.data;
       this.loaderOtp = false;
       this.login = true;
-      localStorage.setItem('token', this.token);
+      localStorage.setItem('token_deal', this.token);
       localStorage.setItem('userId', JSON.stringify(this.id));
       setTimeout(()=>{
         this.otpModal.hide();

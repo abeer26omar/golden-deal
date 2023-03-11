@@ -13,7 +13,7 @@ export class ChatService {
   private socket!: Socket;
   httpOptions = {
     headers: new HttpHeaders({
-      'Authorization': `Bearer ${localStorage.getItem('token')}`,
+      'Authorization': `Bearer ${localStorage.getItem('token_deal')}`,
     })
   }
   private _refresh = new Subject<void>();

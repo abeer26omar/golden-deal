@@ -38,8 +38,8 @@ p.or{
 }
 .btn-sec{
     padding: .9rem 2.2rem;
-    border-color: var(--white);
-    color: var(--white);
+    border-color: var(--white) !important;
+    color: var(--white) !important;
     border-radius: 10px;
 }
 p.ask{

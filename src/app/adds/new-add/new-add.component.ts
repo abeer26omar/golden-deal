@@ -115,11 +115,11 @@ export class NewAddComponent implements OnInit {
       owner_id: new FormControl(this.ownerId),
       negotiable: new FormControl(''),
       category_id: new FormControl(''),
-      product_image_1: new FormControl('',Validators.required),
-      product_image_2: new FormControl('',Validators.required),
-      product_image_3: new FormControl('',Validators.required),
-      product_image_4: new FormControl('',Validators.required),
-      product_image_5: new FormControl('',Validators.required),
+      product_image_1: new FormControl(''),
+      product_image_2: new FormControl(''),
+      product_image_3: new FormControl(''),
+      product_image_4: new FormControl(''),
+      product_image_5: new FormControl(''),
       plate_chars_filter_6: new FormGroup({}),
       plate_chars_en_filter_6: new FormGroup({}),
       plate_numbers_filter_6: new FormGroup({}),
@@ -342,11 +342,11 @@ export class NewAddComponent implements OnInit {
     }
     else{
       this.defaultImage_add = true;
-      this.myForm.addControl('product_image_1', new FormControl('',Validators.required));
-      this.myForm.addControl('product_image_2', new FormControl('',Validators.required));
-      this.myForm.addControl('product_image_3', new FormControl('',Validators.required));
-      this.myForm.addControl('product_image_4', new FormControl('',Validators.required));
-      this.myForm.addControl('product_image_5', new FormControl('',Validators.required));
+      this.myForm.addControl('product_image_1', new FormControl(''));
+      this.myForm.addControl('product_image_2', new FormControl(''));
+      this.myForm.addControl('product_image_3', new FormControl(''));
+      this.myForm.addControl('product_image_4', new FormControl(''));
+      this.myForm.addControl('product_image_5', new FormControl(''));
       this.myForm.removeControl('plate_chars_filter_6');
       this.myForm.removeControl('plate_chars_en_filter_6');
       this.myForm.removeControl('plate_numbers_filter_6');

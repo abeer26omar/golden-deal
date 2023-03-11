@@ -27,6 +27,9 @@ nav ul .nav-item a.active svg path{
 .dropdown-toggle::after {
     display: none;
 }
+.dropdown-toggle:active{
+  border: none;
+}
 .dropdown-toggle span{
     padding:0 .5rem;
 }
@@ -56,7 +59,7 @@ nav .navbar-toggler span {
     position: absolute;
     height: 3px;
     width: 100%;
-    background: var(--primary-color);
+    background: var(--white);
     border-radius: 2px;
     opacity: 1;
     left: 0;
@@ -112,6 +115,10 @@ ul.more-dropdown{
   box-shadow: 0px 5.82143px 17.4643px rgba(0, 0, 0, 0.25);
   border-radius: 7.27679px;
   margin-top: 0;
+}
+.lang.dropdown-menu{
+  width: auto;
+  left: 0;
 }
 .more-list{
   list-style: none;

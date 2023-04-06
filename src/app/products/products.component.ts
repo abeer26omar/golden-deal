@@ -344,15 +344,13 @@ export class ProductsComponent implements OnInit {
   // ////scroll
   @ViewChild('navScrolled') navScrolled!: ElementRef;
 
-  @HostBinding('class.scroll') newScroll: boolean = false;
+  newScroll: boolean = false;
   @HostListener('window:scroll') onScroll(){
-    if(window.pageYOffset >= this.navScrolled.nativeElement.getBoundingClientRect().top){
+    if(window.pageYOffset > this.navScrolled.nativeElement.offsetTop){
       this.newScroll = true;
     }else{
       this.newScroll = false;
-    }
-    console.log(this.navScrolled.nativeElement.offsetTop);
-    
+    }    
   }
   ngOnDestory() :void{
     if(this.productSub){

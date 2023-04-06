@@ -1,11 +1,12 @@
 .content{
     display: flex;
     flex-direction: column;
+    padding-top: 3rem;
+    padding-bottom: .25rem;
 }
-.scroll{
-    position: fixed;
-    top: 0;
-    width: 100%;
+.fixed-top{    
+    background-color: var(--primary-color);
+    padding: 1rem;
 }
 .nav-tabs {
     padding: 0;

@@ -7,6 +7,9 @@ import { Login, Verify } from 'src/app/models/user.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MacPrefixService } from 'src/app/services/mac-prefix.service';
 import { DatePipe } from '@angular/common';
+import { Subscription } from 'rxjs';
+import { ActionsService } from 'src/app/services/actions.service';
+import { Regions } from 'src/app/models/actions.model';
 declare var window: any;
 
 @Component({
@@ -33,7 +36,8 @@ export class RegisterComponent implements OnInit {
           fcm_token: null,
           email_verified_at: null,
           image_url: '',
-          cover_url: ''
+          cover_url: '',
+          region_id: ''
       },
       token: ''
   }
@@ -55,17 +59,22 @@ export class RegisterComponent implements OnInit {
   resMsg: boolean = false;
   token: any;
   id: any;
+  region_id!: string;
   succMsg: string = '';
   login: boolean = false;
   mac: boolean = false;
+  regions: any = [];
   //register
   registerForm = new FormGroup({
     name: new FormControl('', [Validators.required]),
     gender: new FormControl('', [Validators.required]),
     dateOfBirth: new FormControl('', [Validators.required]),
     phone: new FormControl('', [Validators.required, Validators.pattern("[0-9]{9}")]),
+    region: new FormControl('', [Validators.required])
   });
-  
+  private authSub : Subscription = new Subscription;
+  private actionSub : Subscription = new Subscription;
+
   //login
   loginForm = new FormGroup({
     phone: new FormControl('',[Validators.required, Validators.pattern("[0-9]{9}")])
@@ -74,7 +83,8 @@ export class RegisterComponent implements OnInit {
   constructor(private auth: AuthService, 
     private router: Router,
     private macService: MacPrefixService,
-    private datePipe: DatePipe) { 
+    private datePipe: DatePipe,
+    private actionService: ActionsService) { 
     }
     //get forms controls
     get fRegister(){
@@ -83,7 +93,13 @@ export class RegisterComponent implements OnInit {
     get fLogin(){
       return this.loginForm.controls;
     }
-    
+  getRegions(){
+    this.actionSub = this.actionService.getRegions().subscribe({
+      next: (res: Regions) => {
+        this.regions = res.data        
+      }
+    })
+  }
   ngOnInit(): void {
     this.otpModal = new window.bootstrap.Modal(
       document.getElementById('otpModel'),{backdrop: this.macService.backdrop});
@@ -98,32 +114,30 @@ export class RegisterComponent implements OnInit {
       e.preventDefault();
         this.formbox.classList.remove('active');
     })
-    this.mac = this.macService.macphone
+    this.mac = this.macService.macphone;
+    this.getRegions();
   }
   submitData() {
     const userName = this.registerForm.get('name')?.value;
     const userGender = this.registerForm.get('gender')?.value;
     const userDateOfBirth = this.datePipe.transform(this.registerForm.get('dateOfBirth')?.value,"yyyy-MM-dd");
     const userPhone = '+966' + this.registerForm.get('phone')?.value;
+    const region_id = this.registerForm.get('region')?.value;
     if(this.registerForm.valid){
       this.loader = true;
       this.error = '';      
-      this.auth
-      .signUp(userName, userGender, userDateOfBirth, userPhone)
+      this.authSub = this.auth
+      .signUp(userName, userGender, userDateOfBirth, userPhone, region_id)
       .subscribe({
         next: resData =>{
             this.token = resData.data.token;
             this.id = resData.data.user.id;
+            this.region_id = resData.data.user.region_id
             this.loader = false;
-            this.openOtpModal(); 
+            this.openOtpModal();             
         },
-        error: (err: HttpErrorResponse) =>{
+        error: () =>{
             this.loader = false;
-            if(err.error.data){
-              this.error = err.error.data;
-            } else{
-              this.error = err.statusText;
-            }
             localStorage.clear();
           }
       })  
@@ -137,22 +151,18 @@ export class RegisterComponent implements OnInit {
     if(this.loginForm.valid){
       this.loaderLogin = true;
       this.errorLogin = '';    
-      this.auth.signIn(phoneNo).subscribe({
+      this.authSub = this.auth.signIn(phoneNo).subscribe({
         next: (resData: Login) =>{
           this.token = resData.data.token;
           this.id = resData.data.user.id;
+          this.region_id = resData.data.user.region_id;
           this.loaderLogin = false;
           this.userData = resData;
           this.openOtpModal(); 
           this.login = true;
         },
-        error: (err: HttpErrorResponse)=>{
+        error: ()=>{
           this.loaderLogin = false;
-          if(err.error.data){
-            this.errorLogin = err.error.data;
-          } else{
-            this.errorLogin = err.statusText;
-          }
           localStorage.clear();
         }
       })
@@ -191,28 +201,24 @@ export class RegisterComponent implements OnInit {
     this.succMsg ='';
     const otp = this.otp;
     this.loaderOtp = true;
-    this.auth.otpVerify(otp,this.token,this.id).subscribe({
+    this.authSub = this.auth.otpVerify(otp,this.token,this.id).subscribe({
     next:(res: Verify)=>{
       this.succMsg = res.data;
       this.loaderOtp = false;
       this.login = true;
       localStorage.setItem('token_deal', this.token);
       localStorage.setItem('userId', JSON.stringify(this.id));
+      localStorage.setItem('region_id', this.region_id)
       setTimeout(()=>{
         this.otpModal.hide();
         this.router.navigate(['/home'])
         setTimeout(()=>{
           window.location.reload();
-        },500)
-      },1500)
+        },50)
+      },50)
     },
-    error: (err: HttpErrorResponse) =>{
+    error: () =>{
       this.loaderOtp = false;
-      if(err.error.data){
-        this.errorOtp = err.error.data;
-      } else{
-        this.errorOtp = err.statusText;
-      }
       localStorage.clear();
     }
    })
@@ -223,7 +229,7 @@ export class RegisterComponent implements OnInit {
   }
   resendOtp(){
     this.loaderOtp = true;
-    this.auth.resendOtp(this.token).subscribe({
+    this.authSub = this.auth.resendOtp(this.token).subscribe({
       next: (res: Verify)=>{
         this.succMsg = res.data;
         this.resMsg = true ;
@@ -236,11 +242,6 @@ export class RegisterComponent implements OnInit {
       },
       error: (err: HttpErrorResponse)=>{
         this.loaderOtp = false;
-        if(err.error.data){
-          this.errorOtp = err.error.data;
-        } else{
-          this.errorOtp = err.statusText;
-        }
         localStorage.clear()
       }
     })
@@ -248,5 +249,13 @@ export class RegisterComponent implements OnInit {
   closeOtp(){
     this.timeLeft = 60;
     this.otpModal.hide();
+  }
+  ngOnDestory() :void{
+    if(this.authSub){
+      this.authSub.unsubscribe();
+    }
+    if(this.actionSub){
+      this.actionSub.unsubscribe();
+    }
   }
 }

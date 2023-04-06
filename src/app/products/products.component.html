@@ -1,4 +1,4 @@
-<div class=" content pb-4 pt-5">
+<div class="content pb-1 pt-5"  #navScrolled>
   <ul ngbNav #nav="ngbNav"  class="nav-tabs" [(activeId)]="active">
     <ng-container *ngFor="let category of categories; let i = index">
       <li [ngbNavItem]="i" id="{{category.slug}}">
@@ -10,30 +10,30 @@
           *ngIf="category.id == 0" >{{category.title}}</a>
         <ng-template ngbNavContent>
           <div class="products-row row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4 justify-content-start">
-            <div class="alert alert-danger text-center" *ngIf="error">
-              {{error}}
-            </div>
-              <div class="col wow fadeIn" 
-               data-wow-duration="1.3s"  style="visibility: visible; animation-duration: 1.3s; 
-               animation-name: fadeIn;"  *ngFor="let product of products">
+            <div class="alert alert-danger text-center" *ngIf="error">{{error}}</div>
+              <div class="col wow fadeIn" data-wow-duration="1.3s" 
+                style="visibility: visible; 
+                animation-duration: 1.3s; 
+                animation-name: fadeIn;"
+                *ngFor="let product of products">
                 <div class="card h-100" *ngIf="product.category_slug !== 'car_plates'">
                   <div class="card-header text-center" >
-                    <img *ngIf="product.default_image" src="{{product.default_image}}" alt="car" width="100%" height="200px !important">
-                    <img *ngIf="!product.default_image" src="../../assets/images/placeholderimg.jpg" alt="placeholderimg" width="100%" height="200px !important">       
+                    <img  src="{{product.default_image ? product.default_image : '../../assets/images/placeholderimg.jpg'}}" alt="car" width="100%" height="200px !important">
+                    <div class="favorite">
+                        <a (click)="actionService.removeFav(product.id)" class="btn add_fav p-0" *ngIf="product.product_fav == true">
+                         <img src="../../assets/images/already_fav_icon.svg" alt="already_fav_icon" srcset="../../assets/images/already_fav_icon.svg">
+                        </a>
+                        <a (click)="actionService.addToFav(product.id)" class="btn add_fav p-0" *ngIf="product.product_fav == false">
+                          <img src="../../assets/images/favorite_icon.svg" alt="addToFav" srcset="../../assets/images/favorite_icon.svg">                         
+                        </a>
+                    </div>
                   </div>
                   <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
-                      <a (click)="productDetails(product.id)" style="cursor: pointer;" class="m-0">
+                      <a (click)="productDetails(product.id)" class="m-0">
                         <h4>{{(product.name.length > 20)? (product.name | slice:0:20)+'..':(product.name)}}</h4>
                       </a>
-                      <div *ngIf="authService.isRegister | async">
-                        <a (click)="actionService.removeFav(product.id)" class="btn add_fav p-0" *ngIf="product.product_fav == false">
-                         <img src="../../assets/images/already_fav_icon.svg" alt="already_fav_icon" srcset="../../assets/images/already_fav_icon.svg">
-                        </a>
-                        <a (click)="actionService.addToFav(product.id)" class="btn add_fav p-0" *ngIf="product.product_fav == true">
-                          <img src="../../assets/images/favorite_icon.svg" alt="addToFav" srcset="../../assets/images/favorite_icon.svg">                         
-                        </a>
-                      </div>
+                      <img src="../../assets/images/nego_icon.svg" alt="nego_icon" *ngIf="product.negotiable == 1">
                     </div>
                     <!-- <div class="rate">
                       <ng-template #t let-fill="fill">
@@ -48,7 +48,7 @@
                     <div class="evaluation d-flex justify-content-between align-items-center">
                       <p><img src="../../assets/images/location_icon (2).svg" alt="location_icon"> {{product.owner_area == null ? 'غير معروف': product.owner_area}}</p>
                       <div class="person d-flex align-items-center">
-                          <img class="ps-1" src="../../assets/images/profile_icon.svg" alt="profile_icon" width="100%" >
+                          <img class="ps-1" src="../../assets/images/profile_icon.svg" alt="profile_icon" width="20px" >
                           <a (click)="sellerProfile(product.owner_id)" style="cursor: pointer;">
                             {{product.owner.name}}
                           </a>                      
@@ -59,23 +59,23 @@
                 <div class="card h-100" *ngIf="product.category_slug == 'car_plates'">
                   <div class="card-header plates text-center" >
                     <img *ngIf="product.category_slug == 'car_plates'" 
-                    src="../../assets/images/car_plates_icon.svg" alt="carplate_img" width="100%" height="200px !important">         
+                    src="../../assets/images/car_plates_icon.svg" alt="carplate_img" width="100%" height="200px !important">
+                    <div  class="favorite">
+                        <a (click)="actionService.removeFav(product.id)" class="btn add_fav p-0" *ngIf="product.product_fav == true">
+                         <img src="../../assets/images/already_fav_icon.svg" alt="already_fav_icon" srcset="../../assets/images/already_fav_icon.svg">
+                        </a>
+                        <a (click)="actionService.addToFav(product.id)" class="btn add_fav p-0" *ngIf="product.product_fav == false">
+                          <img src="../../assets/images/favorite_icon.svg" alt="addToFav" srcset="../../assets/images/favorite_icon.svg">                         
+                        </a>
+                      </div>  
                   </div>
                   <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
                       <a (click)="productDetails(product.id)" style="cursor: pointer;" class="m-0">
                         <h4>{{(product.name.length > 20)? (product.name | slice:0:20)+'..':(product.name)}}</h4>
                       </a>
-                      <div *ngIf="authService.isRegister | async">
-                        <a (click)="actionService.removeFav(product.id)" class="btn add_fav p-0" *ngIf="product.product_fav == false">
-                         <img src="../../assets/images/already_fav_icon.svg" alt="already_fav_icon" srcset="../../assets/images/already_fav_icon.svg">
-                        </a>
-                        <a (click)="actionService.addToFav(product.id)" class="btn add_fav p-0" *ngIf="product.product_fav == true">
-                          <img src="../../assets/images/favorite_icon.svg" alt="addToFav" srcset="../../assets/images/favorite_icon.svg">                         
-                        </a>
-                      </div>
+                      <img src="../../assets/images/nego_icon.svg" alt="nego_icon" *ngIf="product.negotiable == 1">
                     </div>
-                    <img src="../../assets/images/nego_icon.svg" alt="nego_icon" class="nego_icon" *ngIf="product.negotiable == 1">
                     <ng-container  *ngFor="let property of product.properties">
                       <span  *ngIf="property.type == 'text'">
                           <span *ngIf="property.name_ar == 'حروف اللوحة عربي'" class="card_chars_ar">{{property.filter_value.filter_value}}</span>
@@ -91,7 +91,7 @@
                     <div class="evaluation d-flex justify-content-between align-items-center">
                       <p><img src="../../assets/images/location_icon (2).svg" alt="location_icon"> {{product.owner_area == null ? 'غير معروف': product.owner_area}}</p>
                       <div class="person d-flex align-items-center">
-                          <img class="ps-1" src="../../assets/images/profile_icon.svg" alt="profile_icon" width="100%" >
+                          <img class="ps-1" src="../../assets/images/profile_icon.svg" alt="profile_icon" width="20px" >
                           <a (click)="sellerProfile(product.owner_id)" style="cursor: pointer;">
                             {{product.owner.name}}
                           </a>                      
@@ -106,7 +106,11 @@
       </li>
     </ng-container>
   </ul>
-  <div class="filter">
+  <div class="filter d-flex justify-content-between align-items-center py-2">
+    <select class="form-select" id="productMark" style="width: auto;" (change)="regionFilter($event)" >
+      <option value="" disabled selected>المنطقه</option>
+      <option value="{{region.id}}" *ngFor="let region of regions">{{region.name}}</option>
+    </select>
     <a (click)="openFormModal()">
         <img src="../../assets/images/filter.svg" alt="filter" width="50px">
     </a>
@@ -124,17 +128,17 @@
           <a [ngClass]="{'click': activeClass}"  
           (click)="onApplayBrandFilters(brand.id);
           onApplayFiltersKeys(brand.name);">
-          <img src="{{brand.image}}" alt="{{brand.name}}" width="90px"></a>
+          <img src="{{brand.image}}" alt="{{brand.name}}" width="70px"></a>
         </div>
       </ng-template>
-    </swiper>
-    <swiper [config]="config">
-      <ng-template swiperSlide *ngFor="let brand of filterbrandsOptions" class="pt-4">
-            <div class="d-flex justify-content-center">
-              <a [ngClass]="{'click': activeClass}"(click)="onApplayFiltersKeys('',brand.name)">{{brand.name}}</a>
-            </div>
-          </ng-template>
-        </swiper>
+</swiper>
+<swiper [config]="config">
+  <ng-template swiperSlide *ngFor="let brand of filterbrandsOptions" class="pt-4">
+      <div class="d-flex justify-content-center">
+        <a [ngClass]="{'click': activeClass}"(click)="onApplayFiltersKeys('',brand.name)">{{brand.name}}</a>
+      </div>
+  </ng-template>
+</swiper>
 <div class="fiter_carPlates text-center">
   <form [formGroup]="formPlatesFilter">
   <ng-container *ngFor="let carplate_filter of fiter_carPlates">

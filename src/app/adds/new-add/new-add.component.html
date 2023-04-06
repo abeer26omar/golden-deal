@@ -5,7 +5,7 @@
                 <p class="header text-center">اتفاقيه الاعلان</p>
             </div>
             <p class="text-center text-danger">{{errorAdd}}</p>
-            <!-- <div class="card-body" *ngIf="step == 1">
+            <div class="card-body" *ngIf="step == 1">
                 <div class="aggrement p-sm-5 p-2 ">
                     <p class="title">إتفاقية العمولة <img src="../../../assets/images/arrows.svg" alt="arrows" class="pe-3"></p>
                     <div class="pt-4">
@@ -20,11 +20,11 @@
                         <label class="form-check-label" for="agrement">
                             اتعهد واقسم بالله أنا المعلن أن أدفع عمولة الموقع وهي 1% من قيمة الخدمة. وفي حالة تقديم الخدمة لأكثر من شخص فإنني أتعهد بتحويل العمولة عن كل خدمة يتم تقديمها.  كما أتعهد بدفع*العمولة خلال 10 أيام من استلام مبلغ الخدمة 
                         </label>
-                        <div *ngIf="submitted && f['agrement'].errors && f['agrement'].invalid" class="text-danger">يجب التحديد</div>
+                        <div *ngIf="f['agrement'].untouched && f['agrement'].invalid" class="text-danger">يجب التحديد</div>
                     </div>
                 </div>
-            </div> -->
-                <div class="card-body row g-4 add_images" *ngIf="step == 1">
+            </div>
+                <div class="card-body row g-4 add_images" *ngIf="step == 2">
                         <div class="col-12" *ngIf="defaultImage_add">
                             <div class="row row-cols-md-4 row-cols-lg-6 g-3 justify-content-center">
                                 <div class="col">
@@ -133,11 +133,19 @@
                             <label for="productCategory" class="form-label">التصنيف</label>
                             <select class="form-select" id="productCategory" 
                             formControlName="productCategory" (ngModelChange)="getCategoryFilter($event)">
+                                <option value="" disabled selected>اختر تصنيف</option>
                                 <option  [value]="category.slug"
                                 *ngFor="let category of categories"
-                                [disabled]="category.title == 'الكل'">{{category.title == 'الكل'? 'اختر تصنيف' : category.title}}</option>
+                                [disabled]="category.title == 'الكل'">{{category.title == 'الكل'? '...' : category.title}}</option>
                             </select>
                             <div *ngIf="f['productCategory'].touched && f['productCategory'].errors" class="text-danger">يجب تحديد تصنيف للمنتج</div>  
+                        </div>
+                        <div class="col-md-6">
+                            <label for="productMark" class="form-label">المنطقه</label>
+                            <select class="form-select" id="productMark" formControlName="region_id">
+                                <option value="" disabled selected>اختر المنطقه</option>
+                                <option value="{{region.id}}" *ngFor="let region of regions">{{region.name}}</option>
+                            </select>
                         </div>
                         <div class="col-md-6">
                             <label for="phone" class="form-label">رقم الجوال</label>
@@ -145,10 +153,12 @@
                             class="form-control" 
                             id="phone"
                             formControlName="seller_phone">
-                            <div *ngIf="f['seller_phone'].touched && f['seller_phone'].errors" class="text-danger">يجب اضافه رقم الجوال</div>
+                            <!-- <div *ngIf="f['seller_phone'].touched && f['seller_phone'].errors" class="text-danger">يجب اضافه رقم الجوال</div> -->
                         </div>
                         <div class="col-md-6" *ngFor="let filter of filters.data.filters">
-                            <input type="checkbox" class="form-check-input mx-2" [formControlName]="filter.slug_name" *ngIf="filter.type == 'check'" >
+                            <input type="checkbox" class="form-check-input mx-2" 
+                            [formControlName]="filter.slug_name" *ngIf="filter.type == 'check'" >
+
                             <label for="productMark" class="form-label">{{filter.name_ar}}</label>
                             <div class="row g-3" [formGroupName]="filter.slug_name"
                                 *ngIf="filter.type == 'text' && filter.name_ar == 'حروف اللوحة عربي' ">
@@ -162,7 +172,7 @@
                                 </div>
                                 <p class="small text-muted">{{error_CarPlate}}</p> 
                             </div>
-                            <div class="row g-3"  [formGroupName]="filter.slug_name"
+                            <div class="row g-3" [formGroupName]="filter.slug_name"
                                 *ngIf="filter.type == 'text' && filter.name_ar == 'حروف اللوحة انجليزي' " >
                                 <div class="col-3" *ngFor="let i of [1 , 2 , 3]">
                                     <input 
@@ -173,7 +183,7 @@
                                         readonly >
                                 </div>
                             </div>
-                            <div class="row g-3" [formGroupName]="filter.slug_name"
+                            <!-- <div class="row g-3" [formGroupName]="filter.slug_name"
                                 *ngIf="filter.type == 'text' && filter.name_ar == 'ارقام اللوحة عربي' ">
                                 <div class="col-2" *ngFor="let i of input_number">
                                     <input  
@@ -194,18 +204,21 @@
                                         formControlName="plate_number_en_{{i}}" 
                                         >
                                 </div>
-                            </div>
-                            <select class="form-select" id="productMark" (ngModelChange)="getValue($event,filter.slug_name)"
-                            [formControlName]="filter.slug_name" *ngIf="filter.type == 'select'">
-                                <option value="{{filterOption.name}}" *ngFor="let filterOption of filter.filter_options">{{filterOption.name}}</option>
+                            </div> -->
+                            <select class="form-select" id="productMark" 
+                                [formControlName]="filter.slug_name" *ngIf="filter.type == 'select'">
+                                    <option *ngFor="let filterOption of filter.filter_options" 
+                                    value="{{filterOption.name}}">{{filterOption.name}}</option>
                             </select>
+                            <input type="text" 
+                                *ngIf="filter.type == 'text' && (filter.name_ar !== 'حروف اللوحة عربي'  && filter.name_ar !== 'حروف اللوحة انجليزي'  )" 
+                                class="form-control" [formControlName]="filter.slug_name">
                             <div *ngIf="f[filter.slug_name].touched && f[filter.slug_name].value == ''" class="text-danger">يجب ادخال بيانات</div> 
                         </div>
                         <div class="col-md-6">
                                 <label for="productPrice" class="form-label">السعر</label>
                                 <div class="d-flex align-items-center">
                                     <input type="text" class="form-control" id="productPrice" 
-                                    placeholder="4000"
                                     formControlName="price" style="width: 60%;" [ngClass]="{'disabled': negotiable}">
                                         <a (click)="onNegotiable()" class="btn btn_negotiable" [ngClass]="{'btndisabled': negotiable}">علي السوم</a>
                                 </div>

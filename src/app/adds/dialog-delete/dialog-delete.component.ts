@@ -32,13 +32,14 @@ export class DialogDeleteComponent implements OnInit {
     this.delSub = this.productService.deleteProduct(this.id).subscribe({
       next:(res: ResponseSuccess)=>{
         this.sucMsg = res.data;
+        this.dialogRef.close();
       },
       error: (err: HttpErrorResponse)=>{
         this.load = false;
         if(err.error.data){
-          this.failMsg = err.error.data;
+          this.sucMsg = err.error.data;
         }else{
-          this.failMsg = err.statusText;
+          this.sucMsg = err.statusText;
         }
       }
     })

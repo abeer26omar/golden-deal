@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
+import { HttpClient, HttpHeaders} from '@angular/common/http';
 import { environment as env } from 'src/environments/environment';
-import { map, Observable, Subject, tap } from 'rxjs';
-import { APIresponse, APIresponse2, Favourites, Orders, Portfolio, Provider, ResponseSuccess, Subscriptions } from '../models/actions.model';
+import { Subject, tap } from 'rxjs';
+import { APIresponse, APIresponse2, Favourites, Orders, Portfolio, Provider, ResponseSuccess, Subscriptions, Regions } from '../models/actions.model';
 import { APIResponse, Products } from '../models/products.model';
 import { MatDialog } from '@angular/material/dialog';
 import { ResponseModalComponent } from '../response-modal/response-modal.component';
@@ -44,10 +44,7 @@ export class ActionsService {
       })
     ).subscribe({
       next: res=>{
-        this.dandelRes(res)        
-      },
-      error:(err:HttpErrorResponse)=>{
-        this.dandelRes(err)
+        this.handelRes(res)        
       }
     })
   }
@@ -58,17 +55,20 @@ export class ActionsService {
       })
     ).subscribe({
       next: res=>{
-        this.dandelRes(res)        
-      },
-      error:(err:HttpErrorResponse)=>{
-        this.dandelRes(err)
+        this.handelRes(res)        
       }
     })
   }
-  search(name: string){
-  return  this.http.get<APIResponse<Products>>(`${env.api_url}/products/search-products/search-with-key?key=${name}`)
+  getRegions(){
+    return this.http.get<Regions>(`${env.api_url}/general/regions`)
   }
-  dandelRes(res:any){
+  regionFilter(region_id: number,category_slug: string){
+    return this.http.get<APIResponse<Products>>(`${env.api_url}/filters/get-regions-filters?region_id=${region_id}&category_slug=${category_slug}`)
+  }
+  search(name: string){
+    return  this.http.get<APIResponse<Products>>(`${env.api_url}/products/search-products/search-with-key?key=${name}`)
+  }
+  handelRes(res:any){
     this.dialogRef.open(ResponseModalComponent,{
       data: {
         response: res

@@ -1,4 +1,3 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit ,Inject} from '@angular/core';
 import { MatDialogClose, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ResponseSuccess } from 'src/app/models/actions.model';
@@ -42,13 +41,8 @@ export class DialogImageComponent implements OnInit {
         this.load = false;
         this.resSuc = res.data        
       },
-      error: (err: HttpErrorResponse)=>{
+      error: ()=>{
         this.load = false;
-        if(err.error.data){
-          this.error = err.error.data;
-        }else{
-          this.error = err.statusText;
-        }
       }
     })
   }

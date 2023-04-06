@@ -1,14 +1,15 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, HostBinding, HostListener, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { APIResponse, Products , APIResponse2, Category, CategoryFilter,BrandFilter, Category_Filter} from '../models/products.model';
 import { MacPrefixService } from '../services/mac-prefix.service';
 import { ProductsRequestService } from '../services/products-request.service';
-import SwiperCore, { SwiperOptions } from 'swiper';
+import { SwiperOptions } from 'swiper';
 import { ActionsService } from '../services/actions.service';
 import { AuthService } from '../services/auth.service';
+import { Regions } from '../models/actions.model';
 declare var window: any;
 
 @Component({
@@ -56,6 +57,8 @@ export class ProductsComponent implements OnInit {
   errfilter: string = '';
   errorLength = '';
   activeClass: boolean = false;
+  categorySlug: string = 'all';
+  regions: any = [];
   private routeSub: Subscription = new Subscription;
   private productSub: Subscription = new Subscription;
   private categorySub : Subscription = new Subscription;
@@ -116,9 +119,11 @@ export class ProductsComponent implements OnInit {
     );
     this.getCategories();
     this.getProducts('all');
+    this.getRegions()
   }
   getProducts(categorySlug: string){
     this.loadding = true;
+    this.categorySlug = categorySlug;
     this.productSub = this.httpService
     .getProductsList(categorySlug)
     .subscribe({
@@ -132,17 +137,8 @@ export class ProductsComponent implements OnInit {
             this.errorLength = '';
           }
       },
-      error:(err: HttpErrorResponse)=>{
-        this.faildProducts.show();
-        if(err.error.data){
-          this.errMsg = err.error.data;
-        } else{
-          if(err.statusText == 'Unauthorized'){
-            this.errMsg = 'يجب انشاء حساب اولا';
-          }else{
-            this.errMsg = err.statusText;
-          }
-        }
+      error:()=>{
+        this.loadding = false;
       }
     })
   }
@@ -152,18 +148,6 @@ export class ProductsComponent implements OnInit {
     subscribe({
       next: (categoryList: APIResponse2<Category>)=>{ 
         this.categories = categoryList.data;       
-      },
-      error:(err: HttpErrorResponse)=>{
-        this.faildProducts.show();
-        if(err.error.data){
-          this.errMsg = err.error.data;
-        } else{
-          if(err.statusText == 'Unauthorized'){
-            this.errMsg = 'يجب انشاء حساب اولا';
-          }else{
-            this.errMsg = err.statusText;
-          }
-        }
       }
     })
   }
@@ -176,18 +160,6 @@ export class ProductsComponent implements OnInit {
         this.filters.data.filters.forEach(filter=>{
           this.formFilter.addControl(filter.slug_name, new FormControl('')) 
         }) 
-      },
-      error:(err: HttpErrorResponse)=>{
-        this.faildProducts.show();
-        if(err.error.data){
-          this.errMsg = err.error.data;
-        } else{
-          if(err.statusText == 'Unauthorized'){
-            this.errMsg = 'يجب انشاء حساب اولا';
-          }else{
-            this.errMsg = err.statusText;
-          }
-        }
       }
     })
   }
@@ -280,17 +252,8 @@ export class ProductsComponent implements OnInit {
             this.errorLength = '';
           }
       },
-      error:(err: HttpErrorResponse)=>{
+      error:()=>{
         this.load = false;
-        if(err.error.data){
-          this.errfilter = err.error.data;
-        } else{
-          if(err.statusText == 'Unauthorized'){
-            this.errfilter = 'يجب انشاء حساب اولا';
-          }else{
-            this.errfilter = err.statusText;
-          }
-        }
       }
      })
   }
@@ -307,17 +270,8 @@ export class ProductsComponent implements OnInit {
             this.errorLength = '';
           }
       },
-      error:(err: HttpErrorResponse)=>{
+      error:()=>{
         this.load = false;
-        if(err.error.data){
-          this.errfilter = err.error.data;
-        } else{
-          if(err.statusText == 'Unauthorized'){
-            this.errfilter = 'يجب انشاء حساب اولا';
-          }else{
-            this.errfilter = err.statusText;
-          }
-        }
       }
      })    
   }
@@ -331,17 +285,8 @@ export class ProductsComponent implements OnInit {
             this.filterbrandsOptions = res.data.filter_options;
           }
       },
-      error:(err: HttpErrorResponse)=>{
+      error:()=>{
         this.loadding = false;
-        if(err.error.data){
-          this.errfilter = err.error.data;
-        } else{
-          if(err.statusText == 'Unauthorized'){
-            this.errfilter = 'يجب انشاء حساب اولا';
-          }else{
-            this.errfilter = err.statusText;
-          }
-        }
       }
      })
   }
@@ -364,22 +309,50 @@ export class ProductsComponent implements OnInit {
             this.errorLength = '';
           }
       },
-      error:(err: HttpErrorResponse)=>{
+      error:()=>{
         this.load = false;
-        if(err.error.data){
-          this.errfilter = err.error.data;
-        } else{
-          if(err.statusText == 'Unauthorized'){
-            this.errfilter = 'يجب انشاء حساب اولا';
-          }else{
-            this.errfilter = err.statusText;
-          }
-        }
       }
      })
   }
   openFormModal() {
     this.formModal.show();
+  }
+  getRegions(){
+    this.filterSub = this.actionService.getRegions().subscribe({
+      next: (res: Regions) => {
+        this.regions = res.data        
+      }
+    })
+  }
+  regionFilter(event: any){
+    this.load = true;
+    this.filterSub = this.actionService.regionFilter(event.target.value,this.categorySlug).subscribe({
+      next: (res: APIResponse<Products>)=>{
+        this.load = false;
+        this.formModal.hide();
+        this.products = res.data;
+        if(this.products.length == 0){
+          this.errorLength = 'لا يوجد منتجات';
+        }else{
+          this.errorLength = '';
+        }
+    },
+    error:()=>{
+      this.load = false;
+    }    })
+  }
+  // ////scroll
+  @ViewChild('navScrolled') navScrolled!: ElementRef;
+
+  @HostBinding('class.scroll') newScroll: boolean = false;
+  @HostListener('window:scroll') onScroll(){
+    if(window.pageYOffset >= this.navScrolled.nativeElement.getBoundingClientRect().top){
+      this.newScroll = true;
+    }else{
+      this.newScroll = false;
+    }
+    console.log(this.navScrolled.nativeElement.offsetTop);
+    
   }
   ngOnDestory() :void{
     if(this.productSub){

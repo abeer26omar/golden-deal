@@ -39,14 +39,6 @@ export class ChatSupportComponent implements OnInit {
         this.load = false;
         this.supportData = res.data;
         this.messages = res.data.support_messages;
-      },
-      error: (err: HttpErrorResponse)=>{
-        this.load = false;
-        if(err.error.data){
-          this.supportErr = err.error.data;
-        }else{
-          this.supportErr = err.statusText;
-        }         
       }
     })
   }
@@ -61,13 +53,8 @@ export class ChatSupportComponent implements OnInit {
         this.getAllSupportMsg();
         this.formSupport.reset()
       },
-      error: (err: HttpErrorResponse)=>{
+      error: ()=>{
         this.load = false;
-        if(err.error.data){
-          this.supportErr = err.error.data;
-        }else{
-          this.supportErr = err.statusText;
-        }
       }
     })
   }

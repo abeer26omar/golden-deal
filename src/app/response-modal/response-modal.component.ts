@@ -11,12 +11,20 @@ export class ResponseModalComponent implements OnInit {
 
   constructor(@Inject(MAT_DIALOG_DATA) public data:any,
   public dialogRef: MatDialogRef<MatDialogClose>) {
-    if(data.response.error){
-      this.message = data.response.error.message      
+    if(data.response.message){
+      this.message = data.response.message
+    }else{
+      this.message = data.response.data
     }
   }
-
-  ngOnInit(): void {
+  close(){
+    this.dialogRef.afterOpened().subscribe(_ => {
+     setTimeout(() => {
+        this.dialogRef.close();
+     },1500)
+   })
   }
-
+  ngOnInit(): void {
+    this.close()
+  }
 }

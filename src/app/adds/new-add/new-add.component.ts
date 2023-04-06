@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { APIResponse2, Category, CategoryFilter, NewProduct} from '../../models/products.model';
@@ -7,7 +7,9 @@ import { ProductsRequestService } from 'src/app/services/products-request.servic
 import { HttpErrorResponse } from '@angular/common/http';
 import { environment as env } from 'src/environments/environment';
 import { MacPrefixService } from 'src/app/services/mac-prefix.service';
-import { NgOtpInputComponent, NgOtpInputConfig } from 'ng-otp-input';
+import { NgOtpInputConfig } from 'ng-otp-input';
+import { ActionsService } from 'src/app/services/actions.service';
+import { Regions } from 'src/app/models/actions.model';
 
 declare var window: any;
 
@@ -44,6 +46,7 @@ export class NewAddComponent implements OnInit {
   plate_numbers_filter_6: any;
   plate_numbers_en_filter_6: any;
   input_number: any = [];
+  regions: any = [];
   public categories : Array<Category> = [];
   filters: CategoryFilter = {
     data: {
@@ -104,10 +107,12 @@ export class NewAddComponent implements OnInit {
   private sendSub: Subscription = new Subscription;
   constructor(private httpService: ProductsRequestService,
     private router: Router,
-    private macService: MacPrefixService) {}
+    private macService: MacPrefixService,
+    private actionService: ActionsService ) {}
     
     myForm = new FormGroup({
-      seller_phone: new FormControl('', [Validators.required]),
+      agrement: new FormControl('', [Validators.required]),
+      seller_phone: new FormControl(''),
       productCategory: new FormControl('', [Validators.required]),
       name: new FormControl('', [Validators.required]),
       price: new FormControl('', [Validators.required]),
@@ -115,6 +120,7 @@ export class NewAddComponent implements OnInit {
       owner_id: new FormControl(this.ownerId),
       negotiable: new FormControl(''),
       category_id: new FormControl(''),
+      region_id: new FormControl('', [Validators.required]),
       product_image_1: new FormControl(''),
       product_image_2: new FormControl(''),
       product_image_3: new FormControl(''),
@@ -122,8 +128,8 @@ export class NewAddComponent implements OnInit {
       product_image_5: new FormControl(''),
       plate_chars_filter_6: new FormGroup({}),
       plate_chars_en_filter_6: new FormGroup({}),
-      plate_numbers_filter_6: new FormGroup({}),
-      plate_numbers_en_filter_6: new FormGroup({}),
+      // plate_numbers_filter_6: new FormGroup({}),
+      // plate_numbers_en_filter_6: new FormGroup({}),
     })
     get f(){
       return this.myForm.controls;
@@ -138,7 +144,8 @@ export class NewAddComponent implements OnInit {
       );
       this.addFaild = new window.bootstrap.Modal(
         document.getElementById('addFaild'),{backdrop: this.macService.backdrop}
-      )
+      );
+      this.getRegions();
   }
   onNegotiable(){
     if(this.negotiable == false){
@@ -236,76 +243,76 @@ export class NewAddComponent implements OnInit {
       break;
     }
   }
-  getValue(event: any,slug_name: any){
-    if(slug_name == 'plate_category_filter_6'){
-      this.changeInputs(event);
-    }
-    // let final_values:any = {}
-    // final_values = {
-    //   slug_name:slug_name,
-    //   event:event
-    // }
-    // let final_arr;
-    // this.valueArr.push(final_values);
-    // final_arr = this.valueArr.find((name: any) => name.slug_name == slug_name);
-    // if(slug_name == final_arr){
-    //   this.valueArr.push(final_arr);
-    // }
-    // console.log(this.valueArr);
-    // final_arr.push(final_values)
-    // console.log(final_arr);
-    // this.f['desc'].setValue(this.valueArr)
+  // getValue(event: any,slug_name: any){
+  //   if(slug_name == 'plate_category_filter_6'){
+  //     // this.changeInputs(event);
+  //   }
+  //   // let final_values:any = {}
+  //   // final_values = {
+  //   //   slug_name:slug_name,
+  //   //   event:event
+  //   // }
+  //   // let final_arr;
+  //   // this.valueArr.push(final_values);
+  //   // final_arr = this.valueArr.find((name: any) => name.slug_name == slug_name);
+  //   // if(slug_name == final_arr){
+  //   //   this.valueArr.push(final_arr);
+  //   // }
+  //   // console.log(this.valueArr);
+  //   // final_arr.push(final_values)
+  //   // console.log(final_arr);
+  //   // this.f['desc'].setValue(this.valueArr)
     
-      // if(slug_name == final_values.slug_name){
-      //   final_values.event = event
-      // }
-      // else{
-      // }
-    // this.valueArr.forEach((e: any)=>{
-    //   // final_values.push({slug_name:slug_name,event:event}))
-    // })
+  //     // if(slug_name == final_values.slug_name){
+  //     //   final_values.event = event
+  //     // }
+  //     // else{
+  //     // }
+  //   // this.valueArr.forEach((e: any)=>{
+  //   //   // final_values.push({slug_name:slug_name,event:event}))
+  //   // })
       
-  }
-  changeInputs(count: any){
-    this.plate_numbers_filter_6 = this.myForm.get('plate_numbers_filter_6') as FormGroup;
-    this.plate_numbers_en_filter_6 = this.myForm.get('plate_numbers_en_filter_6') as FormGroup
-    this.plate_numbers_filter_6.reset()
-    this.plate_numbers_en_filter_6.reset()
-    switch(count){
-      case 'فردي':
-        this.input_number = [1];
-        this.plate_numbers_filter_6.addControl('plate_number_ar_1', new FormControl(''));
-        this.plate_numbers_en_filter_6.addControl('plate_number_en_1', new FormControl(''));
-        break;
-      case 'ثنائي':
-        this.input_number = [1 , 2];
-        this.plate_numbers_filter_6.addControl('plate_number_ar_1', new FormControl(''));
-        this.plate_numbers_filter_6.addControl('plate_number_ar_2', new FormControl(''));
-        this.plate_numbers_en_filter_6.addControl('plate_number_en_1', new FormControl(''));
-        this.plate_numbers_en_filter_6.addControl('plate_number_en_2', new FormControl(''));
-        break;
-      case 'ثلاثي':
-        this.input_number = [1 , 2 , 3];
-        this.plate_numbers_filter_6.addControl('plate_number_ar_1', new FormControl(''));
-        this.plate_numbers_filter_6.addControl('plate_number_ar_2', new FormControl(''));
-        this.plate_numbers_filter_6.addControl('plate_number_ar_3', new FormControl(''));
-        this.plate_numbers_en_filter_6.addControl('plate_number_en_1', new FormControl(''));
-        this.plate_numbers_en_filter_6.addControl('plate_number_en_2', new FormControl(''));
-        this.plate_numbers_en_filter_6.addControl('plate_number_en_3', new FormControl(''));
-        break;
-      case 'رباعي':
-        this.input_number = [1 , 2 , 3 , 4];
-        this.plate_numbers_filter_6.addControl('plate_number_ar_1', new FormControl(''));
-        this.plate_numbers_filter_6.addControl('plate_number_ar_2', new FormControl(''));
-        this.plate_numbers_filter_6.addControl('plate_number_ar_3', new FormControl(''));
-        this.plate_numbers_filter_6.addControl('plate_number_ar_4', new FormControl(''));
-        this.plate_numbers_en_filter_6.addControl('plate_number_en_1', new FormControl(''));
-        this.plate_numbers_en_filter_6.addControl('plate_number_en_2', new FormControl(''));
-        this.plate_numbers_en_filter_6.addControl('plate_number_en_3', new FormControl(''));
-        this.plate_numbers_en_filter_6.addControl('plate_number_en_4', new FormControl(''));
-        break;
-    }
-  }
+  // }
+  // changeInputs(count: any){
+  //   this.plate_numbers_filter_6 = this.myForm.get('plate_numbers_filter_6') as FormGroup;
+  //   this.plate_numbers_en_filter_6 = this.myForm.get('plate_numbers_en_filter_6') as FormGroup
+  //   this.plate_numbers_filter_6.reset()
+  //   this.plate_numbers_en_filter_6.reset()
+  //   switch(count){
+  //     case 'فردي':
+  //       this.input_number = [1];
+  //       this.plate_numbers_filter_6.addControl('plate_number_ar_1', new FormControl(''));
+  //       this.plate_numbers_en_filter_6.addControl('plate_number_en_1', new FormControl(''));
+  //       break;
+  //     case 'ثنائي':
+  //       this.input_number = [1 , 2];
+  //       this.plate_numbers_filter_6.addControl('plate_number_ar_1', new FormControl(''));
+  //       this.plate_numbers_filter_6.addControl('plate_number_ar_2', new FormControl(''));
+  //       this.plate_numbers_en_filter_6.addControl('plate_number_en_1', new FormControl(''));
+  //       this.plate_numbers_en_filter_6.addControl('plate_number_en_2', new FormControl(''));
+  //       break;
+  //     case 'ثلاثي':
+  //       this.input_number = [1 , 2 , 3];
+  //       this.plate_numbers_filter_6.addControl('plate_number_ar_1', new FormControl(''));
+  //       this.plate_numbers_filter_6.addControl('plate_number_ar_2', new FormControl(''));
+  //       this.plate_numbers_filter_6.addControl('plate_number_ar_3', new FormControl(''));
+  //       this.plate_numbers_en_filter_6.addControl('plate_number_en_1', new FormControl(''));
+  //       this.plate_numbers_en_filter_6.addControl('plate_number_en_2', new FormControl(''));
+  //       this.plate_numbers_en_filter_6.addControl('plate_number_en_3', new FormControl(''));
+  //       break;
+  //     case 'رباعي':
+  //       this.input_number = [1 , 2 , 3 , 4];
+  //       this.plate_numbers_filter_6.addControl('plate_number_ar_1', new FormControl(''));
+  //       this.plate_numbers_filter_6.addControl('plate_number_ar_2', new FormControl(''));
+  //       this.plate_numbers_filter_6.addControl('plate_number_ar_3', new FormControl(''));
+  //       this.plate_numbers_filter_6.addControl('plate_number_ar_4', new FormControl(''));
+  //       this.plate_numbers_en_filter_6.addControl('plate_number_en_1', new FormControl(''));
+  //       this.plate_numbers_en_filter_6.addControl('plate_number_en_2', new FormControl(''));
+  //       this.plate_numbers_en_filter_6.addControl('plate_number_en_3', new FormControl(''));
+  //       this.plate_numbers_en_filter_6.addControl('plate_number_en_4', new FormControl(''));
+  //       break;
+  //   }
+  // }
   getCategories(){
     this.categorySub = this.httpService.
     getProductsCategories().
@@ -360,7 +367,7 @@ export class NewAddComponent implements OnInit {
     })
     this.filterSub = this.httpService.getCategoryFilters(categoryName).subscribe({
       next: (res: CategoryFilter)=>{
-        this.filters = res;                        
+        this.filters = res;                       
         this.filters.data.filters.forEach(filter=>{
           this.newFormControl = filter.slug_name;
           this.myForm.addControl(filter.slug_name, new FormControl('')) 
@@ -379,57 +386,59 @@ export class NewAddComponent implements OnInit {
   }
   submit(){
     let plate_chars_en_filter_6: any, 
-    plate_chars_filter_6: any, 
-    plate_number_en_filter_6_value: any,
-    plate_number_filter_6_value: any;
+    plate_chars_filter_6: any;
+    // plate_number_en_filter_6_value: any,
+    // plate_number_filter_6_value: any;
     if(this.myForm.get('productCategory')?.value == 'car_plates'){
       plate_chars_en_filter_6 = Object.values(this.myForm.get('plate_chars_en_filter_6')?.value).join(' ');
       plate_chars_filter_6 = Object.values(this.myForm.get('plate_chars_filter_6')?.value).join(' ')
-      plate_number_en_filter_6_value = Object.values(this.myForm.get('plate_numbers_en_filter_6')?.value).join(' ');
-      plate_number_filter_6_value = Object.values(this.myForm.get('plate_numbers_filter_6')?.value).join(' ')
+      // plate_number_en_filter_6_value = Object.values(this.myForm.get('plate_numbers_en_filter_6')?.value).join(' ');
+      // plate_number_filter_6_value = Object.values(this.myForm.get('plate_numbers_filter_6')?.value).join(' ')
     }
-    if(this.myForm.valid){
-    //   this.getProductCategoryId();   
-      const formData = new FormData();
-      for (const field in this.myForm.controls) {
-          if(field == 'plate_chars_en_filter_6'){
-            formData.append(field, plate_chars_en_filter_6);
-          }else if(field == 'plate_chars_filter_6'){
-            formData.append(field, plate_chars_filter_6);
-          }else if(field == 'plate_numbers_en_filter_6'){
-            formData.append(field, plate_number_en_filter_6_value);
-          }else if(field == 'plate_numbers_filter_6'){
-            formData.append(field, plate_number_filter_6_value);
-          }else{
-            formData.append(field, this.myForm.controls[field].value);
-          }
+    if(this.myForm.get('agrement')?.invalid){
+      return;
+    }else{      
+        if(this.step == 1){
+          this.step = this.step + 1;
         }
-        this.load = true;
-        this.sendSub = this.httpService.http.post<NewProduct>(`${env.api_url}/products/store-new-product`,
-          formData,
-        this.httpService.httpOptions)
-        .subscribe({
-          next: (res: NewProduct)=>{
-            this.load = false;
-            this.errorAdd = ''
-            this.NewProductRes = res;
-            this.modelSuccessNewProduct.show();
-          },
-          error: (err: HttpErrorResponse)=>{
-            this.load = false;
-            if(err.error.data){
-              this.error = err.error.data;
-            }else{
-              this.error = err.statusText;
+      if(this.myForm.valid){
+        const formData = new FormData();
+        for (const field in this.myForm.controls) {
+            if(field == 'plate_chars_en_filter_6'){
+              formData.append(field, plate_chars_en_filter_6);
+            }else if(field == 'plate_chars_filter_6'){
+              formData.append(field, plate_chars_filter_6);
             }
-            this.addFaild.show();
+            // else if(field == 'plate_numbers_en_filter_6'){
+            //   formData.append(field, plate_number_en_filter_6_value);
+            // }else if(field == 'plate_numbers_filter_6'){
+            //   formData.append(field, plate_number_filter_6_value);
+            // }
+            else{
+              formData.append(field, this.myForm.controls[field].value);
+            }
+            
           }
-        })   
-      } else{
-        console.log(this.myForm);
-        this.errorAdd = 'يجب ادخال البيانات'
-        return;
-      }
+          this.load = true;
+          this.sendSub = this.httpService.http.post<NewProduct>(`${env.api_url}/products/store-new-product`,
+            formData,
+          this.httpService.httpOptions)
+          .subscribe({
+            next: (res: NewProduct)=>{
+              this.load = false;
+              this.errorAdd = ''
+              this.NewProductRes = res;
+              this.modelSuccessNewProduct.show();
+            },
+            error: ()=>{
+              this.load = false;              
+            }
+          })   
+        } else{
+          this.errorAdd = 'يجب ادخال البيانات'
+          return;
+        }
+    }
   }
   close(){
     this.modelSuccessNewProduct.hide();
@@ -442,6 +451,13 @@ export class NewAddComponent implements OnInit {
     this.categories.forEach(ele=>{
       if(productCategory == ele.slug){
         this.catergoryId = ele.id;
+      }
+    })
+  }
+  getRegions(){
+    this.filterSub = this.actionService.getRegions().subscribe({
+      next: (res: Regions) => {
+        this.regions = res.data        
       }
     })
   }

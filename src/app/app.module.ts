@@ -67,6 +67,7 @@ import { ChatSupportComponent } from './chats/chat-support/chat-support.componen
 import { SellerProfileComponent } from './seller-profile/seller-profile.component';
 import { ResponseModalComponent } from './response-modal/response-modal.component';
 import { PaymentDetailsDialogComponent } from './subscriptions/payment-details-dialog/payment-details-dialog.component';
+import { ResponseModalErrorComponent } from './response-modal-error/response-modal-error.component';
 
 @NgModule({
   declarations: [
@@ -102,6 +103,7 @@ import { PaymentDetailsDialogComponent } from './subscriptions/payment-details-d
     SellerProfileComponent,
     ResponseModalComponent,
     PaymentDetailsDialogComponent,
+    ResponseModalErrorComponent,
   ],
   imports: [
     BrowserModule,

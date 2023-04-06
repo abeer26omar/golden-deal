@@ -1,5 +1,4 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ResponseSuccess } from '../models/actions.model';
@@ -49,14 +48,6 @@ export class HeaderComponent implements OnInit {
     subscribe({
       next:(categoryList: APIResponse2<Category>)=>{ 
         this.categories = categoryList.data;
-      },
-      error: (err: HttpErrorResponse)=>{
-        this.toastFaild.show();
-        if(err.error.data){
-          this.error = err.error.data;
-        }else{
-          this.error = err.statusText;
-        }
       }
     })
   }
@@ -69,17 +60,14 @@ export class HeaderComponent implements OnInit {
         this.route.navigate(['/home'])
         setTimeout(()=>{
           window.location.reload();
-        },500)
+        },50)
       },
-      error: (err: HttpErrorResponse)=>{
+      error: ()=>{
         this.toastFaild.show();
         localStorage.clear();
-        window.location.reload();
-        if(err.error.data){
-          this.error = err.error.data;
-        }else{
-          this.error = err.statusText;
-        }
+        setTimeout(()=>{
+          window.location.reload();
+        },50)
       }
     })
   }

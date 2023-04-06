@@ -30,13 +30,6 @@ export class AddsBannerComponent implements OnInit , OnDestroy{
     .subscribe({
       next:(addList: APIResponse3<Adds>)=>{
         this.adds = addList.data;
-      },
-      error: (err: HttpErrorResponse)=>{
-        if(err.error.data){
-          this.error = err.error.data;
-        }else{
-          this.error = err.statusText;
-        }
       }
     })
   }

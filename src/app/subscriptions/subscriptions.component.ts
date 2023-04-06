@@ -1,4 +1,3 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
@@ -52,10 +51,6 @@ export class SubscriptionsComponent implements OnInit {
     this.subscriptionSub = this.actionService.getSubscribtionsType().subscribe({
       next: (resData: APIresponse<Subscriptions>)=>{
         this.subscriptions = resData.data;
-      },
-      error:(err: HttpErrorResponse)=>{
-        this.faildSubscribtion.show();
-        this.errMsg = err.error.data;
       }
     })
   }

@@ -178,17 +178,22 @@ export interface EditProduct{
         desc: string,
         materials: string,
         about_seller: string,
+        region_id: number,
         delivery_notes: string,
         owner_id: number,
         category_id: number,
         seller_phone: number,
         price: number,
+        negotiable: number,
         status: string,
         active: number,
         sold_to: null,
         created_since: string,
+        activated_since: number,
+        region_name: string,
         default_image: string,
         category_slug: string,
+        owner_area: string,
         ownership_image_url: string,
         product_images: [
             {
@@ -198,7 +203,8 @@ export interface EditProduct{
                 image: string,
                 image_url: string
             }
-        ]
+        ],
+        properties: Array<Product_Properties>
     }
 }
 export interface EditProductFilters{

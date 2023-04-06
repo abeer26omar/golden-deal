@@ -10,6 +10,7 @@ export interface Register{
             image_url: string,
             cover_url: string,
             expiresIn: 60,
+            region_id: string
         },
         token: string
     }      
@@ -31,7 +32,8 @@ export interface Login{
             fcm_token: null,
             email_verified_at: null,
             image_url: string,
-            cover_url: string
+            cover_url: string,
+            region_id: string
         },
         token: string
     }
@@ -52,7 +54,8 @@ export interface Profile{
             fcm_token: null,
             email_verified_at: null,
             image_url: string,
-            cover_url: string
+            cover_url: string,
+            region_id: number
     }
 }
 export interface Addresses{
@@ -88,6 +91,7 @@ export interface Purchases{
     created_since: string,
     default_image: string,
     ownership_image_url: string,
+    category_slug: string,
       owner: {
         id: number,
         name: string,

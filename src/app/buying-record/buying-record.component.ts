@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ProfileService } from '../services/profile.service';
 import { APIResponse2, Purchases } from '../models/user.model';
-import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-buying-record',
@@ -33,13 +32,8 @@ export class BuyingRecordComponent implements OnInit {
           this.error = '';
         }
       },
-      error: (err: HttpErrorResponse)=>{
+      error: ()=>{
         this.loadding = false;
-        if(err.error.data){
-          this.error = err.error.data;
-        }else{
-          this.error = err.statusText;
-        }
       }
     })
   }

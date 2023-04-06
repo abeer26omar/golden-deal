@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 import { ProfileService } from '../services/profile.service';
@@ -7,9 +7,10 @@ import { Profile } from '../models/user.model';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogImageComponent } from './dialog-image/dialog-image.component';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ResponseSuccess } from '../models/actions.model';
+import { Regions, ResponseSuccess } from '../models/actions.model';
 import { MacPrefixService } from '../services/mac-prefix.service';
 import { DatePipe } from '@angular/common';
+import { ActionsService } from '../services/actions.service';
 
 declare var window: any;
 
@@ -36,7 +37,8 @@ export class ProfileComponent implements OnInit {
         fcm_token: null,
         email_verified_at: null,
         image_url: '',
-        cover_url: ''
+        cover_url: '',
+        region_id: 0
     }
   }
   loadProfile: boolean = false;
@@ -49,12 +51,14 @@ export class ProfileComponent implements OnInit {
   imageUrl: any ;
   error: string = '';
   sucMsg: string = '';
+  regions: any = [];
   private userSub: Subscription = new Subscription;
   constructor(public authService: AuthService,
     private macService: MacPrefixService,
     private profileService: ProfileService,
     private dialogRef: MatDialog,
-    private datePipe: DatePipe) {
+    private datePipe: DatePipe,
+    private actionService: ActionsService) {
       this.profileService.refresh.subscribe(()=>{
         this.getProfileInfo();
       })
@@ -64,7 +68,8 @@ export class ProfileComponent implements OnInit {
     phone: new FormControl({value: '',disabled: this.edit}),
     birthdate: new FormControl({value: '', disabled: this.edit}),
     email: new FormControl({value: '', disabled: this.edit}),
-    address: new FormControl({value: '', disabled: this.edit})
+    address: new FormControl({value: '', disabled: this.edit}),
+    gender: new FormControl({value: '', disabled: this.edit})
    });
     photoForm = new FormGroup({
       fileSource: new FormControl('')
@@ -83,6 +88,7 @@ export class ProfileComponent implements OnInit {
       document.getElementById('editFaild'),{backdrop: this.macService.backdrop}
     );
     this.getProfileInfo();
+    this.getRegions();
   }
   get fuser(){
     return this.userForm.controls;
@@ -90,41 +96,43 @@ export class ProfileComponent implements OnInit {
   get fphoto(){
     return this.photoForm.controls;
   }
+  getRegions(){
+    this.userSub = this.actionService.getRegions().subscribe({
+      next: (res: Regions) => {
+        this.regions = res.data        
+      }
+    })
+  }
   getProfileInfo(){
     this.error = '';
     this.sucMsg = '';
     this.userSub = this.profileService.profileInfo()
     .subscribe({
       next:(userDetails: Profile)=>{
-        this.userData = userDetails;
+        this.userData = userDetails;        
         this.userForm = new FormGroup({
           name: new FormControl({value:this.userData.data.name,disabled: this.edit}),
           phone: new FormControl({value:this.userData.data.phone,disabled: this.edit}),
           birthdate: new FormControl({value:this.userData.data.birth_date,disabled: this.edit}),
           email: new FormControl({value:this.userData.data.email,disabled: this.edit}),
-          address: new FormControl({value:'',disabled: this.edit})
+          address: new FormControl({value:this.userData.data.region_id,disabled: this.edit}),
+          gender: new FormControl({value:this.userData.data.gender, disabled: this.edit})
         })
-      },
-      error: (err: HttpErrorResponse)=>{
-        if(err.error.data){
-          this.error = err.error.data;
-        }else{
-          this.error = err.statusText;
-        }
-        this.faildModel.show();
       }
     })
   }
   submitEdit(){ 
     this.error = '';
     this.sucMsg = '';
-  const nameval = this.userForm.get('name')?.value;
-  const emailval = this.userForm.get('email')?.value;
-  const birthval = this.datePipe.transform(this.userForm.get('birthdate')?.value,"yyyy-MM-dd");
-  const phoneval = this.userForm.get('phone')?.value;
+    const nameval = this.userForm.get('name')?.value;
+    const emailval = this.userForm.get('email')?.value;
+    const birthval = this.datePipe.transform(this.userForm.get('birthdate')?.value,"yyyy-MM-dd");
+    const phoneval = this.userForm.get('phone')?.value;
+    const genderVal = this.userForm.get('gender')?.value;
+    const addressVal = this.userForm.get('address')?.value;
   this.loadProfile = true;
     this.userSub = this.profileService
-    .editProfile(nameval, emailval,phoneval,birthval)
+    .editProfile(nameval, emailval,phoneval,birthval,genderVal,addressVal)
     .subscribe({
       next: (res:ResponseSuccess)=>{
         this.loadProfile = false;
@@ -133,13 +141,7 @@ export class ProfileComponent implements OnInit {
         this.edit = true;
         this.changeBtn = false;
       },
-      error: (err: HttpErrorResponse)=>{
-        if(err.error.data){
-          this.error = err.error.data;
-        }else{
-          this.error = err.statusText;
-        }
-        this.faildModel.show();
+      error: ()=>{
         this.loadProfile = false;
         this.edit = true;
         this.changeBtn = false;
@@ -171,14 +173,6 @@ export class ProfileComponent implements OnInit {
         localStorage.clear();
         window.location.reload();
         }, 1000);
-      },
-      error: (err: HttpErrorResponse)=>{
-        if(err.error.data){
-          this.error = err.error.data;
-        }else{
-          this.error = err.statusText;
-        }
-        this.faildModel.show();
       }
     })
   }

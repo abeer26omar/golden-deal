@@ -50,7 +50,7 @@
                         <div class="col-md-6">
                             <label for="productName" class="form-label">اسم المنتج</label>
                             <input type="text" class="form-control" id="productName" 
-                            placeholder=" سياره بي ام"
+                            placeholder=""
                             formControlName="name">
                         </div>
                         <div class="col-md-6">
@@ -61,6 +61,13 @@
                                 *ngFor="let category of categories"
                                 disabled
                                 >{{category.title == 'الكل'? 'اختر تصنيف' : category.title}}</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="productMark" class="form-label">المنطقه</label>
+                            <select class="form-select" id="productMark" formControlName="region_id">
+                                <option value="" disabled selected>اختر المنطقه</option>
+                                <option value="{{region.id}}" *ngFor="let region of regions">{{region.name}}</option>
                             </select>
                         </div>
                         <div class="col-md-6">
@@ -75,17 +82,45 @@
                             [formControlName]="filter.slug_name" 
                             *ngIf="filter.type == 'check'">
                             <label for="productMark" class="form-label">{{filter.name_ar}}</label>
+                            <div class="row g-3" [formGroupName]="filter.slug_name"
+                                *ngIf="filter.type == 'text' && filter.name_ar == 'حروف اللوحة عربي' ">
+                                <div class="col-3" *ngFor="let i of [1 , 2 , 3]">
+                                    <input  
+                                        type="text" 
+                                        class="form-control" 
+                                        maxlength="1" 
+                                        formControlName="plate_chars_ar_{{i}}"
+                                        (keyup)="getCardChar(i,$event)">
+                                </div>
+                                <p class="small text-muted">{{error_CarPlate}}</p> 
+                            </div>
+                            <div class="row g-3" [formGroupName]="filter.slug_name"
+                                *ngIf="filter.type == 'text' && filter.name_ar == 'حروف اللوحة انجليزي' " >
+                                <div class="col-3" *ngFor="let i of [1 , 2 , 3]">
+                                    <input 
+                                        type="text" 
+                                        class="form-control" 
+                                        maxlength="1" 
+                                        formControlName="plate_chars_en_{{i}}"
+                                        readonly >
+                                </div>
+                            </div>
                             <select class="form-select" id="productMark" 
                             [formControlName]="filter.slug_name" *ngIf="filter.type == 'select'">
-                                <option value="{{filterOption.name}}"
+                                <option [value]="filterOption.name"
                                  *ngFor="let filterOption of filter.filter_options">{{filterOption.name}}</option>
                             </select>
+                            <input type="text" 
+                                *ngIf="filter.type == 'text' && (filter.name_ar !== 'حروف اللوحة عربي'  && filter.name_ar !== 'حروف اللوحة انجليزي'  )" 
+                                class="form-control" [formControlName]="filter.slug_name">
                         </div>
                         <div class="col-md-6">
                             <label for="productPrice" class="form-label">السعر</label>
-                            <input type="text" class="form-control" id="productPrice" 
-                            placeholder="4000"
-                            formControlName="price">        
+                            <div class="d-flex align-items-center">
+                                <input type="text" class="form-control" id="productPrice" 
+                                formControlName="price" style="width: 60%;" [ngClass]="{'disabled': negotiable}">
+                                    <a (click)="onNegotiable()" class="btn btn_negotiable" [ngClass]="{'btndisabled': negotiable}">علي السوم</a>
+                            </div>       
                         </div>
                         <!-- <div class="col-md-6">
                             <label for="productSeller" class="form-label">عن البائع</label>
@@ -100,7 +135,7 @@
                         <div class="col-md-6">
                             <label for="productDesc" class="form-label">وصف المنتج</label>
                             <textarea type="text" class="form-control" id="productDesc" 
-                            placeholder="سياره بي ام سياره بي ام" formControlName="desc"></textarea>        
+                            placeholder="" formControlName="desc"></textarea>        
                         </div>
                         <!-- <div class="col-md-6">
                             <label for="productMaterial" class="form-label">خامات المنتج</label>

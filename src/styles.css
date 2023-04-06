@@ -269,12 +269,18 @@ input.star:checked ~ label.star:before {
     background-color: var(--bg-color);
     border: 0.956962px solid #AAAAAA;
     border-radius: 15.3114px;
+    position: relative;
 }
 .products-row .card-header{
     padding: 0.5rem ;
     border-bottom: none ;
     background-color: var(--bg-color);
     border-radius: 15.3114px;
+}
+.products-row .card .card-header .favorite{
+    position: absolute;
+    top: 2%;
+    left: 4%;
 }
 .products-row .card-header img{
     border-radius: 11.4835px 11.4835px 0px 0px;
@@ -314,12 +320,34 @@ input.star:checked ~ label.star:before {
 .products-row .card-body .evaluation  p.name{
     font-size: 1rem;
 }
-
-/* .products-row .card-body .person img{
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
-} */
+.card_num{
+    background-color: var(--header-bg);
+    color: var(--primary-color);
+    box-shadow: 0px 3px 17px rgba(0, 0, 0, 0.13);
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    width: fit-content;
+}
+.card_chars_ar{
+    position: absolute;
+    top: 20%;
+    right: 16%;
+}
+.card_num_ar{
+    position: absolute;
+    top: 20%;
+    left: 16%;
+}
+.card_chars_en{
+    position: absolute;
+    top: 34%;
+    right: 16%;
+}
+.card_num_en{
+    position: absolute;
+    top: 34%;
+    left: 16%;
+}
 @media screen and (max-width: 575px) {
     /* .products-row .card {
         flex-direction: row-reverse;

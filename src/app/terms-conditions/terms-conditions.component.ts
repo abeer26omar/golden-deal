@@ -39,7 +39,6 @@ export class TermsConditionsComponent implements OnInit {
    this.pageSub = this.homeAddService.getStaticPages().subscribe({
       next: (respages: APIResponse4<Pages>)=>{
         this.pages = respages.data
-        console.log(respages);
         
         this.pages.forEach((e)=>{
           if(e.slug == slug){
@@ -47,15 +46,6 @@ export class TermsConditionsComponent implements OnInit {
             this.desc = e.desc;
           }
         })
-      },
-      error:(err: HttpErrorResponse)=>{
-        this.faildTerms.show();
-        this.errMsg = err.error.data;
-        if(err.error.data){
-          this.errMsg = err.error.data;
-        }else{
-          this.errMsg = err.statusText;
-        }
       }
     })
   }

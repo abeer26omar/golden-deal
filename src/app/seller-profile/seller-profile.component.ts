@@ -69,15 +69,6 @@ export class SellerProfileComponent implements OnInit {
       next: (resData: Portfolio)=>{
         this.loadding = false;
         this.portfolio = resData;
-      },
-      error: (err: HttpErrorResponse)=>{
-        this.loadding = false;
-        if(err.error.data){
-          this.error = err.error.data;
-        }else{
-          this.error = err.statusText;
-        }
-        this.faildAdds.show();
       }
     })
   }
@@ -99,16 +90,7 @@ export class SellerProfileComponent implements OnInit {
               this.result = 'لايوجد عناصر'  
             }
           }
-          console.log(this.productsStatus);
         })
-      },
-      error: (err: HttpErrorResponse)=>{
-        this.load = false;
-        if(err.error.data){
-          this.error = err.error.data;
-        }else{
-          this.error = err.statusText;
-        }
       }
     })
   }

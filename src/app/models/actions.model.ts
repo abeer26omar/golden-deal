@@ -29,16 +29,51 @@ export interface Portfolio{
     }
 }
 export interface Products{
+    id: number,
+    name: string,
+    desc: string,
+    owner_id: number,
+    status: string,
+    category_id: number,
+    active: number,
+    price: number,
+    created_since: string,
+    activated_since: number,
+    default_image: string,
+    owner_area: string,
+    category_slug: string,
+    region_name: string,
+    ownership_image_url: string,
+    properties: Array<Product_Properties>
+}
+interface Product_Properties{
+    id: number,
+    parent_id: null,
+    category_id: number,
+    name_ar: string,
+    name_en: string,
+    type: string,
+    required: number,
+    slug_name: string,
+    sort: number,
+    active: number,
+    has_filters: boolean,
+    filter_options: Array<filter_options_new>,
+    filter_value: {
         id: number,
-        name: string,
-        desc: string,
-        owner_id: number,
-        status: string,
-        active: number,
-        price: number,
-        created_since: string,
-        default_image: string,
-        ownership_image_url: string
+        filter_id: number,
+        product_id: number,
+        filter_value: string
+    }
+}
+interface filter_options_new{
+    id: number,
+    filter_id: number,
+    name: string,
+    sort: number,
+    logo: string,
+    image: string,
+    sub_filter: []
 }
 interface Reviews{
     id: number,
@@ -97,6 +132,8 @@ interface FavItem{
         default_image: string,
         category_slug: string,
         ownership_image_url: string,
+        region_name: string,
+        properties: Array<Product_Properties>,
         owner: {
             id: number,
             name: string,
@@ -125,4 +162,14 @@ interface ProviderRate{
 }
 export interface ResponseSuccess{
     data: string;
+}
+export interface Regions{
+    data: [
+        {
+            id: number,
+            name: string,
+            slug: string,
+            active: number
+        }
+    ]
 }

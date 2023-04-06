@@ -156,3 +156,17 @@ select{
     color: var(--primary-color);
     font-size: 1.33rem;
 }
+.btn_negotiable{
+    border: 1px solid var(--primary-color);
+    background-color: transparent;
+    padding: 0.7rem 1.3rem;
+    border-radius: 10px;
+    margin-right: 1rem;
+}
+.btn_negotiable.btndisabled{
+    background-color: var(--primary-color);
+    color: var(--white);
+}
+input.disabled{
+    background-color: var(--sec-text);
+}

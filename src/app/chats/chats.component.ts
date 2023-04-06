@@ -63,14 +63,6 @@ export class ChatsComponent implements OnInit {
       next: (res: APIResponse6<MessagesList>)=>{
         this.loader = false;
         this.msgUsersList = res.data;        
-      },
-      error: (err: HttpErrorResponse)=>{
-        this.loader = false;
-        if(err.error.data){
-          this.errorlist = err.error.data;
-        }else{
-          this.errorlist = err.statusText;
-        }        
       }
     })
   } 
@@ -83,13 +75,8 @@ export class ChatsComponent implements OnInit {
         this.load = false;
         this.usersMsg = res.data 
       },
-      error: err=>{
+      error: ()=>{
         this.load = false;
-          if(err.error.data){
-            this.errorTxt = err.error.data;
-          }else{
-            this.errorTxt = err.statusText;
-          }        
       }
     })
   }

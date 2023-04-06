@@ -50,14 +50,6 @@ export class SidenavComponent implements OnInit {
     subscribe({
       next:(categoryList: APIResponse2<Category>)=>{ 
         this.categories = categoryList.data;
-      },
-      error: (err: HttpErrorResponse)=>{
-        this.toastFaild.show();
-        if(err.error.data){
-          this.error = err.error.data;
-        }else{
-          this.error = err.statusText;
-        }
       }
     })
   }
@@ -70,17 +62,14 @@ export class SidenavComponent implements OnInit {
         this.route.navigate(['/home'])
         setTimeout(()=>{
           window.location.reload();
-        },500)
+        },50)
       },
-      error: (err: HttpErrorResponse)=>{
+      error: ()=>{
         this.toastFaild.show();
         localStorage.clear();
-        window.location.reload();
-        if(err.error.data){
-          this.error = err.error.data;
-        }else{
-          this.error = err.statusText;
-        }
+        setTimeout(()=>{
+          window.location.reload();
+        },50)
       }
     })
   }

@@ -51,3 +51,8 @@
 .carousel-caption a span{
     padding-left: .5rem;
 }
+@media screen and (max-width: 575px) {
+    .carousel-caption{
+        bottom: 1.9rem;
+    }
+}

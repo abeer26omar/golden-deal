@@ -53,6 +53,12 @@
                                              <mat-option value="male">ذكر</mat-option>
                                            </mat-select>
                                          </mat-form-field>
+                                         <mat-form-field  appearance="fill" dir="ltr">
+                                            <mat-label>المنطقه</mat-label>
+                                            <mat-select formControlName="region">
+                                              <mat-option *ngFor="let region of regions" value="{{region.id}}">{{region.name}}</mat-option>
+                                            </mat-select>
+                                          </mat-form-field>
                                         <mat-form-field  appearance="fill">
                                            <mat-label>تاريخ الميلاد</mat-label>
                                            <input matInput [matDatepicker]="picker" formControlName="dateOfBirth">

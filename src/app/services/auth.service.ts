@@ -27,12 +27,13 @@ export class AuthService {
   IsloggedIn(){
     return !!localStorage.getItem('token_deal')
   }
-  signUp(name: string,gender: string, birth_date:any ,phone: string){
+  signUp(name: string,gender: string, birth_date:any ,phone: string,region_id: number){
     return this.http.post<Register>(`${env.api_url}/auth/register`,{
       name: name,
       gender: gender,
       birth_date: birth_date,
-      phone: phone
+      phone: phone,
+      region_id: region_id
     })
   }
   otpVerify(otp: number,token: any,id?:any){

@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { APIresponse2, Favourites, Orders, Portfolio, Products, ResponseSuccess } from '../models/actions.model';
+import { APIresponse2, Favourites, Orders, Portfolio, Products } from '../models/actions.model';
 import { ActionsService } from '../services/actions.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogSolidComponent } from './dialog-solid/dialog-solid.component';
 import { DialogDeleteComponent } from './dialog-delete/dialog-delete.component';
 import { DialogCoverComponent } from './dialog-cover/dialog-cover.component';
-import { HttpErrorResponse } from '@angular/common/http';
 import { MacPrefixService } from '../services/mac-prefix.service';
 import { APIResponse2, Purchases } from '../models/user.model';
 import { ProfileService } from '../services/profile.service';
@@ -34,6 +33,7 @@ export class AddsComponent implements OnInit {
   loadding: boolean = false;
   result: string = '';
   load: boolean = false;
+  active_status: string = 'نشطه';
   portfolio: Portfolio = {
     data:{
       id: 0,
@@ -99,16 +99,10 @@ export class AddsComponent implements OnInit {
     this.portSub = this.actionService.getPortfolio(id).subscribe({
       next: (resData: Portfolio)=>{
         this.loadding = false;
-        this.portfolio = resData;
+        this.portfolio = resData;        
       },
-      error: (err: HttpErrorResponse)=>{
+      error: ()=>{
         this.loadding = false;
-        if(err.error.data){
-          this.error = err.error.data;
-        }else{
-          this.error = err.statusText;
-        }
-        this.faildAdds.show();
       }
     })
   }
@@ -117,47 +111,34 @@ export class AddsComponent implements OnInit {
     this.portSub = this.actionService.getPortfolio(this.portfolioId).subscribe({
       next: (resData: Portfolio)=>{
         this.load = false;
-        resData.data.products.forEach(ele=>{
-          if(ele.active == status){
-            this.productsStatus.push(ele);
-            if(this.productsStatus.length == 0){
-              this.result = 'لايوجد عناصر'
-            }
+        resData.data.products.forEach(ele=>{          
+          if(ele.active == status.target.value){
+            this.portfolio.data.products = resData.data.products;
+          }else{
+            this.result = 'لا يوجد عناصر';
+            this.portfolio.data.products = [];
           }
-          console.log(this.productsStatus);
+          this.active_status = status.target.selectedOptions[0].innerText
+          this.filterModal.hide();
         })
       },
-      error: (err: HttpErrorResponse)=>{
+      error: ()=>{
         this.load = false;
-        if(err.error.data){
-          this.error = err.error.data;
-        }else{
-          this.error = err.statusText;
-        }
-        this.faildAdds.show();
+        this.filterModal.hide();
       }
     })
   }
   getMyFav(){
-    this.loadding = true;
     this.favSub = this.actionService.getMyFav().subscribe({
       next: (resData: Favourites)=>{
-        this.loadding = false;
-        this.favoraties = resData;
+        this.favoraties = resData;        
         if(this.favoraties.data.favourites.length == 0){
           this.errFav = 'لا يوجد مفضله';
         }else{
           this.errFav = '';
         }
       },
-      error: (err: HttpErrorResponse)=>{
-        this.loadding = false;
-        if(err.error.data){
-          this.error = err.error.data;
-        }else{
-          this.error = err.statusText;
-        }
-        this.faildAdds.show();
+      error: ()=>{
       }
     })
   }
@@ -193,14 +174,8 @@ export class AddsComponent implements OnInit {
           this.errorder = '';
         }
       },
-      error: (err: HttpErrorResponse)=>{
+      error: ()=>{
         this.loadding = false;
-        if(err.error.data){
-          this.error = err.error.data;
-        }else{
-          this.error = err.statusText;
-        }
-        this.faildAdds.show();
       }
     })
   }
@@ -215,13 +190,8 @@ export class AddsComponent implements OnInit {
           this.errrecord = '';
         }
       },
-      error: (err: HttpErrorResponse)=>{
+      error: ()=>{
         this.loadding = false;
-        if(err.error.data){
-          this.error = err.error.data;
-        }else{
-          this.error = err.statusText;
-        }
       }
     })
   }

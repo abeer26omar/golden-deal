@@ -136,7 +136,6 @@ export class ProductDetailsComponent implements OnInit {
     .subscribe({
       next:(productDetails: Product)=>{
         this.singleProduct = productDetails;
-        console.log(this.singleProduct.data);
           
         [...productDetails.data.product_images].forEach(e=>{
           this.imgUrls.push({
@@ -146,10 +145,6 @@ export class ProductDetailsComponent implements OnInit {
           })
         })
         // this.admin = this.singleProduct.data.admin_details.id
-      },
-      error:(err: HttpErrorResponse)=>{
-        this.faild.show();
-        this.errMsg = err.error.data;
       }
     })
   }
@@ -194,19 +189,9 @@ export class ProductDetailsComponent implements OnInit {
           this.sucessMsg = res.data;
           this.success.show();
         },
-        error: (err: HttpErrorResponse)=>{
+        error: ()=>{
           this.loaderAdd = false;
           this.formModal2.hide();
-          this.faild.show();
-          if(err.error.data){
-            this.errMsg = err.error.data;
-          } else{
-            if(err.statusText == 'Unauthorized'){
-              this.errMsg = 'يجب انشاء حساب اولا';
-            }else{
-              this.errMsg = err.statusText;
-            }
-          }
         }
       })
       form.reset();

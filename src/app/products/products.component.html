@@ -1,4 +1,6 @@
 <div class="content pt-5 pb-2">
+  <p class="sorts">الفئات</p>
+  <div class="d-flex justify-content-center">
     <ul ngbNav #nav="ngbNav"  class="nav-tabs" [(activeId)]="active">
       <ng-container *ngFor="let category of categories; let i = index">
         <li [ngbNavItem]="i" id="{{category.slug}}">
@@ -6,8 +8,45 @@
           (click)="getProducts(category.slug);
           getCategoryFilter(category.slug);
           getBrandFilter(category.slug);"> 
-            <img src="../../assets/images/left-arrow.svg" class="ps-2" 
-            *ngIf="category.id == 0" >{{category.title}}</a>
+            <span class="all" *ngIf="category.id == 0">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18.022" height="18" viewBox="0 0 18.022 18">
+              <g id="Group_4878" data-name="Group 4878" transform="translate(-278.989 -242)">
+                <path id="Path_32039" data-name="Path 32039" d="M-5819,243.873l8.146,4.549-8.146,4.656-8.15-4.871Z" transform="translate(6107 -1)" fill="#fff"/>
+                <g id="Group_4837" data-name="Group 4837" transform="translate(2271.718 54.509)">
+                  <path id="Path_32036" data-name="Path 32036" d="M-1983.809,683.919a2.942,2.942,0,0,1-.7-.357q-3.951-2.265-7.9-4.534a.57.57,0,0,1-.317-.583.56.56,0,0,1,.429-.474.588.588,0,0,1,.441.076q1.078.621,2.158,1.239,2.93,1.682,5.859,3.367a.156.156,0,0,0,.181,0q3.716-2.121,7.434-4.239l.638-.363a.563.563,0,0,1,.8.186.564.564,0,0,1-.241.791l-6.2,3.533c-.683.389-1.365.781-2.051,1.167-.134.076-.282.129-.423.192Z" transform="translate(0 -478.428)" fill="#11014d"/>
+                  <path id="Path_32037" data-name="Path 32037" d="M-1983.421,198.212a1.887,1.887,0,0,1-.27-.1q-2.578-1.466-5.154-2.938l-3.238-1.848a.528.528,0,0,1-.286-.6.5.5,0,0,1,.269-.363q.8-.456,1.6-.915,3.378-1.926,6.755-3.855a.613.613,0,0,1,.671,0q3.393,1.938,6.791,3.867.806.459,1.612.918a.508.508,0,0,1,.265.573.539.539,0,0,1-.295.366q-1.039.588-2.076,1.18l-6.289,3.579A.856.856,0,0,1-1983.421,198.212Zm-7.241-5.378.13.077q3.518,2.006,7.035,4.013a.157.157,0,0,0,.181,0q3.51-2,7.022-4c.05-.028.1-.058.155-.092l-.089-.052q-3.551-2.022-7.1-4.045a.136.136,0,0,0-.157,0q-2.619,1.5-5.24,2.99Z" transform="translate(-0.341 0)" fill="#11014d"/>
+                  <path id="Path_32038" data-name="Path 32038" d="M-1992.129,530.119a2.354,2.354,0,0,1,.323.126q2.216,1.267,4.429,2.54,1.8,1.031,3.59,2.064a.141.141,0,0,0,.164-.008l8.034-4.578a.628.628,0,0,1,.48-.1.538.538,0,0,1,.43.46.527.527,0,0,1-.246.554c-.125.083-.259.152-.389.226q-4.025,2.294-8.048,4.59a.645.645,0,0,1-.7,0q-4.154-2.391-8.312-4.775a.56.56,0,0,1-.07-.969A1.708,1.708,0,0,1-1992.129,530.119Z" transform="translate(-0.036 -334.219)" fill="#11014d"/>
+                </g>
+              </g>
+            </svg>
+            </span>
+            <span *ngIf="category.id == 1">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 18">
+                <g id="Group_4876" data-name="Group 4876" transform="translate(-208 -242)">
+                  <path id="Path_24475" data-name="Path 24475" d="M-3558.971,244.248l-3.1,6.084v8.087l18.139-.378V250.03l-2.759-5.782Z" transform="translate(3773 -1)" fill="#fff"/>
+                  <path id="Path_24474" data-name="Path 24474" d="M19,20H5v1a1,1,0,0,1-1,1H3a1,1,0,0,1-1-1V13.5L.757,13.19A1,1,0,0,1,0,12.22V11.5A.5.5,0,0,1,.5,11H2L4.48,5.212A2,2,0,0,1,6.32,4H17.68a2,2,0,0,1,1.838,1.212L22,11h1.5a.5.5,0,0,1,.5.5v.72a1,1,0,0,1-.757.97L22,13.5V21a1,1,0,0,1-1,1H20a1,1,0,0,1-1-1Zm1-2V13H4v5ZM5.477,11H18.523a1,1,0,0,0,.928-1.371L18,6H6L4.549,9.629A1,1,0,0,0,5.477,11ZM5,14q3.475,0,4.686,2.264A.5.5,0,0,1,9.245,17H6a1,1,0,0,1-1-1Zm14,0v2a1,1,0,0,1-1,1H14.755a.5.5,0,0,1-.44-.736Q15.522,14,19,14Z" transform="translate(208 238)" fill="#11014d"/>
+                </g>
+              </svg>
+            </span>
+            <span *ngIf="category.id !== 0 && category.id !== 1">
+              <svg xmlns="http://www.w3.org/2000/svg" width="31" height="18" viewBox="0 0 31 18">
+                <g id="Group_4877" data-name="Group 4877" transform="translate(-136 -250)">
+                  <g id="Rectangle_2040" data-name="Rectangle 2040" transform="translate(136 250)" fill="#f5f5f5" stroke="#11014d" stroke-width="1">
+                    <rect width="31" height="18" rx="3" stroke="none"/>
+                    <rect x="0.5" y="0.5" width="30" height="17" rx="2.5" fill="none"/>
+                  </g>
+                  <line id="Line_212" data-name="Line 212" y2="17.463" transform="translate(157.5 250.537)" fill="none" stroke="#11014d" stroke-width="1"/>
+                  <line id="Line_213" data-name="Line 213" y2="17.463" transform="translate(145.5 250.537)" fill="none" stroke="#11014d" stroke-width="1"/>
+                  <line id="Line_214" data-name="Line 214" x1="9" transform="translate(157.5 259.269)" fill="none" stroke="#11014d" stroke-width="1"/>
+                  <line id="Line_215" data-name="Line 215" x1="9" transform="translate(136.5 259.269)" fill="none" stroke="#11014d" stroke-width="1"/>
+                  <g id="Group_4826" data-name="Group 4826" transform="translate(12.499 11.546)">
+                    <path id="Path_24471" data-name="Path 24471" d="M-352.63,242.757a.491.491,0,0,0-.2-.487c-.119.092-.236.189-.36.278a.641.641,0,0,1-.565.1.4.4,0,0,1-.316-.424.328.328,0,0,1,.166-.212c.1-.042.164.045.2.144.067.177.151.214.316.123a3.66,3.66,0,0,0,.318-.215c-.052-.2-.1-.358-.133-.524-.007-.043.064-.1.1-.145l.214.514c.133-.117.227-.2.319-.283s.176-.163.274-.255a5.4,5.4,0,0,0-3.156-1.48,2.274,2.274,0,0,1,1.257-.067,4.145,4.145,0,0,1,1.721.946c.144.119.284.243.418.359.323-.253.633-.511.958-.745a3.081,3.081,0,0,1,1.367-.589,2.308,2.308,0,0,1,1.138.1,5.33,5.33,0,0,0-3.2,1.476l.549.5a.5.5,0,0,0,.214-.465c.216.081.209.265-.036.629.136.088.267.185.409.262a.167.167,0,0,0,.259-.112c.038-.112.087-.211.23-.176a.248.248,0,0,1,.149.311.468.468,0,0,1-.545.344,1.741,1.741,0,0,1-.443-.2,1.879,1.879,0,0,1-.249-.2.494.494,0,0,0-.211.489h-.033c-.262-.236-.057-.441.055-.651l-.6-.517-.6.518c.227.383.233.471.054.65Z" transform="translate(491.031 8.588)" fill="#11014d"/>
+                    <path id="Path_24472" data-name="Path 24472" d="M-315.508,97.369a2.823,2.823,0,0,0-.4,1.629,2.319,2.319,0,0,1-.072-1.729,3.022,3.022,0,0,0-.751,1.392,2.338,2.338,0,0,1,.445-1.794,2.884,2.884,0,0,0-.872.963c-.062-.362.233-.855.837-1.413l-.019-.038a5.4,5.4,0,0,0-.527.292,6.35,6.35,0,0,0-.493.424,1.674,1.674,0,0,1,1.2-1.13,1.5,1.5,0,0,0-1.028.152c.217-.347.552-.473,1.385-.521l.011-.046-.607-.138c.158-.173.519-.186.992-.011l.192-.461.194.466a1.051,1.051,0,0,1,1.019,0l-.632.137.009.028c.255.034.515.05.765.107a1.24,1.24,0,0,1,.666.469,1.728,1.728,0,0,0-1.077-.2,1.656,1.656,0,0,1,1.179,1.131,2.266,2.266,0,0,0-1.022-.676,1.963,1.963,0,0,1,.856,1.418,3.181,3.181,0,0,0-.889-.959,2.466,2.466,0,0,1,.456,1.843,3.238,3.238,0,0,0-.741-1.439A2.508,2.508,0,0,1-314.505,99c-.032-.287-.049-.573-.1-.852a1.967,1.967,0,0,0-.321-.78l-.062.006q.015.31.029.62c0,.022,0,.044,0,.066-.014.395-.03.79-.04,1.185-.007.285-.017.571,0,.855,0,.08.083.156.133.243h-.731c.26-.16.17-.373.158-.575-.007-.125.024-.252.026-.379,0-.1-.021-.209-.02-.313,0-.138.023-.276.02-.414,0-.165-.033-.329-.038-.494-.007-.263,0-.526,0-.789Z" transform="translate(454.196 148.622)" fill="#11014d"/>
+                  </g>
+                </g>
+              </svg>
+            </span>
+            {{category.title}}</a>
           <ng-template ngbNavContent>
             <div class="products-row row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4 justify-content-start">
               <div class="alert alert-danger text-center" *ngIf="error">{{error}}</div>
@@ -16,7 +55,7 @@
                   animation-duration: 1.3s; 
                   animation-name: fadeIn;"
                   *ngFor="let product of products">
-                  <div class="card h-100" *ngIf="product.category_slug !== 'car_plates'">
+                  <div class="card h-100" (click)="productDetails(product.id)" style="cursor: pointer;"  *ngIf="product.category_slug !== 'car_plates'">
                     <div class="card-header text-center" >
                       <img  src="{{product.default_image ? product.default_image : '../../assets/images/placeholderimg.jpg'}}" alt="car" width="100%" height="200px !important">
                       <div class="favorite">
@@ -30,9 +69,7 @@
                     </div>
                     <div class="card-body">
                       <div class="d-flex justify-content-between align-items-center">
-                        <a (click)="productDetails(product.id)" class="m-0">
                           <h4>{{(product.name.length > 20)? (product.name | slice:0:20)+'..':(product.name)}}</h4>
-                        </a>
                         <img src="../../assets/images/nego_icon.svg" alt="nego_icon" *ngIf="product.negotiable == 1">
                       </div>
                       <!-- <div class="rate">
@@ -56,7 +93,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="card h-100" *ngIf="product.category_slug == 'car_plates'">
+                  <div class="card h-100" (click)="productDetails(product.id)" style="cursor: pointer;"  *ngIf="product.category_slug == 'car_plates'">
                     <div class="card-header plates text-center" >
                       <img *ngIf="product.category_slug == 'car_plates'" 
                       src="../../assets/images/car_paletes_details.svg" alt="carplate_img" width="100%" height="200px !important">
@@ -71,9 +108,7 @@
                     </div>
                     <div class="card-body">
                       <div class="d-flex justify-content-between align-items-center">
-                        <a (click)="productDetails(product.id)" style="cursor: pointer;" class="m-0">
                           <h4>{{(product.name.length > 20)? (product.name | slice:0:20)+'..':(product.name)}}</h4>
-                        </a>
                         <img src="../../assets/images/nego_icon.svg" alt="nego_icon" *ngIf="product.negotiable == 1">
                       </div>
                       <ng-container  *ngFor="let property of product.properties">
@@ -106,17 +141,18 @@
         </li>
       </ng-container>
     </ul>
-    <a (click)="openFormModal()">
-      <img src="../../assets/images/filter.svg" alt="filter" width="50px">
-    </a>
   </div>
-  <div class="filter" #navScrolled [ngClass]="{'fixed-top': newScroll}">
+</div>
+ <div class="d-flex justify-content-between" #navScrolled [ngClass]="{'fixed-top': newScroll}">
     <select class="form-select" id="productMark" style="width: auto;" (change)="regionFilter($event)" >
       <option value="" disabled selected>المنطقه</option>
       <option value="all">كل المناطق</option>
       <option value="{{region.id}}" *ngFor="let region of regions">{{region.name}}</option>
     </select>
-  </div>
+    <a (click)="openFormModal()">
+      <img src="../../assets/images/filter.svg" alt="filter" width="40px">
+    </a>
+</div>
 <swiper [config]="config" class="py-2" style="width:80%;">
   <ng-template swiperSlide *ngIf="show">
     <div class="brand_all d-flex justify-content-center">
@@ -135,7 +171,7 @@
 </swiper>
 <swiper [config]="config" style="width:80%;">
   <ng-template swiperSlide *ngFor="let brand of filterbrandsOptions" class="pt-4">
-      <div class="d-flex justify-content-center">
+      <div class="sub_brand d-flex justify-content-center">
         <a [ngClass]="{'click': activeClass}"(click)="onApplayFiltersKeys('',brand.name)">{{brand.name}}</a>
       </div>
   </ng-template>
@@ -149,13 +185,13 @@
         <mat-radio-button *ngFor="let option of carplate_filter.filter_options"
          value="{{option.name}}" class="px-2">{{option.name}}</mat-radio-button>
       </mat-radio-group>
-      <div class="d-flex justify-content-center align-items-center">
+      <!-- <div class="d-flex justify-content-center align-items-center">
         <select class="form-select" id="productMark" style="width: auto;"  
         *ngIf="carplate_filter.slug_name == 'plate_town_filter_6'" [formControlName]="carplate_filter.slug_name">
           <option value="المدينه" disabled selected>المدينه</option>
           <option value="{{option.name}}" *ngFor="let option of carplate_filter.filter_options">{{option.name}}</option>
         </select>
-      </div>
+      </div> -->
     </div>
   </ng-container>
 </form>

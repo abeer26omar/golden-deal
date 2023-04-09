@@ -118,7 +118,7 @@ input.star:checked ~ label.star:before {
     border-radius: 50%;
 }
 .carousel-control-next, .carousel-control-prev{
-    display: none;
+    width: 8%;
 }
 
 .carousel-indicators{
@@ -333,21 +333,25 @@ input.star:checked ~ label.star:before {
     position: absolute;
     top: 20%;
     right: 16%;
+    font-weight: 900;
 }
 .card_num_ar{
     position: absolute;
     top: 20%;
     left: 16%;
+    font-weight: 900;
 }
 .card_chars_en{
     position: absolute;
     top: 34%;
     right: 17%;
+    font-weight: 900;
 }
 .card_num_en{
     position: absolute;
     top: 34%;
     left: 15%;
+    font-weight: 900;
 }
 @media screen and (max-width: 575px) {
     /* .products-row .card {

@@ -42,35 +42,35 @@
                     <li class="mb-1">
                       <button class="btn adds custom collapsed" (click)="stopPropagation($event);"
                       data-bs-toggle="collapse" data-bs-target="#forms-collapse2" aria-expanded="false">
-                      <img class="ps-2" src="../../assets/images/apps.svg" alt="apps"><span>التطبيقات</span>
+                      <img class="ps-2" src="../../assets/images/apps_icon.svg" alt="apps"><span>التطبيقات</span>
                       </button>
                       <div class="collapse" id="forms-collapse2" >
                         <ul class="adds-list">
                             <li *ngFor="let category of categories">
-                              <a [routerLink]="['/home']" fragment="{{category.slug}}}" class="d-inline-flex align-items-center rounded">{{category.title}}</a>
+                              <a [routerLink]="['/home']" fragment="{{category.slug}}" class="d-inline-flex align-items-center rounded">{{category.title}}</a>
                             </li>
                         </ul>
                       </div>
                     </li>
                     <li>
                       <a  [routerLink]="['/adds',userId]">
-                        <img class="ps-2" src="../../assets/images/fav.svg" alt="">المفضله</a>
+                        <img class="ps-2" src="../../assets/images/favorate_icon.svg" alt="favorate_icon">المفضله</a>
                     </li>
                     <li class="spec">
                       <a  routerLink="/address">
-                        <img class="ps-2" src="../../assets/images/address.svg" alt="">قائمه العناوين</a>
+                        <img class="ps-2" src="../../assets/images/addlist_icon.svg" alt="addlist_icon">قائمه العناوين</a>
                     </li>
                     <li>
                       <a  routerLink="/subscriptions">
-                        <img class="ps-2" src="../../assets/images/subscribtion.svg" alt="">الاشتراكات</a>
+                        <img class="ps-2" src="../../assets/images/subscription_icon.svg" alt="subscribtion_icon">الاشتراكات</a>
                     </li>
                     <li>
                       <a  routerLink="/new-add">
-                        <img class="ps-2" src="../../assets/images/newAdd.svg" alt="">اضافه اعلان</a>
+                        <img class="ps-2" src="../../assets/images/addproduct_icon.svg" alt="addproduct_icon">اضافه اعلان</a>
                     </li>
                     <li>
                       <a [routerLink]="['/chat']">
-                        <img class="ps-2" src="../../assets/images/support.svg" alt="">الدعم</a>
+                        <img class="ps-2" src="../../assets/images/chatwithus_icon.svg" alt="chatwithus_icon">الدعم</a>
                     </li>
                   </div>
                   <div class="col-6">
@@ -80,19 +80,19 @@
                     </li>
                     <li>
                       <a  (click)="termsCondition('privacy_policy')">
-                        <img class="ps-2" src="../../assets/images/whoweAre.svg" alt="">من نحن</a>
+                        <img class="ps-2" src="../../assets/images/whoweare_icon.svg" alt="whoweare_icon">من نحن</a>
                     </li>
                     <li>
                       <a  [routerLink]="['/adds',userId]">
-                        <img class="ps-2" src="../../assets/images/myorders.svg" alt="">طلباتى</a>
+                        <img class="ps-2" src="../../assets/images/myorders_icon.svg" alt="myorders_icon">طلباتى</a>
                     </li>
                     <li class="spec">
                       <a class="" (click)="termsCondition('terms_conditions')">
-                        <img class="ps-2" src="../../assets/images/termsConditions.svg" alt="">الشروط والاحكام</a>
+                        <img class="ps-2" src="../../assets/images/termsandcondition_icon.svg" alt="termsandcondition_icon">الشروط والاحكام</a>
                     </li>
                     <li *ngIf="authService.isRegister | async">
                       <a  (click)="logOut()">
-                        <img class="ps-2" src="../../assets/images/exit.svg" alt="">تسجيل خروج</a>
+                        <img class="ps-2" src="../../assets/images/exit_icon.svg" alt="exit_icon">تسجيل خروج</a>
                     </li>
                   </div>
                 </div>

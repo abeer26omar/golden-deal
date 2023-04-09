@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Subscription, from } from 'rxjs';
 import { APIResponse2, Category, CategoryFilter, NewProduct} from '../../models/products.model';
 import { ProductsRequestService } from 'src/app/services/products-request.service';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -10,6 +10,7 @@ import { MacPrefixService } from 'src/app/services/mac-prefix.service';
 import { NgOtpInputConfig } from 'ng-otp-input';
 import { ActionsService } from 'src/app/services/actions.service';
 import { Regions } from 'src/app/models/actions.model';
+import { SwiperOptions } from 'swiper';
 
 declare var window: any;
 
@@ -38,6 +39,8 @@ export class NewAddComponent implements OnInit {
   imgSrc3: any;
   imgSrc4: any;
   imgSrc5: any;
+  imgSrc6: any;
+  imgSrc7: any;
   ownership: any;
   negotiable: boolean = false;
   newFormControl!: any;
@@ -60,6 +63,7 @@ export class NewAddComponent implements OnInit {
   filterOptions :any= [];
   valueArr: any = [];
   // submitted = false;
+  inputValue: any;
   catergoryId!:number;
   ownerId = localStorage.getItem('userId');
   NewProductRes: NewProduct = {
@@ -69,7 +73,7 @@ export class NewAddComponent implements OnInit {
     }
   }
   plates_chars: any = [
-    { char: 'أ' , trans: 'A' },
+    { char: 'ا' , trans: 'A' },
     { char: 'ب' , trans: 'B' },
     { char: 'ح' , trans: 'J '},
     { char: 'د' , trans: 'D' },
@@ -102,13 +106,15 @@ export class NewAddComponent implements OnInit {
       'margin-right': '0px'
     }
   }
+  filterbrandsOptions :any= [];
   private categorySub : Subscription = new Subscription;
   private filterSub : Subscription = new Subscription;
   private sendSub: Subscription = new Subscription;
   constructor(private httpService: ProductsRequestService,
     private router: Router,
     private macService: MacPrefixService,
-    private actionService: ActionsService ) {}
+    private actionService: ActionsService,
+    private productsService: ProductsRequestService ) {}
     
     myForm = new FormGroup({
       agrement: new FormControl('', [Validators.required]),
@@ -126,10 +132,10 @@ export class NewAddComponent implements OnInit {
       product_image_3: new FormControl(''),
       product_image_4: new FormControl(''),
       product_image_5: new FormControl(''),
+      product_image_6: new FormControl(''),
+      product_image_7: new FormControl(''),
       plate_chars_filter_6: new FormGroup({}),
-      plate_chars_en_filter_6: new FormGroup({}),
-      // plate_numbers_filter_6: new FormGroup({}),
-      // plate_numbers_en_filter_6: new FormGroup({}),
+      plate_chars_en_filter_6: new FormGroup({})
     })
     get f(){
       return this.myForm.controls;
@@ -195,8 +201,48 @@ export class NewAddComponent implements OnInit {
         }
         this.myForm.get('product_image_5')?.patchValue(this.file,this.file.name);
       break;
+      case 6:
+        reader.onload = ()=>{
+          this.imgSrc6 = reader.result;
+        }
+        this.myForm.get('product_image_6')?.patchValue(this.file,this.file.name);
+      break;
+      case 7:
+        reader.onload = ()=>{
+          this.imgSrc7 = reader.result;
+        }
+        this.myForm.get('product_image_7')?.patchValue(this.file,this.file.name);
+      break;
     }
   }
+  config: SwiperOptions = {
+    slidesPerView: 5,
+    spaceBetween: 10,
+    navigation: false,
+    pagination: false,
+    scrollbar: false,
+    grabCursor: true,
+    breakpoints: {
+      992: {
+        slidesPerView: 5
+      },
+      768: {
+        slidesPerView: 4
+      },
+      575: {
+        slidesPerView: 3
+      },
+      425: {
+        slidesPerView: 2
+      },
+      375: {
+        slidesPerView: 1
+      },
+      320: {
+        slidesPerView: 1
+      }
+    }
+  };
   onFile(event:any) {
     let reader = new FileReader();
     reader.readAsDataURL(event.target.files[0]);
@@ -330,7 +376,8 @@ export class NewAddComponent implements OnInit {
       }
     })
   }
-  getCategoryFilter(categoryName: any){ 
+  getCategoryFilter(event: any){
+    let categoryName = event.value;
     if(categoryName == 'car_plates'){
       this.defaultImage_add = false;
       this.myForm.removeControl('product_image_1');
@@ -384,16 +431,36 @@ export class NewAddComponent implements OnInit {
       }
     })
   }
-  submit(){
+  getSubFirlters(filter_name: string,event: any){
+    if(filter_name == 'ماركة السيارة'){
+      this.filterbrandsOptions = []
+      this.filters.data.filters.forEach(filter => {
+        if(filter.name_ar == "ماركة السيارة"){
+          filter.filter_options.forEach(sub_filter =>{
+            if(sub_filter.name == event.target.value){
+              this.filterSub = this.productsService.applayBarndFilter(sub_filter.id).subscribe({
+                next: (res: any)=>{
+                  if(res.data != null){
+                    this.filterbrandsOptions = res.data.filter_options;
+                  }
+                }
+              })       
+            }
+          })
+        }
+      })
+    }
+  }
+  submit(){    
     let plate_chars_en_filter_6: any, 
-    plate_chars_filter_6: any;
-    // plate_number_en_filter_6_value: any,
-    // plate_number_filter_6_value: any;
+    plate_chars_filter_6: any,
+    plate_number_en_filter_6_value: any,
+    plate_number_filter_6_value: any;
     if(this.myForm.get('productCategory')?.value == 'car_plates'){
       plate_chars_en_filter_6 = Object.values(this.myForm.get('plate_chars_en_filter_6')?.value).join(' ');
       plate_chars_filter_6 = Object.values(this.myForm.get('plate_chars_filter_6')?.value).join(' ')
-      // plate_number_en_filter_6_value = Object.values(this.myForm.get('plate_numbers_en_filter_6')?.value).join(' ');
-      // plate_number_filter_6_value = Object.values(this.myForm.get('plate_numbers_filter_6')?.value).join(' ')
+      plate_number_en_filter_6_value = Object.values(this.myForm.get('plate_numbers_en_filter_6')?.value).join(' ');
+      plate_number_filter_6_value = Object.values(this.myForm.get('plate_numbers_filter_6')?.value).join(' ')
     }
     if(this.myForm.get('agrement')?.invalid){
       return;
@@ -401,7 +468,7 @@ export class NewAddComponent implements OnInit {
         if(this.step == 1){
           this.step = this.step + 1;
         }
-      if(this.myForm.valid){
+      // if(this.myForm.valid){
         const formData = new FormData();
         for (const field in this.myForm.controls) {
             if(field == 'plate_chars_en_filter_6'){
@@ -409,35 +476,37 @@ export class NewAddComponent implements OnInit {
             }else if(field == 'plate_chars_filter_6'){
               formData.append(field, plate_chars_filter_6);
             }
-            // else if(field == 'plate_numbers_en_filter_6'){
-            //   formData.append(field, plate_number_en_filter_6_value);
-            // }else if(field == 'plate_numbers_filter_6'){
-            //   formData.append(field, plate_number_filter_6_value);
-            // }
+            else if(field == 'plate_numbers_en_filter_6'){
+              formData.append(field, plate_number_en_filter_6_value);
+            }else if(field == 'plate_numbers_filter_6'){
+              formData.append(field, plate_number_filter_6_value);
+            }
             else{
               formData.append(field, this.myForm.controls[field].value);
             }
+            console.log(field,this.myForm.controls[field].value);
             
           }
-          this.load = true;
-          this.sendSub = this.httpService.http.post<NewProduct>(`${env.api_url}/products/store-new-product`,
-            formData,
-          this.httpService.httpOptions)
-          .subscribe({
-            next: (res: NewProduct)=>{
-              this.load = false;
-              this.errorAdd = ''
-              this.NewProductRes = res;
-              this.modelSuccessNewProduct.show();
-            },
-            error: ()=>{
-              this.load = false;              
-            }
-          })   
-        } else{
-          this.errorAdd = 'يجب ادخال البيانات'
-          return;
-        }
+          // this.load = true;
+          // this.sendSub = this.httpService.http.post<NewProduct>(`${env.api_url}/products/store-new-product`,
+          //   formData,
+          // this.httpService.httpOptions)
+          // .subscribe({
+          //   next: (res: NewProduct)=>{
+          //     this.load = false;
+          //     this.errorAdd = ''
+          //     this.NewProductRes = res;
+          //     this.modelSuccessNewProduct.show();
+          //   },
+          //   error: ()=>{
+          //     this.load = false;              
+          //   }
+          // })   
+        // } 
+        // else{
+        //   this.errorAdd = 'يجب ادخال البيانات'
+        //   return;
+        // }
     }
   }
   close(){

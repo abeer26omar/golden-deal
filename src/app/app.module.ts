@@ -68,6 +68,7 @@ import { SellerProfileComponent } from './seller-profile/seller-profile.componen
 import { ResponseModalComponent } from './response-modal/response-modal.component';
 import { PaymentDetailsDialogComponent } from './subscriptions/payment-details-dialog/payment-details-dialog.component';
 import { ResponseModalErrorComponent } from './response-modal-error/response-modal-error.component';
+import { InputPipe } from './services/input.pipe';
 
 @NgModule({
   declarations: [
@@ -104,6 +105,7 @@ import { ResponseModalErrorComponent } from './response-modal-error/response-mod
     ResponseModalComponent,
     PaymentDetailsDialogComponent,
     ResponseModalErrorComponent,
+    InputPipe,
   ],
   imports: [
     BrowserModule,

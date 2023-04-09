@@ -283,25 +283,33 @@ input:focus , textarea:focus{
 }
 .card_chars_ar{
     position: absolute;
-    top: 23%;
+    top: 15%;
     right: 25%;
+    font-weight: 900;
+    font-size: 1.5rem;
 }
 .card_num_ar{
     position: absolute;
-    top: 24%;
-    left: 24%;
+    top: 15%;
+    left: 21%;
+    font-weight: 900;
+    font-size: 1.5rem;
 }
 .card_chars_en{
     position: absolute;
     bottom: 30%;
     right: 25.5%;
     top: unset;
+    font-weight: 900;
+    font-size: 1.5rem;
 }
 .card_num_en{
     position: absolute;
     bottom: 30%;
-    left: 24%;
+    left: 21%;
     top: unset;
+    font-weight: 900;
+    font-size: 1.5rem;
 }
 @media screen and (max-width: 575px) {
     .plates img{
@@ -310,16 +318,20 @@ input:focus , textarea:focus{
     .card_chars_ar{
         top: 15%;
         right: 18%;
+        font-size: 1rem;
     }
     .card_num_ar{
         top: 15%;
         left: 15%;
+        font-size: 1rem;
     }
     .card_chars_en{
         right: 20%;
+        font-size: 1rem;
     }
     .card_num_en{
         bottom: 27%;
         left: 15%;
+        font-size: 1rem;
     }
 }

@@ -87,14 +87,14 @@ export class ProductsComponent implements OnInit {
       // })
     }
     config: SwiperOptions = {
-      slidesPerView: 10,
+      slidesPerView: 11,
       spaceBetween: 0,
       navigation: false,
       pagination: false,
       scrollbar: false,
       breakpoints: {
         1440: {
-          slidesPerView: 10,
+          slidesPerView: 11,
         },
         1024: {
           slidesPerView: 7,
@@ -123,6 +123,7 @@ export class ProductsComponent implements OnInit {
   }
   getProducts(categorySlug: string){
     this.loadding = true;
+    this.formPlatesFilter.reset();
     this.categorySlug = categorySlug;
     this.productSub = this.httpService
     .getProductsList(categorySlug)
@@ -179,7 +180,6 @@ export class ProductsComponent implements OnInit {
       this.brandSub = this.httpService.getCategoryFilter(categoryName).subscribe({
         next: (res: Category_Filter)=>{
           this.fiter_carPlates = res.data.filters         
-          console.log(res.data);
           this.showBtnAction = true;
           this.fiter_carPlates.forEach((e: any)=>{
             this.formPlatesFilter.addControl(e.slug_name, new FormControl('')) 
@@ -326,20 +326,28 @@ export class ProductsComponent implements OnInit {
   }
   regionFilter(event: any){
     this.load = true;
-    this.filterSub = this.actionService.regionFilter(event.target.value,this.categorySlug).subscribe({
-      next: (res: APIResponse<Products>)=>{
-        this.load = false;
-        this.formModal.hide();
-        this.products = res.data;
-        if(this.products.length == 0){
-          this.errorLength = 'لا يوجد منتجات';
-        }else{
-          this.errorLength = '';
-        }
-    },
-    error:()=>{
-      this.load = false;
-    }    })
+    if(event.target.value == 'all'){
+      this.getProducts('all');
+    }else{
+      this.filterSub = this.actionService.regionFilter(event.target.value,this.categorySlug).subscribe({
+        next: (res: APIResponse<Products>)=>{
+          this.load = false;
+          this.formModal.hide();
+          this.products = res.data;
+          if(this.products.length == 0){
+            this.errorLength = 'لا يوجد منتجات';
+          }else{
+            this.errorLength = '';
+          }
+        },
+        error:()=>{
+          this.load = false;
+        }    })
+    }
+  }
+  getSubfilters(event: any){
+    console.log(event.target.value);
+    
   }
   // ////scroll
   @ViewChild('navScrolled') navScrolled!: ElementRef;

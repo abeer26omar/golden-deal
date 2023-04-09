@@ -1,4 +1,4 @@
-<div class="content"  #navScrolled [ngClass]="{'fixed-top': newScroll}">
+<div class="content pt-5 pb-2">
     <ul ngbNav #nav="ngbNav"  class="nav-tabs" [(activeId)]="active">
       <ng-container *ngFor="let category of categories; let i = index">
         <li [ngbNavItem]="i" id="{{category.slug}}">
@@ -59,7 +59,7 @@
                   <div class="card h-100" *ngIf="product.category_slug == 'car_plates'">
                     <div class="card-header plates text-center" >
                       <img *ngIf="product.category_slug == 'car_plates'" 
-                      src="../../assets/images/car_plates_icon.svg" alt="carplate_img" width="100%" height="200px !important">
+                      src="../../assets/images/car_paletes_details.svg" alt="carplate_img" width="100%" height="200px !important">
                       <div  class="favorite">
                           <a (click)="actionService.removeFav(product.id)" class="btn add_fav p-0" *ngIf="product.product_fav == true">
                            <img src="../../assets/images/already_fav_icon.svg" alt="already_fav_icon" srcset="../../assets/images/already_fav_icon.svg">
@@ -106,17 +106,18 @@
         </li>
       </ng-container>
     </ul>
-    <div class="filter d-flex justify-content-between align-items-center py-2">
-      <select class="form-select" id="productMark" style="width: auto;" (change)="regionFilter($event)" >
-        <option value="" disabled selected>المنطقه</option>
-        <option value="{{region.id}}" *ngFor="let region of regions">{{region.name}}</option>
-      </select>
-      <a (click)="openFormModal()">
-          <img src="../../assets/images/filter.svg" alt="filter" width="50px">
-      </a>
-    </div>
-</div>
-<swiper [config]="config" class="py-2">
+    <a (click)="openFormModal()">
+      <img src="../../assets/images/filter.svg" alt="filter" width="50px">
+    </a>
+  </div>
+  <div class="filter" #navScrolled [ngClass]="{'fixed-top': newScroll}">
+    <select class="form-select" id="productMark" style="width: auto;" (change)="regionFilter($event)" >
+      <option value="" disabled selected>المنطقه</option>
+      <option value="all">كل المناطق</option>
+      <option value="{{region.id}}" *ngFor="let region of regions">{{region.name}}</option>
+    </select>
+  </div>
+<swiper [config]="config" class="py-2" style="width:80%;">
   <ng-template swiperSlide *ngIf="show">
     <div class="brand_all d-flex justify-content-center">
       <a [ngClass]="{'click': activeClass}"
@@ -132,7 +133,7 @@
         </div>
       </ng-template>
 </swiper>
-<swiper [config]="config">
+<swiper [config]="config" style="width:80%;">
   <ng-template swiperSlide *ngFor="let brand of filterbrandsOptions" class="pt-4">
       <div class="d-flex justify-content-center">
         <a [ngClass]="{'click': activeClass}"(click)="onApplayFiltersKeys('',brand.name)">{{brand.name}}</a>
@@ -151,7 +152,7 @@
       <div class="d-flex justify-content-center align-items-center">
         <select class="form-select" id="productMark" style="width: auto;"  
         *ngIf="carplate_filter.slug_name == 'plate_town_filter_6'" [formControlName]="carplate_filter.slug_name">
-          <option value="" disabled selected>المدينه</option>
+          <option value="المدينه" disabled selected>المدينه</option>
           <option value="{{option.name}}" *ngFor="let option of carplate_filter.filter_options">{{option.name}}</option>
         </select>
       </div>
@@ -198,17 +199,19 @@ aria-hidden="true"
         <p class="text-danger text-center" *ngIf="errfilter">{{errfilter}}</p>
         <div class="modal-body">
           <form [formGroup]="formFilter">
-            <div class="pb-4 " *ngFor="let filter of filters.data.filters">
-              <input type="checkbox" [formControlName]="filter.slug_name"
-              class="form-check-input mx-2"  *ngIf="filter.type == 'check'" >
-              <label for="productMark" class="form-label" *ngIf="filter.type !== 'text'" >{{filter.name_ar}}</label>
-              <!-- <input type="text" [formControlName]="filter.slug_name"
-              class="form-control"  *ngIf="filter.type == 'text'" > -->
-              <select class="form-select" id="productMark" 
-               *ngIf="filter.type == 'select'" [formControlName]="filter.slug_name">
-                  <option value="{{filterOption.name}}" *ngFor="let filterOption of filter.filter_options">{{filterOption.name}}</option>
-              </select>
-            </div>
+            <ng-container *ngFor="let filter of filters.data.filters">
+              <div class="pb-2" *ngIf="filter.type !== 'text'">
+                <input type="checkbox" [formControlName]="filter.slug_name"
+                class="form-check-input mx-2"  *ngIf="filter.type == 'check'" >
+  
+                <label for="productMark" class="form-label">{{filter.name_ar}}</label>
+                
+                <select class="form-select" id="productMark"
+                 *ngIf="filter.type == 'select'" [formControlName]="filter.slug_name">
+                    <option value="{{filterOption.name}}" *ngFor="let filterOption of filter.filter_options">{{filterOption.name}}</option>
+                </select>
+              </div>
+            </ng-container>
           </form>
           <p>السعر <span>({{value}})</span></p>
           <nz-slider 

@@ -4,7 +4,7 @@
                 <ngx-gallery [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
             </div>
             <div class="d-flex justify-content-center mb-5 plates" *ngIf="singleProduct.data.product_images.length == 0">
-                <img src="../../../assets/images/car_plates_icon.svg" alt="car_plates_icon" width="80%">
+                <img src="../../../assets/images/car_palets_show.svg" alt="car_plates_icon" width="80%">
                 <ng-container  *ngFor="let property of singleProduct.data.properties">
                     <span  *ngIf="property.type == 'text'">
                         <span *ngIf="property.name_ar == 'حروف اللوحة عربي'" class="card_chars_ar">{{property.filter_value.filter_value}}</span>
@@ -14,7 +14,8 @@
                     </span>
                     </ng-container>
             </div>
-            <div class="card main-card p-4">
+            <div class="card main-card">
+                <div class="card-header">
                     <div class="row">
                         <div class="col-12 prod-desc">
                             <div class="d-flex justify-content-between align-items-center">
@@ -33,12 +34,15 @@
                                 </div>
                                 <p class="time px-5"><img src="../../assets/images/clock.svg" alt="clock"><span class="pe-1">{{singleProduct.data.created_since}}ايام</span></p>
                             </div>
-                            <p class="prod-desc">{{singleProduct.data.desc}}</p>
                         </div>
                     </div>
+                </div>
+                <div class="card-body">
+                    <p class="prod-desc m-0">{{singleProduct.data.desc}}</p>
                     <div class="btn-buy d-flex justify-content-center pt-5">
                         <button class="btn btn-site" (click)="onBuy()">شراء</button>
                     </div>
+                </div>
                 <!-- <div class="card-body">
                     <div class="content">
                         <ul ngbNav #nav="ngbNav"  class="nav-tabs">
@@ -135,7 +139,7 @@
                 </div> -->
             </div>
         </div>
-        <div class="col-lg-3 col-12">
+        <!-- <div class="col-lg-3 col-12">
             <div class="card main-card">
                 <div class="card-header related-apps">
                     <p>اعلانات مشابهة</p>
@@ -161,7 +165,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
 <!-- modal 1-->
     <div class="modal fade"
@@ -256,7 +260,7 @@ aria-hidden="true"
         <div class="modal-body">
             <img class="py-2" src="../../../assets/images/admin_icon.svg" alt="admin_icon">  
             <p class="modal-title ">admin</p>    
-            <p class="prod-price">{{singleProduct.data.price}}</p>
+            <p class="prod-price"> السعر : {{singleProduct.data.price}}</p>
             <p class="prod-name">{{singleProduct.data.desc}}</p>
         </div>
         <div class="modal-footer justify-content-evenly">

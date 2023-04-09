@@ -272,7 +272,7 @@
                                 *ngFor="let order of orders">
                                 <div class="card h-100">
                                   <div class="card-header text-center" >
-                                    <span class="badge " [ngClass]="{'bg-success' : order.order_status == 'approved', 'bg-warning': order.order_status == 'pending','bg-danger': order.order_status == 'rejected'}">{{order.order_status}}</span>
+                                    <span class="badge " [ngClass]="{'bg-success' : order.order_status == 'approved', 'bg-warning': order.order_status == 'pending','bg-danger': order.order_status == 'canceled'}">{{order.order_status}}</span>
                                     <img *ngIf="order.product.default_image" class="img-raduis" src="{{order.product.default_image ? order.product.default_image : '../../assets/images/placeholderimg.jpg'}}" alt="placeholderimg" width="100%" height="200px !important"> 
                                   </div>
                                   <div class="card-body text-center p-3">

@@ -36,14 +36,13 @@
               <div class="col wow" *ngFor="let add of searchRes">
                 <div class="card h-100">
                   <div class="card-header text-center" >
-                    <img *ngIf="add.default_image" src="{{add.default_image}}" alt="car" width="100%" height="200px !important">
-                    <img *ngIf="!add.default_image" src="../../assets/images/placeholderimg.jpg" alt="placeholderimg" width="100%" height="200px !important">                
+                    <img *ngIf="add.default_image" src="{{add.default_image ? add.default_image : '../../assets/images/placeholderimg.jpg'}}" alt="car" width="100%" height="200px !important">
                   </div>
                   <div class="card-body text-center">
                     <a style="cursor: pointer;" (click)="productDetails(add.id)">
                       <h4>{{(add.name.length > 20)? (add.name | slice:0:20)+'..':(add.name)}}</h4>
                     </a>
-                    <p class="discription">{{(add.desc.length > 40)? (add.desc| slice:0:40)+'..': (add.desc)}}</p>
+                    <p *ngIf="add.category_slug == 'cars'" class="discription">{{(add.desc.length > 40)? (add.desc| slice:0:40)+'..': (add.desc)}}</p>
                     <p class="time">
                       <img src="../../assets/images/clock.svg" alt="clock"><span>{{add.created_since}} يوم</span>
                     </p>

@@ -29,10 +29,10 @@ const participants = [];
 
 var configDB = {
   "connectionLimit" : 10,
-  "host"            : "qbizns.com",
-  "user"            : "qbizns_deal_user",
-  "password"        : "*stVwc$@l7p[",
-  "database"        : "qbizns_deal"
+  "host"            : "127.0.0.1",
+  "user"            : "vulter_deal_admin",
+  "password"        : "9Fa24r&1a",
+  "database"        : "vulter_deal"
 };
 
 const connection = mysql.createConnection(configDB);

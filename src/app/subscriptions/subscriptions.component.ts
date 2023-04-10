@@ -51,6 +51,8 @@ export class SubscriptionsComponent implements OnInit {
     this.subscriptionSub = this.actionService.getSubscribtionsType().subscribe({
       next: (resData: APIresponse<Subscriptions>)=>{
         this.subscriptions = resData.data;
+        console.log(resData.data);
+        
       }
     })
   }

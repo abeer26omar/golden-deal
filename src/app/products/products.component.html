@@ -1,5 +1,5 @@
 <div class="content pt-5 pb-2">
-  <p class="sorts">الفئات</p>
+  <p class="sorts m-0">الفئات</p>
   <div class="d-flex justify-content-center">
     <ul ngbNav #nav="ngbNav"  class="nav-tabs" [(activeId)]="active">
       <ng-container *ngFor="let category of categories; let i = index">
@@ -55,9 +55,9 @@
                   animation-duration: 1.3s; 
                   animation-name: fadeIn;"
                   *ngFor="let product of products">
-                  <div class="card h-100" (click)="productDetails(product.id)" style="cursor: pointer;"  *ngIf="product.category_slug !== 'car_plates'">
+                  <div class="card h-100" *ngIf="product.category_slug !== 'car_plates'">
                     <div class="card-header text-center" >
-                      <img  src="{{product.default_image ? product.default_image : '../../assets/images/placeholderimg.jpg'}}" alt="car" width="100%" height="200px !important">
+                      <img   (click)="productDetails(product.id)" style="cursor: pointer;" src="{{product.default_image ? product.default_image : '../../assets/images/placeholderimg.jpg'}}" alt="car" width="100%" height="200px !important">
                       <div class="favorite">
                           <a (click)="actionService.removeFav(product.id)" class="btn add_fav p-0" *ngIf="product.product_fav == true">
                            <img src="../../assets/images/already_fav_icon.svg" alt="already_fav_icon" srcset="../../assets/images/already_fav_icon.svg">
@@ -69,7 +69,7 @@
                     </div>
                     <div class="card-body">
                       <div class="d-flex justify-content-between align-items-center">
-                          <h4>{{(product.name.length > 20)? (product.name | slice:0:20)+'..':(product.name)}}</h4>
+                          <h4  (click)="productDetails(product.id)" style="cursor: pointer;" >{{(product.name.length > 20)? (product.name | slice:0:20)+'..':(product.name)}}</h4>
                         <img src="../../assets/images/nego_icon.svg" alt="nego_icon" *ngIf="product.negotiable == 1">
                       </div>
                       <!-- <div class="rate">
@@ -93,9 +93,9 @@
                       </div>
                     </div>
                   </div>
-                  <div class="card h-100" (click)="productDetails(product.id)" style="cursor: pointer;"  *ngIf="product.category_slug == 'car_plates'">
+                  <div class="card h-100" *ngIf="product.category_slug == 'car_plates'">
                     <div class="card-header plates text-center" >
-                      <img *ngIf="product.category_slug == 'car_plates'" 
+                      <img  (click)="productDetails(product.id)" style="cursor: pointer;"  *ngIf="product.category_slug == 'car_plates'" 
                       src="../../assets/images/car_paletes_details.svg" alt="carplate_img" width="100%" height="200px !important">
                       <div  class="favorite">
                           <a (click)="actionService.removeFav(product.id)" class="btn add_fav p-0" *ngIf="product.product_fav == true">
@@ -108,7 +108,7 @@
                     </div>
                     <div class="card-body">
                       <div class="d-flex justify-content-between align-items-center">
-                          <h4>{{(product.name.length > 20)? (product.name | slice:0:20)+'..':(product.name)}}</h4>
+                          <h4  (click)="productDetails(product.id)" style="cursor: pointer;">{{(product.name.length > 20)? (product.name | slice:0:20)+'..':(product.name)}}</h4>
                         <img src="../../assets/images/nego_icon.svg" alt="nego_icon" *ngIf="product.negotiable == 1">
                       </div>
                       <ng-container  *ngFor="let property of product.properties">
@@ -183,15 +183,16 @@
       <mat-radio-group aria-label="Select an option" *ngIf="carplate_filter.slug_name !== 'plate_town_filter_6'" 
       [formControlName]="carplate_filter.slug_name">
         <mat-radio-button *ngFor="let option of carplate_filter.filter_options"
-         value="{{option.name}}" class="px-2">{{option.name}}</mat-radio-button>
+         value="{{option.name}}" class="mx-2">{{option.name}}</mat-radio-button>
       </mat-radio-group>
-      <!-- <div class="d-flex justify-content-center align-items-center">
+      <div class="d-flex justify-content-center align-items-center">
         <select class="form-select" id="productMark" style="width: auto;"  
         *ngIf="carplate_filter.slug_name == 'plate_town_filter_6'" [formControlName]="carplate_filter.slug_name">
-          <option value="المدينه" disabled selected>المدينه</option>
+          <option value="" disabled selected>المدينه</option>
+          <option value="all">كل المدن</option>
           <option value="{{option.name}}" *ngFor="let option of carplate_filter.filter_options">{{option.name}}</option>
         </select>
-      </div> -->
+      </div>
     </div>
   </ng-container>
 </form>
@@ -229,7 +230,7 @@ aria-hidden="true"
           <button type="button" class="btn p-0" data-bs-dismiss="modal" aria-label="Close">
             <img src="../../assets/images/close.svg" alt="close">
           </button>
-          <h5 class="modal-title text-center col-10" id="staticBackdropLabel">فلتر</h5>
+          <h5 class="modal-title text-center col-10" id="staticBackdropLabel">تصفيه حسب</h5>
         </div>
         <mat-progress-bar mode="indeterminate" class="my-3" *ngIf="load" id="addprog"></mat-progress-bar>
         <p class="text-danger text-center" *ngIf="errfilter">{{errfilter}}</p>
@@ -242,24 +243,49 @@ aria-hidden="true"
   
                 <label for="productMark" class="form-label">{{filter.name_ar}}</label>
                 
-                <select class="form-select" id="productMark"
-                 *ngIf="filter.type == 'select'" [formControlName]="filter.slug_name">
-                    <option value="{{filterOption.name}}" *ngFor="let filterOption of filter.filter_options">{{filterOption.name}}</option>
+                <select class="form-select" id="productMark" (change)="getSubFirlters(filter.name_ar,$event)"
+                    [formControlName]="filter.slug_name" *ngIf="filter.type == 'select'">
+                      <ng-container  *ngIf="filter.name_ar !== 'فئة السيارة'">
+                        <option *ngFor="let filterOption of filter.filter_options" 
+                            value="{{filterOption.name}}">{{filterOption.name}}</option>
+                      </ng-container>
+                      <ng-container *ngIf="filter.name_ar == 'فئة السيارة'">
+                        <option value="{{car_category.name}}" 
+                        *ngFor="let car_category of filterbrandsOptions">{{car_category.name}}</option>
+                      </ng-container>
                 </select>
               </div>
             </ng-container>
           </form>
-          <p>السعر <span>({{value}})</span></p>
-          <nz-slider 
-              nzRange 
-              [(ngModel)]="value"
-              [nzStep]="1"
-              [nzMin]	= valueMin
-              [nzMax]	= valueMax>
-          </nz-slider>
+          <div *ngIf="filters.data.filters.length !== 0">
+            <p>السعر <span>({{value}})</span></p>
+            <nz-slider 
+                nzRange 
+                [(ngModel)]="value"
+                [nzStep]="1"
+                [nzMin]	= valueMin
+                [nzMax]	= valueMax>
+            </nz-slider>
+          </div>
+          <div *ngIf="filters.data.filters.length == 0">
+            <form [formGroup]="filterAllProducts">
+                <div class="filters text-center py-2">
+                  <mat-radio-group aria-label="Select an option" 
+                  formControlName="filterAll">
+                    <mat-radio-button
+                     value="new" class="mx-2">الاحدث</mat-radio-button>
+                    <mat-radio-button
+                     value="close" class="mx-2">القريب</mat-radio-button>
+                  </mat-radio-group>
+                </div>
+            </form>
+          </div>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-save" (click)="onApplayFilters()">حفظ</button>
+        <div class="modal-footer" *ngIf="filters.data.filters.length == 0">
+          <button type="button" class="btn btn-save" (click)="apllyAllFilter()">تطبيق</button>
+        </div>
+        <div class="modal-footer" *ngIf="filters.data.filters.length !== 0">
+          <button type="button" class="btn btn-save" (click)="onApplayFilters()">تطبيق</button>
         </div>
       </div>
   </div>

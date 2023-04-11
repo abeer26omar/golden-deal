@@ -15,16 +15,13 @@ p.sorts{
     border-bottom: none;
     align-items: center;
 }
- .nav-item{
-    padding: 0.5rem 1rem;
+.nav-item{
+    padding: 0rem 1rem;
     cursor: pointer;
 }
-.nav-item:nth-child(1){
-    padding: 0rem 0rem 0rem 1rem;
-}
 
- .nav-link{
-    padding: 1rem 0rem;
+.nav-link{
+    padding: 0rem 1rem;
 }
 
 .nav-tabs .nav-link:focus, 

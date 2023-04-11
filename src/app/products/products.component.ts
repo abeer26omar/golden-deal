@@ -77,14 +77,14 @@ export class ProductsComponent implements OnInit {
     min_price: new FormControl(''),
     max_price: new FormControl('')
   })
+  filterAllProducts = new FormGroup({
+    filterAll: new FormControl('')
+  })
   constructor(private httpService: ProductsRequestService, 
     private router: Router,
     private macService: MacPrefixService,
     public actionService: ActionsService,
     public authService: AuthService) {
-      // this.httpService.refresh.subscribe(()=>{
-      //   this.getProducts('all');
-      // })
     }
     config: SwiperOptions = {
       slidesPerView: 11,
@@ -155,7 +155,7 @@ export class ProductsComponent implements OnInit {
   getCategoryFilter(categoryName: any){    
     this.categorySub = this.httpService.getCategoryFilters(categoryName).subscribe({
       next: (res: CategoryFilter)=>{
-        this.filters = res;
+        this.filters = res;        
         this.valueMin = this.filters.data.price.min;
         this.valueMax = this.filters.data.price.max;
         this.filters.data.filters.forEach(filter=>{
@@ -231,6 +231,32 @@ export class ProductsComponent implements OnInit {
       this.fiter_carPlates = [];
       this.show = false;
       this.showBtnAction = false;
+    }
+  }
+  apllyAllFilter(){
+    this.load = true;
+    let value = this.filterAllProducts.get('filterAll')?.value;
+    if(value == 'new'){
+      this.load = false;
+      this.getProducts('all');
+      this.formModal.hide();
+    }else{
+      let region_id = localStorage.getItem('region_id');
+      this.filterSub = this.httpService.getCloseProducts(region_id,'all').subscribe({
+        next: (res: APIResponse<Products>)=>{
+          this.load = false;
+          this.formModal.hide();
+          this.products = res.data;
+          if(this.products.length == 0){
+            this.errorLength = 'لا يوجد منتجات';
+          }else{
+            this.errorLength = '';
+          }
+        },
+        error:()=>{
+          this.load = false;
+        }
+      })  
     }
   }
   onApplayFilters(){
@@ -345,9 +371,25 @@ export class ProductsComponent implements OnInit {
         }    })
     }
   }
-  getSubfilters(event: any){
-    console.log(event.target.value);
-    
+  getSubFirlters(filter_name: string,event: any){
+    if(filter_name == 'ماركة السيارة'){
+      this.filterbrandsOptions = []
+      this.filters.data.filters.forEach(filter => {
+        if(filter.name_ar == "ماركة السيارة"){
+          filter.filter_options.forEach(sub_filter =>{
+            if(sub_filter.name == event.target.value){
+              this.filterSub = this.httpService.applayBarndFilter(sub_filter.id).subscribe({
+                next: (res: any)=>{
+                  if(res.data != null){
+                    this.filterbrandsOptions = res.data.filter_options;
+                  }
+                }
+              })       
+            }
+          })
+        }
+      })
+    }
   }
   // ////scroll
   @ViewChild('navScrolled') navScrolled!: ElementRef;

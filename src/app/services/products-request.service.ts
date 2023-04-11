@@ -112,4 +112,7 @@ export class ProductsRequestService {
       this._refresh.next();
     }))
   }
+  getCloseProducts(region_id: any,category_slug: string){
+    return this.http.get<APIResponse<Products>>(`${env.api_url}/filters/get-regions-filters?region_id=${region_id}&category_slug=${category_slug}`)
+  }
 } 

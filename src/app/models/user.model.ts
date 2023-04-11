@@ -92,13 +92,46 @@ export interface Purchases{
     default_image: string,
     ownership_image_url: string,
     category_slug: string,
-      owner: {
+    owner: {
         id: number,
         name: string,
         image: string,
         image_url: string,
         cover_url: string
-      }
+    },
+    properties: Array<Product_Properties>,
+    price: string,
+    owner_area: string
+
+}
+interface Product_Properties{
+    id: number,
+    parent_id: null,
+    category_id: number,
+    name_ar: string,
+    name_en: string,
+    type: string,
+    required: number,
+    slug_name: string,
+    sort: number,
+    active: number,
+    has_filters: boolean,
+    filter_options: Array<filter_options_new>,
+    filter_value: {
+        id: number,
+        filter_id: number,
+        product_id: number,
+        filter_value: string
+    }
+}
+interface filter_options_new{
+    id: number,
+    filter_id: number,
+    name: string,
+    sort: number,
+    logo: string,
+    image: string,
+    sub_filter: []
 }
 export interface APIResponse2<T>{
     data: Array<T>;

@@ -1,8 +1,7 @@
 <div class="main mt-5 mb-5">
     <div class="title"></div>
     <div class="profile-img">
-        <img *ngIf="userData.data.image_url" [src]="userData.data.image_url" alt="profile-img">
-        <img *ngIf="!(userData.data.image_url)" src="../../assets/images/profilePlacholder.png" alt="profile-img">
+        <img src="{{userData.data.image_url ? userData.data.image_url : '../../assets/images/profilePlacholder.png'}}" alt="profile-img">
         <div class="edit">
             <a (click)="editImgProfile(userData.data.image_url)"><img src="../../assets/images/edit-pen.svg" alt="edit"></a>
         </div>

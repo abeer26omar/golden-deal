@@ -6,7 +6,7 @@
             </div>
                 <div class="card-body row g-4" >
                             <div class="d-flex justify-content-center mb-5 plates" *ngIf="Add.data.category_slug == 'car_plates'">
-                                <img src="../../../assets/images/car_plates_icon.svg" alt="car_plates_icon" width="80%">
+                                <img src="../../../assets/images/car_palets_show.svg" alt="car_plates_icon" width="80%">
                             </div>
                             <div class="col-12" *ngIf="Add.data.category_slug == 'cars'">
                                 <div class="row row-cols-md-4 row-cols-lg-6 g-3 justify-content-center">
@@ -77,6 +77,14 @@
                             id="phone"
                             formControlName="seller_phone">
                         </div>
+                        <div class="col-md-6">
+                            <label for="productPrice" class="form-label">السعر</label>
+                            <div class="d-flex align-items-center">
+                                <input type="text" class="form-control" id="productPrice" 
+                                formControlName="price" style="width: 60%;" [ngClass]="{'disabled': negotiable}">
+                                    <a (click)="onNegotiable()" class="btn btn_negotiable" [ngClass]="{'btndisabled': negotiable}">علي السوم</a>
+                            </div>       
+                        </div>
                         <div class="col-md-6" *ngFor="let filter of EditFilter">
                             <input type="checkbox" class="form-check-input mx-2"
                             [formControlName]="filter.slug_name" 
@@ -105,22 +113,38 @@
                                         readonly >
                                 </div>
                             </div>
+                            <div class="row g-3" [formGroupName]="filter.slug_name"
+                                    *ngIf="filter.type == 'text' && filter.name_ar == 'ارقام اللوحة عربي' ">
+                                    <div class="col-2" *ngFor="let i of [1,2,3,4]">
+                                        <input  
+                                            type="text" 
+                                            class="form-control" 
+                                            maxlength="1"
+                                            formControlName="plate_number_ar_{{i}}" 
+                                            (input)="convertNumbers(i,$event)"
+                                            >
+                                    </div>
+                            </div>
+                            <div class="row g-3" [formGroupName]="filter.slug_name"
+                                    *ngIf="filter.type == 'text' && filter.name_ar == 'ارقام اللوحة انجليزي' ">
+                                <div class="col-2" *ngFor="let i of [1,2,3,4]">
+                                        <input  
+                                            type="text" 
+                                            class="form-control" 
+                                            maxlength="1"
+                                            formControlName="plate_number_en_{{i}}"
+                                            readonly
+                                            >
+                                </div>
+                            </div>
                             <select class="form-select" id="productMark" 
                             [formControlName]="filter.slug_name" *ngIf="filter.type == 'select'">
                                 <option [value]="filterOption.name"
                                  *ngFor="let filterOption of filter.filter_options">{{filterOption.name}}</option>
                             </select>
                             <input type="text" 
-                                *ngIf="filter.type == 'text' && (filter.name_ar !== 'حروف اللوحة عربي'  && filter.name_ar !== 'حروف اللوحة انجليزي'  )" 
+                                *ngIf="filter.type == 'text' && Add.data.category_slug !== 'car_plates'" 
                                 class="form-control" [formControlName]="filter.slug_name">
-                        </div>
-                        <div class="col-md-6">
-                            <label for="productPrice" class="form-label">السعر</label>
-                            <div class="d-flex align-items-center">
-                                <input type="text" class="form-control" id="productPrice" 
-                                formControlName="price" style="width: 60%;" [ngClass]="{'disabled': negotiable}">
-                                    <a (click)="onNegotiable()" class="btn btn_negotiable" [ngClass]="{'btndisabled': negotiable}">علي السوم</a>
-                            </div>       
                         </div>
                         <!-- <div class="col-md-6">
                             <label for="productSeller" class="form-label">عن البائع</label>

@@ -1,14 +1,4 @@
-// const express = require('express');
-// const app = express();
-// const http = require('http');
-// const server = http.createServer(app);
-// const { Server } = require("socket.io");
-// const io = new Server(server);
-// const port = process.env.port || 3000;
 
-// server.listen(port, ()=>{
-//     console.log(`started ${port}`);
-// })
 const fs = require('fs');
 const mysql = require('mysql-await');
 const express = require('express');
@@ -44,6 +34,7 @@ io.on('connection', function(socket) {
   //Golden Deal chat
   socket.on('user_connected' ,function (data){
     (async () => {
+        console.log(data)
         console.log('a user connected ' + data.userid + " Hash " + JSON.stringify(socket.handshake.query));
         participants[data.userid] = socket.id;
         //io.emit('load_conversation_list', data);

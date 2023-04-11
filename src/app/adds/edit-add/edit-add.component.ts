@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup} from '@angular/forms';
-import { ActivatedRoute, Params, Router } from '@angular/router';
-import { HttpErrorResponse } from '@angular/common/http';
+import { ActivatedRoute, Params } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { APIResponse2, APIResponse4, Category, EditProduct, EditProductFilters, Update } from 'src/app/models/products.model';
 import { ProductsRequestService } from 'src/app/services/products-request.service';
@@ -30,6 +29,8 @@ export class EditAddComponent implements OnInit {
   imgSrc3: any;
   imgSrc4: any;
   imgSrc5: any;
+  imgSrc6: any;
+  imgSrc7: any;
   error_CarPlate: string = '';
   rest_images: any = [];
   Add : EditProduct = {
@@ -85,8 +86,12 @@ export class EditAddComponent implements OnInit {
     product_image_3: new FormControl(''),
     product_image_4: new FormControl(''),
     product_image_5: new FormControl(''),
+    product_image_6: new FormControl(''),
+    product_image_7: new FormControl(''),
     plate_chars_filter_6: new FormGroup({}),
     plate_chars_en_filter_6: new FormGroup({}),
+    plate_numbers_filter_6: new FormGroup({}),
+    plate_numbers_en_filter_6: new FormGroup({})
   });
   updateProduct: Update = {
     data:{
@@ -112,6 +117,18 @@ export class EditAddComponent implements OnInit {
     { char: 'هـ' , trans: 'H' },
     { char: 'و' , trans: 'U' },
     { char: 'ى' , trans: 'V' }
+  ]
+  plates_numbers: any = [
+    { char: '٠' , trans: '0' },
+    { char: '١' , trans: '1' },
+    { char: '٢' , trans: '2 '},
+    { char: '٣' , trans: '3' },
+    { char: '٤' , trans: '4' },
+    { char: '٥' , trans: '5' },
+    { char: '٦' , trans: '6' },
+    { char: '٧' , trans: '7' },
+    { char: '٨' , trans: '8' },
+    { char: '٩' , trans: '9' },
   ]
   public categories : Array<Category> = [];
   public EditFilter: Array<EditProductFilters> = [];
@@ -224,6 +241,8 @@ export class EditAddComponent implements OnInit {
               negotiable: new FormControl(this.Add.data.negotiable),
               plate_chars_filter_6: new FormGroup({}),
               plate_chars_en_filter_6: new FormGroup({}),
+              plate_numbers_filter_6: new FormGroup({}),
+              plate_numbers_en_filter_6: new FormGroup({})
             });
           }else{
             this.myForm = new FormGroup({
@@ -241,6 +260,8 @@ export class EditAddComponent implements OnInit {
               product_image_3: new FormControl(''),
               product_image_4: new FormControl(''),
               product_image_5: new FormControl(''),
+              product_image_6: new FormControl(''),
+              product_image_7: new FormControl(''),
             });
           }
         this.getAddFilters();
@@ -263,7 +284,20 @@ export class EditAddComponent implements OnInit {
               plate_chars_en_filter_6.addControl('plate_chars_en_1', new FormControl(ele.filter_value.filter_value[0]));
               plate_chars_en_filter_6.addControl('plate_chars_en_2', new FormControl(ele.filter_value.filter_value[2]));
               plate_chars_en_filter_6.addControl('plate_chars_en_3', new FormControl(ele.filter_value.filter_value[4]));
-            }else{
+            }else if(ele.slug_name == 'plate_numbers_filter_6'){
+              let plate_numbers_filter_6 = this.myForm.get('plate_numbers_filter_6') as FormGroup;
+              plate_numbers_filter_6.addControl('plate_number_ar_1', new FormControl(ele.filter_value.filter_value[0]));
+              plate_numbers_filter_6.addControl('plate_number_ar_2', new FormControl(ele.filter_value.filter_value[2]));
+              plate_numbers_filter_6.addControl('plate_number_ar_3', new FormControl(ele.filter_value.filter_value[4]));
+              plate_numbers_filter_6.addControl('plate_number_ar_4', new FormControl(ele.filter_value.filter_value[6]));
+            }else if(ele.slug_name == 'plate_numbers_en_filter_6'){
+              let plate_numbers_en_filter_6 = this.myForm.get('plate_numbers_en_filter_6') as FormGroup;
+              plate_numbers_en_filter_6.addControl('plate_number_en_1', new FormControl(ele.filter_value.filter_value[0]));
+              plate_numbers_en_filter_6.addControl('plate_number_en_2', new FormControl(ele.filter_value.filter_value[2]));
+              plate_numbers_en_filter_6.addControl('plate_number_en_3', new FormControl(ele.filter_value.filter_value[4]));
+              plate_numbers_en_filter_6.addControl('plate_number_en_4', new FormControl(ele.filter_value.filter_value[6]));
+            }
+            else{
               this.myForm.addControl(ele.slug_name,new FormControl(ele.filter_value.filter_value))
             }
           }else{
@@ -333,15 +367,57 @@ export class EditAddComponent implements OnInit {
       break;
     }
   }
+  convertNumbers(key: number,value: any){
+    let plate_num = value.target.value;
+    let trans_value:any;
+    switch(key){
+      case 1: 
+        this.plates_numbers.forEach((char: any) => {
+          if(char.char == plate_num){
+            return trans_value = char.trans;
+          }
+        });
+        this.myForm.get('plate_numbers_en_filter_6')?.get('plate_number_en_1')?.setValue(trans_value)
+      break;
+      case 2:
+        this.plates_numbers.forEach((char: any) => {
+          if(char.char == plate_num){
+            return trans_value = char.trans;
+          }
+        });
+        this.myForm.get('plate_numbers_en_filter_6')?.get('plate_number_en_2')?.setValue(trans_value)
+      break;
+      case 3:
+        this.plates_numbers.forEach((char: any) => {
+          if(char.char == plate_num){
+            return trans_value = char.trans;
+          }
+        });
+        this.myForm.get('plate_numbers_en_filter_6')?.get('plate_number_en_3')?.setValue(trans_value)
+      break;
+      case 4:
+        this.plates_numbers.forEach((char: any) => {
+          if(char.char == plate_num){
+            return trans_value = char.trans;
+          }
+        });
+        this.myForm.get('plate_numbers_en_filter_6')?.get('plate_number_en_4')?.setValue(trans_value)
+      break;
+    }  
+  }
   openImgDialog(){
     this.modelAddImages.show();
   }
   submit(){
     let plate_chars_en_filter_6: any, 
-    plate_chars_filter_6: any;
+    plate_chars_filter_6: any,
+    plate_numbers_filter_6: any,
+    plate_numbers_en_filter_6: any;
     if(this.myForm.get('productCategory')?.value == 'car_plates'){
       plate_chars_en_filter_6 = Object.values(this.myForm.get('plate_chars_en_filter_6')?.value).join(' ');
       plate_chars_filter_6 = Object.values(this.myForm.get('plate_chars_filter_6')?.value).join(' ')
+      plate_numbers_en_filter_6 = Object.values(this.myForm.get('plate_numbers_en_filter_6')?.value).join(' ')
+      plate_numbers_filter_6 = Object.values(this.myForm.get('plate_numbers_filter_6')?.value).join(' ');
     }
     const formData = new FormData();
       for (const field in this.myForm.controls) {
@@ -349,6 +425,10 @@ export class EditAddComponent implements OnInit {
           formData.append(field, plate_chars_en_filter_6);
         }else if(field == 'plate_chars_filter_6'){
           formData.append(field, plate_chars_filter_6);
+        }else if(field == 'plate_numbers_en_filter_6'){
+          formData.append(field, plate_numbers_en_filter_6);
+        }else if(field == 'plate_numbers_filter_6'){
+          formData.append(field, plate_numbers_filter_6);
         }else{
           formData.append(field, this.myForm.controls[field].value);
         }

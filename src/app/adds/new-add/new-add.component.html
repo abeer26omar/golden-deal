@@ -189,6 +189,15 @@
                             formControlName="seller_phone">
                             <!-- <div *ngIf="f['seller_phone'].touched && f['seller_phone'].errors" class="text-danger">يجب اضافه رقم الجوال</div> -->
                         </div>
+                        <div class="col-md-6">
+                            <label for="productPrice" class="form-label">السعر</label>
+                            <div class="d-flex align-items-center">
+                                <input type="text" class="form-control" id="productPrice" 
+                                formControlName="price" style="width: 60%;" [ngClass]="{'disabled': negotiable}">
+                                    <a (click)="onNegotiable()" class="btn btn_negotiable" [ngClass]="{'btndisabled': negotiable}">علي السوم</a>
+                            </div>
+                            <div *ngIf="f['price'].touched && f['price'].errors" class="text-danger">يجب تحديد سعر  للمنتج</div>  
+                        </div>
                         <ng-container *ngFor="let filter of filters.data.filters">
                             <div class="col-md-6">
                                 <input type="checkbox" class="form-check-input mx-2" 
@@ -218,28 +227,30 @@
                                             readonly >
                                     </div>
                                 </div>
-                                <!-- <div class="row g-3" [formGroupName]="filter.slug_name"
+                                <div class="row g-3" [formGroupName]="filter.slug_name"
                                     *ngIf="filter.type == 'text' && filter.name_ar == 'ارقام اللوحة عربي' ">
-                                    <div class="col-2" *ngFor="let i of input_number">
+                                    <div class="col-2" *ngFor="let i of [1,2,3,4]">
                                         <input  
                                             type="text" 
                                             class="form-control" 
                                             maxlength="1"
                                             formControlName="plate_number_ar_{{i}}" 
+                                            (input)="convertNumbers(i,$event)"
                                             >
                                     </div>
-                                </div> -->
-                                <!-- <div class="row g-3" [formGroupName]="filter.slug_name"
+                                </div>
+                                <div class="row g-3" [formGroupName]="filter.slug_name"
                                     *ngIf="filter.type == 'text' && filter.name_ar == 'ارقام اللوحة انجليزي' ">
-                                    <div class="col-2" *ngFor="let i of input_number">
+                                    <div class="col-2" *ngFor="let i of [1,2,3,4]">
                                         <input  
                                             type="text" 
                                             class="form-control" 
                                             maxlength="1"
-                                            formControlName="plate_number_en_{{i}}" 
+                                            formControlName="plate_number_en_{{i}}"
+                                            readonly
                                             >
                                     </div>
-                                </div> -->
+                                </div>
                                 <select class="form-select" id="productMark" (change)="getSubFirlters(filter.name_ar,$event)"
                                     [formControlName]="filter.slug_name" *ngIf="filter.type == 'select'">
                                     <ng-container  *ngIf="filter.name_ar !== 'فئة السيارة'">
@@ -251,20 +262,11 @@
                                     </ng-container>
                                 </select>
                                 <input type="text" 
-                                    *ngIf="filter.type == 'text' && (filter.name_ar == 'حروف اللوحة انجليزي' || filter.name_ar == 'حروف اللوحة عربي' )"
+                                    *ngIf="filter.type == 'text' && categoryName !== 'car_plates'"
                                     class="form-control" [formControlName]="filter.slug_name">
-                                <div *ngIf="f[filter.slug_name].touched && f[filter.slug_name].value == ''" class="text-danger">يجب ادخال بيانات</div> 
-                            </div>
-                        </ng-container>
-                        <div class="col-md-6">
-                                <label for="productPrice" class="form-label">السعر</label>
-                                <div class="d-flex align-items-center">
-                                    <input type="text" class="form-control" id="productPrice" 
-                                    formControlName="price" style="width: 60%;" [ngClass]="{'disabled': negotiable}">
-                                        <a (click)="onNegotiable()" class="btn btn_negotiable" [ngClass]="{'btndisabled': negotiable}">علي السوم</a>
                                 </div>
-                                <div *ngIf="f['price'].touched && f['price'].errors" class="text-danger">يجب تحديد سعر  للمنتج</div>  
-                        </div>
+                                <!-- <div *ngIf="f[filter.slug_name].touched && f[filter.slug_name].value == ''" class="text-danger">يجب ادخال بيانات</div>  -->
+                        </ng-container>
                         <!-- <div class="col-md-6">
                             <label for="productSeller" class="form-label">عن البائع</label>
                             <textarea type="text" class="form-control" id="productSeller" 

@@ -22,6 +22,7 @@
     width:100%;
     height:300px;
     object-fit: cover;
+    object-position: center;
 }
 .add-content .card-header .edit{
     position: absolute;
@@ -186,4 +187,9 @@
 #faild .p{
     color: var(--primary-color);
     font-size: 1.33rem;
+}
+.sold_icon{
+    position: absolute;
+    left: 0%;
+    top: 0;
 }

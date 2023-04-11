@@ -3,7 +3,6 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Portfolio, Products } from '../models/actions.model';
 import { ActionsService } from '../services/actions.service';
-import { HttpErrorResponse } from '@angular/common/http';
 import { MacPrefixService } from '../services/mac-prefix.service';
 
 declare var window: any;
@@ -37,7 +36,7 @@ export class SellerProfileComponent implements OnInit {
       products: []
     }
   }
-  
+  active_status: string = 'نشطه';
   productsStatus: Array<Products> = [];
   private portSub : Subscription = new Subscription;
   private routeSub : Subscription = new Subscription;
@@ -83,14 +82,20 @@ export class SellerProfileComponent implements OnInit {
     this.portSub = this.actionService.getPortfolio(this.portfolioId).subscribe({
       next: (resData: Portfolio)=>{
         this.load = false;
-        resData.data.products.forEach(ele=>{
-          if(ele.active == status){
-            this.productsStatus.push(ele);
-            if(this.productsStatus.length == 0){
-              this.result = 'لايوجد عناصر'  
-            }
+        resData.data.products.forEach(ele=>{          
+          if(ele.active == status.target.value){
+            this.portfolio.data.products = resData.data.products;
+          }else{
+            this.result = 'لا يوجد عناصر';
+            this.portfolio.data.products = [];
           }
+          this.active_status = status.target.selectedOptions[0].innerText
+          this.filterModal.hide();
         })
+      },
+      error: ()=>{
+        this.load = false;
+        this.filterModal.hide();
       }
     })
   }

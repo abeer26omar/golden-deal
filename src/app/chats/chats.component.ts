@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ChatService } from '../services/chat.service';
-import { APIResponse6, MessagesList ,Messages, APIResponse7} from '../models/chat.model';
+import { MessagesList ,Messages, APIResponse7} from '../models/chat.model';
 import { Subscription } from 'rxjs';
 import { AdminService } from '../services/admin.service';
 
@@ -33,7 +33,7 @@ export class ChatsComponent implements OnInit {
     
   }
   ngOnInit(): void {
-    this.admin = this.adminService.getOption();
+    // this.admin = this.adminService.getOption();
     this.getAllPreMsgList()
   }
   sendMsg(){
@@ -55,22 +55,22 @@ export class ChatsComponent implements OnInit {
     this.chatService.getMessage().subscribe((data)=>{
       this.usersMsg.push(data)
     })
-    this.getChat(data.sender, data.receiver)
+    this.getChat(data.receiver)
   }
   getAllPreMsgList(){
     this.loader = true;
-    this.chatService.getAllPreMsgList().subscribe({
-      next: (res: APIResponse6<MessagesList>)=>{
+    this.chatService.getAllPreMsgList(this.userId).subscribe({
+      next: (res: Array<MessagesList>)=>{
         this.loader = false;
-        this.msgUsersList = res.data;        
+        this.msgUsersList = res;
       }
     })
   } 
-  getChat(senderId: any, reciever: any){
+  getChat(reciever: any){
     this.load = true;
-    this.receiverId = this.admin.id; 
+    // this.receiverId = this.admin.id; 
     this.receiverId =  reciever;
-    this.chatSub = this.chatService.getAllMessages(senderId,this.receiverId).subscribe({
+    this.chatSub = this.chatService.getAllMessages(this.userId,this.receiverId).subscribe({
       next: (res: APIResponse7<Messages>)=>{
         this.load = false;
         this.usersMsg = res.data 

@@ -19,10 +19,11 @@ const participants = [];
 
 var configDB = {
   "connectionLimit" : 10,
-  "host"            : "127.0.0.1",
-  "user"            : "vulter_deal_admin",
-  "password"        : "9Fa24r&1a",
-  "database"        : "vulter_deal"
+  "host"            : "93.104.210.236",
+  "port"            : "3306",
+  "user"            : "macbereg_gdadmin",
+  "password"        : "AA0wDs_njZO_",
+  "database"        : "macbereg_gd"
 };
 
 const connection = mysql.createConnection(configDB);

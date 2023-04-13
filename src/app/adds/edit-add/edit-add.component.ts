@@ -7,6 +7,7 @@ import { ProductsRequestService } from 'src/app/services/products-request.servic
 import { MacPrefixService } from 'src/app/services/mac-prefix.service';
 import { ActionsService } from 'src/app/services/actions.service';
 import { Regions } from 'src/app/models/actions.model';
+import { SwiperOptions } from 'swiper';
 declare var window: any;
 
 @Component({
@@ -146,6 +147,34 @@ export class EditAddComponent implements OnInit {
   get f(){
     return this.myForm.controls;
   }
+  config: SwiperOptions = {
+    slidesPerView: 5,
+    spaceBetween: 10,
+    navigation: false,
+    pagination: false,
+    scrollbar: false,
+    grabCursor: true,
+    breakpoints: {
+      992: {
+        slidesPerView: 5
+      },
+      768: {
+        slidesPerView: 4
+      },
+      575: {
+        slidesPerView: 3
+      },
+      425: {
+        slidesPerView: 2
+      },
+      375: {
+        slidesPerView: 1
+      },
+      320: {
+        slidesPerView: 1
+      }
+    }
+  };
   ngOnInit(): void {
     this.routeSub = this.router.params.subscribe((params: Params) => {
       this.addId = params['id'];
@@ -203,6 +232,20 @@ export class EditAddComponent implements OnInit {
         }
         this.myForm.get('product_image_5')?.patchValue(this.file,this.file.name);
       break;
+      case 6:
+        reader.onload = ()=>{
+          this.imgSrc6 = reader.result;
+          document.getElementById('imgSrc_6')?.setAttribute('src', this.imgSrc5)
+        }
+        this.myForm.get('product_image_6')?.patchValue(this.file,this.file.name);
+      break;
+      case 7:
+        reader.onload = ()=>{
+          this.imgSrc7 = reader.result;
+          document.getElementById('imgSrc_7')?.setAttribute('src', this.imgSrc5)
+        }
+        this.myForm.get('product_image_7')?.patchValue(this.file,this.file.name);
+      break;
     }
   }
   getCategories(){
@@ -225,7 +268,7 @@ export class EditAddComponent implements OnInit {
         this.Add.data.product_images.forEach(ele=>{
          this.images.push(ele.image_url)
         })
-        for(let i=5; i > this.Add.data.product_images.length; i--){
+        for(let i=7; i > this.Add.data.product_images.length; i--){
             this.rest_images.push(i)
           }
           if(this.Add.data.category_slug == 'car_plates'){

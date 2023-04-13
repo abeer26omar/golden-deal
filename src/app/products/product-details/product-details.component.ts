@@ -10,6 +10,7 @@ import { ResponseSuccess } from 'src/app/models/actions.model';
 import { AdminService } from 'src/app/services/admin.service';
 import { MacPrefixService } from 'src/app/services/mac-prefix.service';
 import { NgxGalleryOptions, NgxGalleryImage, NgxGalleryAnimation } from 'ngx-gallery-9';
+import { ChatService } from 'src/app/services/chat.service';
 
 declare var window: any;
 
@@ -72,6 +73,10 @@ export class ProductDetailsComponent implements OnInit {
   buyModal: any;
   success:any;
   faild: any;
+  chatModal: any;
+  messageTxt: string = '';
+  userId: any = localStorage.getItem('userId');
+  receiverId: any;
   errMsg: string = '';
   sucessMsg: string = '';
   admin: any;
@@ -83,7 +88,8 @@ export class ProductDetailsComponent implements OnInit {
     private router: Router,
     public actionService : ActionsService,
     private adminService: AdminService,
-    private macService: MacPrefixService) { }
+    private macService: MacPrefixService,
+    private chatService: ChatService) { }
 
   ngOnInit(): void {
     this.routeSub = this.route.params.subscribe((params: Params) => {
@@ -104,6 +110,9 @@ export class ProductDetailsComponent implements OnInit {
     );
     this.faild = new window.bootstrap.Modal(
       document.getElementById('faild'),{backdrop: this.macService.backdrop}
+    );
+    this.chatModal = new window.bootstrap.Modal(
+      document.getElementById('chatModal'),{backdrop: this.macService.backdrop}
     );
     this.galleryOptions = [
       {
@@ -136,7 +145,7 @@ export class ProductDetailsComponent implements OnInit {
     .subscribe({
       next:(productDetails: Product)=>{
         this.singleProduct = productDetails;
-          
+        this.receiverId = this.singleProduct.data.owner_id;          
         [...productDetails.data.product_images].forEach(e=>{
           this.imgUrls.push({
               small: e.image_url,
@@ -201,8 +210,23 @@ export class ProductDetailsComponent implements OnInit {
     this.buyModal.show()
   } 
   chat(data:any){
-    this.router.navigate([`/chat`])
-    this.adminService.setOption(data)
+    this.buyModal.hide()
+    this.chatModal.show()
+    // this.router.navigate([`/chat`])
+    // this.adminService.setOption(data)
+  }
+  sendMsg(){
+    const data = {
+      sender: this.userId,
+      receiver: this.receiverId,
+      message: this.messageTxt
+    }
+    this.chatService.sendMessage(data);
+    this.messageTxt = '';
+    this.chatModal.hide();
+    setTimeout(()=>{
+      this.router.navigate([`/chat`])
+    },50)
   }
   sellerProfile(id:number){
     this.router.navigate(['seller-profile',id])

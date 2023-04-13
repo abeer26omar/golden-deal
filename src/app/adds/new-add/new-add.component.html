@@ -19,7 +19,7 @@
                         <label class="form-check-label" for="agrement">
                             اتعهد واقسم بالله أنا المعلن أن أدفع عمولة الموقع وهي 1% من قيمة الخدمة. وفي حالة تقديم الخدمة لأكثر من شخص فإنني أتعهد بتحويل العمولة عن كل خدمة يتم تقديمها.  كما أتعهد بدفع*العمولة خلال 3 أيام من استلام مبلغ الخدمة 
                         </label>
-                        <div *ngIf="f['agrement'].untouched && f['agrement'].invalid" class="text-danger">يجب التحديد</div>
+                        <div *ngIf="submitted && f['agrement'].errors" class="text-danger">يجب التحديد</div>
                     </div>
                 </div>
             </div>
@@ -40,7 +40,7 @@
                                     value="{{category.slug}}" class="mx-2">{{category.title}}</mat-radio-button>
                                 </ng-container>
                             </mat-radio-group>
-                            <div *ngIf="f['productCategory'].touched && f['productCategory'].errors" class="text-danger">يجب تحديد تصنيف للمنتج</div>  
+                            <div *ngIf="submitted && f['productCategory'].errors" class="text-danger">يجب تحديد تصنيف للمنتج</div>  
                         </div>
                     </div>
                         <div class="col-12" *ngIf="defaultImage_add">
@@ -50,7 +50,7 @@
                                 style="width:100%">
                                 <ng-template class="col" swiperSlide>
                                     <label for="file1" class="file-upload"
-                                    [ngClass]="{'invalid': f['product_image_1'].touched && f['product_image_1'].errors}">
+                                    [ngClass]="{'invalid': submitted && f['product_image_1'].errors}">
                                         <input
                                             id="file1"
                                             type="file"
@@ -65,7 +65,7 @@
                                 </ng-template>
                                 <ng-template class="col" swiperSlide>
                                     <label for="file2" class="file-upload"
-                                    [ngClass]="{'invalid': f['product_image_2'].touched && f['product_image_2'].errors}">
+                                    [ngClass]="{'invalid': submitted && f['product_image_2'].errors}">
                                         <input
                                             id="file2"
                                             type="file"
@@ -80,7 +80,7 @@
                                 </ng-template>
                                 <ng-template class="col" swiperSlide>
                                     <label for="file3" class="file-upload"
-                                    [ngClass]="{'invalid': f['product_image_3'].touched && f['product_image_3'].errors}">
+                                    [ngClass]="{'invalid': submitted && f['product_image_3'].errors}">
                                         <input
                                             id="file3"
                                             type="file"
@@ -95,7 +95,7 @@
                                 </ng-template>
                                 <ng-template class="col" swiperSlide>
                                     <label for="file4" class="file-upload"
-                                    [ngClass]="{'invalid': f['product_image_4'].touched && f['product_image_4'].errors}">
+                                    [ngClass]="{'invalid': submitted && f['product_image_4'].errors}">
                                         <input
                                             id="file4"
                                             type="file"
@@ -172,7 +172,7 @@
                             <input type="text" class="form-control" id="productName" 
                             placeholder=""
                             formControlName="name">
-                            <div *ngIf="f['name'].touched && f['name'].errors" class="text-danger">يجب كتابه عنوان الإعلان </div>  
+                            <div *ngIf="submitted && f['name'].errors" class="text-danger">يجب كتابه عنوان الإعلان </div>  
                         </div>
                         <div class="col-md-6">
                             <label for="productMark" class="form-label">المنطقه</label>
@@ -180,6 +180,7 @@
                                 <option value="" disabled selected>اختر المنطقه</option>
                                 <option value="{{region.id}}" *ngFor="let region of regions">{{region.name}}</option>
                             </select>
+                            <div class="text-danger" *ngIf="submitted && f['region_id'].errors">يجب تحديد المنطقه</div>
                         </div>
                         <div class="col-md-6">
                             <label for="phone" class="form-label">رقم الجوال</label>
@@ -196,7 +197,7 @@
                                 formControlName="price" style="width: 60%;" [ngClass]="{'disabled': negotiable}">
                                     <a (click)="onNegotiable()" class="btn btn_negotiable" [ngClass]="{'btndisabled': negotiable}">علي السوم</a>
                             </div>
-                            <div *ngIf="f['price'].touched && f['price'].errors" class="text-danger">يجب تحديد سعر  للمنتج</div>  
+                            <div *ngIf="submitted && f['price'].errors" class="text-danger">يجب تحديد سعر  للمنتج</div>  
                         </div>
                         <ng-container *ngFor="let filter of filters.data.filters">
                             <div class="col-md-6">
@@ -264,8 +265,8 @@
                                 <input type="text" 
                                     *ngIf="filter.type == 'text' && categoryName !== 'car_plates'"
                                     class="form-control" [formControlName]="filter.slug_name">
+                                    <div *ngIf="submitted && f[filter.slug_name].value == '' " class="text-danger">يجب ادخال بيانات</div> 
                                 </div>
-                                <!-- <div *ngIf="f[filter.slug_name].touched && f[filter.slug_name].value == ''" class="text-danger">يجب ادخال بيانات</div>  -->
                         </ng-container>
                         <!-- <div class="col-md-6">
                             <label for="productSeller" class="form-label">عن البائع</label>
@@ -281,8 +282,7 @@
                             <label for="productDesc" class="form-label">الوصف</label>
                             <textarea type="text" class="form-control" id="productDesc" 
                             placeholder=""  formControlName="desc"></textarea>
-                            <div *ngIf="f['desc'].touched && f['desc'].errors" class="text-danger">يجب اضافه وصف للمنتج</div>  
-        
+                            <div *ngIf="submitted && f['desc'].errors" class="text-danger">يجب اضافه وصف للمنتج</div> 
                         </div>
                         <!-- <div class="col-md-6">
                             <label for="productMaterial" class="form-label">خامات المنتج</label>

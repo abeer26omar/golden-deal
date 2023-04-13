@@ -68,8 +68,8 @@ label.file-upload{
     flex-direction: column;
 }
  label.file-upload img{
-    width: 65px;
-    height: 65px;
+    /* width: 65px; */
+    height: 100px;
 }
  label.file-upload p{
     padding-top: 1rem;

@@ -89,25 +89,21 @@ span.name{
 .btn-site{
     background-color: var(--primary-color);
     color: var(--white);
+    padding: 0.5rem 2.5rem;
 }
 .btn-Merchant{
     background-color: transparent;
     color: var(--primary-color);
     border: 1px solid var(--primary-color);
 }
-.btn{
-    padding: 0.5rem 2.5rem;
-}
 @media screen and (max-width: 357px) {
-    .btn{
+    .btn-site{
         padding: 0.375rem 0.75rem;
     }
 }
-/* .prod-details .owner img{
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
-} */
+textarea{
+    resize: none;
+}
 .ownership-desc{
     display: flex;
     justify-content: center;

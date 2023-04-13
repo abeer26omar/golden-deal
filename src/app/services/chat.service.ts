@@ -3,7 +3,7 @@ import { environment as env } from 'src/environments/environment';
 import { io, Socket } from 'socket.io-client';
 import { Observable, Subject, tap } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { APIResponse6, APIResponse7, Messages, MessagesList, Support } from '../models/chat.model';
+import { APIResponse7, Messages, MessagesList, Support } from '../models/chat.model';
 import { ResponseSuccess } from '../models/actions.model';
 
 @Injectable({
@@ -27,7 +27,7 @@ export class ChatService {
     this.socket.emit('user_connected', userId)
   }
   sendMessage(data: any){
-    this.socket.emit('send_message', data)
+    this.socket.emit('send_message', data) 
   }
   getMessage() : Observable<any>{
     return new Observable<{sender: string, receiver: string, message: string}>(observer =>{
@@ -41,9 +41,10 @@ export class ChatService {
       this._refresh.next();
     }))
   }
-  getAllPreMsgList(){
-    return this.http.get<APIResponse6<MessagesList>>(`${env.api_url}/chat/get-conversation-list`,
-    this.httpOptions).pipe(tap(()=>{
+  getAllPreMsgList(userId: any){
+    return this.http.post<Array<MessagesList>>(`${env.socket_url}get_conversation_list`,{
+      sender: userId
+    }).pipe(tap(()=>{
       this._refresh.next();
     }))
   }

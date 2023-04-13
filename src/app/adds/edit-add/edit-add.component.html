@@ -10,7 +10,10 @@
                             </div>
                             <div class="col-12" *ngIf="Add.data.category_slug == 'cars'">
                                 <div class="row row-cols-md-4 row-cols-lg-6 g-3 justify-content-center">
-                                    <div class="col" *ngFor="let url of images ;let i='index+1'">
+                            <swiper
+                                [config]="config"
+                                style="width:100%">
+                                <ng-template class="col" swiperSlide *ngFor="let url of images ;let i='index+1'">
                                         <label for="file{{i}}" class="file-upload">
                                                 <input
                                                     id="file{{i}}"
@@ -20,11 +23,11 @@
                                                     (change)="onFileChange(i,$event)"
                                                     >
                                                 <div class="text-center">
-                                                    <img  id="imgSrc_{{i}}" [src]="url ? url : '../../../assets/images/add_new_icon.svg'" height="150px" width="150px">
+                                                    <img  id="imgSrc_{{i}}" [src]="url ? url : '../../../assets/images/plus_add_icon.svg'">
                                                 </div>
                                         </label>
-                                    </div> 
-                                    <div class="col" *ngFor="let i of rest_images">
+                                </ng-template> 
+                                <ng-template class="col" swiperSlide *ngFor="let i of rest_images">
                                         <label for="file{{i}}" class="file-upload">
                                                 <input
                                                     id="file{{i}}"
@@ -34,10 +37,11 @@
                                                     (change)="onFileChange(i,$event)"
                                                     >
                                                 <div class="text-center">
-                                                    <img id="imgSrc_{{i}}" src='../../../assets/images/add_new_icon.svg' height="150px" width="150px">
+                                                    <img id="imgSrc_{{i}}" src='../../../assets/images/plus_add_icon.svg'>
                                                 </div>
                                         </label>
-                                    </div> 
+                                </ng-template> 
+                            </swiper>
                                 </div>
                             </div>
                             <!-- <label  class="file-upload" (click)="openImgDialog()">

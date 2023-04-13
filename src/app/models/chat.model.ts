@@ -14,22 +14,14 @@ export interface Support{
     }
 }
 export interface MessagesList{
-            id: number,
-            sender: number,
-            receiver: {
-                id: number,
-                name: string,
-                image_url: string,
-                cover_url: string
-            },
-            message: string,
-            seen_at: number,
-            created_at: string,
-            updated_at: string
+    avatar: string
+    last_message_date: string,
+    message: string,
+    userid: number,
+    username: string
 }
-export interface APIResponse6<T>{
-    data: Array<T>
-}
+// export interface APIResponse6<T>{
+// }
 export interface Messages{
             id: number,
             sender: {

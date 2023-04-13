@@ -41,9 +41,12 @@ p.card-title{
 .media-2,.media-1{
     display: inline-block;
     max-width: 80%;
-    background-color: var(--bg-color);
-    border-radius: 22.0238px;
+    background-color: var(--chat_gb);
+    border-radius: 8px;
     width: fit-content;
+}
+.media-chat-reverse .media-2{
+    background-color: var(--gray-color);
 }
 .msg-txt{
     margin: 0;
@@ -80,10 +83,11 @@ p.card-title{
 
 }
 .publisher .outer{
-    background-color: var(--bg-color);
-    padding: 1rem;
-    border-radius: 44.0476px;
+    background-color: var(--white);
+    padding: .5rem;
+    border-radius: 30px;
     display: flex;
+    border: 1px solid var(--chat_gb);
     align-items: center;
     justify-content: space-between;
     width: -webkit-fill-available;
@@ -101,7 +105,7 @@ p.card-title{
     flex-grow: 1;
     border: none;
     outline: none !important;
-    background-color: transparent;
+    background-color: var(--white);
     resize: none;
 }
 .publisher-input:focus{

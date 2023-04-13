@@ -11,16 +11,14 @@
                         <ul ngbNav #nav="ngbNav" 
                             class="nav-pills p-0" orientation="vertical">
                             <li ngbNavItem *ngFor="let user of msgUsersList">
-                              <a ngbNavLink (click)="getChat(user.sender,user.receiver.id)">
+                              <a ngbNavLink (click)="getChat(user.userid)">
                                 <div class="column">
                                     <div class="chats">
                                         <div class="avatar">
-                                            <img [src]="(user.receiver.image_url == 
-                                            'https://deal.qbizns.com/storage/users/avatar/default.png' || !user.receiver.image_url) ?
-                                             '../../assets/images/Portrait_Placeholder.png' : user.receiver.image_url" alt="">
+                                            <img src="{{user.avatar ? user.avatar : '../../../../assets/images/placeholderimg.jpg'}}" alt="placeholderimg">
                                         </div>
                                         <div class="chat">
-                                            <p class="chat-name">{{user.receiver.name}}</p>
+                                            <p class="chat-name">{{user.username}}</p>
                                             <p class="chat-desc">{{user.message}}</p>
                                         </div>
                                     </div>
@@ -30,15 +28,15 @@
                                 <div class="page-content page-container" id="page-content">
                                         <div class="card">
                                             <div class="card-header justify-content-center">
-                                                <h4 class="card-title"><strong>{{user.receiver.name}}</strong></h4>
+                                                <h4 class="card-title"><strong>{{user.username}}</strong></h4>
                                             </div>
                                             <mat-progress-bar mode="indeterminate"  *ngIf="load" id="addprog"></mat-progress-bar>
                                             <div class="ps-container ps-theme-default ps-active-y mt-2" id="chat-content">
                                                 <div class="media media-chat" 
-                                                [ngClass]="{'media-chat-reverse' : user.sender === msg.receiver.id}"
+                                                [ngClass]="{'media-chat-reverse' : user.userid !== msg.receiver.id}"
                                                     *ngFor="let msg of usersMsg">
                                                     <div class="p-2 m-1 media-1 media-2">
-                                                        <img class="avatar" [src]="user.sender === msg.receiver.id ? (msg.sender.image_url == 
+                                                        <img class="avatar" [src]="user.userid === msg.receiver.id ? (msg.sender.image_url == 
                                                         'https://deal.qbizns.com/storage/users/avatar/default.png' || !msg.sender.image_url) ?
                                                          '../../assets/images/Portrait_Placeholder.png' : msg.sender.image_url : (msg.receiver.image_url == 
                                                         'https://deal.qbizns.com/storage/users/avatar/default.png' || !msg.receiver.image_url) ?
@@ -54,24 +52,23 @@
                                                 <div class="ps-scrollbar-y" tabindex="0" style="top: 0px; height: 2px;"></div>
                                             </div>
                                         </div>
-                                              <form action="">
-                                              <div class="publisher">
-                                                <div class="outer">
-                                                    <div class="d-flex align-items-center">
-                                                        <textarea class="publisher-input form-control" 
-                                                            type="text" 
-                                                            placeholder="اكتب هنا"
-                                                            [(ngModel)]="messageTxt"
-                                                            [ngModelOptions]="{standalone: true}"
-                                                            (keyup)="$event.keyCode === 13">
-                                                        </textarea>
-                                                    </div>
-                                                </div>
-                                                    <button class="btn text-info" (click)="sendMsg()">
-                                                        <img src="../../assets/images/send.svg" alt="" style="width: 50px;">
-                                                    </button>
-                                                </div>
-                                            </form>
+                                        <form action="">
+                                            <div class="publisher">
+                                              <div class="outer">
+                                                  <div class="d-flex align-items-center" style="width: 100%;">
+                                                      <textarea class="publisher-input form-control" 
+                                                          type="text" 
+                                                          placeholder="اكتب رسالتك هنا"
+                                                          [(ngModel)]="messageTxt"
+                                                          [ngModelOptions]="{standalone: true}"
+                                                          (keyup)="$event.keyCode === 13"></textarea>
+                                                  </div>
+                                              </div>
+                                                  <button class="btn text-info" (click)="sendMsg()">
+                                                      <img src="../../assets/images/send.svg" alt="" style="width: 50px;">
+                                                  </button>
+                                            </div>
+                                        </form>
                                         </div>
                                 </div>
                               </ng-template>
@@ -83,7 +80,7 @@
                                 <div class="column">
                                     <div class="chats">
                                         <div class="avatar">
-                                            <img src="../../assets/images/suportChat.svg" alt="avatar-img">
+                                            <img src="../../assets/images/support_chat_icon.svg" alt="avatar-img">
                                         </div>
                                         <div class="chat ">
                                             <p class="chat-name">الدعم</p>

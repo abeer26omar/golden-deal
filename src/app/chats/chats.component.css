@@ -97,16 +97,19 @@ p.title{
     align-items: end;
     max-width: 100%;
 }
-.media-2,.media-1{
+.media-1{
     display: inline-block;
     max-width: 80%;
-    background-color: var(--bg-color);
-    border-radius: 22.0238px;
+    background-color: var(--chat_gb);
+    border-radius: 8px;
     width: fit-content;
+    color: var(--primary-color);
+}
+.media-chat-reverse .media-1{
+    background-color: var(--gray-color);
 }
 .msg-txt{
     margin: 0;
-    padding: .5rem;
     color: var(--primary-color);
 }
 .avatar {
@@ -132,12 +135,17 @@ p.title{
     .publisher{
         flex-wrap: wrap;
     }
+    .media-2,.media-1{
+        max-width: 100%;
+    }
+
 }
 .publisher .outer{
-    background-color: var(--bg-color);
-    padding: 1rem;
-    border-radius: 44.0476px;
+    background-color: var(--white);
+    padding: .5rem;
+    border-radius: 30px;
     display: flex;
+    border: 1px solid var(--chat_gb);
     align-items: center;
     justify-content: space-between;
     width: -webkit-fill-available;
@@ -155,16 +163,15 @@ p.title{
     flex-grow: 1;
     border: none;
     outline: none !important;
-    background-color: transparent;
+    background-color: var(--white);
     resize: none;
 }
 .publisher-input:focus{
     box-shadow: none;
 }
-/* .publisher-input::placeholder{
-    vertical-align:middle
-} */
-
+textarea{
+    height: 40px;
+}
 .publisher-btn {
     background-color: transparent;
     border: none;

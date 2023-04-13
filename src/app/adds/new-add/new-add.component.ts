@@ -32,6 +32,7 @@ export class NewAddComponent implements OnInit {
   errorAdd: string = '';
   error_CarPlate: string = '';
   load: boolean = false;
+  submitted: boolean = false;
   error_CarPlate_bool: boolean = false;
   file!: File;
   imgSrc1: any;
@@ -139,15 +140,15 @@ export class NewAddComponent implements OnInit {
       negotiable: new FormControl(''),
       category_id: new FormControl(''),
       region_id: new FormControl('', [Validators.required]),
-      product_image_1: new FormControl(''),
-      product_image_2: new FormControl(''),
-      product_image_3: new FormControl(''),
-      product_image_4: new FormControl(''),
+      product_image_1: new FormControl('',[Validators.required]),
+      product_image_2: new FormControl('',[Validators.required]),
+      product_image_3: new FormControl('',[Validators.required]),
+      product_image_4: new FormControl('',[Validators.required]),
       product_image_5: new FormControl(''),
       product_image_6: new FormControl(''),
       product_image_7: new FormControl(''),
       plate_chars_filter_6: new FormGroup({
-        plate_chars_ar_1: new FormControl(''),
+        plate_chars_ar_1: new FormControl('',[Validators.required]),
         plate_chars_ar_2: new FormControl(''),
         plate_chars_ar_3: new FormControl(''),
       }),
@@ -157,7 +158,7 @@ export class NewAddComponent implements OnInit {
         plate_chars_en_3: new FormControl(''),
       }),
       plate_numbers_filter_6: new FormGroup({
-        plate_number_ar_1: new FormControl(''),
+        plate_number_ar_1: new FormControl('',[Validators.required]),
         plate_number_ar_2: new FormControl(''),
         plate_number_ar_3: new FormControl(''),
         plate_number_ar_4: new FormControl('')
@@ -504,7 +505,8 @@ export class NewAddComponent implements OnInit {
       })
     }
   }
-  submit(){    
+  submit(){  
+    this.submitted = true;  
     let plate_chars_en_filter_6: any, 
     plate_chars_filter_6: any,
     plate_number_en_filter_6_value: any,
@@ -557,7 +559,6 @@ export class NewAddComponent implements OnInit {
           })   
         } 
         else{
-          this.errorAdd = 'يجب ادخال البيانات'
           return;
         }
     }

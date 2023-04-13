@@ -270,6 +270,32 @@ aria-hidden="true"
       </div>
   </div>
 </div>
+<!-- modal chat -->
+<div class="modal fade"
+id="chatModal"
+tabindex="-1"
+aria-labelledby="exampleModalLabel"
+aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header justify-content-center">
+          <p>اكتب رسالتك هنا</p>
+        </div>
+        <div class="modal-body d-flex justify-content-between">
+                    <textarea class="publisher-input form-control" 
+                        type="text" 
+                        placeholder="اكتب هنا"
+                        [(ngModel)]="messageTxt"
+                        [ngModelOptions]="{standalone: true}"
+                        (keyup)="$event.keyCode === 13">
+                    </textarea>
+                <button class="btn text-info" (click)="sendMsg()">
+                    <img src="../../assets/images/send.svg" alt="" style="width: 50px;">
+                </button>
+        </div>
+  </div>
+</div>
 <!-- modal success -->
 <div id="success" 
 class="modal fade"

@@ -45,7 +45,9 @@ io.on('connection', function(socket) {
     (async () => {
       var receiversocketId = participants[data.sender];
       var socketId = participants[data.receiver];
-      var result = await connection.awaitQuery(`INSERT INTO messages (sender, receiver, message) VALUES (?, ?, ?)`, [data.sender, data.receiver, data.message]);
+      var send_recev_sum = (data.sender + data.receiver);
+      var chat_code = 'chat-'+send_recev_sum+'-'+(data.sender * data.receiver)+'-'+(send_recev_sum * 2)+'-code';
+      var result = await connection.awaitQuery(`INSERT INTO messages (chat_code, sender, receiver, message) VALUES (?, ?, ?)`, [chat_code, data.sender, data.receiver, data.message]);
       var msg = await connection.awaitQuery(`SELECT * FROM messages WHERE id = ?`, [result.insertId]);
       io.to(receiversocketId).emit("new_message", {"sender": msg[0].sender, "receiver": msg[0].receiver, "message": msg[0].message, "created_at": msg[0].created_at });
       io.to(socketId).emit("new_message", {"sender": msg[0].sender, "receiver": msg[0].receiver, "message": msg[0].message, "created_at": msg[0].created_at });
@@ -64,7 +66,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.post("/get_conversation_list", async function (req, res) {
   var response = [];
-  var messages = await connection.awaitQuery(`SELECT distinct receiver AS userid, (SELECT name FROM users WHERE id = messages.receiver) AS username, (SELECT image FROM users WHERE id = messages.receiver) AS avatar, (SELECT message FROM messages WHERE sender = ? AND receiver = userid ORDER BY created_at DESC LIMIT 1) AS message, (SELECT created_at FROM messages WHERE sender = ? AND receiver = userid ORDER BY created_at DESC LIMIT 1) AS last_message_date FROM messages WHERE sender = ?`, [req.body.sender,req.body.sender,req.body.sender]);
+  var messages = await connection.awaitQuery(`SELECT t1.* FROM messages t1 JOIN (SELECT chat_code, MAX(id) id FROM messages WHERE sender = ? OR receiver = ? GROUP BY chat_code) t2 ON t1.id = t2.id AND t1.chat_code = t2.chat_code ORDER BY id DESC`, [req.body.sender,req.body.sender,req.body.sender]);
   res.json(messages);
 });
 

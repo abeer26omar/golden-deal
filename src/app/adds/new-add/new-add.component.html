@@ -46,6 +46,7 @@
                         <div class="col-12" *ngIf="defaultImage_add">
                             <div class="row row-cols-md-4 row-cols-lg-6 g-3 justify-content-center">
                             <swiper
+                            class="adds_swipe"
                                 [config]="config"
                                 style="width:100%">
                                 <ng-template class="col" swiperSlide>
@@ -213,7 +214,8 @@
                                             class="form-control" 
                                             maxlength="1" 
                                             formControlName="plate_chars_ar_{{i}}"
-                                            (keyup)="getCardChar(i,$event)">
+                                            (keyup)="getCardChar(i,$event)"
+                                            [ngClass]="{'invalid_input': submitted && f['plate_chars_filter_6'].get('plate_chars_ar_1')?.errors}">
                                     </div>
                                     <p class="small text-muted">{{error_CarPlate}}</p> 
                                 </div>
@@ -237,7 +239,7 @@
                                             maxlength="1"
                                             formControlName="plate_number_ar_{{i}}" 
                                             (input)="convertNumbers(i,$event)"
-                                            >
+                                            [ngClass]="{'invalid_input': submitted && f['plate_numbers_filter_6'].get('plate_number_ar_1')?.errors}">
                                     </div>
                                 </div>
                                 <div class="row g-3" [formGroupName]="filter.slug_name"

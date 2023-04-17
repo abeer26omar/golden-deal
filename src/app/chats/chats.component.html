@@ -11,14 +11,14 @@
                         <ul ngbNav #nav="ngbNav" 
                             class="nav-pills p-0" orientation="vertical">
                             <li ngbNavItem *ngFor="let user of msgUsersList">
-                              <a ngbNavLink (click)="getChat(user.userid)">
+                              <a ngbNavLink (click)="getChat(user.sender === userId ? user.receiver : user.sender)">
                                 <div class="column">
                                     <div class="chats">
                                         <div class="avatar">
-                                            <img src="{{user.avatar ? user.avatar : '../../../../assets/images/placeholderimg.jpg'}}" alt="placeholderimg">
+                                            <img src="{{user.sender === userId ? avatar_base_url+user.receiver_avatar : avatar_base_url+user.sender_avatar}}" alt="placeholderimg">
                                         </div>
                                         <div class="chat">
-                                            <p class="chat-name">{{user.username}}</p>
+                                            <p class="chat-name">{{user.sender === userId ? user.receiver_name : user.sender_name}}</p>
                                             <p class="chat-desc">{{user.message}}</p>
                                         </div>
                                     </div>
@@ -28,21 +28,24 @@
                                 <div class="page-content page-container" id="page-content">
                                         <div class="card">
                                             <div class="card-header justify-content-center">
-                                                <h4 class="card-title"><strong>{{user.username}}</strong></h4>
+                                                <h4 class="card-title"><strong>{{user.sender === userId ? user.receiver_name : user.sender_name}}</strong></h4>
                                             </div>
                                             <mat-progress-bar mode="indeterminate"  *ngIf="load" id="addprog"></mat-progress-bar>
                                             <div class="ps-container ps-theme-default ps-active-y mt-2" id="chat-content">
                                                 <div class="media media-chat" 
-                                                [ngClass]="{'media-chat-reverse' : user.userid !== msg.receiver.id}"
+                                                [ngClass]="{'media-chat-reverse' : msg.sender.id !== userId}"
                                                     *ngFor="let msg of usersMsg">
                                                     <div class="p-2 m-1 media-1 media-2">
-                                                        <img class="avatar" [src]="user.userid === msg.receiver.id ? (msg.sender.image_url == 
-                                                        'https://deal.qbizns.com/storage/users/avatar/default.png' || !msg.sender.image_url) ?
-                                                         '../../assets/images/Portrait_Placeholder.png' : msg.sender.image_url : (msg.receiver.image_url == 
-                                                        'https://deal.qbizns.com/storage/users/avatar/default.png' || !msg.receiver.image_url) ?
-                                                         '../../assets/images/Portrait_Placeholder.png' : msg.receiver.image_url" alt="">
+                                                        <img class="avatar" [src]="user.sender === msg.sender.id ? msg.sender.image_url : msg.receiver.image_url" alt="">
                                                         <p class="msg-txt">{{msg.message}}</p>
                                                     </div>
+                                                    <!-- 
+                                                        [src]="user.receiver === msg.receiver.id ? (msg.sender.image_url == 
+                                                        'https://focused-merkle.185-92-223-5.plesk.page/golden-deal/public/storage/users/avatar/default.png' || !msg.sender.image_url) ?
+                                                         '../../assets/images/Portrait_Placeholder.png' : msg.sender.image_url : (msg.receiver.image_url == 
+                                                        'https://focused-merkle.185-92-223-5.plesk.page/golden-deal/public/storage/users/avatar/default.png' || !msg.receiver.image_url) ?
+                                                         '../../assets/images/Portrait_Placeholder.png' : msg.receiver.image_url"
+                                                     -->
                                                 </div>
                                                 <p class="text-danger text-center" *ngIf="errorTxt">{{errorTxt}}</p>
                                               <div class="ps-scrollbar-x-rail" style="left: 0px; bottom: 0px;">

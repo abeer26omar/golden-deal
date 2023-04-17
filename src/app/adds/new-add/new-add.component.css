@@ -204,6 +204,6 @@ select{
 input.disabled{
     background-color: var(--sec-text);
 }
-.invalid_input{
-    border-color: var(--semi-red);
+input.invalid_input{
+    border: 1px solid var(--semi-red);
 }

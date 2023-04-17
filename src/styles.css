@@ -413,6 +413,10 @@ input.star:checked ~ label.star:before {
 }
 .swiper-wrapper{
     align-items: center;
+    justify-content: center;
+}
+.adds_swipe .swiper-wrapper{
+    justify-content: flex-start;
 }
 /* nz-slider */
 .ant-slider-track{

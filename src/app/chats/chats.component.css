@@ -29,7 +29,7 @@ p.title{
     border-radius: 50%;
 }
 .side-chat .card-body .chats .chat{
-    width: -webkit-fill-available;
+    width: 100%;
     text-align: center;
 }
 .avatar-offline::after, 

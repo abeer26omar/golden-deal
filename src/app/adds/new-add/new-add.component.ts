@@ -140,15 +140,15 @@ export class NewAddComponent implements OnInit {
       negotiable: new FormControl(''),
       category_id: new FormControl(''),
       region_id: new FormControl('', [Validators.required]),
-      product_image_1: new FormControl('',[Validators.required]),
-      product_image_2: new FormControl('',[Validators.required]),
-      product_image_3: new FormControl('',[Validators.required]),
-      product_image_4: new FormControl('',[Validators.required]),
+      product_image_1: new FormControl(''),
+      product_image_2: new FormControl(''),
+      product_image_3: new FormControl(''),
+      product_image_4: new FormControl(''),
       product_image_5: new FormControl(''),
       product_image_6: new FormControl(''),
       product_image_7: new FormControl(''),
       plate_chars_filter_6: new FormGroup({
-        plate_chars_ar_1: new FormControl('',[Validators.required]),
+        plate_chars_ar_1: new FormControl(''),
         plate_chars_ar_2: new FormControl(''),
         plate_chars_ar_3: new FormControl(''),
       }),
@@ -158,7 +158,7 @@ export class NewAddComponent implements OnInit {
         plate_chars_en_3: new FormControl(''),
       }),
       plate_numbers_filter_6: new FormGroup({
-        plate_number_ar_1: new FormControl('',[Validators.required]),
+        plate_number_ar_1: new FormControl(''),
         plate_number_ar_2: new FormControl(''),
         plate_number_ar_3: new FormControl(''),
         plate_number_ar_4: new FormControl('')
@@ -381,84 +381,31 @@ export class NewAddComponent implements OnInit {
     this.categoryName = event.value;
     if(this.categoryName == 'car_plates'){
       this.defaultImage_add = false;
-      // this.myForm = new FormGroup({
-      //   agrement: new FormControl('', [Validators.required]),
-      //   seller_phone: new FormControl(''),
-      //   productCategory: new FormControl('car_plates', [Validators.required]),
-      //   name: new FormControl('', [Validators.required]),
-      //   price: new FormControl('', [Validators.required]),
-      //   desc: new FormControl('', [Validators.required]),
-      //   owner_id: new FormControl(this.ownerId),
-      //   negotiable: new FormControl(''),
-      //   category_id: new FormControl(''),
-      //   region_id: new FormControl('', [Validators.required]),
-      //   plate_chars_filter_6: new FormGroup({
-      //     plate_chars_ar_1: new FormControl(''),
-      //     plate_chars_ar_2: new FormControl(''),
-      //     plate_chars_ar_3: new FormControl(''),
-      //   }),
-      //   plate_chars_en_filter_6: new FormGroup({
-      //     plate_chars_en_1: new FormControl(''),
-      //     plate_chars_en_2: new FormControl(''),
-      //     plate_chars_en_3: new FormControl(''),
-      //   }),
-      //   plate_numbers_filter_6: new FormGroup({
-      //     plate_number_ar_1: new FormControl(''),
-      //     plate_number_ar_2: new FormControl(''),
-      //     plate_number_ar_3: new FormControl(''),
-      //     plate_number_ar_4: new FormControl('')
-      //   }),
-      //   plate_numbers_en_filter_6: new FormGroup({
-      //     plate_number_en_1: new FormControl(''),
-      //     plate_number_en_2: new FormControl(''),
-      //     plate_number_en_3: new FormControl(''),
-      //     plate_number_en_4: new FormControl('')
-      //   })
-      // })
+      this.myForm.get('plate_chars_filter_6')?.get('plate_chars_ar_1')?.setValidators([Validators.required]);
+      this.myForm.get('plate_chars_en_filter_6')?.get('plate_chars_en_1')?.setValidators([Validators.required]);
+      this.myForm.get('plate_numbers_filter_6')?.get('plate_number_ar_1')?.setValidators([Validators.required,Validators.pattern(/^[\u0660-\u0669]/)]);
+      this.myForm.get('plate_numbers_en_filter_6')?.get('plate_number_en_1')?.setValidators([Validators.required]);
+      this.myForm.get('plate_numbers_filter_6')?.get('plate_number_ar_2')?.setValidators([Validators.pattern(/^[\u0660-\u0669]/)]);
+      this.myForm.get('plate_numbers_filter_6')?.get('plate_number_ar_3')?.setValidators([Validators.pattern(/^[\u0660-\u0669]/)]);
+      this.myForm.get('plate_numbers_filter_6')?.get('plate_number_ar_4')?.setValidators([Validators.pattern(/^[\u0660-\u0669]/)]);
+      this.myForm.get('product_image_1')?.removeValidators([Validators.required]);
+      this.myForm.get('product_image_2')?.removeValidators([Validators.required]);
+      this.myForm.get('product_image_3')?.removeValidators([Validators.required]);
+      this.myForm.get('product_image_4')?.removeValidators([Validators.required]);
     }
     else{
       this.defaultImage_add = true;
-      // this.myForm = new FormGroup({
-      //   agrement: new FormControl('', [Validators.required]),
-      //   seller_phone: new FormControl(''),
-      //   productCategory: new FormControl('cars', [Validators.required]),
-      //   name: new FormControl('', [Validators.required]),
-      //   price: new FormControl('', [Validators.required]),
-      //   desc: new FormControl('', [Validators.required]),
-      //   owner_id: new FormControl(this.ownerId),
-      //   negotiable: new FormControl(''),
-      //   category_id: new FormControl(''),
-      //   region_id: new FormControl('', [Validators.required]),
-      //   product_image_1: new FormControl(''),
-      //   product_image_2: new FormControl(''),
-      //   product_image_3: new FormControl(''),
-      //   product_image_4: new FormControl(''),
-      //   product_image_5: new FormControl(''),
-      //   product_image_6: new FormControl(''),
-      //   product_image_7: new FormControl(''),
-      //   plate_chars_filter_6: new FormGroup({
-      //     plate_chars_ar_1: new FormControl(''),
-      //     plate_chars_ar_2: new FormControl(''),
-      //     plate_chars_ar_3: new FormControl(''),
-      //   }),
-      //   plate_chars_en_filter_6: new FormGroup({
-      //     plate_chars_en_1: new FormControl(''),
-      //     plate_chars_en_2: new FormControl(''),
-      //     plate_chars_en_3: new FormControl(''),
-      //   }),
-      //   plate_numbers_filter_6: new FormGroup({
-      //     plate_number_ar_1: new FormControl(''),
-      //     plate_number_ar_2: new FormControl(''),
-      //     plate_number_ar_3: new FormControl(''),
-      //     plate_number_ar_4: new FormControl('')
-      //   }),
-      //   plate_numbers_en_filter_6: new FormGroup({
-      //     plate_number_en_1: new FormControl(''),
-      //     plate_number_en_2: new FormControl(''),
-      //     plate_number_en_3: new FormControl(''),
-      //     plate_number_en_4: new FormControl('')
-      //   })
-      // })
+      this.myForm.get('plate_chars_filter_6')?.get('plate_chars_ar_1')?.removeValidators([Validators.required]);
+      this.myForm.get('plate_chars_en_filter_6')?.get('plate_chars_en_1')?.removeValidators([Validators.required]);
+      this.myForm.get('plate_numbers_filter_6')?.get('plate_number_ar_1')?.removeValidators([Validators.required]);
+      this.myForm.get('plate_numbers_en_filter_6')?.get('plate_number_en_1')?.removeValidators([Validators.required]);
+      this.myForm.get('plate_numbers_filter_6')?.get('plate_number_ar_2')?.removeValidators([Validators.pattern(/^[\u0660-\u0669]/)]);
+      this.myForm.get('plate_numbers_filter_6')?.get('plate_number_ar_3')?.removeValidators([Validators.pattern(/^[\u0660-\u0669]/)]);
+      this.myForm.get('plate_numbers_filter_6')?.get('plate_number_ar_4')?.removeValidators([Validators.pattern(/^[\u0660-\u0669]/)]);
+      this.myForm.get('product_image_1')?.setValidators([Validators.required]);
+      this.myForm.get('product_image_2')?.setValidators([Validators.required]);
+      this.myForm.get('product_image_3')?.setValidators([Validators.required]);
+      this.myForm.get('product_image_4')?.setValidators([Validators.required]);
     }
     this.categories.forEach(ele=>{
       if(ele.slug == this.categoryName){
@@ -539,9 +486,7 @@ export class NewAddComponent implements OnInit {
             else{
               formData.append(field, this.myForm.controls[field].value);
             }
-            console.log(field,this.myForm.controls[field].value);
-            
-          }
+        }
           this.load = true;
           this.sendSub = this.httpService.http.post<NewProduct>(`${env.api_url}/products/store-new-product`,
             formData,

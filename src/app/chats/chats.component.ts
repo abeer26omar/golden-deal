@@ -11,7 +11,7 @@ import { AdminService } from '../services/admin.service';
   styleUrls: ['./chats.component.css']
 })
 export class ChatsComponent implements OnInit {
-  userId = localStorage.getItem('userId');
+  userId = parseInt(localStorage.getItem('userId') || '') ;
   receiverId: any;
   admin: any;
   message: string = '';
@@ -26,7 +26,7 @@ export class ChatsComponent implements OnInit {
   loader: boolean = false;
   public msgUsersList: Array<MessagesList> = []
   public usersMsg: Array<Messages> = []
-
+  avatar_base_url: string = 'https://focused-merkle.185-92-223-5.plesk.page/golden-deal/public/storage/'
   public chatSub: Subscription = new Subscription;
   constructor(private chatService: ChatService,
     private adminService: AdminService) { 
@@ -62,7 +62,7 @@ export class ChatsComponent implements OnInit {
     this.chatService.getAllPreMsgList(this.userId).subscribe({
       next: (res: Array<MessagesList>)=>{
         this.loader = false;
-        this.msgUsersList = res;
+        this.msgUsersList = res;        
       }
     })
   } 
@@ -73,7 +73,9 @@ export class ChatsComponent implements OnInit {
     this.chatSub = this.chatService.getAllMessages(this.userId,this.receiverId).subscribe({
       next: (res: APIResponse7<Messages>)=>{
         this.load = false;
-        this.usersMsg = res.data 
+        this.usersMsg = res.data;
+        console.log(this.usersMsg);
+         
       },
       error: ()=>{
         this.load = false;

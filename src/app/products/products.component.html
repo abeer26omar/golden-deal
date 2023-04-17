@@ -170,7 +170,7 @@
       </ng-template>
 </swiper>
 <swiper [config]="config" style="width:80%;">
-  <ng-template swiperSlide *ngFor="let brand of filterbrandsOptions" class="pt-4">
+  <ng-template swiperSlide *ngFor="let brand of filterbrandsOptions" class="pt-2">
       <div class="sub_brand d-flex justify-content-center">
         <a [ngClass]="{'click': activeClass}"(click)="onApplayFiltersKeys('',brand.name)">{{brand.name}}</a>
       </div>

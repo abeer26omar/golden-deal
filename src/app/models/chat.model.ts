@@ -14,11 +14,16 @@ export interface Support{
     }
 }
 export interface MessagesList{
-    avatar: string
-    last_message_date: string,
+    chat_code: string
+    created_at: string,
+    id: number,
     message: string,
-    userid: number,
-    username: string
+    receiver: number,
+    receiver_avatar: string,
+    receiver_name: string,
+    sender: number,
+    sender_avatar: string,
+    sender_name: string
 }
 // export interface APIResponse6<T>{
 // }

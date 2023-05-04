@@ -96,7 +96,7 @@ export class ProductsRequestService {
     }))
   }
   searchResult(key: string){
-    return this.http.get<APIResponse5<Search>>(`${env.api_url}/products/search-products/search-with-key?key=${key}`,this.httpOptions).pipe(tap(()=>{
+    return this.http.get<APIResponse<Products>>(`${env.api_url}/products/search-products/search-with-key?key=${key}`,this.httpOptions).pipe(tap(()=>{
       this._refresh.next();
     }))
   }

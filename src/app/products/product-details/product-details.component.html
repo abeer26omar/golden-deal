@@ -282,12 +282,18 @@ aria-hidden="true"
             <p class="prod-name">{{singleProduct.data.desc}}</p>
         </div>
         <div class="modal-footer">
-          <a style="width:100%" href="tel:+{{singleProduct.data.seller_phone}}" class="btn btn-prim">اتصال <img src="../../../assets/images/call.svg" alt="call"></a>
-          <a style="width:100%;" class="btn btn-sec btn-deposit" data-bs-dismiss="modal">عربون <img src="../../../assets/images/deposit_icon.svg" alt="deposit_icon"></a>
+          <a style="width:100%" 
+            href="tel:+{{singleProduct.data.seller_phone}}" 
+            class="btn btn-prim" [ngClass]="{'pe-none': singleProduct.data.seller_phone == null}">اتصال <img src="../../../assets/images/call.svg" alt="call"></a>
+          <a style="width:100%;" 
+            class="btn btn-sec btn-deposit" data-bs-dismiss="modal">عربون <img src="../../../assets/images/deposit_icon.svg" alt="deposit_icon"></a>
         </div>
         <div class="modal-footer justify-content-evenly">
-            <a (click)="chat(singleProduct.data.admin_details)" class="btn btn-sec" data-bs-dismiss="modal">محادثه <img src="../../../assets/images/chat.svg" alt="chat"></a>
-            <a  href="https://api.whatsapp.com/send?phone=966{{singleProduct.data.seller_phone}}" target="_blank" class="btn btn-prim btn-whats">واتساب <img src="../../../assets/images/whatsapp_icon.svg" alt="whatsapp_icon"></a>
+            <a (click)="chat(singleProduct.data.admin_details)" 
+            class="btn btn-sec" data-bs-dismiss="modal">محادثه <img src="../../../assets/images/chat.svg" alt="chat"></a>
+            <a  href="https://api.whatsapp.com/send?phone=966{{singleProduct.data.seller_phone}}" 
+            [ngClass]="{'pe-none': singleProduct.data.seller_phone == null}"
+            target="_blank" class="btn btn-prim btn-whats">واتساب <img src="../../../assets/images/whatsapp_icon.svg" alt="whatsapp_icon"></a>
         </div>
       </div>
   </div>
@@ -301,8 +307,13 @@ aria-hidden="true"
 >
   <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
-        <div class="modal-header justify-content-center">
-          <p>اكتب رسالتك هنا</p>
+        <div class="modal-header justify-content-start">
+            <div class="col-5">
+                <button type="button" class="btn p-0" data-bs-dismiss="modal" aria-label="Close">
+                  <img src="../../assets/images/close.svg" alt="close">
+                </button>
+            </div>
+            <p>اكتب رسالتك هنا</p>
         </div>
         <div class="modal-body d-flex justify-content-between">
                     <textarea class="publisher-input form-control" 
@@ -327,7 +338,13 @@ aria-hidden="true"
 >
 	<div class="modal-dialog modal-dialog-centered modal-sm">
 		<div class="modal-content">
-			
+			<div class="modal-header justify-content-start">
+                <div class="col-5">
+                    <button type="button" class="btn p-0" data-bs-dismiss="modal" aria-label="Close">
+                      <img src="../../assets/images/close.svg" alt="close">
+                    </button>
+                </div>
+            </div>
 			<div class="modal-body text-center">
                 <img src="../../assets/images/sucess-mark.svg" alt="sucess-mark" width="67px">
 				<p class="py-4">{{sucessMsg}}</p>
@@ -344,7 +361,13 @@ aria-hidden="true"
 >
 	<div class="modal-dialog modal-dialog-centered modal-sm">
 		<div class="modal-content">
-			
+			<div class="modal-header justify-content-start">
+                <div class="col-5">
+                    <button type="button" class="btn p-0" data-bs-dismiss="modal" aria-label="Close">
+                      <img src="../../assets/images/close.svg" alt="close">
+                    </button>
+                </div>
+            </div>
 			<div class="modal-body text-center">
                 <img src="../../../assets/images/faild-mark.svg" alt="faild-mark" width="67px">
 				<p class="py-4">{{errMsg}}</p>

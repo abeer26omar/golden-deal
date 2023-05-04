@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { APIResponse5, Search } from 'src/app/models/products.model';
+import { APIResponse, Products, Search } from 'src/app/models/products.model';
+import { ActionsService } from 'src/app/services/actions.service';
 import { ProductsRequestService } from 'src/app/services/products-request.service';
 
 @Component({
@@ -16,11 +17,13 @@ export class SearchResultComponent implements OnInit {
   key2: any;
   loader: boolean = false;
   private routeSub: Subscription = new Subscription;
-  public searchRes : Array<Search> = [];
+  public searchRes : Array<Products> = [];
+  owner_id: any;
 
   constructor(private route: ActivatedRoute,
     private productService: ProductsRequestService,
-    private router: Router) { 
+    private router: Router,
+    public actionService: ActionsService,) { 
     } 
     
     ngOnInit(): void {
@@ -28,12 +31,13 @@ export class SearchResultComponent implements OnInit {
         this.key = param['key'];
       });    
       this.getSearchResult(this.key);
+      this.owner_id = localStorage.getItem('userId');
   }
   getSearchResult(key: string){
     this.loader = true;
     this.searchRes = [];
      this.routeSub = this.productService.searchResult(key).subscribe({
-      next: (res: APIResponse5<Search>)=>{
+      next: (res: APIResponse<Products>)=>{
         this.loader = false;
         this.searchRes = res.data;
       },
@@ -41,6 +45,13 @@ export class SearchResultComponent implements OnInit {
         this.loader = false;
       }
      })
+  }
+  sellerProfile(id:number){
+    if(id == this.owner_id){
+      this.router.navigate(['/adds',id])
+    }else{
+      this.router.navigate(['seller-profile',id])
+    }
   }
   search(name:any){
     this.key2 = name.target.value;    

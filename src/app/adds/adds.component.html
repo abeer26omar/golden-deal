@@ -378,9 +378,14 @@ aria-hidden="true"
 >
   <div class="modal-dialog modal-dialog-centered modal-sm">
       <div class="modal-content">
-        <div class="modal-header justify-content-center">
-          <h5 class="modal-title text-center" >اضافه فلتر</h5>
-        </div>
+        <div class="modal-header justify-content-start">
+          <div class="col-5">
+              <button type="button" class="btn p-0" data-bs-dismiss="modal" aria-label="Close">
+                <img src="../../assets/images/close.svg" alt="close">
+              </button>
+            </div>
+            <h5 class="modal-title text-center" >اضافه فلتر</h5>
+      </div>
         <mat-progress-bar mode="indeterminate" class="my-3" *ngIf="load" id="addprog"></mat-progress-bar>
         <p class="text-center" *ngIf="result">{{result}}</p>
         <div class="modal-body">
@@ -405,11 +410,16 @@ aria-hidden="true"
 >
 	<div class="modal-dialog modal-dialog-centered modal-sm">
 		<div class="modal-content">
-			<div class="modal-header justify-content-center">
-        <img src="../../assets/images/sucess-mark.svg" alt="sucess-mark" width="67px">
-			</div>
+			<div class="modal-header justify-content-start">
+        <div class="col-5">
+            <button type="button" class="btn p-0" data-bs-dismiss="modal" aria-label="Close">
+              <img src="../../assets/images/close.svg" alt="close">
+            </button>
+        </div>
+    </div>
 			<div class="modal-body text-center">
-        <p>{{successMsg}}</p>
+        <img src="../../assets/images/sucess-mark.svg" alt="sucess-mark" width="67px">
+        <p class="py-3">{{successMsg}}</p>
 			</div>
 		</div>
 	</div>
@@ -423,11 +433,16 @@ aria-hidden="true"
 >
 	<div class="modal-dialog modal-dialog-centered modal-sm">
 		<div class="modal-content">
-			<div class="modal-header justify-content-center">
-        <img src="../../assets/images/faild-mark.svg" alt="faild-mark" width="67px">
-			</div>
+			<div class="modal-header justify-content-start">
+        <div class="col-5">
+            <button type="button" class="btn p-0" data-bs-dismiss="modal" aria-label="Close">
+              <img src="../../assets/images/close.svg" alt="close">
+            </button>
+        </div>
+    </div>
 			<div class="modal-body text-center">
-        <p>{{error}}</p>
+        <img src="../../assets/images/faild-mark.svg" alt="faild-mark" width="67px">
+        <p class="py-3">{{error}}</p>
 			</div>
 		</div>
 	</div>

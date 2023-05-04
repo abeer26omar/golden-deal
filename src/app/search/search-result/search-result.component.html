@@ -8,14 +8,13 @@
     </div>
   </div>
 </div>
-<app-adds-banner></app-adds-banner>
+<!-- <app-adds-banner></app-adds-banner> -->
 <section class="buy-record mt-5 mb-5">
     <div class="header ">
         <span class="title"><img src="../../assets/images/left-arrow.svg" class="ps-2">نتائج البحث</span>
     </div>
-    <div class="my-prods pt-5 pb-5 text-center">
-
-      <div class="loader pt-5 pb-5" *ngIf="loader" dir="ltr">
+    <div class="my-prods py-5">
+      <div class="loader py-5 text-center" *ngIf="loader" dir="ltr">
         <svg version="1.1" id="L3" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
       viewBox="0 0 100 100" width="70px" height="70px" enable-background="new 0 0 0 0" xml:space="preserve">
       <circle fill="none" stroke="#E29547" stroke-width="4" cx="50" cy="50" r="44" style="opacity:0.7;"/>
@@ -34,22 +33,91 @@
       <p class="text text-center" *ngIf="(!error) && searchRes.length == 0 ">لا يوجد اعلانات</p>
         <div class="products-row row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4 justify-content-start">
               <div class="col wow" *ngFor="let add of searchRes">
-                <div class="card h-100">
-                  <div class="card-header text-center" >
-                    <img *ngIf="add.default_image" src="{{add.default_image ? add.default_image : '../../assets/images/placeholderimg.jpg'}}" alt="car" width="100%" height="200px !important">
-                  </div>
-                  <div class="card-body text-center">
-                    <a style="cursor: pointer;" (click)="productDetails(add.id)">
-                      <h4>{{(add.name.length > 20)? (add.name | slice:0:20)+'..':(add.name)}}</h4>
+                <div class="card h-100" *ngIf="add.category_slug !== 'car_plates'">
+                  <div class="card-header text-center">
+                    <a (click)="productDetails(add.id)" [ngClass]="{'pe-none': add.status === 'sold' }">
+                      <img src="{{add.default_image ? add.default_image : '../../assets/images/placeholderimg.jpg'}}" alt="car" width="100%" height="200px !important">
                     </a>
-                    <p *ngIf="add.category_slug == 'cars'" class="discription">{{(add.desc.length > 40)? (add.desc| slice:0:40)+'..': (add.desc)}}</p>
-                    <p class="time">
-                      <img src="../../assets/images/clock.svg" alt="clock"><span>{{add.created_since}} يوم</span>
-                    </p>
+                    <div class="favorite" *ngIf="add.status === 'active'">
+                        <a (click)="actionService.removeFav(add.id)" class="btn add_fav p-0" *ngIf="add.product_fav == true">
+                         <img src="../../assets/images/already_fav_icon.svg" alt="already_fav_icon" srcset="../../assets/images/already_fav_icon.svg">
+                        </a>
+                        <a (click)="actionService.addToFav(add.id)" class="btn add_fav p-0" *ngIf="add.product_fav == false">
+                          <img src="../../assets/images/favorite_icon.svg" alt="addToFav" srcset="../../assets/images/favorite_icon.svg">                         
+                        </a>
+                    </div>
+                    <div class="favorite" *ngIf="add.status === 'sold'">
+                      <img src="../../assets/images/solid-flag.svg" alt="">
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <a  (click)="productDetails(add.id)" [ngClass]="{'pe-none': add.status === 'sold' }">{{(add.name.length > 20)? (add.name | slice:0:20)+'..':(add.name)}}</a>
+                      <img src="../../assets/images/nego_icon.svg" alt="nego_icon" *ngIf="add.negotiable == 1">
+                    </div>
+                    <p class="time"><img src="../../assets/images/clock.svg" alt="clock"><span>منذ {{add.created_since | dateAgo}}</span></p>
+                    <div class="evaluation d-flex justify-content-between align-items-center">
+                      <p><img src="../../assets/images/location_icon (2).svg" alt="location_icon"> {{add.region_name == '' ? 'غير معروف': add.region_name}}</p>
+                      <div class="person d-flex align-items-center">
+                          <img class="ps-1" src="../../assets/images/profile_icon.svg" alt="profile_icon" width="20px" >
+                          <a (click)="sellerProfile(add.owner_id)" style="cursor: pointer;">
+                            {{add.owner.name}}
+                          </a>                      
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card h-100" *ngIf="add.category_slug == 'car_plates'">
+                  <div class="card-header plates text-center" >
+                    <a (click)="productDetails(add.id)"
+                    [ngClass]="{'pe-none': add.status === 'sold' }">
+                      <img
+                        *ngIf="add.category_slug == 'car_plates'" 
+                        src="../../assets/images/car_paletes_details.svg" alt="carplate_img" width="100%" height="200px !important">
+                    </a>
+                    <div  class="favorite" *ngIf="add.status === 'active'">
+                        <a (click)="actionService.removeFav(add.id)" class="btn add_fav p-0" *ngIf="add.product_fav == true">
+                         <img src="../../assets/images/already_fav_icon.svg" alt="already_fav_icon" srcset="../../assets/images/already_fav_icon.svg">
+                        </a>
+                        <a (click)="actionService.addToFav(add.id)" class="btn add_fav p-0" *ngIf="add.product_fav == false">
+                          <img src="../../assets/images/favorite_icon.svg" alt="addToFav" srcset="../../assets/images/favorite_icon.svg">                         
+                        </a>
+                    </div>
+                    <div class="favorite" *ngIf="add.status === 'sold'">
+                      <img src="../../assets/images/solid-flag.svg" alt="">
+                    </div>  
+                  </div>
+                  <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <a (click)="productDetails(add.id)" [ngClass]="{'pe-none': add.status === 'sold' }"
+                        >{{(add.name.length > 20)? (add.name | slice:0:20)+'..':(add.name)}}</a>
+                      <img src="../../assets/images/nego_icon.svg" alt="nego_icon" *ngIf="add.negotiable == 1">
+                    </div>
+                    <ng-container  *ngFor="let property of add.properties">
+                      <span  *ngIf="property.type == 'text'">
+                          <span *ngIf="property.name_ar == 'حروف اللوحة عربي'" class="card_chars_ar">{{property.filter_value.filter_value}}</span>
+                          <span *ngIf="property.name_ar == 'حروف اللوحة انجليزي'" class="card_chars_en">{{property.filter_value.filter_value}}</span>
+                          <span *ngIf="property.name_ar == 'ارقام اللوحة عربي'" class="card_num_ar">{{property.filter_value.filter_value}}</span>
+                          <span *ngIf="property.name_ar == 'ارقام اللوحة انجليزي'" class="card_num_en">{{property.filter_value.filter_value}}</span>
+                      </span>
+                    </ng-container>
+                    <div class="d-flex justify-content-between align-items-center">
+                      <p class="card_num">{{add.price}}</p>
+                      <p class="time"><img src="../../assets/images/clock.svg" alt="clock"><span>منذ {{add.created_since | dateAgo}}</span></p>
+                    </div>
+                    <div class="evaluation d-flex justify-content-between align-items-center">
+                      <p><img src="../../assets/images/location_icon (2).svg" alt="location_icon"> {{add.region_name == null ? 'غير معروف': add.region_name}}</p>
+                      <div class="person d-flex align-items-center">
+                          <img class="ps-1" src="../../assets/images/profile_icon.svg" alt="profile_icon" width="20px" >
+                          <a (click)="sellerProfile(add.owner_id)">
+                            {{add.owner.name}}
+                          </a>                      
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
-          </div> 
+        </div> 
     </div>
 </section>
 <!-- <app-testimonial></app-testimonial> -->

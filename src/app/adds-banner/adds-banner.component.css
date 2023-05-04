@@ -2,9 +2,25 @@
 .carousel-control-prev{
     display: none;
 }
+.picsum-img-wrapper{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden
+}
 .picsum-img-wrapper img{
+    min-height:400px;
     position: relative;
-    object-fit: cover;
+    flex-shrink: 0;
+    -webkit-flex-shrink: 0;
+    /* max-width:70%;
+    max-height:90%; */
+}
+@media screen and (max-width: 575px) {
+    .picsum-img-wrapper img{
+        min-height: auto;
+    }
 }
 .picsum-img-wrapper img,
 .picsum-img-wrapper {

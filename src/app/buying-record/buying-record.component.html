@@ -31,8 +31,8 @@
                         <h4>{{(record.name.length > 20)? (record.name | slice:0:20)+'..':(record.name)}}</h4>
                       <p class="discription" *ngIf="record.desc !== null">{{(record.desc.length > 40)? (record.desc| slice:0:40)+'..': (record.desc)}}</p>
                       <div class="evaluation d-flex justify-content-between align-items-center">
-                        <p class="time"><img src="../../assets/images/clock.svg" alt="clock"><span>{{record.created_since}}ايام</span></p>
-                        <p  class="m-0"><img src="../../assets/images/location_icon (2).svg" alt="location_icon"> {{record.owner_area == null ? 'غير معروف': record.owner_area}}</p>
+                        <p class="time"><img src="../../assets/images/clock.svg" alt="clock"><span>منذ {{record.created_since | dateAgo}}</span></p>
+                        <p  class="m-0"><img src="../../assets/images/location_icon (2).svg" alt="location_icon"> {{record.region_name == '' ? 'غير معروف': record.region_name}}</p>
                       </div>
                     </div>
                   </div>
@@ -59,8 +59,8 @@
                         <p class="card_num">{{record.price}}</p>
                       </div>
                       <div class="evaluation d-flex justify-content-between align-items-center">
-                        <p class="time"><img src="../../assets/images/clock.svg" alt="clock"><span>{{record.created_since}}ايام</span></p>
-                        <p  class="m-0"><img src="../../assets/images/location_icon (2).svg" alt="location_icon"> {{record.owner_area == null ? 'غير معروف': record.owner_area}}</p>
+                        <p class="time"><img src="../../assets/images/clock.svg" alt="clock"><span>منذ {{record.created_since | dateAgo}}</span></p>
+                        <p  class="m-0"><img src="../../assets/images/location_icon (2).svg" alt="location_icon"> {{record.region_name == '' ? 'غير معروف': record.region_name}}</p>
                       </div>
                     </div>
                   </div>

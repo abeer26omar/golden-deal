@@ -18,6 +18,7 @@ import { AddressComponent } from './address/address.component';
 import { AddEditAddressComponent } from './address/add-edit-address/add-edit-address.component';
 import { AuthGuardGuard } from './Guards/auth-guard.guard';
 import { SellerProfileComponent } from './seller-profile/seller-profile.component';
+import { DepositComponent } from './deposit/deposit.component';
 
 
 
@@ -40,6 +41,7 @@ const routes: Routes = [
   { path:'address', component: AddressComponent, canActivate:[AuthGuardGuard]},
   { path:'add', component: AddEditAddressComponent, canActivate:[AuthGuardGuard]},
   { path:'edit/:id', component:AddEditAddressComponent, canActivate:[AuthGuardGuard]},
+  { path:'deposit', component: DepositComponent},
   { path:'**', component:NotfoundComponent}
 ];
 const routerOptions: ExtraOptions = {

@@ -101,8 +101,7 @@ export interface Purchases{
     },
     properties: Array<Product_Properties>,
     price: string,
-    owner_area: string
-
+    region_name: string
 }
 interface Product_Properties{
     id: number,

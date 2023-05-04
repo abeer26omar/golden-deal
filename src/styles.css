@@ -54,7 +54,8 @@ body {
 .btn:focus,
 .btn:active,
 input:focus,
-button:focus{
+button:focus,
+.btn.show{
     box-shadow: none !important;
     outline: none;
 }
@@ -267,6 +268,13 @@ input.star:checked ~ label.star:before {
     padding: .5rem !important;
     color: var(--white) !important;
 }
+#payDepositModal .modal-header{
+    justify-content: flex-start;
+}
+#payDepositModal .mat-form-field-appearance-fill .mat-form-field-infix,
+.deposit .mat-form-field-appearance-fill .mat-form-field-infix{
+    padding: 1em 0 0.75em 0;
+}
 .products-row .card{
     background-color: var(--bg-color);
     border: 0.956962px solid #AAAAAA;
@@ -295,11 +303,15 @@ input.star:checked ~ label.star:before {
     background-color: var(--bg-color);
     border-radius: 15.3114px;
 }
-.products-row .card-body h4{
+.products-row .card-body a{
     font-family: var(--font-family);
     color: var(--primary-color);
     font-weight: 600;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
+}
+.products-row .card-body .evaluation a{
+    font-weight: 500;
+    font-size: 1rem;
 }
 .products-row .card-body .discription{
     color: var(--sec-text);
@@ -413,7 +425,7 @@ input.star:checked ~ label.star:before {
 }
 .swiper-wrapper{
     align-items: center;
-    justify-content: center;
+    justify-content: start;
 }
 .adds_swipe .swiper-wrapper{
     justify-content: flex-start;
@@ -459,6 +471,9 @@ input.star:checked ~ label.star:before {
     background-color: var(--primary-color);
     color: var(--white);
 }
+.add_images .mat-radio-button.mat-radio-disabled.mat-radio-checked .mat-radio-label-content {
+    color: var(--white);
+}
 .filters .mat-radio-button{
     background-color: var(--gray-color);
     padding: .5rem 1rem;
@@ -473,9 +488,9 @@ input.star:checked ~ label.star:before {
     color: var(--white);
 }
 .form-select {
-    padding: 0.375rem .75rem 0.375rem 0.75rem;
+    padding: 0.375rem 0.75rem 0.375rem 1.75rem;
     color: var(--new_gray);
     background-color: var(--gray-color);
-    background-position: left 0.75rem center;
+    background-position: left 0.3rem center;
     border-radius: 8px;
 }

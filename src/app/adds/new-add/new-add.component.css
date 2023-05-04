@@ -27,6 +27,7 @@
 }
 .form-check {
     padding-right: 2.5em;
+    padding-left: 0em;
 }
 .form-check .form-check-input {
     float: right;
@@ -71,8 +72,8 @@ label.file-upload.invalid{
     border-color: var(--offline);
 }
  label.file-upload img{
-    width: 65px;
-    height: 65px;
+    width: 100%;
+    height: 100%;
 }
  label.file-upload p{
     padding-top: 1rem;
@@ -206,4 +207,8 @@ input.disabled{
 }
 input.invalid_input{
     border: 1px solid var(--semi-red);
+}
+.rest_icon{
+    position: absolute;
+    right: 4px;
 }

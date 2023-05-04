@@ -1,0 +1,50 @@
+<div class="main my-5">
+    <div class="container py-5">
+            <p class="main-title text-center">دفع العموله</p>
+            <div class="deposit d-flex justify-content-center">
+                <div class="col-9">
+                      <form [formGroup]="depositFrom">
+                          <div class="col">
+                              <mat-form-field appearance="fill">
+                                <mat-label>مبلغ البيع كامل</mat-label>
+                                <input type="number" 
+                                    matInput 
+                                    placeholder="ادخل المبلغ هنا" 
+                                    (change)="calcDeposit($event)"
+                                    formControlName="fullValue">
+                              </mat-form-field>
+                          </div>
+                          <div class="col">
+                              <mat-form-field appearance="fill">
+                                <mat-label>العموله 1% </mat-label>
+                                <input 
+                                    matInput 
+                                    value="{{deposit}}" 
+                                    readonly
+                                    formControlName="depositValue">
+                              </mat-form-field>
+                          </div>
+                      </form>
+                  <p class="sec-title">معلومات الدفع</p>
+                    <div class="col">
+                      <mat-form-field  appearance="fill">
+                        <mat-label>الاسم</mat-label>
+                        <input type="text" matInput value="مؤسسه شبكات المميز لتقنيه المعلومات" readonly/>
+                      </mat-form-field>
+                    </div>
+                    <div class="col">
+                      <mat-form-field appearance="fill" >
+                        <mat-label>رقم الحساب الجارى</mat-label>
+                        <input matInput value="2140993259940" readonly/>
+                      </mat-form-field>
+                    </div>
+                    <div class="col">
+                      <mat-form-field appearance="fill" >
+                        <mat-label>رقم الحساب الموحد / اللأيبان</mat-label>
+                        <input matInput value="SA5520000002140993259940" readonly/>
+                      </mat-form-field>
+                    </div>
+                </div>
+            </div>
+          </div>
+</div>

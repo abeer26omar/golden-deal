@@ -26,7 +26,6 @@ export class BuyingRecordComponent implements OnInit {
       next: (resData: APIResponse2<Purchases>)=>{
         this.loadding = false;
         this.records = resData.data;
-        console.log(this.records);
         if(this.records.length == 0){
           this.error = 'لا يوجد مشتريات'
         }else{

@@ -5,9 +5,7 @@ import { Subscription } from 'rxjs';
 import { ProductsRequestService } from '../../services/products-request.service';
 import { NgForm } from '@angular/forms';
 import { ActionsService } from 'src/app/services/actions.service';
-import { HttpErrorResponse } from '@angular/common/http';
 import { ResponseSuccess } from 'src/app/models/actions.model';
-import { AdminService } from 'src/app/services/admin.service';
 import { MacPrefixService } from 'src/app/services/mac-prefix.service';
 import { NgxGalleryOptions, NgxGalleryImage, NgxGalleryAnimation } from 'ngx-gallery-9';
 import { ChatService } from 'src/app/services/chat.service';
@@ -62,7 +60,9 @@ export class ProductDetailsComponent implements OnInit {
       ],
       owner_ratings: [],
       negotiable: 0,
-      properties:[]
+      properties:[],
+      region_id: 0,
+      region_name: ""
     }
   }
   error: string = '';
@@ -80,6 +80,7 @@ export class ProductDetailsComponent implements OnInit {
   errMsg: string = '';
   sucessMsg: string = '';
   admin: any;
+  owner_id: any;
   private routeSub: Subscription = new Subscription;
   private productSub: Subscription = new Subscription;
   imgUrls :any = [];
@@ -87,7 +88,6 @@ export class ProductDetailsComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     public actionService : ActionsService,
-    private adminService: AdminService,
     private macService: MacPrefixService,
     private chatService: ChatService) { }
 
@@ -96,6 +96,7 @@ export class ProductDetailsComponent implements OnInit {
       this.ProductId = params['id'];
       this.getProductDetails(this.ProductId);
     });
+    this.owner_id = localStorage.getItem('userId')
     this.formModal = new window.bootstrap.Modal(
       document.getElementById('myModal'),{backdrop: this.macService.backdrop}
     );
@@ -113,11 +114,11 @@ export class ProductDetailsComponent implements OnInit {
     );
     this.chatModal = new window.bootstrap.Modal(
       document.getElementById('chatModal'),{backdrop: this.macService.backdrop}
-    );
+    );    
     this.galleryOptions = [
       {
-          width: '70%',
-          height: '500px',
+          width: '90%',
+          height: '750px',
           thumbnailsColumns: 3,
           imageAnimation: NgxGalleryAnimation.Slide
       },
@@ -144,7 +145,7 @@ export class ProductDetailsComponent implements OnInit {
     this.productSub = this.httpService.getDetails(id)
     .subscribe({
       next:(productDetails: Product)=>{
-        this.singleProduct = productDetails;
+        this.singleProduct = productDetails;     
         this.receiverId = this.singleProduct.data.owner_id;          
         [...productDetails.data.product_images].forEach(e=>{
           this.imgUrls.push({
@@ -153,7 +154,6 @@ export class ProductDetailsComponent implements OnInit {
               big: e.image_url
           })
         })
-        // this.admin = this.singleProduct.data.admin_details.id
       }
     })
   }
@@ -177,6 +177,9 @@ export class ProductDetailsComponent implements OnInit {
   //     }
   //   })
    }
+  editAdd(id: number){
+    this.router.navigate([`edit-add/${id}`])
+  }
   openFormModal() {
     this.formModal.show();
   }
@@ -229,7 +232,11 @@ export class ProductDetailsComponent implements OnInit {
     },50)
   }
   sellerProfile(id:number){
-    this.router.navigate(['seller-profile',id])
+    if(id == this.owner_id){
+      this.router.navigate(['/adds',id])
+    }else{
+      this.router.navigate(['seller-profile',id])
+    }
   }
   ngOnDestory() :void{
     if(this.productSub){

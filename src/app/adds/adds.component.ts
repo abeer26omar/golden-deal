@@ -183,7 +183,7 @@ export class AddsComponent implements OnInit {
     this.recordSub = this.profileService.buyingRecord().subscribe({
       next: (resData: APIResponse2<Purchases>)=>{
         this.loadding = false;
-        this.records = resData.data;
+        this.records = resData.data;        
         if(this.records.length == 0){
           this.errrecord = 'لا يوجد مشتريات'
         }else{

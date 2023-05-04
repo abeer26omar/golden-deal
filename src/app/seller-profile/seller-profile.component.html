@@ -101,7 +101,7 @@
                                   </div>
                                   <p class="discription" *ngIf="product.desc !== null">{{(product.desc.length > 40)? (product.desc | slice:0:40)+'...':(product.desc)}}</p>
                                   <div class="d-flex justify-content-between align-items-center">
-                                    <p class="time m-0"><img src="../../assets/images/clock.svg" alt="clock"><span>{{product.created_since}} يوم</span></p>
+                                    <p class="time m-0"><img src="../../assets/images/clock.svg" alt="clock"><span>منذ {{product.created_since | dateAgo}}</span></p>
                                     <p class="m-0"><img src="../../assets/images/location_icon (2).svg" alt="location_icon"> {{product.owner_area == null ? 'غير معروف': product.owner_area}}</p>
                                   </div>
                                 </div>
@@ -131,7 +131,7 @@
                                     <p class="card_num">{{product.price}}</p>
                                   </div>
                                   <div class="evaluation d-flex justify-content-between align-items-center">
-                                    <p class="time"><img src="../../assets/images/clock.svg" alt="clock"><span>{{product.created_since}}ايام</span></p>
+                                    <p class="time"><img src="../../assets/images/clock.svg" alt="clock"><span>منذ {{product.created_since | dateAgo}}</span></p>
                                     <p  class="m-0"><img src="../../assets/images/location_icon (2).svg" alt="location_icon"> {{product.owner_area == null ? 'غير معروف': product.owner_area}}</p>
                                   </div>
                                 </div>

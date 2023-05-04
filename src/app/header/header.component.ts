@@ -23,6 +23,8 @@ export class HeaderComponent implements OnInit {
   msgSucess: string = '';
   toastSuccess: any;
   toastFaild: any;
+  payDepositModal: any;
+  deposit: any;
   constructor(public authService: AuthService,
     private route: Router,
     private categoryService: ProductsRequestService,
@@ -37,11 +39,24 @@ export class HeaderComponent implements OnInit {
     this.toastFaild = new window.bootstrap.Toast(
       document.getElementById('toastFaild'),{backdrop: this.macService.backdrop}
     )
+    // this.payDepositModal = new window.bootstrap.Modal(
+    //   document.getElementById('payDepositModal'),{backdrop: this.macService.backdrop}
+    // )
   }
   private categorySub : Subscription = new Subscription;
   stopPropagation(event: any){
     event.stopPropagation();
   }
+  // payDeposit(){
+  //   this.payDepositModal.show()
+  // }
+  // calcDeposit(event: any){
+  //   if(event.target.value !== ''){
+  //     this.deposit = (1/100 * event.target.value)
+  //   }else{
+  //     this.deposit = '';
+  //   }
+  // }
   getCategories(){
     this.categorySub = this.categoryService.
     getProductsCategories().

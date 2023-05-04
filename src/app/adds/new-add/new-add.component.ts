@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription, from } from 'rxjs';
@@ -44,6 +44,13 @@ export class NewAddComponent implements OnInit {
   imgSrc7: any;
   ownership: any;
   negotiable: boolean = false;
+  onAddNewImg1: boolean = false;
+  onAddNewImg2: boolean = false;
+  onAddNewImg3: boolean = false;
+  onAddNewImg4: boolean = false;
+  onAddNewImg5: boolean = false;
+  onAddNewImg6: boolean = false;
+  onAddNewImg7: boolean = false;
   newFormControl!: any;
   plate_chars_filter_6: any;
   plate_chars_en_filter_6: any;
@@ -205,46 +212,92 @@ export class NewAddComponent implements OnInit {
     this.file =<File>event.target.files[0];
     switch(key){
       case 1:
+        this.onAddNewImg1 = true;
         reader.onload = ()=>{
           this.imgSrc1 = reader.result;
         }
         this.myForm.get('product_image_1')?.patchValue(this.file,this.file.name);
         break;
       case 2:
+        this.onAddNewImg2 = true;
         reader.onload = ()=>{
           this.imgSrc2 = reader.result;
         }
         this.myForm.get('product_image_2')?.patchValue(this.file,this.file.name);
       break;
       case 3:
+        this.onAddNewImg3 = true;
         reader.onload = ()=>{
           this.imgSrc3 = reader.result;
         }
         this.myForm.get('product_image_3')?.patchValue(this.file,this.file.name);
       break;
       case 4:
+        this.onAddNewImg4 = true;
         reader.onload = ()=>{
           this.imgSrc4 = reader.result;
         }
         this.myForm.get('product_image_4')?.patchValue(this.file,this.file.name);
       break;
       case 5:
+        this.onAddNewImg5 = true;
         reader.onload = ()=>{
           this.imgSrc5 = reader.result;
         }
         this.myForm.get('product_image_5')?.patchValue(this.file,this.file.name);
       break;
       case 6:
+        this.onAddNewImg6 = true;
         reader.onload = ()=>{
           this.imgSrc6 = reader.result;
         }
         this.myForm.get('product_image_6')?.patchValue(this.file,this.file.name);
       break;
       case 7:
+        this.onAddNewImg7 = true;
         reader.onload = ()=>{
           this.imgSrc7 = reader.result;
         }
         this.myForm.get('product_image_7')?.patchValue(this.file,this.file.name);
+      break;
+    }
+  }
+  resetImg(key: any){
+    switch(key){
+      case 1:
+        this.onAddNewImg1 = false;
+        this.imgSrc1 = ''  
+        this.myForm.get('product_image_1')?.setValue('');
+      break;
+      case 2:
+        this.onAddNewImg2 = false;
+        this.imgSrc2 = ''  
+        this.myForm.get('product_image_2')?.setValue('');
+      break;
+      case 3:
+        this.onAddNewImg3 = false;
+        this.imgSrc3 = ''  
+        this.myForm.get('product_image_3')?.setValue('');
+      break;
+      case 4:
+        this.onAddNewImg4 = false;
+        this.imgSrc4 = ''  
+        this.myForm.get('product_image_4')?.setValue('');
+      break;
+      case 5:
+        this.onAddNewImg5 = false;
+        this.imgSrc5 = ''  
+        this.myForm.get('product_image_5')?.setValue('');
+      break;
+      case 6:
+        this.onAddNewImg6 = false;
+        this.imgSrc6 = ''  
+        this.myForm.get('product_image_6')?.setValue('');
+      break;
+      case 7:
+        this.onAddNewImg7 = false;
+        this.imgSrc7 = ''  
+        this.myForm.get('product_image_7')?.setValue('');
       break;
     }
   }
@@ -415,7 +468,7 @@ export class NewAddComponent implements OnInit {
     })
     this.filterSub = this.httpService.getCategoryFilters(this.categoryName).subscribe({
       next: (res: CategoryFilter)=>{
-        this.filters = res;                               
+        this.filters = res;                                       
         this.filters.data.filters.forEach(filter=>{
           this.newFormControl = filter.slug_name;
           this.myForm.addControl(filter.slug_name, new FormControl('')) 
@@ -497,6 +550,7 @@ export class NewAddComponent implements OnInit {
               this.errorAdd = ''
               this.NewProductRes = res;
               this.modelSuccessNewProduct.show();
+              this.myForm.reset()
             },
             error: ()=>{
               this.load = false;              

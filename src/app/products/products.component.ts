@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, ElementRef, HostBinding, HostListener, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -10,12 +10,14 @@ import { SwiperOptions } from 'swiper';
 import { ActionsService } from '../services/actions.service';
 import { AuthService } from '../services/auth.service';
 import { Regions } from '../models/actions.model';
+import { DatePipe } from '@angular/common';
 declare var window: any;
 
 @Component({
   selector: 'app-products',
   templateUrl: './products.component.html',
-  styleUrls: ['./products.component.css']
+  styleUrls: ['./products.component.css'],
+  providers: [DatePipe]
 })
 export class ProductsComponent implements OnInit {
   filters: CategoryFilter = {
@@ -38,9 +40,10 @@ export class ProductsComponent implements OnInit {
       filter_options: []
     }
   }
-  filterbrandsOptions :any= [];
-  brandsOptions :any= [];
-  fiter_carPlates: any =[];
+  filterbrandsOptions: any = [];
+  brandsOptions: any = [];
+  showBrandsOptions: boolean = false;
+  fiter_carPlates: any = [];
   searchText: any;
   public sort: string = '';
   public products: Array<Products> = [];
@@ -59,6 +62,7 @@ export class ProductsComponent implements OnInit {
   activeClass: boolean = false;
   categorySlug: string = 'all';
   regions: any = [];
+  owner_id: any;
   private routeSub: Subscription = new Subscription;
   private productSub: Subscription = new Subscription;
   private categorySub : Subscription = new Subscription;
@@ -84,14 +88,16 @@ export class ProductsComponent implements OnInit {
     private router: Router,
     private macService: MacPrefixService,
     public actionService: ActionsService,
-    public authService: AuthService) {
+    public authService: AuthService,
+    public datepipe: DatePipe) {
     }
     config: SwiperOptions = {
       slidesPerView: 11,
-      spaceBetween: 0,
+      spaceBetween: 10,
       navigation: false,
       pagination: false,
       scrollbar: false,
+      grabCursor: true,
       breakpoints: {
         1440: {
           slidesPerView: 11,
@@ -103,10 +109,16 @@ export class ProductsComponent implements OnInit {
           slidesPerView: 5,
         },
         786: {
+          slidesPerView: 5,
+        },
+        575: {
+          slidesPerView: 5,
+        },
+        425:{
           slidesPerView: 4,
         },
         320: {
-          slidesPerView: 2,
+          slidesPerView: 3,
         }
     }
     };
@@ -119,7 +131,8 @@ export class ProductsComponent implements OnInit {
     );
     this.getCategories();
     this.getProducts('all');
-    this.getRegions()
+    this.getRegions();
+    this.owner_id = localStorage.getItem('userId')
   }
   getProducts(categorySlug: string){
     this.loadding = true;
@@ -130,8 +143,7 @@ export class ProductsComponent implements OnInit {
     .subscribe({
       next:(productsList: APIResponse<Products>)=>{
         this.loadding = false;
-          this.products = productsList.data;
-          
+          this.products = productsList.data;          
           if(this.products.length == 0){
             this.errorLength = 'لا يوجد منتجات';
           }else{
@@ -168,10 +180,15 @@ export class ProductsComponent implements OnInit {
     this.router.navigate(['product-details', id])
   }
   sellerProfile(id:number){
-    this.router.navigate(['seller-profile',id])
+    if(id == this.owner_id){
+      this.router.navigate(['/adds',id])
+    }else{
+      this.router.navigate(['seller-profile',id])
+    }
   }
   getBrandFilter(categoryName: any){   
     if(categoryName =='car_plates'){
+      this.showBrandsOptions = false
       this.brandsOptions = [];
       this.filterbrandsOptions = [];
       this.fiter_carPlates = [];
@@ -206,8 +223,9 @@ export class ProductsComponent implements OnInit {
       this.showBtnAction = false;
       this.brandSub = this.httpService.getBrandFilters().subscribe({
         next: (res: BrandFilter)=>{
-          this.brands = res;
+          this.brands = res;          
           this.brandsOptions = this.brands.data;
+          this.showBrandsOptions = true;
           this.show = true;
         },
         error:(err: HttpErrorResponse)=>{
@@ -230,6 +248,7 @@ export class ProductsComponent implements OnInit {
       this.filterbrandsOptions = [];
       this.fiter_carPlates = [];
       this.show = false;
+      this.showBrandsOptions = false;
       this.showBtnAction = false;
     }
   }
@@ -271,7 +290,7 @@ export class ProductsComponent implements OnInit {
       next: (res: APIResponse<Products>)=>{
           this.load = false;
           this.formModal.hide();
-          this.products = res.data;
+          this.products = res.data;          
           if(this.products.length == 0){
             this.errorLength = 'لا يوجد منتجات';
           }else{
@@ -289,7 +308,7 @@ export class ProductsComponent implements OnInit {
       next: (res: APIResponse<Products>)=>{
           this.load = false;
           this.formModal.hide();
-          this.products = res.data;
+          this.products = res.data;          
           if(this.products.length == 0){
             this.errorLength = 'لا يوجد منتجات';
           }else{
@@ -306,7 +325,7 @@ export class ProductsComponent implements OnInit {
     this.filterbrandsOptions = [];
     this.filterSub = this.httpService.applayBarndFilter(filter_key).subscribe({
       next: (res: any)=>{
-          this.loadding = false;
+          this.loadding = false;          
           if(res.data != null){
             this.filterbrandsOptions = res.data.filter_options;
           }

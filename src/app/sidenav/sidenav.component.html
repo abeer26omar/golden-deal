@@ -44,7 +44,7 @@
                       <ul class="adds-list p-0">
                           <li *ngFor="let category of categories">
                             <a [routerLink]="['/home']" 
-                            fragment="{{category.slug}}}" 
+                            fragment="{{category.slug}}" 
                             class="d-inline-flex align-items-center rounded" (click)="closeNav()">{{category.title}}</a>
                           </li>
                       </ul>
@@ -63,7 +63,10 @@
                     <a  routerLink="/new-add" (click)="closeNav()">اضافه اعلان</a>
                   </li>
                   <li>
-                    <a [routerLink]="['/chat']" (click)="closeNav()">الدعم</a>
+                    <a [routerLink]="['/chat']" (click)="closeNav()">تواصل معنا</a>
+                  </li>
+                  <li>
+                    <a routerLink="/deposit" (click)="closeNav()">دفع العموله</a>
                   </li>
                   <li>
                     <a  (click)="termsCondition('privacy_policy')" (click)="closeNav()">من نحن</a>

@@ -21,8 +21,9 @@ export interface Products{
         product_fav: boolean,
         properties: Array<Product_Properties>,
         activated_since: string,
-        owner_area: null,
         category_slug: string,    
+        region_name: string,
+        status: string
 }
 interface Product_Properties{
         id: number,
@@ -58,12 +59,12 @@ export interface APIResponse<T>{
 }
 export interface Product{
     data: {
-        id: number;
-        name: string;
-        desc: string;
-        materials: string;
-        about_seller: string;
-        delivery_notes: string;
+        id: number,
+        name: string,
+        desc: string,
+        materials: string,
+        about_seller: string,
+        delivery_notes: string,
         admin_details:{
             cover_url: string,
             id: number,
@@ -72,26 +73,28 @@ export interface Product{
             name: string,
             phone: string
         }
-        owner_id: number;
-        category_id: number;
-        seller_phone: string;
-        price: string;
-        status: string;
-        active: string;
-        created_since: string;
-        default_image: string;
-        ownership_image_url: string;
+        owner_id: number,
+        category_id: number,
+        seller_phone: string,
+        price: string,
+        status: string,
+        active: string,
+        created_since: string,
+        default_image: string,
+        ownership_image_url: string,
         owner: {
-            id: number;
-            name: string;
-            subscribed: number;
-            image_url: string;
-            cover_url: string;
-        };
-        product_images: Array<productImages>;
-        owner_ratings: Array<ownerRatings>;
-        negotiable: number;
-        properties: Array<Product_Properties>
+            id: number,
+            name: string,
+            subscribed: number,
+            image_url: string,
+            cover_url: string
+        },
+        product_images: Array<productImages>,
+        owner_ratings: Array<ownerRatings>,
+        negotiable: number,
+        properties: Array<Product_Properties>,
+        region_name: string,
+        region_id: number
         }
 }
 export interface ownerRatings{

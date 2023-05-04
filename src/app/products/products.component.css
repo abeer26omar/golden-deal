@@ -16,12 +16,12 @@ p.sorts{
     align-items: center;
 }
 .nav-item{
-    padding: 0rem 1rem;
+    padding: 0rem 1.5rem;
     cursor: pointer;
 }
 
 .nav-link{
-    padding: 0rem 1rem;
+    padding: 0rem;
 }
 
 .nav-tabs .nav-link:focus, 
@@ -85,10 +85,14 @@ p.sorts{
 swiper .brand a {
     background-color: var(--gray-color);
 }
-swiper .sub_brand a{
+swiper .sub_brand{
+    height: 50px;
+    width: 100px;
+    align-items: center;
+    justify-content: center;
     background-color: var(--gray-color);
     color: var( --primary-color);
-    padding: .5rem;
+    padding: .1rem;
     border-radius: 8px;
 }
 .loader {

@@ -4,68 +4,123 @@
             <div class="card-header">
                 <p class="header text-center">تعديل الاعلان</p>
             </div>
-                <div class="card-body row g-4" >
-                            <div class="d-flex justify-content-center mb-5 plates" *ngIf="Add.data.category_slug == 'car_plates'">
-                                <img src="../../../assets/images/car_palets_show.svg" alt="car_plates_icon" width="80%">
-                            </div>
-                            <div class="col-12" *ngIf="Add.data.category_slug == 'cars'">
+                <div class="card-body add_images row g-4 justify-content-center">
+                    <div class="col-12 col-sm-6">
+                        <div class="d-flex flex-column align-items-center justify-content-center">
+                            <label for="productCategory" class="form-label align-self-start">التصنيف</label>
+                            <mat-radio-group aria-label="Select an option" formControlName="productCategory">
+                                <ng-container *ngFor="let category of categories">
+                                    <mat-radio-button *ngIf="category.title !== 'الكل'" 
+                                    value="{{category.slug}}" class="mx-2" disabled >{{category.title}}</mat-radio-button>
+                                </ng-container>
+                            </mat-radio-group>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-center mb-5 plates" *ngIf="Add.data.category_slug == 'car_plates'">
+                        <img src="../../../assets/images/car_palets_show.svg" alt="car_plates_icon" width="80%">
+                    </div>
+                    <div class="col-12" *ngIf="Add.data.category_slug == 'cars'">
                                 <div class="row row-cols-md-4 row-cols-lg-6 g-3 justify-content-center">
-                            <swiper
-                                [config]="config"
-                                style="width:100%">
-                                <ng-template class="col" swiperSlide *ngFor="let url of images ;let i='index+1'">
-                                        <label for="file{{i}}" class="file-upload">
-                                                <input
-                                                    id="file{{i}}"
-                                                    type="file"
-                                                    class="form-control"
-                                                    accept="image/*"
-                                                    (change)="onFileChange(i,$event)"
-                                                    >
-                                                <div class="text-center">
-                                                    <img  id="imgSrc_{{i}}" [src]="url ? url : '../../../assets/images/plus_add_icon.svg'">
-                                                </div>
-                                        </label>
-                                </ng-template> 
-                                <ng-template class="col" swiperSlide *ngFor="let i of rest_images">
-                                        <label for="file{{i}}" class="file-upload">
-                                                <input
-                                                    id="file{{i}}"
-                                                    type="file"
-                                                    class="form-control"
-                                                    accept="image/*"
-                                                    (change)="onFileChange(i,$event)"
-                                                    >
-                                                <div class="text-center">
-                                                    <img id="imgSrc_{{i}}" src='../../../assets/images/plus_add_icon.svg'>
-                                                </div>
-                                        </label>
-                                </ng-template> 
-                            </swiper>
+                                    <swiper [config]="config" style="width:100%">
+                                        <ng-template class="col" swiperSlide *ngFor="let url of images ;let i='index+1'">
+                                            <a (click)="resetImg(1)" class="rest_icon" *ngIf="onAddNewImg1">
+                                                <img src="../../../assets/images/close_img_icon.svg" alt="close_img_icon">
+                                            </a>
+                                                <label for="file{{i}}" class="file-upload">
+                                                        <input
+                                                            id="file{{i}}"
+                                                            type="file"
+                                                            class="form-control"
+                                                            accept="image/x-png,image/gif,image/jpeg"
+                                                            (change)="onFileChange(i,$event)"
+                                                            >
+                                                        <div class="text-center">
+                                                            <img  id="imgSrc_{{i}}" [src]="url ? url : '../../../assets/images/add_new_icon.svg'">
+                                                        </div>
+                                                </label>
+                                        </ng-template> 
+                                        <ng-template class="col" swiperSlide *ngFor="let i of rest_images">
+                                            <a (click)="resetImg(i)" class="rest_icon" *ngIf="onAddNewImg2">
+                                                <img src="../../../assets/images/close_img_icon.svg" alt="close_img_icon">
+                                            </a>
+                                                <label for="file{{i}}" class="file-upload">
+                                                        <input
+                                                            id="file{{i}}"
+                                                            type="file"
+                                                            class="form-control"
+                                                            accept="image/x-png,image/gif,image/jpeg"
+                                                            (change)="onFileChange(i,$event)"
+                                                            >
+                                                        <div class="text-center">
+                                                            <img id="imgSrc_{{i}}" src='../../../assets/images/add_new_icon.svg'>
+                                                        </div>
+                                                </label>
+                                        </ng-template> 
+                                    </swiper>
                                 </div>
-                            </div>
-                            <!-- <label  class="file-upload" (click)="openImgDialog()">
-                                    <div class="text-center">
-                                        <img src="../../../assets/images/product-imgs.svg" alt="product-imgs">
-                                        <p>تعديل صور المنتج</p>
-                                        <img *ngFor="let url of images" [src]="url" height="150" width="200px" style="margin: 3px;">
+                    </div>
+                    <ng-container *ngFor="let filter of EditFilter">
+                        <div class="col-md-6" 
+                        *ngIf="(filter.slug_name !== 'plate_chars_en_filter_6' 
+                        && filter.slug_name == 'plate_chars_filter_6' )
+                            || (filter.slug_name !== 'plate_numbers_en_filter_6' 
+                            && filter.slug_name == 'plate_numbers_filter_6') ">
+                            <label for="productMark" class="form-label" *ngIf="filter.slug_name == 'plate_chars_filter_6'"> حروف اللوحة </label>
+                            <div class="row g-3" [formGroupName]="filter.slug_name"
+                                    *ngIf="filter.type == 'text' && filter.name_ar == 'حروف اللوحة عربي' ">
+                                    <div class="col-3" *ngFor="let i of [1 , 2 , 3]">
+                                        <input  
+                                            type="text" 
+                                            class="form-control" 
+                                            maxlength="1" 
+                                            formControlName="plate_chars_ar_{{i}}"
+                                            (keyup)="getCardChar(i,$event)">
                                     </div>
-                            </label> -->
+                                    <p class="small text-muted">{{error_CarPlate}}</p> 
+                                </div>
+                            <!-- <div class="row g-3" [formGroupName]="filter.slug_name"
+                                *ngIf="filter.type == 'text' && filter.name_ar == 'حروف اللوحة انجليزي' " style="display: none;">
+                                <div class="col-4 col-sm-3" *ngFor="let i of [1 , 2 , 3]">
+                                    <input 
+                                        type="text" 
+                                        class="form-control" 
+                                        maxlength="1" 
+                                        formControlName="plate_chars_en_{{i}}"
+                                        readonly >
+                                </div>
+                            </div> -->
+                            <label for="productMark" class="form-label" *ngIf="filter.slug_name == 'plate_numbers_filter_6'"> ارقام اللوحة </label>
+                            <div class="row g-3" [formGroupName]="filter.slug_name"
+                                        *ngIf="filter.type == 'text' && filter.name_ar == 'ارقام اللوحة عربي' ">
+                                        <div class="col-2" *ngFor="let i of [1,2,3,4]">
+                                            <input  
+                                                type="text" 
+                                                class="form-control" 
+                                                maxlength="1"
+                                                formControlName="plate_number_ar_{{i}}" 
+                                                (input)="convertNumbers(i,$event)"
+                                                >
+                                        </div>
+                                </div>
+                            <!-- <div class="row g-3" [formGroupName]="filter.slug_name"
+                                *ngIf="filter.type == 'text' && filter.name_ar == 'ارقام اللوحة انجليزي' " style="display: none;">
+                                <div class="col-3 col-sm-2" *ngFor="let i of [1,2,3,4]">
+                                    <input  
+                                        type="text" 
+                                        class="form-control" 
+                                        maxlength="1"
+                                        formControlName="plate_number_en_{{i}}"
+                                        readonly
+                                        >
+                                </div>
+                            </div> -->
+                        </div>
+                    </ng-container>
                         <div class="col-md-6">
-                            <label for="productName" class="form-label">اسم المنتج</label>
+                            <label for="productName" class="form-label">عنوان الإعلان</label>
                             <input type="text" class="form-control" id="productName" 
                             placeholder=""
                             formControlName="name">
-                        </div>
-                        <div class="col-md-6">
-                            <label for="productCategory" class="form-label">التصنيف</label>
-                            <select class="form-select" id="productCategory"
-                            formControlName="productCategory">
-                                <option  [value]="category.slug"
-                                *ngFor="let category of categories"
-                                disabled
-                                >{{category.title == 'الكل'? 'اختر تصنيف' : category.title}}</option>
-                            </select>
                         </div>
                         <div class="col-md-6">
                             <label for="productMark" class="form-label">المنطقه</label>
@@ -89,99 +144,78 @@
                                     <a (click)="onNegotiable()" class="btn btn_negotiable" [ngClass]="{'btndisabled': negotiable}">علي السوم</a>
                             </div>       
                         </div>
-                        <div class="col-md-6" *ngFor="let filter of EditFilter">
-                            <input type="checkbox" class="form-check-input mx-2"
-                            [formControlName]="filter.slug_name" 
-                            *ngIf="filter.type == 'check'">
-                            <label for="productMark" class="form-label">{{filter.name_ar}}</label>
-                            <div class="row g-3" [formGroupName]="filter.slug_name"
-                                *ngIf="filter.type == 'text' && filter.name_ar == 'حروف اللوحة عربي' ">
-                                <div class="col-3" *ngFor="let i of [1 , 2 , 3]">
-                                    <input  
-                                        type="text" 
-                                        class="form-control" 
-                                        maxlength="1" 
-                                        formControlName="plate_chars_ar_{{i}}"
-                                        (keyup)="getCardChar(i,$event)">
-                                </div>
-                                <p class="small text-muted">{{error_CarPlate}}</p> 
-                            </div>
-                            <div class="row g-3" [formGroupName]="filter.slug_name"
-                                *ngIf="filter.type == 'text' && filter.name_ar == 'حروف اللوحة انجليزي' " >
-                                <div class="col-3" *ngFor="let i of [1 , 2 , 3]">
-                                    <input 
-                                        type="text" 
-                                        class="form-control" 
-                                        maxlength="1" 
-                                        formControlName="plate_chars_en_{{i}}"
-                                        readonly >
-                                </div>
-                            </div>
-                            <div class="row g-3" [formGroupName]="filter.slug_name"
-                                    *ngIf="filter.type == 'text' && filter.name_ar == 'ارقام اللوحة عربي' ">
-                                    <div class="col-2" *ngFor="let i of [1,2,3,4]">
+                        <ng-container *ngFor="let filter of EditFilter" >
+                            <div class="col-md-6"*ngIf="filter.slug_name !== 'plate_chars_en_filter_6' 
+                            && filter.slug_name !== 'plate_numbers_en_filter_6' 
+                            && filter.slug_name !== 'plate_chars_filter_6' 
+                            && filter.slug_name !== 'plate_numbers_filter_6' ">
+                                <input type="checkbox" class="form-check-input mx-2"
+                                [formControlName]="filter.slug_name" 
+                                *ngIf="filter.type == 'check'">
+                                <label for="productMark" class="form-label">{{filter.name_ar}}</label>
+                                <!-- <div class="row g-3" [formGroupName]="filter.slug_name"
+                                    *ngIf="filter.type == 'text' && filter.name_ar == 'حروف اللوحة عربي' ">
+                                    <div class="col-3" *ngFor="let i of [1 , 2 , 3]">
                                         <input  
                                             type="text" 
                                             class="form-control" 
-                                            maxlength="1"
-                                            formControlName="plate_number_ar_{{i}}" 
-                                            (input)="convertNumbers(i,$event)"
-                                            >
+                                            maxlength="1" 
+                                            formControlName="plate_chars_ar_{{i}}"
+                                            (keyup)="getCardChar(i,$event)">
                                     </div>
-                            </div>
-                            <div class="row g-3" [formGroupName]="filter.slug_name"
-                                    *ngIf="filter.type == 'text' && filter.name_ar == 'ارقام اللوحة انجليزي' ">
-                                <div class="col-2" *ngFor="let i of [1,2,3,4]">
-                                        <input  
+                                    <p class="small text-muted">{{error_CarPlate}}</p> 
+                                </div>
+                                <div class="row g-3" [formGroupName]="filter.slug_name"
+                                    *ngIf="filter.type == 'text' && filter.name_ar == 'حروف اللوحة انجليزي' " >
+                                    <div class="col-3" *ngFor="let i of [1 , 2 , 3]">
+                                        <input 
                                             type="text" 
                                             class="form-control" 
-                                            maxlength="1"
-                                            formControlName="plate_number_en_{{i}}"
-                                            readonly
-                                            >
+                                            maxlength="1" 
+                                            formControlName="plate_chars_en_{{i}}"
+                                            readonly >
+                                    </div>
                                 </div>
+                                <div class="row g-3" [formGroupName]="filter.slug_name"
+                                        *ngIf="filter.type == 'text' && filter.name_ar == 'ارقام اللوحة عربي' ">
+                                        <div class="col-2" *ngFor="let i of [1,2,3,4]">
+                                            <input  
+                                                type="text" 
+                                                class="form-control" 
+                                                maxlength="1"
+                                                formControlName="plate_number_ar_{{i}}" 
+                                                (input)="convertNumbers(i,$event)"
+                                                >
+                                        </div>
+                                </div>
+                                <div class="row g-3" [formGroupName]="filter.slug_name"
+                                        *ngIf="filter.type == 'text' && filter.name_ar == 'ارقام اللوحة انجليزي' ">
+                                    <div class="col-2" *ngFor="let i of [1,2,3,4]">
+                                            <input  
+                                                type="text" 
+                                                class="form-control" 
+                                                maxlength="1"
+                                                formControlName="plate_number_en_{{i}}"
+                                                readonly
+                                                >
+                                    </div>
+                                </div> -->
+                                <select class="form-select" id="productMark" 
+                                [formControlName]="filter.slug_name" *ngIf="filter.type == 'select'">
+                                    <option [value]="filterOption.name"
+                                     *ngFor="let filterOption of filter.filter_options">{{filterOption.name}}</option>
+                                </select>
+                                <input type="text" 
+                                    *ngIf="filter.type == 'text' && Add.data.category_slug !== 'car_plates'" 
+                                    class="form-control" [formControlName]="filter.slug_name">
                             </div>
-                            <select class="form-select" id="productMark" 
-                            [formControlName]="filter.slug_name" *ngIf="filter.type == 'select'">
-                                <option [value]="filterOption.name"
-                                 *ngFor="let filterOption of filter.filter_options">{{filterOption.name}}</option>
-                            </select>
-                            <input type="text" 
-                                *ngIf="filter.type == 'text' && Add.data.category_slug !== 'car_plates'" 
-                                class="form-control" [formControlName]="filter.slug_name">
-                        </div>
-                        <!-- <div class="col-md-6">
-                            <label for="productSeller" class="form-label">عن البائع</label>
-                            <textarea type="text" class="form-control" id="productSeller" 
-                            placeholder="عن البائع عن البائع" formControlName="about_seller"></textarea>        
-                        </div> -->
-                        <!-- <div class="col-md-6">
-                            <label for="sellerinfo" class="form-label">ملاحظات التواصل</label>
-                            <textarea type="text" class="form-control" id="sellerinfo" 
-                            placeholder="معلومات لاتصال" formControlName="delivery_notes"></textarea>        
-                        </div> -->
+                        </ng-container>
                         <div class="col-md-6">
                             <label for="productDesc" class="form-label">وصف المنتج</label>
                             <textarea type="text" class="form-control" id="productDesc" 
                             placeholder="" formControlName="desc"></textarea>        
                         </div>
-                        <!-- <div class="col-md-6">
-                            <label for="productMaterial" class="form-label">خامات المنتج</label>
-                            <textarea type="text" class="form-control" id="productMaterial" 
-                            placeholder="سياره بي ام سياره بي ام" formControlName="materials"></textarea>
-                        </div> -->
-                        <!-- <div class="d-flex justify-content-center align-items-center">
-                            <label for="file2" id="label-file">
-                                <input type="file" id="file2" 
-                                formControlName="ownership_image" 
-                                class="form-control" style="height: 0px">
-                                <div class="d-flex justify-content-between py-2 px-3">
-                                    <span>اضافه وثيقه المنتج</span>
-                                    <img src="../../../assets/images/upload-docs.svg" alt="upload-docs">
-                                </div>
-                            </label>
-                        </div> -->
-                        <!-- <mat-progress-bar mode="indeterminate" class="my-3" *ngIf="load" id="addprog"></mat-progress-bar> -->
+                        <mat-progress-bar mode="indeterminate" class="my-3" *ngIf="load" id="addprog"></mat-progress-bar>
                 </div>
             <div class="d-flex justify-content-center align-items-center pt-5 pb-3">
                 <button class="btn btn-next btn-prim" type="submit">التالى</button>

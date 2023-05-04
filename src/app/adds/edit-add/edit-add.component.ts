@@ -24,6 +24,7 @@ export class EditAddComponent implements OnInit {
   modelAddImages: any;
   addFaild: any;
   file!: File;
+  load: boolean = false;
   negotiable: boolean = false;
   imgSrc1: any;
   imgSrc2: any;
@@ -32,6 +33,13 @@ export class EditAddComponent implements OnInit {
   imgSrc5: any;
   imgSrc6: any;
   imgSrc7: any;
+  onAddNewImg1: boolean = false;
+  onAddNewImg2: boolean = false;
+  onAddNewImg3: boolean = false;
+  onAddNewImg4: boolean = false;
+  onAddNewImg5: boolean = false;
+  onAddNewImg6: boolean = false;
+  onAddNewImg7: boolean = false;
   error_CarPlate: string = '';
   rest_images: any = [];
   Add : EditProduct = {
@@ -248,6 +256,45 @@ export class EditAddComponent implements OnInit {
       break;
     }
   }
+  resetImg(key: any){
+    switch(key){
+      case 1:
+        this.onAddNewImg1 = true;
+        document.getElementById('imgSrc_1')?.setAttribute('src', '../../../assets/images/add_new_icon.svg');
+        this.myForm.get('product_image_1')?.setValue('');
+      break;
+      case 2:
+        this.onAddNewImg2 = false;
+        this.imgSrc2 = ''  
+        this.myForm.get('product_image_2')?.setValue('');
+      break;
+      case 3:
+        this.onAddNewImg3 = false;
+        this.imgSrc3 = ''  
+        this.myForm.get('product_image_3')?.setValue('');
+      break;
+      case 4:
+        this.onAddNewImg4 = false;
+        this.imgSrc4 = ''  
+        this.myForm.get('product_image_4')?.setValue('');
+      break;
+      case 5:
+        this.onAddNewImg5 = false;
+        this.imgSrc5 = ''  
+        this.myForm.get('product_image_5')?.setValue('');
+      break;
+      case 6:
+        this.onAddNewImg6 = false;
+        this.imgSrc6 = ''  
+        this.myForm.get('product_image_6')?.setValue('');
+      break;
+      case 7:
+        this.onAddNewImg7 = false;
+        this.imgSrc7 = ''  
+        this.myForm.get('product_image_7')?.setValue('');
+      break;
+    }
+  }
   getCategories(){
     this.categorySub = this.productService.
     getProductsCategories().
@@ -266,10 +313,11 @@ export class EditAddComponent implements OnInit {
         }        
         this.addCategory = this.Add.data.category_slug;
         this.Add.data.product_images.forEach(ele=>{
-         this.images.push(ele.image_url)
+         this.images.push(ele.image_url);
+         this.onAddNewImg1 = true;
         })
         for(let i=7; i > this.Add.data.product_images.length; i--){
-            this.rest_images.push(i)
+          this.rest_images.push(i)
           }
           if(this.Add.data.category_slug == 'car_plates'){
             this.myForm = new FormGroup({
@@ -452,6 +500,7 @@ export class EditAddComponent implements OnInit {
     this.modelAddImages.show();
   }
   submit(){
+    this.load = true;
     let plate_chars_en_filter_6: any, 
     plate_chars_filter_6: any,
     plate_numbers_filter_6: any,
@@ -478,8 +527,12 @@ export class EditAddComponent implements OnInit {
       }
     this.editSub = this.productService.updateAdd(this.addId,formData).subscribe({
       next: (res: Update)=>{
+        this.load = false;
         this.updateProduct = res;
         this.modelSuccessNewProduct.show()
+      },
+      error: ()=>{
+        this.load = false;
       }
     })
   }

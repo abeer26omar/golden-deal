@@ -25,22 +25,38 @@
                                 </a>
                             </div>
                             <img src="../../assets/images/nego_icon.svg" alt="nego_icon" class="nego_icon" *ngIf="singleProduct.data.negotiable == 1">
+                            <div class="prod-details d-flex align-items-center py-2">
+                                <div class="owner">
+                                    <p class="m-0">{{singleProduct.data.price}} ر.س</p>
+                                </div>
+                                <p class="time px-5"><img src="../../assets/images/location_icon (2).svg" alt="clock"><span class="pe-1">{{singleProduct.data.region_name}}</span></p>
+                            </div>
                             <div class="prod-details d-flex align-items-center">
-                                <!-- <p class="p-rate" *ngIf="singleProduct.data.owner_ratings">{{singleProduct.data.owner_ratings.length}} تقيمات</p> -->
-                                <!-- <p *ngIf="!singleProduct.data.owner_ratings || null">0 تقيمات</p> -->
                                 <div class="owner">
                                     <img class="ps-1" src="../../assets/images/profile_icon.svg" alt="profile_icon">
                                     <a (click)="sellerProfile(singleProduct.data.owner_id)">{{singleProduct.data.owner.name}}</a>
                                 </div>
-                                <p class="time px-5"><img src="../../assets/images/clock.svg" alt="clock"><span class="pe-1">{{singleProduct.data.created_since}}ايام</span></p>
+                                <p class="time px-5"><img src="../../assets/images/clock.svg" alt="clock"><span class="pe-1">منذ {{singleProduct.data.created_since | dateAgo}}</span></p>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="card-body">
-                    <p class="prod-desc m-0">{{singleProduct.data.desc}}</p>
+                    <ng-container *ngFor="let filter_value of singleProduct.data.properties" class="">
+                        <div class="desc_details" *ngIf="filter_value.name_ar !== 'ماركة السيارة' && filter_value.name_ar !== 'المدينة' ">
+                            <div class="col-12 col-sm-4 d-flex justify-content-between align-items-center">
+                                <p>{{filter_value.name_ar}}</p>
+                                <p>{{filter_value.filter_value.filter_value}}</p>
+                            </div>
+                        </div>
+                    </ng-container>
+                    <div class="mt-2 add_desc">
+                        <span>الوصف</span>
+                        <p class="prod-desc m-0">{{singleProduct.data.desc}}</p>
+                    </div>
                     <div class="btn-buy d-flex justify-content-center pt-5">
-                        <button class="btn btn-site" (click)="onBuy()">شراء</button>
+                        <button class="btn btn-site" (click)="onBuy()" *ngIf="owner_id != singleProduct.data.owner_id">شراء</button>
+                        <button class="btn btn-site" (click)="editAdd(singleProduct.data.id)" *ngIf="owner_id == singleProduct.data.owner_id">تعديل الاعلان</button>
                     </div>
                 </div>
                 <!-- <div class="card-body">
@@ -167,7 +183,7 @@
             </div>
         </div> -->
     </div>
-<!-- modal 1-->
+<!-- modal 1 removed-->
     <div class="modal fade"
     id="myModal"
     tabindex="-1"
@@ -186,7 +202,7 @@
         </div>
     </div>
     </div>
-<!-- modal 2-->
+<!-- modal 2 removed-->
 <div class="modal fade" id="staticBackdrop" 
     data-bs-backdrop="static" data-bs-keyboard="false" 
     tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -251,11 +267,13 @@ aria-hidden="true"
 >
   <div class="modal-dialog modal-dialog-centered modal-sm">
       <div class="modal-content">
-        <div class="modal-header justify-content-center">
-          <!-- <button type="button" class="btn p-0" data-bs-dismiss="modal" aria-label="Close">
-            <img src="../../assets/images/close.svg" alt="close">
-          </button> -->
-          <p>شراء</p>
+        <div class="modal-header justify-content-start">
+            <div class="col-5">
+                <button type="button" class="btn p-0" data-bs-dismiss="modal" aria-label="Close">
+                  <img src="../../assets/images/close.svg" alt="close">
+                </button>
+            </div>
+              <p class="text-center">شراء</p>
         </div>
         <div class="modal-body">
             <img class="py-2" src="../../../assets/images/admin_icon.svg" alt="admin_icon">  
@@ -263,9 +281,13 @@ aria-hidden="true"
             <p class="prod-price"> السعر : {{singleProduct.data.price}}</p>
             <p class="prod-name">{{singleProduct.data.desc}}</p>
         </div>
+        <div class="modal-footer">
+          <a style="width:100%" href="tel:+{{singleProduct.data.seller_phone}}" class="btn btn-prim">اتصال <img src="../../../assets/images/call.svg" alt="call"></a>
+          <a style="width:100%;" class="btn btn-sec btn-deposit" data-bs-dismiss="modal">عربون <img src="../../../assets/images/deposit_icon.svg" alt="deposit_icon"></a>
+        </div>
         <div class="modal-footer justify-content-evenly">
-          <a  href="tel:+{{singleProduct.data.seller_phone}}" class="btn btn-prim">اتصال <img src="../../../assets/images/call.svg" alt="call"></a>
-          <a (click)="chat(singleProduct.data.admin_details)" class="btn btn-sec" data-bs-dismiss="modal">محادثه <img src="../../../assets/images/chat.svg" alt="chat"></a>
+            <a (click)="chat(singleProduct.data.admin_details)" class="btn btn-sec" data-bs-dismiss="modal">محادثه <img src="../../../assets/images/chat.svg" alt="chat"></a>
+            <a  href="https://api.whatsapp.com/send?phone=966{{singleProduct.data.seller_phone}}" target="_blank" class="btn btn-prim btn-whats">واتساب <img src="../../../assets/images/whatsapp_icon.svg" alt="whatsapp_icon"></a>
         </div>
       </div>
   </div>

@@ -19,9 +19,9 @@ nav ul .nav-item a.active,
 nav .nav-item:hover .ps-1{
     color: var(--org-color);
 }
-nav ul .nav-item:hover a svg path,
-nav .nav-item:hover svg path,
-nav ul .nav-item a.active svg path{
+nav ul .nav-item:hover a svg:not(.spec) path,
+nav .nav-item:hover svg:not(.spec) path,
+nav ul .nav-item a.active svg:not(.spec) path{
     fill: var(--org-color);
 }
 .dropdown-toggle::after {

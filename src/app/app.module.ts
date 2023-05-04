@@ -69,6 +69,8 @@ import { ResponseModalComponent } from './response-modal/response-modal.componen
 import { PaymentDetailsDialogComponent } from './subscriptions/payment-details-dialog/payment-details-dialog.component';
 import { ResponseModalErrorComponent } from './response-modal-error/response-modal-error.component';
 import { InputPipe } from './services/input.pipe';
+import { DepositComponent } from './deposit/deposit.component';
+import { DateAgoPipe } from './services/date-ago.pipe';
 
 @NgModule({
   declarations: [
@@ -106,6 +108,8 @@ import { InputPipe } from './services/input.pipe';
     PaymentDetailsDialogComponent,
     ResponseModalErrorComponent,
     InputPipe,
+    DepositComponent,
+    DateAgoPipe,
   ],
   imports: [
     BrowserModule,

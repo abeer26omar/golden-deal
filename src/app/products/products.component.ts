@@ -92,36 +92,57 @@ export class ProductsComponent implements OnInit {
     public datepipe: DatePipe) {
     }
     config: SwiperOptions = {
-      slidesPerView: 11,
+      // slidesPerView: 11,
+      slidesPerView: 'auto',
       spaceBetween: 10,
       navigation: false,
       pagination: false,
       scrollbar: false,
       grabCursor: true,
-      breakpoints: {
-        1440: {
-          slidesPerView: 11,
+      slideActiveClass: 'swiper-slide-active',
+      on:{
+        click(swiper) {
+          swiper.activeIndex =  swiper.clickedIndex;
+          console.log(swiper.activeIndex);
+          console.log(swiper);
+          swiper.clickedSlide.classList.add('swiper-slide-active');          
         },
-        1024: {
-          slidesPerView: 7,
-        },
-        992: {
-          slidesPerView: 5,
-        },
-        786: {
-          slidesPerView: 5,
-        },
-        575: {
-          slidesPerView: 5,
-        },
-        425:{
-          slidesPerView: 4,
-        },
-        320: {
-          slidesPerView: 3,
-        }
-    }
+      }
+    //   breakpoints: {
+    //     1440: {
+    //       slidesPerView: 11,
+    //     },
+    //     1024: {
+    //       slidesPerView: 7,
+    //     },
+    //     992: {
+    //       slidesPerView: 5,
+    //     },
+    //     786: {
+    //       slidesPerView: 5,
+    //     },
+    //     575: {
+    //       slidesPerView: 5,
+    //     },
+    //     425:{
+    //       slidesPerView: 4,
+    //     },
+    //     320: {
+    //       slidesPerView: 3,
+    //     }
+    // }
     };
+    addSwiperActiveClass(event: any){
+      console.log('gkgh');
+      
+      const swiperSlides = document.getElementsByClassName('swiper-slide')
+      for (let index = 0; index < swiperSlides.length; index++) {
+        const element = swiperSlides[index];
+        element.getElementsByTagName('a')[0].style.display = 'none';
+        const linkElemCurrentSlide = swiperSlides[event[0].clickedindex].getElementsByTagName('a')
+        linkElemCurrentSlide[0].style.display = 'block'
+      }
+    }
   ngOnInit(): void {
     this.formModal = new window.bootstrap.Modal(
       document.getElementById('filterModal'),{backdrop: this.macService.backdrop}
@@ -143,7 +164,7 @@ export class ProductsComponent implements OnInit {
     .subscribe({
       next:(productsList: APIResponse<Products>)=>{
         this.loadding = false;
-          this.products = productsList.data;          
+        this.products = productsList.data;          
           if(this.products.length == 0){
             this.errorLength = 'لا يوجد منتجات';
           }else{
@@ -183,7 +204,7 @@ export class ProductsComponent implements OnInit {
     if(id == this.owner_id){
       this.router.navigate(['/adds',id])
     }else{
-      this.router.navigate(['seller-profile',id])
+      this.router.navigate(['/seller-profile',id])
     }
   }
   getBrandFilter(categoryName: any){   

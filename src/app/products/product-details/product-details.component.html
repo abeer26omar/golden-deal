@@ -34,7 +34,7 @@
                             <div class="prod-details d-flex align-items-center">
                                 <div class="owner">
                                     <img class="ps-1" src="../../assets/images/profile_icon.svg" alt="profile_icon">
-                                    <a (click)="sellerProfile(singleProduct.data.owner_id)">{{singleProduct.data.owner.name}}</a>
+                                    <a (click)="sellerProfile(singleProduct.data.owner.id)">{{singleProduct.data.owner.name}}</a>
                                 </div>
                                 <p class="time px-5"><img src="../../assets/images/clock.svg" alt="clock"><span class="pe-1">منذ {{singleProduct.data.created_since | dateAgo}}</span></p>
                             </div>
@@ -43,7 +43,7 @@
                 </div>
                 <div class="card-body">
                     <ng-container *ngFor="let filter_value of singleProduct.data.properties" class="">
-                        <div class="desc_details" *ngIf="filter_value.name_ar !== 'ماركة السيارة' && filter_value.name_ar !== 'المدينة' ">
+                        <div class="desc_details" *ngIf="filter_value.name_ar !== 'المدينة'">
                             <div class="col-12 col-sm-4 d-flex justify-content-between align-items-center">
                                 <p>{{filter_value.name_ar}}</p>
                                 <p>{{filter_value.filter_value.filter_value}}</p>

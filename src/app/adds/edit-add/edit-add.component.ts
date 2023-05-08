@@ -363,6 +363,8 @@ export class EditAddComponent implements OnInit {
     this.editSub = this.productService.getEditFilters(this.addId,this.addCategory).subscribe({
       next: (res: APIResponse4<EditProductFilters>)=>{
         this.EditFilter = res.data;
+        console.log(res);
+        
         this.EditFilter.forEach(ele=>{   
           if(ele.filter_value !== null){
             if(ele.slug_name == 'plate_chars_filter_6'){

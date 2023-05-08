@@ -13,7 +13,7 @@
                 <div class="row justify-content-center my-info">
                     <div class="user-data text-center col-sm-5 col-12 ">
                         <p class="user-name">{{portfolio.data.name}}</p>
-                        <div class="d-flex justify-content-evenly pt-5 align-items-center">
+                        <!-- <div class="d-flex justify-content-evenly pt-5 align-items-center">
                             <div class="crown">
                                 <img src="../../assets/images/profile-crown.svg" alt="profile-crown">
                                 <p class="user-rate">{{(portfolio.data.sum_of_ratings / portfolio.data.ratings_count)}}</p>
@@ -23,7 +23,7 @@
                                 <img src="../../assets/images/chat-msg.svg" alt="chat-msg">
                                 <p class="user-rate">{{portfolio.data.ratings_count}} تقيم</p>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
@@ -102,7 +102,7 @@
                                   <p class="discription" *ngIf="product.desc !== null">{{(product.desc.length > 40)? (product.desc | slice:0:40)+'...':(product.desc)}}</p>
                                   <div class="d-flex justify-content-between align-items-center">
                                     <p class="time m-0"><img src="../../assets/images/clock.svg" alt="clock"><span>منذ {{product.created_since | dateAgo}}</span></p>
-                                    <p class="m-0"><img src="../../assets/images/location_icon (2).svg" alt="location_icon"> {{product.owner_area == null ? 'غير معروف': product.owner_area}}</p>
+                                    <p class="m-0"><img src="../../assets/images/location_icon (2).svg" alt="location_icon"> {{product.region_name == null ? 'غير معروف': product.region_name}}</p>
                                   </div>
                                 </div>
                               </div>
@@ -132,7 +132,7 @@
                                   </div>
                                   <div class="evaluation d-flex justify-content-between align-items-center">
                                     <p class="time"><img src="../../assets/images/clock.svg" alt="clock"><span>منذ {{product.created_since | dateAgo}}</span></p>
-                                    <p  class="m-0"><img src="../../assets/images/location_icon (2).svg" alt="location_icon"> {{product.owner_area == null ? 'غير معروف': product.owner_area}}</p>
+                                    <p  class="m-0"><img src="../../assets/images/location_icon (2).svg" alt="location_icon"> {{product.region_name == null ? 'غير معروف': product.region_name}}</p>
                                   </div>
                                 </div>
                               </div>

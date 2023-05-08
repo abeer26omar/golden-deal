@@ -6,6 +6,7 @@ import { Category,APIResponse2 } from '../models/products.model';
 import { AuthService } from '../services/auth.service';
 import { ProductsRequestService } from '../services/products-request.service'
 import { MacPrefixService } from '../services/mac-prefix.service';
+import { GetproductsService } from '../services/getproducts.service';
 declare var window: any;
 
 @Component({
@@ -28,7 +29,8 @@ export class HeaderComponent implements OnInit {
   constructor(public authService: AuthService,
     private route: Router,
     private categoryService: ProductsRequestService,
-    private macService: MacPrefixService) { 
+    private macService: MacPrefixService,
+    public getProducts: GetproductsService) { 
     this.userId = localStorage.getItem('userId')
   }
   ngOnInit(): void { 

@@ -74,25 +74,19 @@
                       </div>
                     </div>
                     <div class="card-body">
-                      <div class="d-flex justify-content-between align-items-center">
+                      <div class="d-flex justify-content-between align-items-center pb-2">
                           <a  (click)="productDetails(product.id)" [ngClass]="{'pe-none': product.status === 'sold' }">{{(product.name.length > 20)? (product.name | slice:0:20)+'..':(product.name)}}</a>
                         <img src="../../assets/images/nego_icon.svg" alt="nego_icon" *ngIf="product.negotiable == 1">
                       </div>
-                      <!-- <div class="rate">
-                        <ng-template #t let-fill="fill">
-                            <img src="../../assets/images/rate_star_icon.svg" alt="">
-                        </ng-template>
-                        <ngb-rating [max]="product.owner_ratings_count == 0 ? 1: product.owner_ratings_count" 
-                        [rate]="product.owner_ratings_count" 
-                        [readonly]="true"
-                        [starTemplate]="t"></ngb-rating>
-                      </div> -->
-                      <p class="time"><img src="../../assets/images/clock.svg" alt="clock"><span>منذ {{product.created_since | dateAgo}}</span></p>
-                      <div class="evaluation d-flex justify-content-between align-items-center">
+                      <div class="d-flex justify-content-between align-items-center pb-2">
+                        <p class="card_num">{{product.price}} ر.س</p>
+                        <p class="time"><img src="../../assets/images/clock.svg" alt="clock"><span>منذ {{product.created_since | dateAgo}}</span></p>
+                      </div>
+                      <div class="evaluation d-flex justify-content-between align-items-center pb-2">
                         <p><img src="../../assets/images/location_icon (2).svg" alt="location_icon"> {{product.region_name == '' ? 'غير معروف': product.region_name}}</p>
                         <div class="person d-flex align-items-center">
                             <img class="ps-1" src="../../assets/images/profile_icon.svg" alt="profile_icon" width="20px" >
-                            <a (click)="sellerProfile(product.owner_id)" style="cursor: pointer;">
+                            <a (click)="sellerProfile(product.owner.id)" style="cursor: pointer;">
                               {{product.owner.name}}
                             </a>                      
                         </div>
@@ -120,7 +114,7 @@
                       </div>  
                     </div>
                     <div class="card-body">
-                      <div class="d-flex justify-content-between align-items-center">
+                      <div class="d-flex justify-content-between align-items-center pb-2">
                           <a (click)="productDetails(product.id)" [ngClass]="{'pe-none': product.status === 'sold' }"
                           >{{(product.name.length > 20)? (product.name | slice:0:20)+'..':(product.name)}}</a>
                         <img src="../../assets/images/nego_icon.svg" alt="nego_icon" *ngIf="product.negotiable == 1">
@@ -133,15 +127,15 @@
                             <span *ngIf="property.name_ar == 'ارقام اللوحة انجليزي'" class="card_num_en">{{property.filter_value.filter_value}}</span>
                         </span>
                       </ng-container>
-                      <div class="d-flex justify-content-between align-items-center">
-                        <p class="card_num">{{product.price}}</p>
+                      <div class="d-flex justify-content-between align-items-center pb-2">
+                        <p class="card_num">{{product.price}} ر.س</p>
                         <p class="time"><img src="../../assets/images/clock.svg" alt="clock"><span>منذ {{product.created_since | dateAgo}}</span></p>
                       </div>
                       <div class="evaluation d-flex justify-content-between align-items-center">
                         <p><img src="../../assets/images/location_icon (2).svg" alt="location_icon"> {{product.region_name == null ? 'غير معروف': product.region_name}}</p>
                         <div class="person d-flex align-items-center">
                             <img class="ps-1" src="../../assets/images/profile_icon.svg" alt="profile_icon" width="20px" >
-                            <a (click)="sellerProfile(product.owner_id)">
+                            <a (click)="sellerProfile(product.owner.id)">
                               {{product.owner.name}}
                             </a>                      
                         </div>
@@ -149,8 +143,8 @@
                     </div>
                   </div>
                 </div>
-                <p class="text-danger" *ngIf="errorLength !== ''">{{errorLength}}</p>
-            </div> 
+              </div> 
+              <p class="text-danger text-center error" *ngIf="errorLength !== ''">{{errorLength}}</p>
           </ng-template>
         </li>
       </ng-container>
@@ -168,7 +162,7 @@
     </a>
 </div>
 <div *ngIf="showBrandsOptions" class="row row-cols-3 g-3 justify-content-center">
-  <swiper [config]="config" class="py-2" style="width:80%">
+  <swiper [config]="config"  (onRealIndexChange)="addSwiperActiveClass($event)" class="py-2" style="width:80%">
     <ng-template swiperSlide class="col"  *ngIf="show">
       <div class="brand_all d-flex justify-content-center">
         <a [ngClass]="{'click': activeClass}"

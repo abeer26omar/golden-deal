@@ -196,7 +196,7 @@
                                     </div>
                                     <p class="small text-muted">{{error_CarPlate}}</p> 
                                 </div>
-                                <div class="row g-3" [formGroupName]="filter.slug_name"
+                                <!-- <div class="row g-3" [formGroupName]="filter.slug_name"
                                     *ngIf="filter.type == 'text' && filter.name_ar == 'حروف اللوحة انجليزي' " style="display: none;">
                                     <div class="col-4 col-sm-3" *ngFor="let i of [1 , 2 , 3]">
                                         <input 
@@ -206,7 +206,7 @@
                                             formControlName="plate_chars_en_{{i}}"
                                             readonly >
                                     </div>
-                                </div>
+                                </div> -->
                                 <label for="productMark" class="form-label" *ngIf="filter.slug_name == 'plate_numbers_filter_6'"> ارقام اللوحة </label>
                                 <div class="row g-3" [formGroupName]="filter.slug_name"
                                     *ngIf="filter.type == 'text' && filter.name_ar == 'ارقام اللوحة عربي' ">
@@ -220,7 +220,7 @@
                                             [ngClass]="{'invalid_input': submitted && f['plate_numbers_filter_6'].get('plate_number_ar_1')?.errors}">
                                     </div>
                                 </div>
-                                <div class="row g-3" [formGroupName]="filter.slug_name"
+                                <!-- <div class="row g-3" [formGroupName]="filter.slug_name"
                                     *ngIf="filter.type == 'text' && filter.name_ar == 'ارقام اللوحة انجليزي' " style="display: none;">
                                     <div class="col-3 col-sm-2" *ngFor="let i of [1,2,3,4]">
                                         <input  
@@ -231,7 +231,7 @@
                                             readonly
                                             >
                                     </div>
-                                </div>
+                                </div> -->
                                     <div *ngIf="submitted && f[filter.slug_name].value == '' " class="text-danger">يجب ادخال بيانات</div> 
                             </div>
                         </ng-container>
@@ -242,14 +242,14 @@
                             formControlName="name">
                             <div *ngIf="submitted && f['name'].errors" class="text-danger">يجب كتابه عنوان الإعلان </div>  
                         </div>
-                        <div class="col-md-6">
+                        <!-- <div class="col-md-6">
                             <label for="productMark" class="form-label">المنطقه</label>
                             <select class="form-select" id="productMark" formControlName="region_id">
                                 <option value="" disabled selected>اختر المنطقه</option>
                                 <option value="{{region.id}}" *ngFor="let region of regions">{{region.name}}</option>
                             </select>
                             <div class="text-danger" *ngIf="submitted && f['region_id'].errors">يجب تحديد المنطقه</div>
-                        </div>
+                        </div> -->
                         <div class="col-md-6">
                             <label for="phone" class="form-label">رقم الجوال</label>
                             <input type="text" 
@@ -375,7 +375,7 @@ aria-hidden="true"
 			<div class="modal-header justify-content-center">
                 <img src="../../assets/images/sucess-mark.svg" alt="sucess-mark" width="67px">
 			</div>
-			<div class="modal-body text-center p-0">
+			<div class="modal-body text-center">
 				<p class="review">سيتم مراجعه طلبك وسنقوم بالرد عليك فى خلال ساعات</p>
                 <div class="contnet d-flex align-items-center justify-content-evenly">
                     <div class="copy">

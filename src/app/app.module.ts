@@ -71,6 +71,7 @@ import { ResponseModalErrorComponent } from './response-modal-error/response-mod
 import { InputPipe } from './services/input.pipe';
 import { DepositComponent } from './deposit/deposit.component';
 import { DateAgoPipe } from './services/date-ago.pipe';
+import { AuthRemainderModalComponent } from './auth-remainder-modal/auth-remainder-modal.component';
 
 @NgModule({
   declarations: [
@@ -110,6 +111,7 @@ import { DateAgoPipe } from './services/date-ago.pipe';
     InputPipe,
     DepositComponent,
     DateAgoPipe,
+    AuthRemainderModalComponent,
   ],
   imports: [
     BrowserModule,

@@ -494,3 +494,18 @@ input.star:checked ~ label.star:before {
     background-position: left 0.3rem center;
     border-radius: 8px;
 }
+.btn-whats{
+    background-color: #1FD37F !important;
+}
+.btn-deposit{
+    background-color: #FA9C44 !important;
+    color: var(--white) !important;
+    border: none !important;
+    display: none;
+}
+.btn-tweet{
+    background-color: #1D9BF0 !important;
+}
+.btn-google{
+    background-color: #FF0000 !important;
+}

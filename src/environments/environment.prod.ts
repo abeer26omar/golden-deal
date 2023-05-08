@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  api_url: 'https://focused-merkle.185-92-223-5.plesk.page/golden-deal/public/api',
+  api_url: 'https://admin.golden-deal.co/api',
   // socket_url: 'http://localhost:3000'
   socket_url: 'https://golden-deal-socket.herokuapp.com/'
 

@@ -39,7 +39,7 @@ export class TermsConditionsComponent implements OnInit {
    this.pageSub = this.homeAddService.getStaticPages().subscribe({
       next: (respages: APIResponse4<Pages>)=>{
         this.pages = respages.data
-        
+        console.log(respages)
         this.pages.forEach((e)=>{
           if(e.slug == slug){
             this.title = e.title;

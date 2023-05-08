@@ -74,6 +74,7 @@ export class NewAddComponent implements OnInit {
   inputValue: any;
   catergoryId!:number;
   ownerId = localStorage.getItem('userId');
+  region_id = localStorage.getItem('region_id');
   NewProductRes: NewProduct = {
     data:{
       order_code: 0,
@@ -146,7 +147,7 @@ export class NewAddComponent implements OnInit {
       owner_id: new FormControl(this.ownerId),
       negotiable: new FormControl(''),
       category_id: new FormControl(''),
-      region_id: new FormControl('', [Validators.required]),
+      region_id: new FormControl(this.region_id),
       product_image_1: new FormControl(''),
       product_image_2: new FormControl(''),
       product_image_3: new FormControl(''),

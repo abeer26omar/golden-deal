@@ -70,7 +70,8 @@ p.sorts{
         font-size: 1.1rem;
     }
 }
-.brand_all a,swiper .brand a {
+.brand_all a,
+swiper .brand a {
     color: var( --bg-color);
     font-size: 1.2rem;
     font-weight: 500;
@@ -94,6 +95,9 @@ swiper .sub_brand{
     color: var( --primary-color);
     padding: .1rem;
     border-radius: 8px;
+}
+swiper .swiper-slide-active .brand a{
+    background-color: var(--primary-color);
 }
 .loader {
        display: flex;
@@ -152,6 +156,13 @@ swiper .sub_brand{
     position: relative;
     left: 45%;
     bottom: 49%;
+}
+p{
+    margin: 0;
+}
+p.error{
+    font-size: 1.3rem;
+    font-weight: 600;
 }
 /* @media screen and (max-width: 575px) {
     .card_chars_en{

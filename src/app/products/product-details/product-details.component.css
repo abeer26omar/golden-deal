@@ -338,16 +338,6 @@ input:focus , textarea:focus{
 p{
     margin-bottom: 0;
 }
-.btn-whats{
-    background-color: #1FD37F !important;
-    color: var(--white);
-}
-.btn-deposit{
-    background-color: #FA9C44 !important;
-    color: var(--white) !important;
-    border: none !important;
-    display: none;
-}
 .add_desc{
     border: .5px solid #7070703b;
     padding: 1rem;

@@ -145,7 +145,8 @@ export class ProductDetailsComponent implements OnInit {
     this.productSub = this.httpService.getDetails(id)
     .subscribe({
       next:(productDetails: Product)=>{
-        this.singleProduct = productDetails;     
+        this.singleProduct = productDetails;  
+        console.log(productDetails);
         this.receiverId = this.singleProduct.data.owner_id;          
         [...productDetails.data.product_images].forEach(e=>{
           this.imgUrls.push({

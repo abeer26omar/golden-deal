@@ -34,7 +34,7 @@ export class ChatsComponent implements OnInit {
   }
   ngOnInit(): void {
     // this.admin = this.adminService.getOption();
-    this.getAllPreMsgList()
+    // this.getAllPreMsgList()
   }
   sendMsg(){
     const data = {

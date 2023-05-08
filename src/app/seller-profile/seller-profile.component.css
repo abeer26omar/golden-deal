@@ -32,7 +32,7 @@
     padding: 0;
 }
 .add-content .card-body .user-profile{
-    height: 300px;
+    height: 200px;
     background-color: var(--white);
 }
 .add-content .card-body .user-profile .profile-img{

@@ -59,6 +59,7 @@ export class AddsComponent implements OnInit {
       favourites: []
     }
   }
+  active: number = 2
   productsStatus: Array<Products> = [];
   public orders: Array<Orders> = [];
   private recordSub: Subscription = new Subscription;
@@ -73,6 +74,13 @@ export class AddsComponent implements OnInit {
     private dialogRef: MatDialog,
     private macService: MacPrefixService,
     private profileService: ProfileService) { 
+      if(this.route.snapshot.fragment == 'fav'){
+        this.active = 3;
+        this.getMyFav()
+      }else if(this.route.snapshot.fragment == 'orders'){
+        this.active = 4;
+        this.getMyOrders()
+      }else{}
       this.actionService.refresh.subscribe(()=>{
         this.getMyFav();
         this.getMyOrders();
@@ -80,6 +88,8 @@ export class AddsComponent implements OnInit {
       })
     }
   ngOnInit(): void {
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+
     this.filterModal = new window.bootstrap.Modal(
       document.getElementById('myModalFilter'),{backdrop: this.macService.backdrop}
     );

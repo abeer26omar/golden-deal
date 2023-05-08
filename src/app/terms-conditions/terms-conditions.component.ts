@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { HomeAddsService } from '../services/home-adds.service';
 import { APIResponse4, Pages } from '../models/user.model';
-import { HttpErrorResponse } from '@angular/common/http';
 import { MacPrefixService } from '../services/mac-prefix.service';
 declare var window: any;
 
@@ -23,10 +22,12 @@ export class TermsConditionsComponent implements OnInit {
   errMsg: string = '';
   constructor(private homeAddService: HomeAddsService,
     private route: ActivatedRoute,
+    private router: Router,
     private macService: MacPrefixService) { 
     }
 
   ngOnInit(): void {
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     this.routeSub = this.route.params.subscribe((params: Params) => {
     this.pageSlug = params['slug'];
     });

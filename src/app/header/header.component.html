@@ -49,14 +49,13 @@
                             <li *ngFor="let category of categories">
                               <a [routerLink]="['/home']" 
                               fragment="{{category.slug}}"
-                              (click)="getProducts.getProducts(category.slug);" 
                               class="d-inline-flex align-items-center rounded">{{category.title}}</a>
                             </li>
                         </ul>
                       </div>
                     </li>
                     <li>
-                      <a  [routerLink]="['/adds',userId]">
+                      <a  [routerLink]="['/adds',userId]" fragment="fav">
                         <img class="ps-2" src="../../assets/images/favorate_icon.svg" alt="favorate_icon">المفضله</a>
                     </li>
                     <li class="spec">
@@ -92,7 +91,7 @@
                         <img class="ps-2" src="../../assets/images/whoweare_icon.svg" alt="whoweare_icon">من نحن</a>
                     </li>
                     <li>
-                      <a  [routerLink]="['/adds',userId]">
+                      <a  [routerLink]="['/adds',userId]" fragment="orders">
                         <img class="ps-2" src="../../assets/images/myorders_icon.svg" alt="myorders_icon">طلباتى</a>
                     </li>
                     <li class="spec">

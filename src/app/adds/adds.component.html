@@ -29,7 +29,7 @@
                 </div>
             </div>
             <div class="user-info p-3">
-                  <ul ngbNav #nav="ngbNav" class="nav-tabs">
+                  <ul ngbNav #nav="ngbNav" class="nav-tabs" [(activeId)]="active">
                     <!-- <li [ngbNavItem]="1">
                       <a ngbNavLink>التقيمات</a>
                       <ng-template ngbNavContent>
@@ -171,7 +171,7 @@
                         </div>
                       </ng-template>
                     </li>
-                    <li [ngbNavItem]="3">
+                    <li [ngbNavItem]="3" id="fav">
                       <a ngbNavLink (click)="getMyFav()">المفضله</a>
                       <ng-template ngbNavContent>
                         <!-- <div class="loader text-center pt-5 pb-5" *ngIf="loadding" dir="ltr">
@@ -246,7 +246,7 @@
                         <p class="none" *ngIf="errFav !== ''">{{errFav}}</p>
                       </ng-template>
                     </li>
-                    <li [ngbNavItem]="4">
+                    <li [ngbNavItem]="4" id="orders">
                       <a ngbNavLink (click)="getMyOrders()">طلباتى</a>
                       <ng-template ngbNavContent>
                         <!-- <div class="loader text-center pt-5 pb-5" *ngIf="loadding" dir="ltr">

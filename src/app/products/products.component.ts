@@ -1,7 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { APIResponse, Products , APIResponse2, Category, CategoryFilter,BrandFilter, Category_Filter} from '../models/products.model';
 import { MacPrefixService } from '../services/mac-prefix.service';
@@ -86,10 +86,23 @@ export class ProductsComponent implements OnInit {
   })
   constructor(private httpService: ProductsRequestService, 
     private router: Router,
+    private route: ActivatedRoute,
     private macService: MacPrefixService,
     public actionService: ActionsService,
     public authService: AuthService,
     public datepipe: DatePipe) {
+      if(this.route.snapshot.fragment){
+        if(this.route.snapshot.fragment == 'cars'){
+          this.active = 1
+        }else if(this.route.snapshot.fragment == 'car_plates'){
+          this.active = 2
+        }else{
+          this.active = 0
+        }
+        this.getProducts(this.route.snapshot.fragment);
+        this.getCategoryFilter(this.route.snapshot.fragment);
+        this.getBrandFilter(this.route.snapshot.fragment);
+      }
     }
     config: SwiperOptions = {
       // slidesPerView: 11,
@@ -144,6 +157,7 @@ export class ProductsComponent implements OnInit {
       }
     }
   ngOnInit(): void {
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     this.formModal = new window.bootstrap.Modal(
       document.getElementById('filterModal'),{backdrop: this.macService.backdrop}
     );

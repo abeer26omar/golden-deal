@@ -19,6 +19,7 @@ import { AddEditAddressComponent } from './address/add-edit-address/add-edit-add
 import { AuthGuardGuard } from './Guards/auth-guard.guard';
 import { SellerProfileComponent } from './seller-profile/seller-profile.component';
 import { DepositComponent } from './deposit/deposit.component';
+import { NotificationsComponent } from './notifications/notifications.component';
 
 
 
@@ -42,6 +43,7 @@ const routes: Routes = [
   { path:'add', component: AddEditAddressComponent, canActivate:[AuthGuardGuard]},
   { path:'edit/:id', component:AddEditAddressComponent, canActivate:[AuthGuardGuard]},
   { path:'deposit', component: DepositComponent},
+  { path:'notification', component: NotificationsComponent},
   { path:'**', component:NotfoundComponent}
 ];
 const routerOptions: ExtraOptions = {

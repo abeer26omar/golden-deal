@@ -120,6 +120,12 @@ ul.more-dropdown{
   width: auto;
   left: 0;
 }
+.notifcation.dropdown-menu{
+  width: 420px;
+  height: 650px;
+  left: 0;
+  overflow: auto;
+}
 .more-list{
   list-style: none;
   padding: 0 !important;

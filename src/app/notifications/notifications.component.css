@@ -1,0 +1,25 @@
+ul.more-list{
+    list-style: none;
+}
+li .notify{
+    background-color: var(--gray-color);
+    border-radius: 8px;
+}
+.desc{
+    text-align: start;
+}
+p{
+    margin: 0;
+}
+.desc .title{
+    font-weight: 600;
+    color: var(--newColor);
+}
+.desc .body{
+    font-size: .8rem;
+    font-weight: 400;
+    color: var(--black-2);
+}
+.created_at{
+    font-size: .8rem;
+}   

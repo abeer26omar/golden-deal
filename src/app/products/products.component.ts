@@ -47,6 +47,8 @@ export class ProductsComponent implements OnInit {
   searchText: any;
   public sort: string = '';
   public products: Array<Products> = [];
+  links: any ={};
+  meta: any = {};
   public categories : Array<Category> = [];
   active = 0;
   show:boolean = false;
@@ -99,7 +101,7 @@ export class ProductsComponent implements OnInit {
         }else{
           this.active = 0
         }
-        this.getProducts(this.route.snapshot.fragment);
+        this.getProducts(this.route.snapshot.fragment, 1);
         this.getCategoryFilter(this.route.snapshot.fragment);
         this.getBrandFilter(this.route.snapshot.fragment);
       }
@@ -157,22 +159,22 @@ export class ProductsComponent implements OnInit {
       document.getElementById('faildProducts'),{backdrop: this.macService.backdrop}
     );
     this.getCategories();
-    this.getProducts('all');
+    this.getProducts('all', 1);
     this.getRegions();
     this.owner_id = localStorage.getItem('userId')
   }
-  getProducts(categorySlug: string){
+  getProducts(categorySlug: string, pageNo: number){
     this.loadding = true;
     this.formPlatesFilter.reset();
     this.categorySlug = categorySlug;
     this.productSub = this.httpService
-    .getProductsList(categorySlug)
+    .getProductsList(categorySlug, pageNo)
     .subscribe({
       next:(productsList: APIResponse<Products>)=>{
         this.loadding = false;
         this.products = productsList.data;
-        console.log(productsList);
-                  
+        this.links = productsList.links;
+        this.meta = productsList.meta;                          
           if(this.products.length == 0){
             this.errorLength = 'لا يوجد منتجات';
           }else{
@@ -183,6 +185,19 @@ export class ProductsComponent implements OnInit {
         this.loadding = false;
       }
     })
+  }
+  getNewPage(current_page: number,pageNo: any){
+      if(Number.isNaN(+pageNo)){
+        if(pageNo.includes('Previous')){
+          pageNo = current_page - 1;
+          this.getProducts('all',+pageNo);
+        }else{
+          pageNo = current_page + 1;
+          this.getProducts('all',+pageNo); 
+        }
+      }else{
+        this.getProducts('all',+pageNo)
+      }
   }
   getCategories(){
     this.categorySub = this.httpService.
@@ -286,7 +301,7 @@ export class ProductsComponent implements OnInit {
     let value = this.filterAllProducts.get('filterAll')?.value;
     if(value == 'new'){
       this.load = false;
-      this.getProducts('all');
+      this.getProducts('all', 1);
       this.formModal.hide();
     }else{
       let region_id = localStorage.getItem('region_id');
@@ -401,7 +416,7 @@ export class ProductsComponent implements OnInit {
   regionFilter(event: any){
     this.load = true;
     if(event.target.value == 'all'){
-      this.getProducts('all');
+      this.getProducts('all', 1);
     }else{
       this.filterSub = this.actionService.regionFilter(event.target.value,this.categorySlug).subscribe({
         next: (res: APIResponse<Products>)=>{

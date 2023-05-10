@@ -5,7 +5,7 @@
       <ng-container *ngFor="let category of categories; let i = index">
         <li [ngbNavItem]="i" id="{{category.slug}}">
           <a ngbNavLink [ngClass]="{'all': category.id == 0}" 
-          (click)="getProducts(category.slug);
+          (click)="getProducts(category.slug, 1);
           getCategoryFilter(category.slug);
           getBrandFilter(category.slug);"> 
             <span class="all" *ngIf="category.id == 0">
@@ -166,7 +166,7 @@
     <ng-template swiperSlide class="col"  *ngIf="show">
       <div class="brand_all d-flex justify-content-center">
         <a [ngClass]="{'click': activeClass}"
-        (click)="getProducts('cars')">الكل</a>
+        (click)="getProducts('cars',1)">الكل</a>
       </div>
     </ng-template>
     <ng-template swiperSlide class="col"  *ngFor="let brand of brandsOptions">
@@ -210,7 +210,7 @@
 </form>
   <div class="d-flex justify-content-center" *ngIf="showBtnAction">
     <a class="btn btn_find" (click)="onApplayPlatesFilters()">بحث</a>
-    <a class="btn btn_remove me-2" (click)="getProducts('car_plates')">حذف</a>
+    <a class="btn btn_remove me-2" (click)="getProducts('car_plates', 1)">حذف</a>
   </div>
 </div>
 <div class="loader pt-4 pb-5" *ngIf="loadding" dir="ltr">
@@ -229,8 +229,34 @@ viewBox="0 0 100 100" width="70px" height="70px" enable-background="new 0 0 0 0"
 </svg>
 </div>
   <div [ngbNavOutlet]="nav" class="mt-5 mb-5"></div>
-  <mat-paginator [length]="200" [pageSizeOptions]="[10, 50, 100]" aria-label="Select page">
-  </mat-paginator>
+  <section class="pagination">
+      <ul class="pagination__list">
+        <button id="pg-button-prev" 
+          type="button" class="pagination__button"
+          (click)="getNewPage(meta.current_page,1)">
+          <i class="fa-solid fa-angles-left"></i>
+        </button>
+        <li class="pagination__item" 
+         *ngFor="let page of meta.links"
+         [ngClass]="{'pagination--move-next': page.active === true}">
+          <button id="pg-button-1" type="button"
+          [ngClass]="{'activePage': page.active === true, 'next_prev' : (page.label.includes('Previous') || page.label.includes('Next'))}"
+          (click)="getNewPage(meta.current_page,page.label)"
+          [disabled]="((page.label.includes('Previous') && meta.current_page == 1) || 
+          (page.label.includes('Next') && meta.current_page == meta.last_page))">
+            {{ (page.label.includes('Previous') || page.label.includes('Next')) ? '' : page.label }}
+            <i class="fa-solid fa-angle-left" *ngIf="page.label.includes('Previous')"></i>
+            <i class="fa-solid fa-angle-right" *ngIf="page.label.includes('Next')"></i>
+          </button>
+        </li>
+        <button id="pg-button-next" 
+          type="button" 
+          class="pagination__button"
+          (click)="getNewPage(meta.current_page,meta.last_page)">
+          <i class="fa-solid fa-angles-right"></i>
+        </button>
+      </ul>
+  </section>
 <!-- filter modal -->
 <div class="modal fade"
 id="filterModal"

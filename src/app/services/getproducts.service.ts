@@ -44,7 +44,7 @@ export class GetproductsService {
     // this.formPlatesFilter.reset();
     this.categorySlug = categorySlug;
     this.httpService
-    .getProductsList(categorySlug)
+    .getProductsList(categorySlug,1)
     .subscribe({
       next:(productsList: APIResponse<Products>)=>{
         this.loadding = false;

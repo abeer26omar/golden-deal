@@ -109,7 +109,7 @@
           </li>
         </ul>
         <ul class="navbar-nav main-nv mb-2 mb-lg-0  p-0 align-items-center">
-          <li class="nav-item dropdown">
+          <li class="nav-item dropdown" *ngIf="authService.isRegister | async">
             <button class="btn p-0 custom dropdown-toggle" 
               id="dropdownMenuButton3" 
               data-bs-toggle="dropdown" 

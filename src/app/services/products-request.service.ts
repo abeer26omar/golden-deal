@@ -20,8 +20,8 @@ export class ProductsRequestService {
     }
   constructor(public http: HttpClient) { }
 
-  getProductsList(categorySlug: string): Observable<APIResponse<Products>>{
-    return this.http.get<APIResponse<Products>>(`${env.api_url}/products/${categorySlug}`,this.httpOptions);
+  getProductsList(categorySlug: string, pageNo: number): Observable<APIResponse<Products>>{
+    return this.http.get<APIResponse<Products>>(`${env.api_url}/products/${categorySlug}?page=${pageNo}`,this.httpOptions);
   }
   getDetails(id: string): Observable<Product>{
     return this.http.get<Product>(`${env.api_url}/products/get-product-details/${id}`);

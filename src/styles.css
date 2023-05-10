@@ -29,6 +29,14 @@
     --black-3: #333333;
     --new_gray: #707070;
     --chat_gb: #D1D1D1;
+    --color-gray: #dde6f3;
+    --color-secondary: #a5b3d4;
+    --color-input-hover: rgba(165, 179, 212, 0.6);
+    --color-input-focus: rgba(26, 37, 86, 0.45);
+    --color-input-error: rgba(255, 94, 31, 0.6);
+    --color-input-warning: rgba(166, 145, 54, 0.6);
+    --color-input-success: rgba(23, 125, 23, 0.45);
+    --color-input-disabled: #dde6f3;
 }
 /* html, body { height: 100%;} */
 

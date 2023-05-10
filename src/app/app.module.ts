@@ -35,6 +35,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { SwiperModule } from 'swiper/angular';
 import { NgxGalleryModule } from 'ngx-gallery-9';
 import { ClipboardModule } from 'ngx-clipboard';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 //components
 import { HeaderComponent } from './header/header.component';
@@ -150,7 +151,8 @@ import { NotificationsComponent } from './notifications/notifications.component'
     MatPaginatorModule,
     SwiperModule,
     NgxGalleryModule,
-    ClipboardModule
+    ClipboardModule,
+    NgxPaginationModule
     ], 
   providers: [{
     provide: HTTP_INTERCEPTORS,

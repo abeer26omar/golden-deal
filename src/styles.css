@@ -89,8 +89,10 @@ button:focus,
     box-shadow: none !important;
     outline: none;
 }
-.btn:active{
-    border: none;
+.btn:active,
+.btn.show,
+.btn.active{
+    border: none !important;
 }
 .btn:not(.custom):hover{
     transform: scale(.97);

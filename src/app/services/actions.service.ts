@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders} from '@angular/common/http';
 import { environment as env } from 'src/environments/environment';
 import { Subject, tap } from 'rxjs';
 import { APIresponse, APIresponse2, Favourites, Orders, Portfolio, Provider, ResponseSuccess, Subscriptions, Regions } from '../models/actions.model';
-import { APIResponse, Products } from '../models/products.model';
+import { APIResponse, Products, SplashScreen } from '../models/products.model';
 import { MatDialog } from '@angular/material/dialog';
 import { ResponseModalComponent } from '../response-modal/response-modal.component';
 
@@ -67,6 +67,9 @@ export class ActionsService {
   }
   search(name: string){
     return  this.http.get<APIResponse<Products>>(`${env.api_url}/products/search-products/search-with-key?key=${name}`)
+  }
+  getSplashScreen(){
+    return this.http.get<SplashScreen>(`${env.api_url}/general/splash-screen`)
   }
   handelRes(res:any){
     this.dialogRef.open(ResponseModalComponent,{

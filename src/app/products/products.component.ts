@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, Input, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -20,6 +20,7 @@ declare var window: any;
   providers: [DatePipe]
 })
 export class ProductsComponent implements OnInit {
+  @Input() categoriesSplash: any = [];
   filters: CategoryFilter = {
     data: {
       filters: [],
@@ -47,9 +48,9 @@ export class ProductsComponent implements OnInit {
   searchText: any;
   public sort: string = '';
   public products: Array<Products> = [];
-  links: any ={};
+  links: any = {};
   meta: any = {};
-  public categories : Array<Category> = [];
+  // public categories : Array<Category> = [];
   active = 0;
   show:boolean = false;
   showBtnAction: boolean = false;
@@ -158,7 +159,8 @@ export class ProductsComponent implements OnInit {
     this.faildProducts = new window.bootstrap.Modal(
       document.getElementById('faildProducts'),{backdrop: this.macService.backdrop}
     );
-    this.getCategories();
+    // this.getCategories();
+    // this.categoriesSplash = this.categories;    
     this.getProducts('all', 1);
     this.getRegions();
     this.owner_id = localStorage.getItem('userId')
@@ -174,7 +176,7 @@ export class ProductsComponent implements OnInit {
         this.loadding = false;
         this.products = productsList.data;
         this.links = productsList.links;
-        this.meta = productsList.meta;                          
+        this.meta = productsList.meta;                                  
           if(this.products.length == 0){
             this.errorLength = 'لا يوجد منتجات';
           }else{
@@ -190,13 +192,13 @@ export class ProductsComponent implements OnInit {
       if(Number.isNaN(+pageNo)){
         if(pageNo.includes('Previous')){
           pageNo = current_page - 1;
-          this.getProducts('all',+pageNo);
+          this.getProducts(this.categorySlug,+pageNo);
         }else{
           pageNo = current_page + 1;
-          this.getProducts('all',+pageNo); 
+          this.getProducts(this.categorySlug,+pageNo); 
         }
       }else{
-        this.getProducts('all',+pageNo)
+        this.getProducts(this.categorySlug,+pageNo)
       }
   }
   getCategories(){
@@ -204,7 +206,7 @@ export class ProductsComponent implements OnInit {
     getProductsCategories().
     subscribe({
       next: (categoryList: APIResponse2<Category>)=>{ 
-        this.categories = categoryList.data;       
+        this.categoriesSplash = categoryList.data;       
       }
     })
   }

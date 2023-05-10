@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { Notifications } from '../models/actions.model';
 import { Subscription } from 'rxjs';
 import { NotificationsService } from '../services/notifications.service';
@@ -44,11 +44,21 @@ export class NotificationsComponent implements OnInit {
   getMyNotifications(){
     this.notifiSub = this.notificationService.getMyNotifications().subscribe({
       next: (resData: Notifications)=>{
-        this.notifications = resData;        
+        this.notifications = resData;                
       },
       error: ()=>{
       }
     })
   }
+  // scrolll
+  @ViewChild('notification') notification!: ElementRef;
 
+  newScroll: boolean = false;
+  @HostListener('window:scroll') onScroll(){
+  }
+  ngOnDestory() :void{
+    if(this.notifiSub){
+      this.notifiSub.unsubscribe();
+    }
+  }
 }

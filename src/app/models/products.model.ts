@@ -1,3 +1,10 @@
+export interface SplashScreen{
+    data: {
+        ads: Array<Adds>,
+        categories: Array<Category>,
+        products: APIResponse<Products>
+    }
+}
 export interface Products{
         id: number;
         name: string;
@@ -143,7 +150,8 @@ interface productImages{
 export interface Category{
     id: number,
     title: string,
-    slug: string
+    slug: string,
+    image: ''
 }
 export interface APIResponse2<T>{
     data: Array<T>;

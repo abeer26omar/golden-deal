@@ -96,9 +96,6 @@ swiper .sub_brand{
     padding: .1rem;
     border-radius: 8px;
 }
-swiper .swiper-slide-active .brand a{
-    background-color: var(--primary-color);
-}
 .loader {
        display: flex;
        justify-content: center;

@@ -6,7 +6,7 @@ import { Subscription } from 'rxjs';
 import { APIResponse, Products , APIResponse2, Category, CategoryFilter,BrandFilter, Category_Filter} from '../models/products.model';
 import { MacPrefixService } from '../services/mac-prefix.service';
 import { ProductsRequestService } from '../services/products-request.service';
-import { SwiperOptions } from 'swiper';
+import Swiper, { SwiperOptions } from 'swiper';
 import { ActionsService } from '../services/actions.service';
 import { AuthService } from '../services/auth.service';
 import { Regions } from '../models/actions.model';
@@ -112,49 +112,41 @@ export class ProductsComponent implements OnInit {
       pagination: false,
       scrollbar: false,
       grabCursor: true,
-      slideActiveClass: 'swiper-slide-active',
-      on:{
-        click(swiper) {
-          swiper.activeIndex =  swiper.clickedIndex;
-          console.log(swiper.activeIndex);
-          console.log(swiper);
-          swiper.clickedSlide.classList.add('swiper-slide-active');          
-        },
-      }
-    //   breakpoints: {
-    //     1440: {
-    //       slidesPerView: 11,
-    //     },
-    //     1024: {
-    //       slidesPerView: 7,
-    //     },
-    //     992: {
-    //       slidesPerView: 5,
-    //     },
-    //     786: {
-    //       slidesPerView: 5,
-    //     },
-    //     575: {
-    //       slidesPerView: 5,
-    //     },
-    //     425:{
-    //       slidesPerView: 4,
-    //     },
-    //     320: {
-    //       slidesPerView: 3,
-    //     }
-    // }
     };
-    addSwiperActiveClass(event: any){
-      console.log('gkgh');
-      
-      const swiperSlides = document.getElementsByClassName('swiper-slide')
-      for (let index = 0; index < swiperSlides.length; index++) {
-        const element = swiperSlides[index];
-        element.getElementsByTagName('a')[0].style.display = 'none';
-        const linkElemCurrentSlide = swiperSlides[event[0].clickedindex].getElementsByTagName('a')
-        linkElemCurrentSlide[0].style.display = 'block'
-      }
+    configSubBrands: SwiperOptions = {
+      // slidesPerView: 11,
+      slidesPerView: 'auto',
+      spaceBetween: 10,
+      navigation: false,
+      pagination: false,
+      scrollbar: false,
+      grabCursor: true,
+    };
+    swiper!: Swiper;
+    swiperSubrand!: Swiper;
+    onSwiper(swiper: Swiper){
+      this.swiper = swiper;
+      this.swiper.slides.forEach((slide, index) => {
+        slide.addEventListener('click', () => {
+          this.swiper.slideTo(index);
+          this.swiper.slides.forEach((slide) => {
+            slide.classList.remove('swiper-slide-active');
+          });
+          slide.classList.add('swiper-slide-active');
+        });
+      });
+    }
+    onSwiperSubBrand(swiperSubrand: Swiper){
+      this.swiperSubrand = swiperSubrand;
+      this.swiperSubrand.slides.forEach((slide, index) => {
+        slide.addEventListener('click', () => {
+          this.swiperSubrand.slideTo(index);
+          this.swiperSubrand.slides.forEach((slide) => {
+            slide.classList.remove('active');
+          });
+          slide.classList.add('active');
+        });
+      });
     }
   ngOnInit(): void {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
@@ -178,7 +170,9 @@ export class ProductsComponent implements OnInit {
     .subscribe({
       next:(productsList: APIResponse<Products>)=>{
         this.loadding = false;
-        this.products = productsList.data;          
+        this.products = productsList.data;
+        console.log(productsList);
+                  
           if(this.products.length == 0){
             this.errorLength = 'لا يوجد منتجات';
           }else{

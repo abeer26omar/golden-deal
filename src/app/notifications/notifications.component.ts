@@ -44,9 +44,7 @@ export class NotificationsComponent implements OnInit {
   getMyNotifications(){
     this.notifiSub = this.notificationService.getMyNotifications().subscribe({
       next: (resData: Notifications)=>{
-        this.notifications = resData;
-        console.log(this.notifications);
-        
+        this.notifications = resData;        
       },
       error: ()=>{
       }

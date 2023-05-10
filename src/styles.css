@@ -452,6 +452,13 @@ input.star:checked ~ label.star:before {
 .adds_swipe .swiper-wrapper{
     justify-content: flex-start;
 }
+.swiper-slide.swiper-slide-active .brand a{
+    background-color: var(--primary-color) !important;
+}
+.swiper-slide.swiper-slide-active .sub_brand{
+    background-color: var( --primary-color) !important;
+    color: var(--gray-color) !important;
+}
 /* nz-slider */
 .ant-slider-track{
     background-color: var(--primary-color);

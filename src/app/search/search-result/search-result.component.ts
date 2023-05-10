@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -41,8 +42,10 @@ export class SearchResultComponent implements OnInit {
         this.loader = false;
         this.searchRes = res.data;
       },
-      error: ()=>{
+      error: (err: HttpErrorResponse)=>{
         this.loader = false;
+        console.log(err);
+        
       }
      })
   }

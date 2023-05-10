@@ -1,5 +1,4 @@
 export interface Products{
-    
         id: number;
         name: string;
         desc: string; 
@@ -55,7 +54,30 @@ interface filter_options_new{
     sub_filter: []
 }
 export interface APIResponse<T>{
-    data: Array<T>;
+    data: Array<T>,
+    links: {
+        self: string,
+        first: string,
+        last: string,
+        prev: string,
+        next: string
+    },
+    meta: {
+        current_page: number,
+        from: number,
+        last_page: number,
+        links: [
+            {
+                url: string,
+                label: string,
+                active: boolean
+            }
+        ],
+        path: string,
+        per_page: number,
+        to: number,
+        total: number
+    }
 }
 export interface Product{
     data: {

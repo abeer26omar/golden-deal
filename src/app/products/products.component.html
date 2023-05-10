@@ -162,7 +162,7 @@
     </a>
 </div>
 <div *ngIf="showBrandsOptions" class="row row-cols-3 g-3 justify-content-center">
-  <swiper [config]="config"  (onRealIndexChange)="addSwiperActiveClass($event)" class="py-2" style="width:80%">
+  <swiper [config]="config" (swiper)="onSwiper($event)" class="py-2" style="width:80%">
     <ng-template swiperSlide class="col"  *ngIf="show">
       <div class="brand_all d-flex justify-content-center">
         <a [ngClass]="{'click': activeClass}"
@@ -180,7 +180,7 @@
   </swiper>
 </div>
 <div *ngIf="showBrandsOptions" class="row row-cols-3 g-3 justify-content-center">
-  <swiper [config]="config" style="width:80%;">
+  <swiper [config]="configSubBrands" (swiper)="onSwiperSubBrand($event)" style="width:80%;">
     <ng-template swiperSlide *ngFor="let brand of filterbrandsOptions" class="pt-2 col">
         <div class="sub_brand d-flex justify-content-center">
           <a [ngClass]="{'click': activeClass}"(click)="onApplayFiltersKeys('',brand.name)">{{brand.name}}</a>
@@ -229,6 +229,8 @@ viewBox="0 0 100 100" width="70px" height="70px" enable-background="new 0 0 0 0"
 </svg>
 </div>
   <div [ngbNavOutlet]="nav" class="mt-5 mb-5"></div>
+  <mat-paginator [length]="200" [pageSizeOptions]="[10, 50, 100]" aria-label="Select page">
+  </mat-paginator>
 <!-- filter modal -->
 <div class="modal fade"
 id="filterModal"

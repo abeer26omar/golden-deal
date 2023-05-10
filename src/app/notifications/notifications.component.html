@@ -2,7 +2,7 @@
     <li *ngFor="let notify of notifications.data" class="py-1">
         <div class="notify py-1 px-2 d-flex justify-content-between">
             <div class="d-flex align-items-center">
-                <img src="{{'../../assets/images/' + notify.slug + '.svg'}}" alt="{{notify.slug}}">
+                <img src="{{'../../assets/images/' + notify.slug + '.svg'}}" alt="{{notify.slug}}" width = '24px'>
                 <div class="desc pe-2">
                     <p class="title">{{notify.title}}</p>
                     <p class="body">{{notify.body}}</p>

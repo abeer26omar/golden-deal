@@ -11,6 +11,7 @@ import { Regions, ResponseSuccess } from '../models/actions.model';
 import { MacPrefixService } from '../services/mac-prefix.service';
 import { DatePipe } from '@angular/common';
 import { ActionsService } from '../services/actions.service';
+import { ErrorHandlerService } from '../services/error-handler.service';
 
 declare var window: any;
 
@@ -58,7 +59,8 @@ export class ProfileComponent implements OnInit {
     private profileService: ProfileService,
     private dialogRef: MatDialog,
     private datePipe: DatePipe,
-    private actionService: ActionsService) {
+    private actionService: ActionsService,
+    private errorHandel: ErrorHandlerService) {
       this.profileService.refresh.subscribe(()=>{
         this.getProfileInfo();
       })
@@ -100,6 +102,9 @@ export class ProfileComponent implements OnInit {
     this.userSub = this.actionService.getRegions().subscribe({
       next: (res: Regions) => {
         this.regions = res.data        
+      },
+      error: (err: HttpErrorResponse)=>{
+        this.errorHandel.openErrorModa(err)
       }
     })
   }
@@ -118,6 +123,9 @@ export class ProfileComponent implements OnInit {
           address: new FormControl({value:this.userData.data.region_id,disabled: this.edit}),
           gender: new FormControl({value:this.userData.data.gender, disabled: this.edit})
         })
+      },
+      error:(err: HttpErrorResponse)=>{
+        this.errorHandel.openErrorModa(err)
       }
     })
   }
@@ -141,10 +149,11 @@ export class ProfileComponent implements OnInit {
         this.edit = true;
         this.changeBtn = false;
       },
-      error: ()=>{
+      error: (err: HttpErrorResponse)=>{
         this.loadProfile = false;
         this.edit = true;
         this.changeBtn = false;
+        this.errorHandel.openErrorModa(err)
       }
     })
   }
@@ -173,6 +182,9 @@ export class ProfileComponent implements OnInit {
         localStorage.clear();
         window.location.reload();
         }, 1000);
+      },
+      error:(err: HttpErrorResponse)=>{
+        this.errorHandel.openErrorModa(err)
       }
     })
   }

@@ -10,6 +10,7 @@ import { DatePipe } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { ActionsService } from 'src/app/services/actions.service';
 import { Regions } from 'src/app/models/actions.model';
+import { ErrorHandlerService } from 'src/app/services/error-handler.service';
 declare var window: any;
 
 @Component({
@@ -84,7 +85,8 @@ export class RegisterComponent implements OnInit {
     private router: Router,
     private macService: MacPrefixService,
     private datePipe: DatePipe,
-    private actionService: ActionsService) { 
+    private actionService: ActionsService,
+    private errorHandel: ErrorHandlerService) { 
     }
     //get forms controls
     get fRegister(){
@@ -97,6 +99,9 @@ export class RegisterComponent implements OnInit {
     this.actionSub = this.actionService.getRegions().subscribe({
       next: (res: Regions) => {
         this.regions = res.data        
+      },
+      error: (err: HttpErrorResponse)=>{
+        this.errorHandel.openErrorModa(err);
       }
     })
   }
@@ -136,9 +141,10 @@ export class RegisterComponent implements OnInit {
             this.loader = false;
             this.openOtpModal();             
         },
-        error: () =>{
+        error: (err: HttpErrorResponse) =>{
             this.loader = false;
             localStorage.clear();
+            this.errorHandel.openErrorModa(err);
           }
       })  
     }
@@ -161,9 +167,10 @@ export class RegisterComponent implements OnInit {
           this.openOtpModal(); 
           this.login = true;
         },
-        error: ()=>{
+        error: (err: HttpErrorResponse)=>{
           this.loaderLogin = false;
           localStorage.clear();
+          this.errorHandel.openErrorModa(err);
         }
       })
     }
@@ -217,9 +224,10 @@ export class RegisterComponent implements OnInit {
         },50)
       },50)
     },
-    error: () =>{
+    error: (err: HttpErrorResponse) =>{
       this.loaderOtp = false;
       localStorage.clear();
+      this.errorHandel.openErrorModa(err);
     }
    })
   }
@@ -243,6 +251,7 @@ export class RegisterComponent implements OnInit {
       error: (err: HttpErrorResponse)=>{
         this.loaderOtp = false;
         localStorage.clear()
+        this.errorHandel.openErrorModa(err);
       }
     })
   }

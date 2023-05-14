@@ -112,7 +112,7 @@
                                   <div class="d-flex justify-content-between align-items-center">
                                       <h4 (click)="productDetails(product.id)" style="cursor: pointer;">{{(product.name.length > 20)? (product.name | slice:0:20)+'...':(product.name)}}</h4>
                                   </div>
-                                  <p class="discription">{{(product.desc.length > 40)? (product.desc | slice:0:40)+'...':(product.desc)}}</p>
+                                  <p class="discription" *ngIf="product.desc">{{(product.desc.length > 40)? (product.desc | slice:0:40)+'...':(product.desc)}}</p>
                                   <div class="d-flex justify-content-between align-items-center">
                                     <p class="time m-0"><img src="../../assets/images/clock.svg" alt="clock"><span>منذ {{product.created_since | dateAgo}}</span></p>
                                     <p class="m-0"><img src="../../assets/images/location_icon (2).svg" alt="location_icon"> {{product.region_name == '' ? 'غير معروف': product.region_name}}</p>
@@ -203,7 +203,7 @@
                                   <div class="d-flex justify-content-between align-items-center">
                                       <h4 (click)="productDetails(fav.product_id)" style="cursor: pointer;">{{(fav.product.name.length > 20)? (fav.product.name | slice:0:20)+'...':(fav.product.name)}}</h4>
                                   </div>
-                                  <p class="discription">{{(fav.product.desc.length > 40)? (fav.product.desc | slice:0:40)+'...':(fav.product.desc)}}</p>
+                                  <p class="discription" *ngIf="fav.product.desc">{{(fav.product.desc.length > 40)? (fav.product.desc | slice:0:40)+'...':(fav.product.desc)}}</p>
                                   <div class="d-flex justify-content-between align-items-center">
                                     <p class="time m-0"><img src="../../assets/images/clock.svg" alt="clock"><span>منذ {{fav.product.created_since | dateAgo}}</span></p>
                                     <p class="m-0"><img src="../../assets/images/location_icon (2).svg" alt="location_icon"> {{fav.product.region_name == '' ? 'غير معروف': fav.product.region_name}}</p>
@@ -325,7 +325,7 @@
                                   <p class="discription" *ngIf="record.desc !== null">{{(record.desc.length > 40)? (record.desc| slice:0:40)+'..': (record.desc)}}</p>
                                   <div class="evaluation d-flex justify-content-between align-items-center">
                                     <p class="time"><img src="../../assets/images/clock.svg" alt="clock"><span>منذ {{record.created_since | dateAgo}}</span></p>
-                                    <p  class="m-0"><img src="../../assets/images/location_icon (2).svg" alt="location_icon"> {{record.region_name == '' ? 'غير معروف': record.region_name}}</p>
+                                    <p class="m-0"><img src="../../assets/images/location_icon (2).svg" alt="location_icon"> {{record.region_name == '' ? 'غير معروف': record.region_name}}</p>
                                   </div>
                                 </div>
                               </div>

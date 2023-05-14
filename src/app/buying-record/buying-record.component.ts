@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ProfileService } from '../services/profile.service';
 import { APIResponse2, Purchases } from '../models/user.model';
+import { ErrorHandlerService } from '../services/error-handler.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-buying-record',
@@ -14,7 +16,8 @@ export class BuyingRecordComponent implements OnInit {
   error: string = '';
   loadding: boolean = false;
   mac: boolean = false;
-  constructor(private profileService: ProfileService) { 
+  constructor(private profileService: ProfileService,
+    private errorHandel: ErrorHandlerService) { 
     }
 
   ngOnInit(): void {
@@ -32,8 +35,9 @@ export class BuyingRecordComponent implements OnInit {
           this.error = '';
         }
       },
-      error: ()=>{
+      error: (err: HttpErrorResponse)=>{
         this.loadding = false;
+        this.errorHandel.openErrorModa(err)
       }
     })
   }

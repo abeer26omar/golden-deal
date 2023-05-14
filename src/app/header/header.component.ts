@@ -7,6 +7,8 @@ import { AuthService } from '../services/auth.service';
 import { ProductsRequestService } from '../services/products-request.service'
 import { MacPrefixService } from '../services/mac-prefix.service';
 import { GetproductsService } from '../services/getproducts.service';
+import { ErrorHandlerService } from '../services/error-handler.service';
+import { HttpErrorResponse } from '@angular/common/http';
 declare var window: any;
 
 @Component({
@@ -30,7 +32,8 @@ export class HeaderComponent implements OnInit {
     private route: Router,
     private categoryService: ProductsRequestService,
     private macService: MacPrefixService,
-    public getProducts: GetproductsService) { 
+    public getProducts: GetproductsService,
+    private errorHandel: ErrorHandlerService) { 
     this.userId = localStorage.getItem('userId')
   }
   ngOnInit(): void { 
@@ -65,6 +68,9 @@ export class HeaderComponent implements OnInit {
     subscribe({
       next:(categoryList: APIResponse2<Category>)=>{ 
         this.categories = categoryList.data;
+      },
+      error: (err: HttpErrorResponse)=>{
+        this.errorHandel.openErrorModa(err)
       }
     })
   }

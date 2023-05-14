@@ -10,6 +10,8 @@ import { DialogCoverComponent } from './dialog-cover/dialog-cover.component';
 import { MacPrefixService } from '../services/mac-prefix.service';
 import { APIResponse2, Purchases } from '../models/user.model';
 import { ProfileService } from '../services/profile.service';
+import { ErrorHandlerService } from '../services/error-handler.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 declare var window: any;
 
@@ -73,7 +75,8 @@ export class AddsComponent implements OnInit {
     public actionService: ActionsService,
     private dialogRef: MatDialog,
     private macService: MacPrefixService,
-    private profileService: ProfileService) { 
+    private profileService: ProfileService,
+    private errorHandel: ErrorHandlerService) { 
       if(this.route.snapshot.fragment == 'fav'){
         this.active = 3;
         this.getMyFav()
@@ -111,8 +114,9 @@ export class AddsComponent implements OnInit {
         this.loadding = false;
         this.portfolio = resData;        
       },
-      error: ()=>{
+      error: (err: HttpErrorResponse)=>{
         this.loadding = false;
+        this.errorHandel.openErrorModa(err);
       }
     })
   }
@@ -132,9 +136,10 @@ export class AddsComponent implements OnInit {
           this.filterModal.hide();
         })
       },
-      error: ()=>{
+      error: (err: HttpErrorResponse)=>{
         this.load = false;
         this.filterModal.hide();
+        this.errorHandel.openErrorModa(err);
       }
     })
   }
@@ -148,7 +153,9 @@ export class AddsComponent implements OnInit {
           this.errFav = '';
         }
       },
-      error: ()=>{
+      error: (err: HttpErrorResponse)=>{
+        this.loadding = false;
+        this.errorHandel.openErrorModa(err);
       }
     })
   }
@@ -184,8 +191,9 @@ export class AddsComponent implements OnInit {
           this.errorder = '';
         }
       },
-      error: ()=>{
+      error: (err: HttpErrorResponse)=>{
         this.loadding = false;
+        this.errorHandel.openErrorModa(err);
       }
     })
   }
@@ -200,8 +208,9 @@ export class AddsComponent implements OnInit {
           this.errrecord = '';
         }
       },
-      error: ()=>{
+      error: (err: HttpErrorResponse)=>{
         this.loadding = false;
+        this.errorHandel.openErrorModa(err);
       }
     })
   }

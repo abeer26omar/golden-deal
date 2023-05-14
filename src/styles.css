@@ -377,7 +377,7 @@ input.star:checked ~ label.star:before {
 .card_chars_ar{
     position: absolute;
     top: 20%;
-    right: 16%;
+    right: 19%;
     font-weight: 900;
 }
 .card_num_ar{
@@ -389,13 +389,13 @@ input.star:checked ~ label.star:before {
 .card_chars_en{
     position: absolute;
     top: 34%;
-    right: 17%;
+    right: 19%;
     font-weight: 900;
 }
 .card_num_en{
     position: absolute;
     top: 34%;
-    left: 15%;
+    left: 16%;
     font-weight: 900;
 }
 @media screen and (max-width: 575px) {

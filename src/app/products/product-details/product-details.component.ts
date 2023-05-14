@@ -9,6 +9,8 @@ import { ResponseSuccess } from 'src/app/models/actions.model';
 import { MacPrefixService } from 'src/app/services/mac-prefix.service';
 import { NgxGalleryOptions, NgxGalleryImage, NgxGalleryAnimation } from 'ngx-gallery-9';
 import { ChatService } from 'src/app/services/chat.service';
+import { ErrorHandlerService } from 'src/app/services/error-handler.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 declare var window: any;
 
@@ -89,7 +91,8 @@ export class ProductDetailsComponent implements OnInit {
     private router: Router,
     public actionService : ActionsService,
     private macService: MacPrefixService,
-    private chatService: ChatService) { }
+    private chatService: ChatService,
+    private errorHandel: ErrorHandlerService) { }
 
   ngOnInit(): void {
     this.routeSub = this.route.params.subscribe((params: Params) => {
@@ -155,6 +158,9 @@ export class ProductDetailsComponent implements OnInit {
               big: e.image_url
           })
         })
+      },
+      error: (err: HttpErrorResponse)=>{
+        this.errorHandel.openErrorModa(err)
       }
     })
   }
@@ -202,9 +208,10 @@ export class ProductDetailsComponent implements OnInit {
           this.sucessMsg = res.data;
           this.success.show();
         },
-        error: ()=>{
+        error:(err: HttpErrorResponse)=>{
           this.loaderAdd = false;
           this.formModal2.hide();
+          this.errorHandel.openErrorModa(err)
         }
       })
       form.reset();

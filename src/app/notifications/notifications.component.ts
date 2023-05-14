@@ -2,6 +2,8 @@ import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular
 import { Notifications } from '../models/actions.model';
 import { Subscription } from 'rxjs';
 import { NotificationsService } from '../services/notifications.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ErrorHandlerService } from '../services/error-handler.service';
 
 @Component({
   selector: 'app-notifications',
@@ -36,7 +38,8 @@ export class NotificationsComponent implements OnInit {
   }
   private notifiSub : Subscription = new Subscription;
 
-  constructor(private notificationService: NotificationsService) { }
+  constructor(private notificationService: NotificationsService,
+    private errorHandel: ErrorHandlerService) { }
 
   ngOnInit(): void {
     this.getMyNotifications();
@@ -46,7 +49,8 @@ export class NotificationsComponent implements OnInit {
       next: (resData: Notifications)=>{
         this.notifications = resData;                
       },
-      error: ()=>{
+      error: (err: HttpErrorResponse)=>{
+        this.errorHandel.openErrorModa(err)
       }
     })
   }

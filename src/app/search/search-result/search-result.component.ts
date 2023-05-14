@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { APIResponse, Products, Search } from 'src/app/models/products.model';
 import { ActionsService } from 'src/app/services/actions.service';
+import { ErrorHandlerService } from 'src/app/services/error-handler.service';
 import { ProductsRequestService } from 'src/app/services/products-request.service';
 
 @Component({
@@ -24,7 +25,8 @@ export class SearchResultComponent implements OnInit {
   constructor(private route: ActivatedRoute,
     private productService: ProductsRequestService,
     private router: Router,
-    public actionService: ActionsService,) { 
+    public actionService: ActionsService,
+    private errorHandel: ErrorHandlerService) { 
     } 
     
     ngOnInit(): void {
@@ -44,8 +46,7 @@ export class SearchResultComponent implements OnInit {
       },
       error: (err: HttpErrorResponse)=>{
         this.loader = false;
-        console.log(err);
-        
+        this.errorHandel.openErrorModa(err)
       }
      })
   }

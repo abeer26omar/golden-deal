@@ -3,6 +3,8 @@ import { NgwWowService } from 'ngx-wow';
 import { ActionsService } from '../services/actions.service';
 import { Subscription } from 'rxjs';
 import { SplashScreen } from '../models/products.model';
+import { ErrorHandlerService } from '../services/error-handler.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-home',
@@ -17,7 +19,8 @@ export class HomeComponent implements OnInit {
   meta: any;
   links: any;
   constructor(private wowService: NgwWowService,
-    private actionService: ActionsService) { 
+    private actionService: ActionsService,
+    private errorHandel: ErrorHandlerService) { 
       this.wowService.init(); 
   }
   ngOnInit(): void {
@@ -32,7 +35,8 @@ export class HomeComponent implements OnInit {
         this.links = resData.data.products.links;
         this.meta = resData.data.products.meta;       
       },
-      error: ()=>{
+      error: (err: HttpErrorResponse)=>{
+        this.errorHandel.openErrorModa(err)
       }
     })
   }

@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { CommonModule } from '@angular/common';  
+import { AsyncPipe, CommonModule } from '@angular/common';  
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { HttpHeadersInterceptor } from './interceptors/http-headers.interceptor';
 import { HttpErrorInterceptor } from './interceptors/http-errors.interceptor';
 import { AppRoutingModule } from './app-routing.module';
@@ -36,7 +37,9 @@ import { SwiperModule } from 'swiper/angular';
 import { NgxGalleryModule } from 'ngx-gallery-9';
 import { ClipboardModule } from 'ngx-clipboard';
 import { NgxPaginationModule } from 'ngx-pagination';
-
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+import { AngularFireMessagingModule} from '@angular/fire/compat/messaging';
+import { AngularFireModule } from '@angular/fire/compat';
 //components
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
@@ -75,6 +78,8 @@ import { DepositComponent } from './deposit/deposit.component';
 import { DateAgoPipe } from './services/date-ago.pipe';
 import { AuthRemainderModalComponent } from './auth-remainder-modal/auth-remainder-modal.component';
 import { NotificationsComponent } from './notifications/notifications.component';
+import { environment } from 'src/environments/environment';
+import { NotificationsService } from './services/notifications.service';
 
 @NgModule({
   declarations: [
@@ -152,18 +157,27 @@ import { NotificationsComponent } from './notifications/notifications.component'
     SwiperModule,
     NgxGalleryModule,
     ClipboardModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    AngularFireAuthModule,
+    AngularFireMessagingModule,
+    AngularFireModule.initializeApp(environment.firebase)
     ], 
-  providers: [{
-    provide: HTTP_INTERCEPTORS,
-    useClass: HttpHeadersInterceptor,
-    multi: true,
-  },
-  {
-  provide: HTTP_INTERCEPTORS,
-  useClass: HttpErrorInterceptor,
-  multi: true
- }],
+  providers: [ NotificationsService, AsyncPipe,
+    { 
+      provide: LocationStrategy, 
+      useClass: PathLocationStrategy 
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpHeadersInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpErrorInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

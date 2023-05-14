@@ -6,6 +6,8 @@ import { APIresponse, Subscriptions } from '../models/actions.model';
 import { ActionsService } from '../services/actions.service';
 import { MacPrefixService } from '../services/mac-prefix.service';
 import { PaymentDetailsDialogComponent } from './payment-details-dialog/payment-details-dialog.component';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ErrorHandlerService } from '../services/error-handler.service';
 declare var window: any;
 
 @Component({
@@ -28,7 +30,8 @@ export class SubscriptionsComponent implements OnInit {
   });
   constructor(private actionService: ActionsService,
     private macService: MacPrefixService,
-    private dialogRef: MatDialog) { }
+    private dialogRef: MatDialog,
+    private errorHandel: ErrorHandlerService) { }
   get f(){
     return this.subscribtionForm.controls;
   }
@@ -50,9 +53,10 @@ export class SubscriptionsComponent implements OnInit {
   getSubscriptionTypes(){
     this.subscriptionSub = this.actionService.getSubscribtionsType().subscribe({
       next: (resData: APIresponse<Subscriptions>)=>{
-        this.subscriptions = resData.data;
-        console.log(resData.data);
-        
+        this.subscriptions = resData.data;        
+      },
+      error: (err: HttpErrorResponse)=>{
+        this.errorHandel.openErrorModa(err);
       }
     })
   }

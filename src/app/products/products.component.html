@@ -52,7 +52,7 @@
                         <img src="../../assets/images/nego_icon.svg" alt="nego_icon" *ngIf="product.negotiable == 1">
                       </div>
                       <div class="d-flex justify-content-between align-items-center pb-2">
-                        <p class="card_num">{{product.price}} ر.س</p>
+                        <p class="card_num" *ngIf="product.price !== 0">{{product.price}} ر.س</p>
                         <p class="time"><img src="../../assets/images/clock.svg" alt="clock"><span>منذ {{product.created_since | dateAgo}}</span></p>
                       </div>
                       <div class="evaluation d-flex justify-content-between align-items-center pb-2">
@@ -93,15 +93,15 @@
                         <img src="../../assets/images/nego_icon.svg" alt="nego_icon" *ngIf="product.negotiable == 1">
                       </div>
                       <ng-container  *ngFor="let property of product.properties">
-                        <span  *ngIf="property.type == 'text'">
+                        <ng-container  *ngIf="property.type == 'text'">
                             <span *ngIf="property.name_ar == 'حروف اللوحة عربي'" class="card_chars_ar">{{property.filter_value.filter_value}}</span>
                             <span *ngIf="property.name_ar == 'حروف اللوحة انجليزي'" class="card_chars_en">{{property.filter_value.filter_value}}</span>
                             <span *ngIf="property.name_ar == 'ارقام اللوحة عربي'" class="card_num_ar">{{property.filter_value.filter_value}}</span>
                             <span *ngIf="property.name_ar == 'ارقام اللوحة انجليزي'" class="card_num_en">{{property.filter_value.filter_value}}</span>
-                        </span>
+                        </ng-container>
                       </ng-container>
                       <div class="d-flex justify-content-between align-items-center pb-2">
-                        <p class="card_num">{{product.price}} ر.س</p>
+                        <p class="card_num" *ngIf="product.price !== 0">{{product.price}} ر.س</p>
                         <p class="time"><img src="../../assets/images/clock.svg" alt="clock"><span>منذ {{product.created_since | dateAgo}}</span></p>
                       </div>
                       <div class="evaluation d-flex justify-content-between align-items-center">

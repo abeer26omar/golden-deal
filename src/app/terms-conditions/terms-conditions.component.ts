@@ -4,6 +4,8 @@ import { Subscription } from 'rxjs';
 import { HomeAddsService } from '../services/home-adds.service';
 import { APIResponse4, Pages } from '../models/user.model';
 import { MacPrefixService } from '../services/mac-prefix.service';
+import { ErrorHandlerService } from '../services/error-handler.service';
+import { HttpErrorResponse } from '@angular/common/http';
 declare var window: any;
 
 @Component({
@@ -23,7 +25,8 @@ export class TermsConditionsComponent implements OnInit {
   constructor(private homeAddService: HomeAddsService,
     private route: ActivatedRoute,
     private router: Router,
-    private macService: MacPrefixService) { 
+    private macService: MacPrefixService,
+    private errorHandel: ErrorHandlerService) { 
     }
 
   ngOnInit(): void {
@@ -40,13 +43,15 @@ export class TermsConditionsComponent implements OnInit {
    this.pageSub = this.homeAddService.getStaticPages().subscribe({
       next: (respages: APIResponse4<Pages>)=>{
         this.pages = respages.data
-        console.log(respages)
         this.pages.forEach((e)=>{
           if(e.slug == slug){
             this.title = e.title;
             this.desc = e.desc;
           }
         })
+      },
+      error: (err: HttpErrorResponse)=>{
+        this.errorHandel.openErrorModa(err);
       }
     })
   }

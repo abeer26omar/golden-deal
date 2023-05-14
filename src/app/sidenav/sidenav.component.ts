@@ -6,6 +6,7 @@ import { ResponseSuccess } from '../models/actions.model';
 import { Category,APIResponse2 } from '../models/products.model';
 import { AuthService } from '../services/auth.service';
 import { ProductsRequestService } from '../services/products-request.service'
+import { ErrorHandlerService } from '../services/error-handler.service';
 declare var window: any;
 
 @Component({
@@ -27,7 +28,8 @@ export class SidenavComponent implements OnInit {
   
   constructor(public authService: AuthService,
     private route: Router,
-    private categoryService: ProductsRequestService) { 
+    private categoryService: ProductsRequestService,
+    private errorHandel: ErrorHandlerService) { 
     this.userId = localStorage.getItem('userId');
     }
   ngOnInit(): void {
@@ -50,6 +52,9 @@ export class SidenavComponent implements OnInit {
     subscribe({
       next:(categoryList: APIResponse2<Category>)=>{ 
         this.categories = categoryList.data;
+      },
+      error: (err: HttpErrorResponse)=>{
+        this.errorHandel.openErrorModa(err);
       }
     })
   }
@@ -64,12 +69,13 @@ export class SidenavComponent implements OnInit {
           window.location.reload();
         },50)
       },
-      error: ()=>{
+      error: (err: HttpErrorResponse)=>{
         this.toastFaild.show();
         localStorage.clear();
         setTimeout(()=>{
           window.location.reload();
         },50)
+        this.errorHandel.openErrorModa(err);
       }
     })
   }

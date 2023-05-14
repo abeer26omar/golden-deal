@@ -6,13 +6,13 @@
             <div class="d-flex justify-content-center mb-5 plates" *ngIf="singleProduct.data.product_images.length == 0">
                 <img src="../../../assets/images/car_palets_show.svg" alt="car_plates_icon" width="80%">
                 <ng-container  *ngFor="let property of singleProduct.data.properties">
-                    <span  *ngIf="property.type == 'text'">
+                    <ng-container  *ngIf="property.type == 'text'">
                         <span *ngIf="property.name_ar == 'حروف اللوحة عربي'" class="card_chars_ar">{{property.filter_value.filter_value}}</span>
                         <span *ngIf="property.name_ar == 'حروف اللوحة انجليزي'" class="card_chars_en">{{property.filter_value.filter_value}}</span>
                         <span *ngIf="property.name_ar == 'ارقام اللوحة عربي'" class="card_num_ar">{{property.filter_value.filter_value}}</span>
                         <span *ngIf="property.name_ar == 'ارقام اللوحة انجليزي'" class="card_num_en">{{property.filter_value.filter_value}}</span>
-                    </span>
                     </ng-container>
+                </ng-container>
             </div>
             <div class="card main-card">
                 <div class="card-header">
@@ -42,8 +42,8 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <ng-container *ngFor="let filter_value of singleProduct.data.properties" class="">
-                        <div class="desc_details" *ngIf="filter_value.name_ar !== 'المدينة'">
+                    <ng-container *ngFor="let filter_value of singleProduct.data.properties">
+                        <div class="desc_details" *ngIf="filter_value.slug_name !== 'plate_town_filter_6' && filter_value.slug_name !== 'plate_chars_filter_6' && filter_value.slug_name !== 'plate_chars_en_filter_6' && filter_value.slug_name !== 'plate_numbers_en_filter_6' && filter_value.slug_name !== 'plate_numbers_filter_6'">
                             <div class="col-12 col-sm-4 d-flex justify-content-between align-items-center">
                                 <p>{{filter_value.name_ar}}</p>
                                 <p>{{filter_value.filter_value.filter_value}}</p>

@@ -8,6 +8,8 @@ import { MacPrefixService } from 'src/app/services/mac-prefix.service';
 import { ActionsService } from 'src/app/services/actions.service';
 import { Regions } from 'src/app/models/actions.model';
 import { SwiperOptions } from 'swiper';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ErrorHandlerService } from 'src/app/services/error-handler.service';
 declare var window: any;
 
 @Component({
@@ -151,7 +153,8 @@ export class EditAddComponent implements OnInit {
   constructor(private productService: ProductsRequestService,
     private router: ActivatedRoute,
     private macService: MacPrefixService,
-    private actionService: ActionsService ) { }
+    private actionService: ActionsService,
+    private errorHandel: ErrorHandlerService) { }
   get f(){
     return this.myForm.controls;
   }
@@ -356,6 +359,9 @@ export class EditAddComponent implements OnInit {
             });
           }
         this.getAddFilters();
+      },
+      error: (err: HttpErrorResponse)=>{
+        this.errorHandel.openErrorModa(err);
       }
     })
   }
@@ -363,7 +369,6 @@ export class EditAddComponent implements OnInit {
     this.editSub = this.productService.getEditFilters(this.addId,this.addCategory).subscribe({
       next: (res: APIResponse4<EditProductFilters>)=>{
         this.EditFilter = res.data;
-        console.log(res);
         
         this.EditFilter.forEach(ele=>{   
           if(ele.filter_value !== null){
@@ -397,6 +402,9 @@ export class EditAddComponent implements OnInit {
             this.myForm.addControl(ele.slug_name,new FormControl(''))
           }
         })
+      },
+      error: (err: HttpErrorResponse)=>{
+        this.errorHandel.openErrorModa(err);
       }
     })
   }
@@ -404,6 +412,9 @@ export class EditAddComponent implements OnInit {
     this.filterSub = this.actionService.getRegions().subscribe({
       next: (res: Regions) => {
         this.regions = res.data        
+      },
+      error: (err: HttpErrorResponse)=>{
+        this.errorHandel.openErrorModa(err);
       }
     })
   }
@@ -533,8 +544,9 @@ export class EditAddComponent implements OnInit {
         this.updateProduct = res;
         this.modelSuccessNewProduct.show()
       },
-      error: ()=>{
+      error: (err: HttpErrorResponse)=>{
         this.load = false;
+        this.errorHandel.openErrorModa(err);
       }
     })
   }

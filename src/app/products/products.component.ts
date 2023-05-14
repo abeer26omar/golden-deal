@@ -11,6 +11,7 @@ import { ActionsService } from '../services/actions.service';
 import { AuthService } from '../services/auth.service';
 import { Regions } from '../models/actions.model';
 import { DatePipe } from '@angular/common';
+import { ErrorHandlerService } from '../services/error-handler.service';
 declare var window: any;
 
 @Component({
@@ -93,7 +94,8 @@ export class ProductsComponent implements OnInit {
     private macService: MacPrefixService,
     public actionService: ActionsService,
     public authService: AuthService,
-    public datepipe: DatePipe) {
+    public datepipe: DatePipe,
+    private errorHandel: ErrorHandlerService) {
       if(this.route.snapshot.fragment){
         if(this.route.snapshot.fragment == 'cars'){
           this.active = 1
@@ -183,8 +185,9 @@ export class ProductsComponent implements OnInit {
             this.errorLength = '';
           }
       },
-      error:()=>{
+      error:(err: HttpErrorResponse)=>{
         this.loadding = false;
+        this.errorHandel.openErrorModa(err)
       }
     })
   }
@@ -207,6 +210,10 @@ export class ProductsComponent implements OnInit {
     subscribe({
       next: (categoryList: APIResponse2<Category>)=>{ 
         this.categoriesSplash = categoryList.data;       
+      },
+      error:(err: HttpErrorResponse)=>{
+        this.loadding = false;
+        this.errorHandel.openErrorModa(err)
       }
     })
   }
@@ -219,6 +226,10 @@ export class ProductsComponent implements OnInit {
         this.filters.data.filters.forEach(filter=>{
           this.formFilter.addControl(filter.slug_name, new FormControl('')) 
         }) 
+      },
+      error:(err: HttpErrorResponse)=>{
+        this.loadding = false;
+        this.errorHandel.openErrorModa(err)
       }
     })
   }
@@ -318,8 +329,9 @@ export class ProductsComponent implements OnInit {
             this.errorLength = '';
           }
         },
-        error:()=>{
+        error:(err: HttpErrorResponse)=>{
           this.load = false;
+          this.errorHandel.openErrorModa(err)
         }
       })  
     }
@@ -343,8 +355,9 @@ export class ProductsComponent implements OnInit {
             this.errorLength = '';
           }
       },
-      error:()=>{
+      error:(err: HttpErrorResponse)=>{
         this.load = false;
+        this.errorHandel.openErrorModa(err)
       }
      })
   }
@@ -361,8 +374,9 @@ export class ProductsComponent implements OnInit {
             this.errorLength = '';
           }
       },
-      error:()=>{
+      error:(err: HttpErrorResponse)=>{
         this.load = false;
+        this.errorHandel.openErrorModa(err)
       }
      })    
   }
@@ -376,8 +390,9 @@ export class ProductsComponent implements OnInit {
             this.filterbrandsOptions = res.data.filter_options;
           }
       },
-      error:()=>{
-        this.loadding = false;
+      error:(err: HttpErrorResponse)=>{
+        this.load = false;
+        this.errorHandel.openErrorModa(err)
       }
      })
   }
@@ -400,8 +415,9 @@ export class ProductsComponent implements OnInit {
             this.errorLength = '';
           }
       },
-      error:()=>{
+      error:(err: HttpErrorResponse)=>{
         this.load = false;
+        this.errorHandel.openErrorModa(err)
       }
      })
   }
@@ -412,6 +428,9 @@ export class ProductsComponent implements OnInit {
     this.filterSub = this.actionService.getRegions().subscribe({
       next: (res: Regions) => {
         this.regions = res.data        
+      },
+      error:(err: HttpErrorResponse)=>{
+        this.errorHandel.openErrorModa(err)
       }
     })
   }
@@ -431,9 +450,11 @@ export class ProductsComponent implements OnInit {
             this.errorLength = '';
           }
         },
-        error:()=>{
+        error:(err: HttpErrorResponse)=>{
           this.load = false;
-        }    })
+          this.errorHandel.openErrorModa(err)
+        }
+      })
     }
   }
   getSubFirlters(filter_name: string,event: any){
@@ -448,6 +469,9 @@ export class ProductsComponent implements OnInit {
                   if(res.data != null){
                     this.filterbrandsOptions = res.data.filter_options;
                   }
+                },
+                error:(err: HttpErrorResponse)=>{
+                  this.errorHandel.openErrorModa(err)
                 }
               })       
             }

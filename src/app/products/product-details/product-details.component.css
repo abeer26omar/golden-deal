@@ -294,7 +294,7 @@ input:focus , textarea:focus{
 .card_chars_en{
     position: absolute;
     bottom: 30%;
-    right: 25.5%;
+    right: 25%;
     top: unset;
     font-weight: 900;
     font-size: 1.5rem;
@@ -322,7 +322,7 @@ input:focus , textarea:focus{
         font-size: 1rem;
     }
     .card_chars_en{
-        right: 20%;
+        right: 18%;
         font-size: 1rem;
     }
     .card_num_en{

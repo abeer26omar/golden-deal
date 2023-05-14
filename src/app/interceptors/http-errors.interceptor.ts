@@ -11,17 +11,11 @@ import { ResponseModalErrorComponent } from "../response-modal-error/response-mo
   
 @Injectable()
 export class HttpErrorInterceptor implements HttpInterceptor{
-constructor(private dialogRef: MatDialog) {}
+constructor() {}
 intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     return next.handle(request)
     .pipe(catchError((err) => {
-        return throwError(() => {
-          this.dialogRef.open(ResponseModalErrorComponent,{
-            data: {
-              response: err
-            }
-          }), err
-        })
+        return throwError(() => err)
     }))
   }
 }

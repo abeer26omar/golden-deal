@@ -11,6 +11,7 @@ import { NgOtpInputConfig } from 'ng-otp-input';
 import { ActionsService } from 'src/app/services/actions.service';
 import { Regions } from 'src/app/models/actions.model';
 import { SwiperOptions } from 'swiper';
+import { ErrorHandlerService } from 'src/app/services/error-handler.service';
 
 declare var window: any;
 
@@ -135,7 +136,8 @@ export class NewAddComponent implements OnInit {
     private router: Router,
     private macService: MacPrefixService,
     private actionService: ActionsService,
-    private productsService: ProductsRequestService ) {}
+    private productsService: ProductsRequestService,
+    private errorHandel: ErrorHandlerService ) {}
     
     myForm = new FormGroup({
       agrement: new FormControl('', [Validators.required]),
@@ -498,6 +500,9 @@ export class NewAddComponent implements OnInit {
                   if(res.data != null){
                     this.filterbrandsOptions = res.data.filter_options;
                   }
+                },
+                error: (err: HttpErrorResponse)=>{
+                  this.errorHandel.openErrorModa(err);
                 }
               })       
             }
@@ -553,8 +558,9 @@ export class NewAddComponent implements OnInit {
               this.modelSuccessNewProduct.show();
               this.myForm.reset()
             },
-            error: ()=>{
-              this.load = false;              
+            error: (err: HttpErrorResponse)=>{
+              this.load = false;
+              this.errorHandel.openErrorModa(err);
             }
           })   
         } 
@@ -581,6 +587,9 @@ export class NewAddComponent implements OnInit {
     this.filterSub = this.actionService.getRegions().subscribe({
       next: (res: Regions) => {
         this.regions = res.data        
+      },
+      error: (err: HttpErrorResponse)=>{
+        this.errorHandel.openErrorModa(err);
       }
     })
   }

@@ -4,6 +4,8 @@ import { Subscription } from 'rxjs';
 import { Portfolio, Products } from '../models/actions.model';
 import { ActionsService } from '../services/actions.service';
 import { MacPrefixService } from '../services/mac-prefix.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ErrorHandlerService } from '../services/error-handler.service';
 
 declare var window: any;
 
@@ -44,7 +46,8 @@ export class SellerProfileComponent implements OnInit {
   constructor(private router: Router,
     private route: ActivatedRoute,
     private actionService: ActionsService,
-    private macService: MacPrefixService) { 
+    private macService: MacPrefixService,
+    private errorHandel: ErrorHandlerService) { 
       this.actionService.refresh.subscribe(()=>{
         this.getPortfolioInfo(this.portfolioId);
       })
@@ -68,6 +71,10 @@ export class SellerProfileComponent implements OnInit {
       next: (resData: Portfolio)=>{
         this.loadding = false;
         this.portfolio = resData;
+      },
+      error: (err: HttpErrorResponse)=>{
+        this.loadding = false;
+        this.errorHandel.openErrorModa(err)
       }
     })
   }
@@ -93,9 +100,10 @@ export class SellerProfileComponent implements OnInit {
           this.filterModal.hide();
         })
       },
-      error: ()=>{
+      error: (err: HttpErrorResponse)=>{
         this.load = false;
         this.filterModal.hide();
+        this.errorHandel.openErrorModa(err)
       }
     })
   }

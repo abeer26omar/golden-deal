@@ -185,6 +185,8 @@ export class AddsComponent implements OnInit {
       next:(resData: APIresponse2<Orders>)=>{
         this.loadding = false;
         this.orders = resData.data;
+        console.log(this.orders);
+        
         if(this.orders.length == 0){
           this.errorder = 'لا يوجد طلبات';
         }else{

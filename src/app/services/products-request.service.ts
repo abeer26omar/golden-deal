@@ -21,10 +21,12 @@ export class ProductsRequestService {
   constructor(public http: HttpClient) { }
 
   getProductsList(categorySlug: string, pageNo: number): Observable<APIResponse<Products>>{
-    return this.http.get<APIResponse<Products>>(`${env.api_url}/products/${categorySlug}?page=${pageNo}`,this.httpOptions);
+    return this.http.get<APIResponse<Products>>(`${env.api_url}/products/${categorySlug}?page=${pageNo}`,this.httpOptions).pipe(tap(()=>{
+      this._refresh.next();
+    }))
   }
   getDetails(id: string): Observable<Product>{
-    return this.http.get<Product>(`${env.api_url}/products/get-product-details/${id}`);
+    return this.http.get<Product>(`${env.api_url}/products/get-product-details/${id}`, this.httpOptions);
   }
   getProductsCategories(): Observable<APIResponse2<Category>>{
     return this.http.get<APIResponse2<Category>>(`${env.api_url}/categories`)
@@ -72,8 +74,8 @@ export class ProductsRequestService {
     }))
   }
   applayFilter(body: any){
-    return this.http.post<APIResponse<Products>>(`${env.api_url}/filters/submit-filters`,
-    body,this.httpOptions).pipe(tap(()=>{
+    return this.http.post<APIResponse<Products>>(`${env.api_url}/filters/submit-filters`,body
+    ,this.httpOptions).pipe(tap(()=>{
       this._refresh.next();
     }))
   }
@@ -81,8 +83,9 @@ export class ProductsRequestService {
     brand_Subfilter?: string, 
     town_filter?: string,
     plate_type_filter?: string,
-    plate_category_filter?: string){
-    return this.http.post<APIResponse<Products>>(`${env.api_url}/filters/submit-filters`,
+    plate_category_filter?: string,
+    page_num?: number){
+    return this.http.post<APIResponse<Products>>(`${env.api_url}/filters/submit-filters?page=${page_num}`,
     {
       min_price: '0',
       max_price: '8584040',
@@ -95,8 +98,34 @@ export class ProductsRequestService {
       this._refresh.next();
     }))
   }
-  searchResult(key: string){
-    return this.http.get<APIResponse<Products>>(`${env.api_url}/products/search-products/search-with-key?key=${key}`,this.httpOptions).pipe(tap(()=>{
+  applayForPagination(brand_filter?: string, 
+    brand_Subfilter?: string, 
+    page_num?: number){
+    return this.http.post<APIResponse<Products>>(`${env.api_url}/filters/submit-filters?page=${page_num}`,
+    {
+      min_price: '0',
+      max_price: '8584040',
+      car_brand_filter_1: brand_filter,
+      car_class_sub_filter_1: brand_Subfilter,
+    },this.httpOptions).pipe(tap(()=>{
+      this._refresh.next();
+    }))
+  }
+  applayForCar_plates(town_filter?: string, 
+    plate_type_filter?: string, 
+    page_num?: number){
+    return this.http.post<APIResponse<Products>>(`${env.api_url}/filters/submit-filters?page=${page_num}`,
+    {
+      min_price: '0',
+      max_price: '8584040',
+      plate_town_filter_6: town_filter,
+      plate_type_filter_6: plate_type_filter,
+    },this.httpOptions).pipe(tap(()=>{
+      this._refresh.next();
+    }))
+  }
+  searchResult(key: string, pageNo?: number){
+    return this.http.get<APIResponse<Products>>(`${env.api_url}/products/search-products/search-with-key?key=${key}?page=${pageNo}`,this.httpOptions).pipe(tap(()=>{
       this._refresh.next();
     }))
   }

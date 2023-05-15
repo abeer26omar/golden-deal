@@ -19,10 +19,24 @@
                     <div class="row">
                         <div class="col-12 prod-desc">
                             <div class="d-flex justify-content-between align-items-center">
-                                <h2 class="prod-name">{{singleProduct.data.name}}</h2>
-                                <a (click)="actionService.addToFav(singleProduct.data.id)" class="">
+                                <ng-container *ngIf="singleProduct.data.category_slug == 'car_plates'">
+                                    <ng-container  *ngFor="let property of singleProduct.data.properties">
+                                        <h2 *ngIf="property.slug_name == 'plate_type_filter_6'" 
+                                        >{{property.filter_value.filter_value}}</h2>
+                                      </ng-container>
+                                </ng-container>
+                                <h2 class="prod-name" *ngIf="singleProduct.data.category_slug == 'cars'">{{singleProduct.data.name}}</h2>
+                                <!-- <a (click)="actionService.addToFav(singleProduct.data.id)" class="">
                                     <img src="../../../assets/images/wishlisticon.svg" alt="wishlisticon">
-                                </a>
+                                </a> -->
+                                <div class="favorite" *ngIf="singleProduct.data.status === 'active'">
+                                    <a (click)="actionService.removeFav(singleProduct.data.id)" class="btn add_fav p-0" *ngIf="singleProduct.data.product_fav == true">
+                                     <img src="../../../assets/images/already_fav_icon.svg" alt="already_fav_icon" srcset="../../assets/images/already_fav_icon.svg">
+                                    </a>
+                                    <a (click)="actionService.addToFav(singleProduct.data.id)" class="btn add_fav p-0" *ngIf="singleProduct.data.product_fav == false">
+                                      <img src="../../../assets/images/favorite_icon.svg" alt="addToFav" srcset="../../assets/images/favorite_icon.svg">                         
+                                    </a>
+                                </div>
                             </div>
                             <img src="../../assets/images/nego_icon.svg" alt="nego_icon" class="nego_icon" *ngIf="singleProduct.data.negotiable == 1">
                             <div class="prod-details d-flex align-items-center py-2">
@@ -43,10 +57,14 @@
                 </div>
                 <div class="card-body">
                     <ng-container *ngFor="let filter_value of singleProduct.data.properties">
-                        <div class="desc_details" *ngIf="filter_value.slug_name !== 'plate_town_filter_6' && filter_value.slug_name !== 'plate_chars_filter_6' && filter_value.slug_name !== 'plate_chars_en_filter_6' && filter_value.slug_name !== 'plate_numbers_en_filter_6' && filter_value.slug_name !== 'plate_numbers_filter_6'">
+                        <div class="desc_details" *ngIf="filter_value.slug_name !== 'plate_town_filter_6' 
+                        && filter_value.slug_name !== 'plate_chars_filter_6' 
+                        && filter_value.slug_name !== 'plate_chars_en_filter_6' 
+                        && filter_value.slug_name !== 'plate_numbers_en_filter_6' 
+                        && filter_value.slug_name !== 'plate_numbers_filter_6'">
                             <div class="col-12 col-sm-4 d-flex justify-content-between align-items-center">
                                 <p>{{filter_value.name_ar}}</p>
-                                <p>{{filter_value.filter_value.filter_value}}</p>
+                                <p *ngIf="filter_value.filter_value !== null">{{filter_value.filter_value.filter_value}}</p>
                             </div>
                         </div>
                     </ng-container>

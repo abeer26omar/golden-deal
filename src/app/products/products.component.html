@@ -70,9 +70,12 @@
                     <div class="card-header plates text-center" >
                       <a (click)="productDetails(product.id)"
                       [ngClass]="{'pe-none': product.status === 'sold' }">
-                        <img
-                          *ngIf="product.category_slug == 'car_plates'" 
-                          src="../../assets/images/car_paletes_details.svg" alt="carplate_img" width="100%" height="200px !important">
+                      <ng-container *ngFor="let property of product.properties">
+                        <ng-container *ngIf="property.slug_name == 'plate_type_filter_6'">
+                          <img *ngIf="property.filter_value.filter_value == 'نقل'" src="../../assets/images/carplate_nakl.svg" alt="carplate_img" width="100%" height="200px !important">
+                          <img *ngIf="property.filter_value.filter_value !== 'نقل'" src="../../assets/images/car_paletes_details.svg" alt="carplate_img" width="100%" height="200px !important">
+                        </ng-container>
+                      </ng-container>
                       </a>
                       <div  class="favorite" *ngIf="product.status === 'active'">
                           <a (click)="actionService.removeFav(product.id)" class="btn add_fav p-0" *ngIf="product.product_fav == true">
@@ -88,8 +91,12 @@
                     </div>
                     <div class="card-body">
                       <div class="d-flex justify-content-between align-items-center pb-2">
-                          <a (click)="productDetails(product.id)" [ngClass]="{'pe-none': product.status === 'sold' }"
-                          >{{(product.name.length > 20)? (product.name | slice:0:20)+'..':(product.name)}}</a>
+                        <ng-container  *ngFor="let property of product.properties">
+                          <a (click)="productDetails(product.id)" 
+                          [ngClass]="{'pe-none': product.status === 'sold' }"
+                          *ngIf="property.slug_name == 'plate_type_filter_6'" 
+                          >{{property.filter_value.filter_value}}</a>
+                        </ng-container>
                         <img src="../../assets/images/nego_icon.svg" alt="nego_icon" *ngIf="product.negotiable == 1">
                       </div>
                       <ng-container  *ngFor="let property of product.properties">
@@ -185,7 +192,7 @@
                         <img src="../../assets/images/nego_icon.svg" alt="nego_icon" *ngIf="product.negotiable == 1">
                       </div>
                       <div class="d-flex justify-content-between align-items-center pb-2">
-                        <p class="card_num">{{product.price}} ر.س</p>
+                        <p class="card_num" *ngIf="product.price !== 0">{{product.price}} ر.س</p>
                         <p class="time"><img src="../../assets/images/clock.svg" alt="clock"><span>منذ {{product.created_since | dateAgo}}</span></p>
                       </div>
                       <div class="evaluation d-flex justify-content-between align-items-center pb-2">
@@ -234,7 +241,7 @@
                         </span>
                       </ng-container>
                       <div class="d-flex justify-content-between align-items-center pb-2">
-                        <p class="card_num">{{product.price}} ر.س</p>
+                        <p class="card_num" *ngIf="product.price !== 0">{{product.price}} ر.س</p>
                         <p class="time"><img src="../../assets/images/clock.svg" alt="clock"><span>منذ {{product.created_since | dateAgo}}</span></p>
                       </div>
                       <div class="evaluation d-flex justify-content-between align-items-center">
@@ -266,45 +273,69 @@
       <img src="../../assets/images/filter.svg" alt="filter" width="40px">
     </a>
 </div>
-<div *ngIf="showBrandsOptions" class="row row-cols-3 g-3 justify-content-center">
-  <swiper [config]="config" (swiper)="onSwiper($event)" class="py-2" style="width:80%">
-    <ng-template swiperSlide class="col"  *ngIf="show">
-      <div class="brand_all d-flex justify-content-center">
-        <a [ngClass]="{'click': activeClass}"
-        (click)="getProducts('cars',1)">الكل</a>
-      </div>
-    </ng-template>
-    <ng-template swiperSlide class="col"  *ngFor="let brand of brandsOptions">
-          <div class="brand d-flex justify-content-center">
-            <a [ngClass]="{'click': activeClass}"  
-            (click)="onApplayBrandFilters(brand.id);
-            onApplayFiltersKeys(brand.name);">
-            <img src="{{brand.image}}" alt="{{brand.name}}" width="50px"></a>
-          </div>
-    </ng-template>
-  </swiper>
-</div>
-<div *ngIf="showBrandsOptions" class="row row-cols-3 g-3 justify-content-center">
-  <swiper [config]="configSubBrands" (swiper)="onSwiperSubBrand($event)" style="width:80%;">
-    <ng-template swiperSlide *ngFor="let brand of filterbrandsOptions" class="pt-2 col">
-        <div class="sub_brand d-flex justify-content-center">
-          <a [ngClass]="{'click': activeClass}"(click)="onApplayFiltersKeys('',brand.name)">{{brand.name}}</a>
-        </div>
-    </ng-template>
-  </swiper>
+    <div class="d-flex justify-content-center my-2">
+      <ul class="nav nav-tabs swipers" id="myTab" role="tablist" *ngIf="showBrandsOptions">
+        <swiper [config]="config">
+          <ng-template swiperSlide *ngIf="show">
+            <li class="nav-item brand p-0" role="presentation">
+              <a [ngClass]="{'active': active}"
+              data-bs-toggle="tab" 
+              type="button" 
+              role="tab" 
+              aria-controls="home-tab-pane" 
+              aria-selected="true"
+              (click)="getProducts('cars',1)">الكل</a>
+            </li>
+          </ng-template>
+        <ng-container *ngFor="let brand of brandsOptions">
+          <ng-template swiperSlide>
+              <li class="nav-item brand p-0" role="presentation">
+              <a   
+              (click)="onApplayBrandFilters(brand.id);
+              onApplayFiltersKeys(brand.name);" 
+              data-bs-toggle="tab" 
+              type="button" 
+              role="tab" 
+              aria-controls="home-tab-pane" 
+              aria-selected="true"><img src="{{brand.image}}" alt="{{brand.name}}"></a>
+            </li> 
+          </ng-template>
+        </ng-container>
+        </swiper>
+      </ul>
+    </div>
+<div class="d-flex justify-content-center my-1">
+  <ul class="nav nav-tabs swipers swipy" id="myTab" role="tablist" *ngIf="showBrandsOptions">
+    <swiper [config]="configSub_barnd" dir="ltr">
+    <ng-container *ngFor="let brand of filterbrandsOptions">
+      <ng-template swiperSlide>
+          <li class="nav-item sub_brand d-flex justify-content-center px-1" role="presentation">
+            <a [ngClass]="{'click': active}" 
+            (click)="onApplayFiltersKeys(undefined,brand.name)"
+            data-bs-toggle="tab" 
+            type="button" 
+            role="tab" 
+            aria-controls="home-tab-pane" 
+            aria-selected="true">{{brand.name}}</a>
+        </li> 
+      </ng-template>
+    </ng-container>
+    </swiper>
+  </ul>
 </div>
 <div class="fiter_carPlates text-center py-1">
   <form [formGroup]="formPlatesFilter">
   <ng-container *ngFor="let carplate_filter of fiter_carPlates">
     <div class="filters py-2" *ngIf="carplate_filter.type !== 'text'">
       <mat-radio-group aria-label="Select an option" *ngIf="carplate_filter.slug_name !== 'plate_town_filter_6'" 
-      [formControlName]="carplate_filter.slug_name">
+      [formControlName]="carplate_filter.slug_name" (change)="change_plate_type($event)">
         <mat-radio-button *ngFor="let option of carplate_filter.filter_options"
          value="{{option.name}}" class="mx-2">{{option.name}}</mat-radio-button>
       </mat-radio-group>
       <div class="d-flex justify-content-center align-items-center">
         <select class="form-select" id="productMark" style="width: auto;"  
-        *ngIf="carplate_filter.slug_name == 'plate_town_filter_6'" [formControlName]="carplate_filter.slug_name">
+        *ngIf="carplate_filter.slug_name == 'plate_town_filter_6'" 
+        [formControlName]="carplate_filter.slug_name" (change)="change_plate_twon($event)">
           <option value="" disabled selected>المدينه</option>
           <option value="all">كل المدن</option>
           <option value="{{option.name}}" *ngFor="let option of carplate_filter.filter_options">{{option.name}}</option>
@@ -318,7 +349,7 @@
     <a class="btn btn_remove me-2" (click)="getProducts('car_plates', 1)">حذف</a>
   </div>
 </div>
-<div class="loader pt-4 pb-5" *ngIf="loadding" dir="ltr">
+<!-- <div class="loader pt-4 pb-5" *ngIf="loadding" dir="ltr">
   <svg version="1.1" id="L3" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 viewBox="0 0 100 100" width="70px" height="70px" enable-background="new 0 0 0 0" xml:space="preserve">
 <circle fill="none" stroke="#E29547" stroke-width="4" cx="50" cy="50" r="44" style="opacity:0.7;"/>
@@ -332,13 +363,13 @@ viewBox="0 0 100 100" width="70px" height="70px" enable-background="new 0 0 0 0"
     repeatCount="indefinite" />
 </circle>
 </svg>
-</div>
+</div> -->
   <div [ngbNavOutlet]="nav" class="mt-5 mb-5"></div>
   <section class="pagination">
       <ul class="pagination__list">
         <button id="pg-button-prev" 
           type="button" class="pagination__button"
-          (click)="getNewPage(meta.current_page,1)">
+          (click)="getNewPage(meta.current_page,1,meta.path)">
           <i class="fa-solid fa-angles-left"></i>
         </button>
         <li class="pagination__item" 
@@ -346,7 +377,7 @@ viewBox="0 0 100 100" width="70px" height="70px" enable-background="new 0 0 0 0"
          [ngClass]="{'pagination--move-next': page.active === true}">
           <button id="pg-button-1" type="button"
           [ngClass]="{'activePage': page.active === true, 'next_prev' : (page.label.includes('Previous') || page.label.includes('Next'))}"
-          (click)="getNewPage(meta.current_page,page.label)"
+          (click)="getNewPage(meta.current_page,page.label,meta.path)"
           [disabled]="((page.label.includes('Previous') && meta.current_page == 1) || 
           (page.label.includes('Next') && meta.current_page == meta.last_page))">
             {{ (page.label.includes('Previous') || page.label.includes('Next')) ? '' : page.label }}
@@ -357,7 +388,7 @@ viewBox="0 0 100 100" width="70px" height="70px" enable-background="new 0 0 0 0"
         <button id="pg-button-next" 
           type="button" 
           class="pagination__button"
-          (click)="getNewPage(meta.current_page,meta.last_page)">
+          (click)="getNewPage(meta.current_page,meta.last_page,meta.path)">
           <i class="fa-solid fa-angles-right"></i>
         </button>
       </ul>

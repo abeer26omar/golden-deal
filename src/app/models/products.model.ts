@@ -123,7 +123,9 @@ export interface Product{
         negotiable: number,
         properties: Array<Product_Properties>,
         region_name: string,
-        region_id: number
+        region_id: number,
+        category_slug: string,
+        product_fav: boolean
         }
 }
 export interface ownerRatings{

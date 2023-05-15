@@ -100,7 +100,7 @@ export interface Purchases{
         cover_url: string
     },
     properties: Array<Product_Properties>,
-    price: string,
+    price: number,
     region_name: string
 }
 interface Product_Properties{

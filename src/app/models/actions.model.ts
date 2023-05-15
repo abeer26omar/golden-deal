@@ -99,12 +99,13 @@ export interface Orders{
         owner_id: number,
         created_since: string,
         default_image: string,
-        ownership_image_url: string
+        ownership_image_url: string,
+        properties: Array<Product_Properties>
       },
       category: {
         id: number,
         title: string
-      }
+      },
     }
 export interface APIresponse2<T>{
     data: Array<T>

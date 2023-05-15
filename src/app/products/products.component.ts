@@ -12,6 +12,7 @@ import { AuthService } from '../services/auth.service';
 import { Regions } from '../models/actions.model';
 import { DatePipe } from '@angular/common';
 import { ErrorHandlerService } from '../services/error-handler.service';
+import { OwlOptions } from 'ngx-owl-carousel-o';
 declare var window: any;
 
 @Component({
@@ -53,6 +54,9 @@ export class ProductsComponent implements OnInit {
   meta: any = {};
   // public categories : Array<Category> = [];
   active = 0;
+  activeSub_brand = 0;
+  brand_name: any;
+  sub_brand_name: any;
   show:boolean = false;
   showBtnAction: boolean = false;
   loadding = false;
@@ -67,6 +71,8 @@ export class ProductsComponent implements OnInit {
   categorySlug: string = 'all';
   regions: any = [];
   owner_id: any;
+  plate_town_filter_6: any;
+  plate_type_filter_6: any;
   private routeSub: Subscription = new Subscription;
   private productSub: Subscription = new Subscription;
   private categorySub : Subscription = new Subscription;
@@ -108,51 +114,66 @@ export class ProductsComponent implements OnInit {
         this.getCategoryFilter(this.route.snapshot.fragment);
         this.getBrandFilter(this.route.snapshot.fragment);
       }
+      this.actionService.refresh.subscribe(()=>{
+        this.getProducts(this.categorySlug, 1);
+      })
     }
     config: SwiperOptions = {
-      // slidesPerView: 11,
-      slidesPerView: 'auto',
-      spaceBetween: 10,
+      slidesPerView: 15,
+      spaceBetween: 3,
       navigation: false,
       pagination: false,
       scrollbar: false,
       grabCursor: true,
+    breakpoints: {
+      992: {
+        slidesPerView: 10
+      },
+      768: {
+        slidesPerView: 7
+      },
+      575: {
+        slidesPerView: 5
+      },
+      425: {
+        slidesPerView: 4
+      },
+      375: {
+        slidesPerView: 3
+      },
+      320: {
+        slidesPerView: 3
+      }
+    }
     };
-    configSubBrands: SwiperOptions = {
-      // slidesPerView: 11,
-      slidesPerView: 'auto',
-      spaceBetween: 10,
+    configSub_barnd: SwiperOptions = {
+      slidesPerView: 10,
+      spaceBetween: 0,
       navigation: false,
       pagination: false,
       scrollbar: false,
       grabCursor: true,
-    };
-    swiper!: Swiper;
-    swiperSubrand!: Swiper;
-    onSwiper(swiper: Swiper){
-      this.swiper = swiper;
-      this.swiper.slides.forEach((slide, index) => {
-        slide.addEventListener('click', () => {
-          this.swiper.slideTo(index);
-          this.swiper.slides.forEach((slide) => {
-            slide.classList.remove('swiper-slide-active');
-          });
-          slide.classList.add('swiper-slide-active');
-        });
-      });
+    breakpoints: {
+      992: {
+        slidesPerView: 7
+      },
+      768: {
+        slidesPerView: 6
+      },
+      575: {
+        slidesPerView: 5
+      },
+      425: {
+        slidesPerView: 4
+      },
+      375: {
+        slidesPerView: 3
+      },
+      320: {
+        slidesPerView: 3
+      }
     }
-    onSwiperSubBrand(swiperSubrand: Swiper){
-      this.swiperSubrand = swiperSubrand;
-      this.swiperSubrand.slides.forEach((slide, index) => {
-        slide.addEventListener('click', () => {
-          this.swiperSubrand.slideTo(index);
-          this.swiperSubrand.slides.forEach((slide) => {
-            slide.classList.remove('active');
-          });
-          slide.classList.add('active');
-        });
-      });
-    }
+  }
   ngOnInit(): void {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     this.formModal = new window.bootstrap.Modal(
@@ -171,6 +192,7 @@ export class ProductsComponent implements OnInit {
     this.loadding = true;
     this.formPlatesFilter.reset();
     this.categorySlug = categorySlug;
+    this.filterbrandsOptions = [];
     this.productSub = this.httpService
     .getProductsList(categorySlug, pageNo)
     .subscribe({
@@ -178,7 +200,7 @@ export class ProductsComponent implements OnInit {
         this.loadding = false;
         this.products = productsList.data;
         this.links = productsList.links;
-        this.meta = productsList.meta;                                  
+        this.meta = productsList.meta;                                          
           if(this.products.length == 0){
             this.errorLength = 'لا يوجد منتجات';
           }else{
@@ -191,7 +213,55 @@ export class ProductsComponent implements OnInit {
       }
     })
   }
-  getNewPage(current_page: number,pageNo: any){
+  applayForPagination(brand_filter: string,brand_Subfilter: string,page_num: number){
+    this.load = true;
+     this.filterSub = this.httpService.applayForPagination(brand_filter,brand_Subfilter,page_num).subscribe({
+      next: (res: APIResponse<Products>)=>{
+          this.load = false;
+          this.formModal.hide();          
+          this.products = res.data;
+          this.links = res.links;
+          this.meta = res.meta;         
+          if(this.products.length == 0){
+            this.errorLength = 'لا يوجد منتجات';
+          }else{
+            this.errorLength = '';
+          }
+      },
+      error:(err: HttpErrorResponse)=>{
+        this.load = false;
+        this.errorHandel.openErrorModa(err)
+      }
+     })    
+  }
+  getNewPage(current_page: number,pageNo: any,meta_path: string){        
+    if(meta_path.includes('filters')){
+      if(this.categorySlug == 'cars'){
+        if(Number.isNaN(+pageNo)){
+          if(pageNo.includes('Previous')){
+            pageNo = current_page - 1;
+            this.applayForPagination(this.brand_name,this.sub_brand_name,+pageNo);
+          }else{
+            pageNo = current_page + 1;
+            this.applayForPagination(this.brand_name,this.sub_brand_name,+pageNo);
+          }
+        }else{
+          this.applayForPagination(this.brand_name,this.sub_brand_name,+pageNo);
+        }
+      }else if (this.categorySlug == 'car_plates'){        
+        if(Number.isNaN(+pageNo)){
+          if(pageNo.includes('Previous')){
+            pageNo = current_page - 1;
+            this.onApplayPlatesFilters(+pageNo);
+          }else{
+            pageNo = current_page + 1;
+            this.onApplayPlatesFilters(+pageNo);
+          }
+        }else{
+          this.onApplayPlatesFilters(+pageNo);
+        }
+      }      
+    }else{
       if(Number.isNaN(+pageNo)){
         if(pageNo.includes('Previous')){
           pageNo = current_page - 1;
@@ -203,7 +273,8 @@ export class ProductsComponent implements OnInit {
       }else{
         this.getProducts(this.categorySlug,+pageNo)
       }
-  }
+    }
+  } 
   getCategories(){
     this.categorySub = this.httpService.
     getProductsCategories().
@@ -341,14 +412,18 @@ export class ProductsComponent implements OnInit {
     this.formFilter.get('min_price')?.setValue(this.valueMin);
     this.formFilter.get('max_price')?.setValue(this.valueMax);
     const formData = new FormData()
-      for (const field in this.formFilter.controls) { 
-        formData.append(field,this.formFilter.controls[field].value)
+      for (const field in this.formFilter.controls) {
+        if(this.formFilter.controls[field].value !== ''){          
+          formData.append(field,this.formFilter.controls[field].value)
+        } 
       }        
      this.filterSub = this.httpService.applayFilter(formData).subscribe({
       next: (res: APIResponse<Products>)=>{
           this.load = false;
           this.formModal.hide();
-          this.products = res.data;          
+          this.products = res.data;
+          this.links = res.links;
+          this.meta = res.meta;          
           if(this.products.length == 0){
             this.errorLength = 'لا يوجد منتجات';
           }else{
@@ -361,13 +436,19 @@ export class ProductsComponent implements OnInit {
       }
      })
   }
-  onApplayFiltersKeys(brand_filter?: string, brand_Subfilter?: string){
+  onApplayFiltersKeys(brand_filter?: string, brand_Subfilter?: string, town_filter?: string,
+    plate_type_filter?: string,
+    plate_category_filter?: string,page_num?: number){
     this.load = true;
-     this.filterSub = this.httpService.applayFilterKeys(brand_filter,brand_Subfilter).subscribe({
+    this.brand_name = brand_filter;
+    this.sub_brand_name = brand_Subfilter;
+     this.filterSub = this.httpService.applayFilterKeys(brand_filter,brand_Subfilter,town_filter,plate_type_filter,plate_category_filter,page_num).subscribe({
       next: (res: APIResponse<Products>)=>{
           this.load = false;
-          this.formModal.hide();
-          this.products = res.data;          
+          this.formModal.hide();          
+          this.products = res.data;
+          this.links = res.links;
+          this.meta = res.meta;         
           if(this.products.length == 0){
             this.errorLength = 'لا يوجد منتجات';
           }else{
@@ -396,19 +477,21 @@ export class ProductsComponent implements OnInit {
       }
      })
   }
-  onApplayPlatesFilters(){
-    this.load = true;
-    this.formPlatesFilter.get('min_price')?.setValue('0');
-    this.formPlatesFilter.get('max_price')?.setValue('8584040');
-    const formData = new FormData()
-      for (const field in this.formPlatesFilter.controls) { 
-        formData.append(field,this.formPlatesFilter.controls[field].value)
-      }        
-     this.filterSub = this.httpService.applayFilter(formData).subscribe({
+  change_plate_type(event: any){
+    this.plate_type_filter_6 = event.value    
+  }
+  change_plate_twon(event: any){
+    this.plate_town_filter_6 = event.target.value    
+  }
+  onApplayPlatesFilters(page_num?: number){
+    this.load = true;       
+     this.filterSub = this.httpService.applayForCar_plates(this.plate_town_filter_6,this.plate_type_filter_6,page_num).subscribe({
       next: (res: APIResponse<Products>)=>{
           this.load = false;
           this.formModal.hide();
           this.products = res.data;
+          this.links = res.links;
+          this.meta = res.meta;
           if(this.products.length == 0){
             this.errorLength = 'لا يوجد منتجات';
           }else{

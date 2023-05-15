@@ -70,9 +70,12 @@ p.sorts{
         font-size: 1.1rem;
     }
 }
-.brand_all a,
-swiper .brand a {
-    color: var( --bg-color);
+.brand{
+  height: 70px;
+  width: 70px;
+}
+.brand a{
+    color: var( --primary-color);
     font-size: 1.2rem;
     font-weight: 500;
     height: 70px;
@@ -83,10 +86,24 @@ swiper .brand a {
     justify-content: center;
     align-items: center;
 }
-swiper .brand a {
+.nav.nav-tabs.swipers{
+  width: 80%;
+}
+.nav.nav-tabs.swipy{
+  width: 70%;
+}
+.brand a {
     background-color: var(--gray-color);
 }
-swiper .sub_brand{
+.brand a.active{
+  color: var(--white);
+}
+.brand a img{
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain;
+}
+.sub_brand a{
     height: 50px;
     width: 100px;
     align-items: center;
@@ -95,6 +112,16 @@ swiper .sub_brand{
     color: var( --primary-color);
     padding: .1rem;
     border-radius: 8px;
+}
+.sub_brand a{
+  color: var(--primary-color);
+  font-size: 1rem;
+  font-weight: 400;
+  text-align: center;
+}
+.sub_brand a.active{
+  color: var(--white);
+  background-color: var(--primary-color);
 }
 .loader {
        display: flex;
@@ -162,8 +189,7 @@ p.error{
     font-weight: 600;
 }
 .pagination {
-    height: 60px;
-    border-radius: 9px;
+  border-radius: 9px;
     overflow: hidden;
   }
   .pagination, .pagination__list {
@@ -179,8 +205,7 @@ p.error{
     list-style-type: none;
     padding: 0;
     margin: 0;
-    width: 350;
-    height: 50px;
+    width: 350px;
     border-radius: 9px;
     margin: 0 9px;
     overflow: hidden;

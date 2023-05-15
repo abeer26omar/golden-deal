@@ -14,7 +14,7 @@
         <span class="title"><img src="../../assets/images/left-arrow.svg" class="ps-2">نتائج البحث</span>
     </div>
     <div class="my-prods py-5">
-      <div class="loader py-5 text-center" *ngIf="loader" dir="ltr">
+      <!-- <div class="loader py-5 text-center" *ngIf="loader" dir="ltr">
         <svg version="1.1" id="L3" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
       viewBox="0 0 100 100" width="70px" height="70px" enable-background="new 0 0 0 0" xml:space="preserve">
       <circle fill="none" stroke="#E29547" stroke-width="4" cx="50" cy="50" r="44" style="opacity:0.7;"/>
@@ -28,7 +28,7 @@
           repeatCount="indefinite" />
       </circle>
       </svg>
-      </div>
+      </div> -->
       <p class="text-danger text-center"  *ngIf="error && searchRes.length == 0 ">{{errMsg}}</p>
       <p class="text text-center" *ngIf="(!error) && searchRes.length == 0 ">لا يوجد اعلانات</p>
         <div class="products-row row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4 justify-content-start">
@@ -119,5 +119,33 @@
               </div>
         </div> 
     </div>
+    <section class="pagination">
+      <ul class="pagination__list">
+        <button id="pg-button-prev" 
+          type="button" class="pagination__button"
+          (click)="getNewPage(meta.current_page,1)">
+          <i class="fa-solid fa-angles-left"></i>
+        </button>
+        <li class="pagination__item" 
+         *ngFor="let page of meta.links"
+         [ngClass]="{'pagination--move-next': page.active === true}">
+          <button id="pg-button-1" type="button"
+          [ngClass]="{'activePage': page.active === true, 'next_prev' : (page.label.includes('Previous') || page.label.includes('Next'))}"
+          (click)="getNewPage(meta.current_page,page.label)"
+          [disabled]="((page.label.includes('Previous') && meta.current_page == 1) || 
+          (page.label.includes('Next') && meta.current_page == meta.last_page))">
+            {{ (page.label.includes('Previous') || page.label.includes('Next')) ? '' : page.label }}
+            <i class="fa-solid fa-angle-left" *ngIf="page.label.includes('Previous')"></i>
+            <i class="fa-solid fa-angle-right" *ngIf="page.label.includes('Next')"></i>
+          </button>
+        </li>
+        <button id="pg-button-next" 
+          type="button" 
+          class="pagination__button"
+          (click)="getNewPage(meta.current_page,meta.last_page)">
+          <i class="fa-solid fa-angles-right"></i>
+        </button>
+      </ul>
+  </section>
 </section>
 <!-- <app-testimonial></app-testimonial> -->

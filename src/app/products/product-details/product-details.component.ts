@@ -64,7 +64,9 @@ export class ProductDetailsComponent implements OnInit {
       negotiable: 0,
       properties:[],
       region_id: 0,
-      region_name: ""
+      region_name: "",
+      category_slug: '',
+      product_fav: false
     }
   }
   error: string = '';
@@ -92,7 +94,11 @@ export class ProductDetailsComponent implements OnInit {
     public actionService : ActionsService,
     private macService: MacPrefixService,
     private chatService: ChatService,
-    private errorHandel: ErrorHandlerService) { }
+    private errorHandel: ErrorHandlerService) { 
+      this.actionService.refresh.subscribe(()=>{
+        this.getProductDetails(this.ProductId);
+      })
+    }
 
   ngOnInit(): void {
     this.routeSub = this.route.params.subscribe((params: Params) => {

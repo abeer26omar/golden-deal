@@ -56,7 +56,7 @@
                         </span>
                       </ng-container>
                       <div class="d-flex justify-content-between align-items-center">
-                        <p class="card_num">{{record.price}}</p>
+                        <p class="card_num" *ngIf="record.price !== 0">{{record.price}} ر.س</p>
                       </div>
                       <div class="evaluation d-flex justify-content-between align-items-center">
                         <p class="time"><img src="../../assets/images/clock.svg" alt="clock"><span>منذ {{record.created_since | dateAgo}}</span></p>

@@ -21,7 +21,8 @@ export class SearchResultComponent implements OnInit {
   private routeSub: Subscription = new Subscription;
   public searchRes : Array<Products> = [];
   owner_id: any;
-
+  links: any = {};
+  meta: any = {};
   constructor(private route: ActivatedRoute,
     private productService: ProductsRequestService,
     private router: Router,
@@ -36,13 +37,15 @@ export class SearchResultComponent implements OnInit {
       this.getSearchResult(this.key);
       this.owner_id = localStorage.getItem('userId');
   }
-  getSearchResult(key: string){
+  getSearchResult(key: string, pageNo?: number){
     this.loader = true;
     this.searchRes = [];
-     this.routeSub = this.productService.searchResult(key).subscribe({
+     this.routeSub = this.productService.searchResult(key, pageNo).subscribe({
       next: (res: APIResponse<Products>)=>{
         this.loader = false;
         this.searchRes = res.data;
+        this.links = res.links;
+        this.meta = res.meta;  
       },
       error: (err: HttpErrorResponse)=>{
         this.loader = false;
@@ -69,6 +72,19 @@ export class SearchResultComponent implements OnInit {
   goLittleRockStar(){
     this.router.navigate(['/new-add'])
   }
+  getNewPage(current_page: number,pageNo: any){        
+      if(Number.isNaN(+pageNo)){
+        if(pageNo.includes('Previous')){
+          pageNo = current_page - 1;
+          this.getSearchResult(this.key,+pageNo);
+        }else{
+          pageNo = current_page + 1;
+          this.getSearchResult(this.key,+pageNo); 
+        }
+      }else{
+        this.getSearchResult(this.key,+pageNo)
+      }
+  } 
   ngOnDestory() :void{
     if(this.routeSub){
       this.routeSub.unsubscribe();

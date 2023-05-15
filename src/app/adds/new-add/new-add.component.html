@@ -235,7 +235,7 @@
                                     <div *ngIf="submitted && f[filter.slug_name].value == '' " class="text-danger">يجب ادخال بيانات</div> 
                             </div>
                         </ng-container>
-                        <div class="col-md-6">
+                        <div class="col-md-6" *ngIf="defaultImage_add">
                             <label for="productName" class="form-label">عنوان الإعلان</label>
                             <input type="text" class="form-control" id="productName" 
                             placeholder=""

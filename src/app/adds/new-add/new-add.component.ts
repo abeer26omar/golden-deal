@@ -44,7 +44,7 @@ export class NewAddComponent implements OnInit {
   imgSrc6: any;
   imgSrc7: any;
   ownership: any;
-  negotiable: boolean = false;
+  negotiable: number = 0;
   onAddNewImg1: boolean = false;
   onAddNewImg2: boolean = false;
   onAddNewImg3: boolean = false;
@@ -59,6 +59,7 @@ export class NewAddComponent implements OnInit {
   plate_numbers_en_filter_6: any;
   input_number: any = [];
   regions: any = [];
+  car_plate: string = '';
   public categories : Array<Category> = [];
   filters: CategoryFilter = {
     data: {
@@ -143,7 +144,7 @@ export class NewAddComponent implements OnInit {
       agrement: new FormControl('', [Validators.required]),
       seller_phone: new FormControl(''),
       productCategory: new FormControl('', [Validators.required]),
-      name: new FormControl('', [Validators.required]),
+      name: new FormControl(''),
       price: new FormControl('', [Validators.required]),
       desc: new FormControl('', [Validators.required]),
       owner_id: new FormControl(this.ownerId),
@@ -197,14 +198,14 @@ export class NewAddComponent implements OnInit {
       this.getRegions();
   }
   onNegotiable(){
-    if(this.negotiable == false){
-      this.negotiable = true;
-      this.f['negotiable'].setValue(1)
+    if(this.negotiable == 0){
+      this.negotiable = 1;
+      this.f['negotiable'].setValue('1')
       this.f['price'].disable()
       this.f['price'].setValue('0')
     }else{
-      this.negotiable = false;
-      this.f['negotiable'].setValue(0)
+      this.negotiable = 0;
+      this.f['negotiable'].setValue('0')
       this.f['price'].enable()
       this.f['price'].setValue('')
     }
@@ -448,6 +449,7 @@ export class NewAddComponent implements OnInit {
       this.myForm.get('product_image_2')?.removeValidators([Validators.required]);
       this.myForm.get('product_image_3')?.removeValidators([Validators.required]);
       this.myForm.get('product_image_4')?.removeValidators([Validators.required]);
+      this.myForm.get('name')?.removeValidators([Validators.required])
     }
     else{
       this.defaultImage_add = true;
@@ -462,6 +464,7 @@ export class NewAddComponent implements OnInit {
       this.myForm.get('product_image_2')?.setValidators([Validators.required]);
       this.myForm.get('product_image_3')?.setValidators([Validators.required]);
       this.myForm.get('product_image_4')?.setValidators([Validators.required]);
+      this.myForm.get('name')?.setValidators([Validators.required]);
     }
     this.categories.forEach(ele=>{
       if(ele.slug == this.categoryName){
@@ -488,7 +491,7 @@ export class NewAddComponent implements OnInit {
       }
     })
   }
-  getSubFirlters(filter_name: string,event: any){
+  getSubFirlters(filter_name: string,event: any){    
     if(filter_name == 'ماركة السيارة'){
       this.filterbrandsOptions = []
       this.filters.data.filters.forEach(filter => {
@@ -510,6 +513,9 @@ export class NewAddComponent implements OnInit {
         }
       })
     }
+    if(filter_name == 'نوع اللوحة'){
+      this.car_plate = event.target.value
+    }
   }
   submit(){  
     this.submitted = true;  
@@ -521,7 +527,8 @@ export class NewAddComponent implements OnInit {
       plate_chars_en_filter_6 = Object.values(this.myForm.get('plate_chars_en_filter_6')?.value).join(' ');
       plate_chars_filter_6 = Object.values(this.myForm.get('plate_chars_filter_6')?.value).join(' ')
       plate_number_en_filter_6_value = Object.values(this.myForm.get('plate_numbers_en_filter_6')?.value).join(' ');
-      plate_number_filter_6_value = Object.values(this.myForm.get('plate_numbers_filter_6')?.value).join(' ')
+      plate_number_filter_6_value = Object.values(this.myForm.get('plate_numbers_filter_6')?.value).join(' ');
+      this.myForm.get('name')?.setValue(this.car_plate);
     }
     if(this.myForm.get('agrement')?.invalid){
       return;
@@ -529,7 +536,7 @@ export class NewAddComponent implements OnInit {
         if(this.step == 1){
           this.step = this.step + 1;
         }
-      if(this.myForm.valid){
+      if(this.myForm.valid){        
         const formData = new FormData();
         for (const field in this.myForm.controls) {
             if(field == 'plate_chars_en_filter_6'){

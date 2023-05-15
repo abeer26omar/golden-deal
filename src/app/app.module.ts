@@ -40,6 +40,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { AngularFireMessagingModule} from '@angular/fire/compat/messaging';
 import { AngularFireModule } from '@angular/fire/compat';
+import { CarouselModule } from 'ngx-owl-carousel-o';
+
 //components
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
@@ -160,7 +162,8 @@ import { NotificationsService } from './services/notifications.service';
     NgxPaginationModule,
     AngularFireAuthModule,
     AngularFireMessagingModule,
-    AngularFireModule.initializeApp(environment.firebase)
+    AngularFireModule.initializeApp(environment.firebase),
+    CarouselModule
     ], 
   providers: [ NotificationsService, AsyncPipe,
     { 

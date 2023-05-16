@@ -219,6 +219,7 @@
                                             (input)="convertNumbers(i,$event)"
                                             [ngClass]="{'invalid_input': submitted && f['plate_numbers_filter_6'].get('plate_number_ar_1')?.errors}">
                                     </div>
+                                    <p class="small text-muted">{{error_CarPlate_num}}</p> 
                                 </div>
                                 <!-- <div class="row g-3" [formGroupName]="filter.slug_name"
                                     *ngIf="filter.type == 'text' && filter.name_ar == 'ارقام اللوحة انجليزي' " style="display: none;">

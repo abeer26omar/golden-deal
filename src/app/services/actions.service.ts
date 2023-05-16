@@ -1,18 +1,20 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders} from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import { environment as env } from 'src/environments/environment';
 import { Subject, tap } from 'rxjs';
 import { APIresponse, APIresponse2, Favourites, Orders, Portfolio, Provider, ResponseSuccess, Subscriptions, Regions } from '../models/actions.model';
 import { APIResponse, Products, SplashScreen } from '../models/products.model';
 import { MatDialog } from '@angular/material/dialog';
 import { ResponseModalComponent } from '../response-modal/response-modal.component';
+import { ErrorHandlerService } from './error-handler.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ActionsService {
   constructor(private http: HttpClient,
-    private dialogRef: MatDialog) { }
+    private dialogRef: MatDialog,
+    private errorHandel: ErrorHandlerService) { }
   private _refresh = new Subject<void>();
   get refresh(){
     return this._refresh;
@@ -45,6 +47,9 @@ export class ActionsService {
     ).subscribe({
       next: res=>{
         this.handelRes(res)        
+      },
+      error: (err: HttpErrorResponse)=>{
+        this.errorHandel.openErrorModa(err)
       }
     })
   }
@@ -56,6 +61,10 @@ export class ActionsService {
     ).subscribe({
       next: res=>{
         this.handelRes(res)        
+      },
+      error: (err: HttpErrorResponse)=>{
+        this.errorHandel.openErrorModa(err)
+
       }
     })
   }

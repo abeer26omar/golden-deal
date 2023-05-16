@@ -13,6 +13,8 @@ import { Regions } from '../models/actions.model';
 import { DatePipe } from '@angular/common';
 import { ErrorHandlerService } from '../services/error-handler.service';
 import { OwlOptions } from 'ngx-owl-carousel-o';
+import { MatDialog } from '@angular/material/dialog';
+import { AuthRemainderModalComponent } from '../auth-remainder-modal/auth-remainder-modal.component';
 declare var window: any;
 
 @Component({
@@ -101,7 +103,8 @@ export class ProductsComponent implements OnInit {
     public actionService: ActionsService,
     public authService: AuthService,
     public datepipe: DatePipe,
-    private errorHandel: ErrorHandlerService) {
+    private errorHandel: ErrorHandlerService,
+    private dialogRef: MatDialog) {
       if(this.route.snapshot.fragment){
         if(this.route.snapshot.fragment == 'cars'){
           this.active = 1
@@ -125,26 +128,26 @@ export class ProductsComponent implements OnInit {
       pagination: false,
       scrollbar: false,
       grabCursor: true,
-    breakpoints: {
-      992: {
-        slidesPerView: 10
-      },
-      768: {
-        slidesPerView: 7
-      },
-      575: {
-        slidesPerView: 5
-      },
-      425: {
-        slidesPerView: 4
-      },
-      375: {
-        slidesPerView: 3
-      },
-      320: {
-        slidesPerView: 3
+      breakpoints: {
+        992: {
+          slidesPerView: 10
+        },
+        768: {
+          slidesPerView: 7
+        },
+        575: {
+          slidesPerView: 5
+        },
+        425: {
+          slidesPerView: 4
+        },
+        375: {
+          slidesPerView: 3
+        },
+        320: {
+          slidesPerView: 3
+        }
       }
-    }
     };
     configSub_barnd: SwiperOptions = {
       slidesPerView: 10,
@@ -153,26 +156,26 @@ export class ProductsComponent implements OnInit {
       pagination: false,
       scrollbar: false,
       grabCursor: true,
-    breakpoints: {
-      992: {
-        slidesPerView: 7
-      },
-      768: {
-        slidesPerView: 6
-      },
-      575: {
-        slidesPerView: 5
-      },
-      425: {
-        slidesPerView: 4
-      },
-      375: {
-        slidesPerView: 3
-      },
-      320: {
-        slidesPerView: 3
+      breakpoints: {
+        992: {
+          slidesPerView: 7
+        },
+        768: {
+          slidesPerView: 6
+        },
+        575: {
+          slidesPerView: 5
+        },
+        425: {
+          slidesPerView: 4
+        },
+        375: {
+          slidesPerView: 3
+        },
+        320: {
+          slidesPerView: 3
+        }
       }
-    }
   }
   ngOnInit(): void {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
@@ -381,7 +384,6 @@ export class ProductsComponent implements OnInit {
     }
   }
   apllyAllFilter(){
-    this.load = true;
     let value = this.filterAllProducts.get('filterAll')?.value;
     if(value == 'new'){
       this.load = false;
@@ -389,22 +391,30 @@ export class ProductsComponent implements OnInit {
       this.formModal.hide();
     }else{
       let region_id = localStorage.getItem('region_id');
-      this.filterSub = this.httpService.getCloseProducts(region_id,'all').subscribe({
-        next: (res: APIResponse<Products>)=>{
-          this.load = false;
-          this.formModal.hide();
-          this.products = res.data;
-          if(this.products.length == 0){
-            this.errorLength = 'لا يوجد منتجات';
-          }else{
-            this.errorLength = '';
+      if(region_id == null){
+        this.formModal.hide();
+        this.dialogRef.open(AuthRemainderModalComponent,{
+          data: {}
+        })
+      }else{
+        this.load = true;
+        this.filterSub = this.httpService.getCloseProducts(region_id,'all').subscribe({
+          next: (res: APIResponse<Products>)=>{
+            this.load = false;
+            this.formModal.hide();
+            this.products = res.data;
+            if(this.products.length == 0){
+              this.errorLength = 'لا يوجد منتجات';
+            }else{
+              this.errorLength = '';
+            }
+          },
+          error:(err: HttpErrorResponse)=>{
+            this.load = false;
+            this.errorHandel.openErrorModa(err)
           }
-        },
-        error:(err: HttpErrorResponse)=>{
-          this.load = false;
-          this.errorHandel.openErrorModa(err)
-        }
-      })  
+        })  
+      }
     }
   }
   onApplayFilters(){

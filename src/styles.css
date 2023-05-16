@@ -107,6 +107,9 @@ button:focus,
     border: 1px solid var(--primary-color) !important;
     color: var(--primary-color) !important;
 }
+.mat-button{
+    background: none !important;
+}
 a{
     text-decoration: none;
     cursor: pointer;

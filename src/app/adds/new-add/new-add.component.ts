@@ -32,6 +32,7 @@ export class NewAddComponent implements OnInit {
   error: string = '';
   errorAdd: string = '';
   error_CarPlate: string = '';
+  error_CarPlate_num: string = '';
   load: boolean = false;
   submitted: boolean = false;
   error_CarPlate_bool: boolean = false;
@@ -386,7 +387,10 @@ export class NewAddComponent implements OnInit {
       case 1: 
         this.plates_numbers.forEach((char: any) => {
           if(char.char == plate_num){
+            this.error_CarPlate_num = '';
             return trans_value = char.trans;
+          }else{
+            this.error_CarPlate_num = 'ارقام اللوحه يجب ان تكون ضمن هذه المجموعه [٠-١-٢-٣-٤-٥-٦-٧-٨-٩]';  
           }
         });
         this.myForm.get('plate_numbers_en_filter_6')?.get('plate_number_en_1')?.setValue(trans_value)
@@ -394,7 +398,10 @@ export class NewAddComponent implements OnInit {
       case 2:
         this.plates_numbers.forEach((char: any) => {
           if(char.char == plate_num){
+            this.error_CarPlate_num = '';
             return trans_value = char.trans;
+          }else{
+            this.error_CarPlate_num = 'ارقام اللوحه يجب ان تكون ضمن هذه المجموعه [٠-١-٢-٣-٤-٥-٦-٧-٨-٩]';  
           }
         });
         this.myForm.get('plate_numbers_en_filter_6')?.get('plate_number_en_2')?.setValue(trans_value)
@@ -402,7 +409,10 @@ export class NewAddComponent implements OnInit {
       case 3:
         this.plates_numbers.forEach((char: any) => {
           if(char.char == plate_num){
+            this.error_CarPlate_num = '';
             return trans_value = char.trans;
+          }else{
+            this.error_CarPlate_num = 'ارقام اللوحه يجب ان تكون ضمن هذه المجموعه [٠-١-٢-٣-٤-٥-٦-٧-٨-٩]';  
           }
         });
         this.myForm.get('plate_numbers_en_filter_6')?.get('plate_number_en_3')?.setValue(trans_value)
@@ -410,7 +420,10 @@ export class NewAddComponent implements OnInit {
       case 4:
         this.plates_numbers.forEach((char: any) => {
           if(char.char == plate_num){
+            this.error_CarPlate_num = '';
             return trans_value = char.trans;
+          }else{
+            this.error_CarPlate_num = 'ارقام اللوحه يجب ان تكون ضمن هذه المجموعه [٠-١-٢-٣-٤-٥-٦-٧-٨-٩]';  
           }
         });
         this.myForm.get('plate_numbers_en_filter_6')?.get('plate_number_en_4')?.setValue(trans_value)

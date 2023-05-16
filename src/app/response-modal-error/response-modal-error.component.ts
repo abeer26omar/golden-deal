@@ -10,6 +10,7 @@ export class ResponseModalErrorComponent implements OnInit {
   message: string = '';
   constructor(@Inject(MAT_DIALOG_DATA) public data:any,
   public dialogRef: MatDialogRef<MatDialogClose>) {   
+    console.log(data);
     
     if(data.response.error.errors){
       Object.values(data.response.error.errors).forEach((e: any)=>{
@@ -17,6 +18,9 @@ export class ResponseModalErrorComponent implements OnInit {
       });
     }else if(data.response.error){
       this.message = data.response.error.data || data.response.error.message
+      if(data.response.error.message == 'Unauthenticated.'){
+        this.message = 'يجب تسجيل الدخول اولا'
+      }
     }else{
       this.message = data.response.message      
     }

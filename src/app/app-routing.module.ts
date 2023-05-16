@@ -20,6 +20,7 @@ import { AuthGuardGuard } from './Guards/auth-guard.guard';
 import { SellerProfileComponent } from './seller-profile/seller-profile.component';
 import { DepositComponent } from './deposit/deposit.component';
 import { NotificationsComponent } from './notifications/notifications.component';
+import { SingleChatComponent } from './chats/single-chat/single-chat.component';
 
 
 
@@ -31,6 +32,7 @@ const routes: Routes = [
   { path:'product-details/:id', component:ProductDetailsComponent},
   { path:'seller-profile/:id', component:SellerProfileComponent,canActivate:[AuthGuardGuard]},
   { path:'chat', component:ChatsComponent,canActivate:[AuthGuardGuard]},
+  { path:'userchat/:id', component:SingleChatComponent,canActivate:[AuthGuardGuard]},
   { path:'adds/:id', component:AddsComponent, canActivate:[AuthGuardGuard]},
   { path:'new-add', component:NewAddComponent,canActivate:[AuthGuardGuard]},
   { path:'edit-add/:id', component: EditAddComponent},

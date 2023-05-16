@@ -307,7 +307,7 @@ aria-hidden="true"
             class="btn btn-sec btn-deposit" data-bs-dismiss="modal">عربون <img src="../../../assets/images/deposit_icon.svg" alt="deposit_icon"></a>
         </div>
         <div class="modal-footer justify-content-evenly">
-            <a (click)="chat(singleProduct.data.admin_details)" 
+            <a (click)="chat(singleProduct.data)" 
             class="btn btn-sec" data-bs-dismiss="modal">محادثه <img src="../../../assets/images/chat.svg" alt="chat"></a>
             <a  href="https://api.whatsapp.com/send?phone=966{{singleProduct.data.seller_phone}}" 
             [ngClass]="{'pe-none': singleProduct.data.seller_phone == null}"

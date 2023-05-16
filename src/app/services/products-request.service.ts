@@ -125,7 +125,7 @@ export class ProductsRequestService {
     }))
   }
   searchResult(key: string, pageNo?: number){
-    return this.http.get<APIResponse<Products>>(`${env.api_url}/products/search-products/search-with-key?key=${key}?page=${pageNo}`,this.httpOptions).pipe(tap(()=>{
+    return this.http.get<APIResponse<Products>>(`${env.api_url}/products/search-products/search-with-key?key=${key}&page=${pageNo}`,this.httpOptions).pipe(tap(()=>{
       this._refresh.next();
     }))
   }

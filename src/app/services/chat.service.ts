@@ -11,6 +11,7 @@ import { ResponseSuccess } from '../models/actions.model';
 })
 export class ChatService {
   private socket!: Socket;
+  userData: any;
   httpOptions = {
     headers: new HttpHeaders({
       'Authorization': `Bearer ${localStorage.getItem('token_deal')}`,

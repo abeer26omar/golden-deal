@@ -1,0 +1,49 @@
+<div class="d-flex justify-content-center">
+    <div class="col-9">
+        <div class="page-content page-container my-5" id="page-content">
+                <div class="card">
+                    <div class="card-header">
+                        <p class="card-title"><strong>{{userInfo.owner.name}}</strong></p>
+                    </div>
+                    <div class="ps-container ps-theme-default ps-active-y mt-2" id="chat-content">
+                        <!-- <div class="media media-chat" 
+                        [ngClass]="{'media-chat-reverse' : msg.sender.id !== userId}"
+                            *ngFor="let msg of usersMsg">
+                            <div class="p-2 m-1 media-1 media-2">
+                                <img class="avatar" [src]="user.sender === msg.sender.id ? msg.sender.image_url : msg.receiver.image_url" alt="">
+                                <p class="msg-txt">{{msg.message}}</p>
+                            </div> -->
+                            <!-- 
+                                [src]="user.receiver === msg.receiver.id ? (msg.sender.image_url == 
+                                'https://focused-merkle.185-92-223-5.plesk.page/golden-deal/public/storage/users/avatar/default.png' || !msg.sender.image_url) ?
+                                 '../../assets/images/Portrait_Placeholder.png' : msg.sender.image_url : (msg.receiver.image_url == 
+                                'https://focused-merkle.185-92-223-5.plesk.page/golden-deal/public/storage/users/avatar/default.png' || !msg.receiver.image_url) ?
+                                 '../../assets/images/Portrait_Placeholder.png' : msg.receiver.image_url"
+                             -->
+                        </div>
+                        <p class="text-danger text-center" *ngIf="errorTxt">{{errorTxt}}</p>
+                      <div class="ps-scrollbar-x-rail" style="left: 0px; bottom: 0px;">
+                        <div class="ps-scrollbar-x" tabindex="0" style="left: 0px; width: 0px;"></div>
+                    </div>
+                    <div class="ps-scrollbar-y-rail" style="top: 0px; height: 0px; right: 2px;">
+                        <div class="ps-scrollbar-y" tabindex="0" style="top: 0px; height: 2px;"></div>
+                    </div>
+                </div>
+                <form >
+                    <div class="publisher">
+                      <div class="outer">
+                          <div class="d-flex align-items-center" style="width: 100%;">
+                              <textarea class="publisher-input form-control" 
+                                  type="text" 
+                                  placeholder="اكتب رسالتك هنا"
+                                  (keyup)="$event.keyCode === 13;getText($event)"></textarea>
+                          </div>
+                      </div>
+                          <button class="btn text-info" (click)="sendMsg()" type="button">
+                              <img src="../../assets/images/send.svg" alt="" style="width: 50px;">
+                          </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>

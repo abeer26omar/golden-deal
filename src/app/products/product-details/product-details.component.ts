@@ -227,9 +227,10 @@ export class ProductDetailsComponent implements OnInit {
     this.buyModal.show()
   } 
   chat(data:any){
-    this.buyModal.hide()
-    this.chatModal.show()
-    // this.router.navigate([`/chat`])
+    // this.buyModal.hide()
+    // this.chatModal.show()
+    localStorage.setItem('userInfoDeal',JSON.stringify(data))
+    this.router.navigate([`/userchat/${data.owner.id}`])
     // this.adminService.setOption(data)
   }
   sendMsg(){
@@ -238,7 +239,7 @@ export class ProductDetailsComponent implements OnInit {
       receiver: this.receiverId,
       message: this.messageTxt
     }
-    this.chatService.sendMessage(data);
+    this.chatService.sendMessage(data); 
     this.messageTxt = '';
     this.chatModal.hide();
     setTimeout(()=>{

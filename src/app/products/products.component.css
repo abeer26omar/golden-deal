@@ -3,6 +3,9 @@ p.sorts{
     font-size: 1.5rem;
     font-weight: 700;
 }
+.card-header{
+  height: 200px;
+}
 .fixed-top{    
     background-color: var(--primary-color);
     padding: 1rem;

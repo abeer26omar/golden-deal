@@ -13,7 +13,8 @@ export interface Register{
             region_id: string
         },
         token: string
-    }      
+    },
+    status_msg: string      
 }
 export interface Login{
     data:{
@@ -36,7 +37,8 @@ export interface Login{
             region_id: string
         },
         token: string
-    }
+    },
+    status_msg: string
 }
 export interface Profile{
     data:{

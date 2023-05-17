@@ -51,31 +51,42 @@
                     </div>
                   </li>
                   <li>
-                    <a  [routerLink]="['/adds',userId]" (click)="closeNav()">المفضله</a>
+                    <a  [routerLink]="['/adds',userId]" (click)="closeNav()">
+                      <img class="ps-2" src="../../assets/images/favorate_icon.svg" alt="favorate_icon">المفضله</a>
                   </li>
                   <li>
-                    <a  routerLink="/address" (click)="closeNav()">قائمه العناوين</a>
+                    <a  routerLink="/address" (click)="closeNav()">
+                      <img class="ps-2" src="../../assets/images/addlist_icon.svg" alt="addlist_icon">قائمه العناوين</a>
                   </li>
                   <li>
-                    <a  routerLink="/subscriptions" (click)="closeNav()">الاشتراكات</a>
+                    <a  routerLink="/subscriptions" (click)="closeNav()">
+                      <img class="ps-2" src="../../assets/images/subscription_icon.svg" alt="subscribtion_icon">الاشتراكات</a>
                   </li>
                   <li>
-                    <a  routerLink="/new-add" (click)="closeNav()">اضافه اعلان</a>
+                    <a  routerLink="/new-add" (click)="closeNav()">
+                      <img class="ps-2" src="../../assets/images/addproduct_icon.svg" alt="addproduct_icon">اضافه اعلان</a>
                   </li>
                   <li>
-                    <a [routerLink]="['/chat']" (click)="closeNav()">تواصل معنا</a>
+                    <a [routerLink]="['/chat']" (click)="closeNav()">
+                      <img class="ps-2" src="../../assets/images/chatwithus_icon.svg" alt="chatwithus_icon">تواصل معنا</a>
                   </li>
                   <li>
-                    <a routerLink="/deposit" (click)="closeNav()">دفع العموله</a>
+                    <a routerLink="/deposit">
+                      <svg width="31" height="25" viewBox="0 0 31 25" class="ps-2 spec" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M27.918 0.500017H3.91799C3.52442 0.498947 3.13456 0.575925 2.77094 0.726496C2.40732 0.877068 2.07716 1.09824 1.79957 1.37723C1.52198 1.65622 1.30246 1.98748 1.15371 2.35185C1.00497 2.71622 0.929944 3.10647 0.932986 3.50002L0.917986 21.5C0.916664 21.8944 0.99336 22.2851 1.14366 22.6496C1.29395 23.0142 1.51488 23.3454 1.79372 23.6243C2.07256 23.9031 2.4038 24.1241 2.76837 24.2743C3.13295 24.4246 3.52365 24.5013 3.91799 24.5H27.918C28.3123 24.5013 28.703 24.4246 29.0676 24.2743C29.4322 24.1241 29.7634 23.9031 30.0423 23.6243C30.3211 23.3454 30.542 23.0142 30.6923 22.6496C30.8426 22.2851 30.9193 21.8944 30.918 21.5V3.50002C30.9193 3.10568 30.8426 2.71498 30.6923 2.35041C30.542 1.98583 30.3211 1.65459 30.0423 1.37575C29.7634 1.09691 29.4322 0.875984 29.0676 0.725688C28.703 0.575391 28.3123 0.498696 27.918 0.500017ZM27.918 21.5H3.91799V12.5H27.918V21.5ZM27.918 6.50002H3.91799V3.50002H27.918V6.50002Z" fill="#11014D"/>
+                      </svg>دفع العموله</a>
                   </li>
                   <li>
-                    <a  (click)="termsCondition('privacy_policy')" (click)="closeNav()">من نحن</a>
+                    <a  (click)="termsCondition('privacy_policy')">
+                      <img class="ps-2" src="../../assets/images/whoweare_icon.svg" alt="whoweare_icon">من نحن</a>
                   </li>
                   <li>
-                    <a  [routerLink]="['/adds',userId]" (click)="closeNav()">طلباتى</a>
+                    <a  [routerLink]="['/adds',userId]" fragment="orders">
+                      <img class="ps-2" src="../../assets/images/myorders_icon.svg" alt="myorders_icon">طلباتى</a>
                   </li>
                   <li >
-                    <a class="" (click)="termsCondition('terms_conditions')" (click)="closeNav()">الشروط والاحكام</a>
+                    <a class="" (click)="termsCondition('terms_conditions')">
+                      <img class="ps-2" src="../../assets/images/termsandcondition_icon.svg" alt="termsandcondition_icon">الشروط والاحكام</a>
                   </li>
             </ul>
           </div>

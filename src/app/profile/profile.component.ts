@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../services/auth.service';
@@ -114,7 +114,8 @@ export class ProfileComponent implements OnInit {
     this.userSub = this.profileService.profileInfo()
     .subscribe({
       next:(userDetails: Profile)=>{
-        this.userData = userDetails;        
+        this.userData = userDetails;
+        localStorage.setItem('userImage', userDetails.data.image_url)        
         this.userForm = new FormGroup({
           name: new FormControl({value:this.userData.data.name,disabled: this.edit}),
           phone: new FormControl({value:this.userData.data.phone,disabled: this.edit}),

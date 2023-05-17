@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ResponseSuccess } from '../models/actions.model';
@@ -22,6 +22,7 @@ export class HeaderComponent implements OnInit {
   httpService: any;
   public categories : Array<Category> = [];
   userId!: any;
+  userImage: any;
   error: string = '';
   msgSucess: string = '';
   toastSuccess: any;
@@ -34,7 +35,11 @@ export class HeaderComponent implements OnInit {
     private macService: MacPrefixService,
     public getProducts: GetproductsService,
     private errorHandel: ErrorHandlerService) { 
-    this.userId = localStorage.getItem('userId')
+      this.userId = localStorage.getItem('userId');
+      this.userImage = localStorage.getItem('userImage')
+      this.authService.refresh.subscribe(()=>{
+      this.userImage = localStorage.getItem('userImage')
+    })
   }
   ngOnInit(): void { 
     this.getCategories();

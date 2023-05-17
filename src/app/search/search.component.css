@@ -1,6 +1,6 @@
 .btn-adds{
-    background-color: var(--primary-color);
-    color: var(--white);
+    background-color: var(--primary-color) !important;
+    color: var(--white) !important;
     padding: .7rem 3rem;
     border-radius: 10px;
 }

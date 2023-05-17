@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-light">
     <div class="container-fluid">
       <a class="navbar-brand" routerLink='/home'>
-        <img src="../../assets/images/new_logo.svg" alt="header-logo" width="100%">
+        <img src="../../assets/images/new_logo_header.svg" alt="header-logo" width="100%">
       </a>
       <button mat-icon-button 
         (click)="toggleSidebar()" class="menu-btn navbar-toggler">
@@ -141,8 +141,8 @@
               <button class="btn create-account" routerLink="register">تسجيل الدخول</button>
             </li>
             <li class="nav-item" *ngIf="authService.isRegister | async">
-              <a class="nav-link" routerLink="/profile">
-                <img src="../../assets/images/profile_icon (2).svg" alt="profile_icon">
+              <a class="nav-link p-0" routerLink="/profile">
+                <img src="{{userImage}}" alt="profile_icon" class="profile_icon">
               </a>
             </li>
             <li class="nav-item" *ngIf="authService.isRegister | async">

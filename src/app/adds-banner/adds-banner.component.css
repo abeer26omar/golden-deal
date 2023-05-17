@@ -10,7 +10,7 @@
     overflow: hidden
 }
 .picsum-img-wrapper img{
-    min-height:400px;
+    height: 400px;
     position: relative;
     flex-shrink: 0;
     -webkit-flex-shrink: 0;
@@ -19,7 +19,7 @@
 }
 @media screen and (max-width: 575px) {
     .picsum-img-wrapper img{
-        min-height: auto;
+        height: 200px;
     }
 }
 .picsum-img-wrapper img,

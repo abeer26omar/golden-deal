@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { AuthService } from './services/auth.service';
 import { NotificationsService } from './services/notifications.service';
 declare var window: any;
@@ -30,10 +30,10 @@ export class AppComponent implements OnInit{
     });
   }
   ngOnInit(): void {
-    this.notificationService.requestPermission();
-    this.notificationService.getMyNotifications();
-    this.notification = this.notificationService.currentMessage;
-    console.log(this.notification);
+    // this.notificationService.requestPermission();
+    // this.notificationService.getMyNotifications();
+    // this.notification = this.notificationService.currentMessage;
+    // console.log(this.notification);
     
   }
 }

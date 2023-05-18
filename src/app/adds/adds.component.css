@@ -132,8 +132,8 @@
 }
 .products-row .card-header .btn-dots{
     position: absolute;
-    left: 22px;
-    top: 25px;
+    left: 5%;
+    top: 3%;
 }
 .products-row .card-header .dropdown-menu{
     background: #FFFFFF;

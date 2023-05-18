@@ -327,7 +327,7 @@ input.star:checked ~ label.star:before {
 }
 .products-row .card .card-header .favorite{
     position: absolute;
-    top: 2%;
+    top: 3%;
     left: 4%;
 }
 .products-row .card-header img{

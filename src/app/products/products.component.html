@@ -210,9 +210,12 @@
                     <div class="card-header plates text-center" >
                       <a (click)="productDetails(product.id)"
                       [ngClass]="{'pe-none': product.status === 'sold' }">
-                        <img
-                          *ngIf="product.category_slug == 'car_plates'" 
-                          src="../../assets/images/car_paletes_details.svg" alt="carplate_img" width="100%" height="200px !important">
+                      <ng-container *ngFor="let property of product.properties">
+                        <ng-container *ngIf="property.slug_name == 'plate_type_filter_6'">
+                          <img *ngIf="property.filter_value.filter_value == 'نقل'" src="../../assets/images/carplate_nakl.svg" alt="carplate_img" width="100%" height="200px !important">
+                          <img *ngIf="property.filter_value.filter_value !== 'نقل'" src="../../assets/images/car_paletes_details.svg" alt="carplate_img" width="100%" height="200px !important">
+                        </ng-container>
+                      </ng-container>
                       </a>
                       <div  class="favorite" *ngIf="product.status === 'active'">
                           <a (click)="actionService.removeFav(product.id)" class="btn add_fav p-0" *ngIf="product.product_fav == true">

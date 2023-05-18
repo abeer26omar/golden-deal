@@ -6,6 +6,10 @@
             <div class="d-flex justify-content-center mb-5 plates" *ngIf="singleProduct.data.product_images.length == 0">
                 <img src="../../../assets/images/car_palets_show.svg" alt="car_plates_icon" width="80%">
                 <ng-container  *ngFor="let property of singleProduct.data.properties">
+                    <ng-container *ngIf="property.slug_name == 'plate_type_filter_6'">
+                      <img *ngIf="property.filter_value.filter_value == 'نقل'" src="../../assets/images/car_palets_show_nakl.svg" alt="car_plates_icon" width="80%">
+                      <img *ngIf="property.filter_value.filter_value !== 'نقل'" src="../../assets/images/car_palets_show.svg" alt="car_plates_icon" width="80%">
+                    </ng-container>
                     <ng-container  *ngIf="property.type == 'text'">
                         <span *ngIf="property.name_ar == 'حروف اللوحة عربي'" class="card_chars_ar">{{property.filter_value.filter_value}}</span>
                         <span *ngIf="property.name_ar == 'حروف اللوحة انجليزي'" class="card_chars_en">{{property.filter_value.filter_value}}</span>

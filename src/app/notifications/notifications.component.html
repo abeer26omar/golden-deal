@@ -11,4 +11,5 @@
             <p class="created_at align-self-end">{{notify.created_at | date:'M/d/yyyy'}}</p>
         </div>
     </li>
+    <p *ngIf="notifications.data.length == 0" class="text-center">لا يوجد اشعارات</p>
 </ul>

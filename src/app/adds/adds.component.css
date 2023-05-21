@@ -122,7 +122,8 @@
     border-bottom: none ;
     background-color: var(--bg-color);
     border-radius: 15.3114px;
-    height: auto;
+    height: 200px;
+    position: relative;
 }
 .products-row .card-body p.price{
     color: var(--org-color);
@@ -187,4 +188,18 @@
 #faild .p{
     color: var(--primary-color);
     font-size: 1.33rem;
+}
+.card_chars_en {
+    bottom: 33%;
+    top: unset;
+}
+.card_chars_ar {
+    top: 33%;
+}
+.card_num_en {
+    bottom: 33%;
+    top: unset;
+}
+.card_num_ar {
+    top: 33%;
 }

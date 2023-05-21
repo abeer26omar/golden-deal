@@ -44,6 +44,8 @@ export interface Products{
     category_slug: string,
     region_name: string,
     ownership_image_url: string,
+    product_fav: boolean,
+    negotiable: number,
     properties: Array<Product_Properties>
 }
 interface Product_Properties{
@@ -134,6 +136,7 @@ interface FavItem{
         category_slug: string,
         ownership_image_url: string,
         region_name: string,
+        status: string,
         properties: Array<Product_Properties>,
         owner: {
             id: number,

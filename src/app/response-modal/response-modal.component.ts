@@ -11,13 +11,12 @@ export class ResponseModalComponent implements OnInit {
 
   constructor(@Inject(MAT_DIALOG_DATA) public data:any,
   public dialogRef: MatDialogRef<MatDialogClose>) {    
-    if(data){
-      this.message = data.response;
-    }
-    else if(data.response.message){
+    if(data.response.message){
       this.message = data.response.message
-    }else{
+    }else if(data.response.data){
       this.message = data.response.data
+    }else{
+      this.message = data.response
     }
   }
   close(){

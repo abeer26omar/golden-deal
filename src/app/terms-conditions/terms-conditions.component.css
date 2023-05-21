@@ -23,12 +23,12 @@
 }
 .content ul li::marker{
     content: '\2B24 ';
-    font-size: .9rem;
+    font-size: .6rem;
     color: #12004C; /*don't know why doesn't accept variables*/
 }
-.content ul li p{
+.content ul p,.content ul span{
     color: var(--primary-color);
-    font-weight: 400;
+    font-weight: 600;
     font-size: 1rem;
     letter-spacing: normal;
 }

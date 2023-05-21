@@ -493,9 +493,9 @@ export class ProductsComponent implements OnInit {
   change_plate_twon(event: any){
     this.plate_town_filter_6 = event.target.value    
   }
-  onApplayPlatesFilters(page_num?: number){
+  onApplayPlatesFilters(event: any, page_num?: number){
     this.load = true;       
-     this.filterSub = this.httpService.applayForCar_plates(this.plate_town_filter_6,this.plate_type_filter_6,page_num).subscribe({
+     this.filterSub = this.httpService.applayForCar_plates(this.plate_town_filter_6,event.value,page_num).subscribe({
       next: (res: APIResponse<Products>)=>{
           this.load = false;
           this.formModal.hide();
@@ -530,7 +530,7 @@ export class ProductsComponent implements OnInit {
   regionFilter(event: any){
     this.load = true;
     if(event.target.value == 'all'){
-      this.getProducts('all', 1);
+      this.getProducts(this.categorySlug, 1);
     }else{
       this.filterSub = this.actionService.regionFilter(event.target.value,this.categorySlug).subscribe({
         next: (res: APIResponse<Products>)=>{

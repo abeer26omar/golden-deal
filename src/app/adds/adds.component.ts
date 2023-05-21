@@ -35,7 +35,7 @@ export class AddsComponent implements OnInit {
   loadding: boolean = false;
   result: string = '';
   load: boolean = false;
-  active_status: string = 'نشطه';
+  active_status: string = 'الكل';
   portfolio: Portfolio = {
     data:{
       id: 0,

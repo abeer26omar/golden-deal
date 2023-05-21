@@ -34,7 +34,9 @@ export class TermsConditionsComponent implements OnInit {
     this.routeSub = this.route.params.subscribe((params: Params) => {
     this.pageSlug = params['slug'];
     });
-    this.getPages(this.pageSlug);
+    console.log(this.pageSlug);
+    
+    // this.getPages(this.pageSlug);
     this.faildTerms = new window.bootstrap.Modal(
       document.getElementById('faildTerms'),{backdrop: this.macService.backdrop}
     );
@@ -44,6 +46,7 @@ export class TermsConditionsComponent implements OnInit {
       next: (respages: APIResponse4<Pages>)=>{
         this.pages = respages.data
         this.pages.forEach((e)=>{
+          console.log(e.slug);
           if(e.slug == slug){
             this.title = e.title;
             this.desc = e.desc;

@@ -176,7 +176,7 @@ p.sorts{
 }
 .btn_remove{
     color: var(--primary-color);
-    border: 1px solid var(--primary-color);
+    border: 1px solid var(--primary-color) !important;
     border-radius: 8px;
 }
 .nego_icon{

@@ -33,12 +33,15 @@
                                     <img src="../../../assets/images/wishlisticon.svg" alt="wishlisticon">
                                 </a> -->
                                 <div class="favorite" *ngIf="singleProduct.data.status === 'active'">
-                                    <a (click)="actionService.removeFav(singleProduct.data.id)" class="btn add_fav p-0" *ngIf="singleProduct.data.product_fav == true">
+                                    <a (click)="addToFav(singleProduct.data)">
+                                        <img src="../../assets/images/{{singleProduct.data.product_fav == false ? 'favorite_icon.svg' : 'already_fav_icon.svg'}}" alt="already_fav_icon" >
+                                    </a>
+                                    <!-- <a (click)="actionService.removeFav(singleProduct.data.id)" class="btn add_fav p-0" *ngIf="singleProduct.data.product_fav == true">
                                      <img src="../../../assets/images/already_fav_icon.svg" alt="already_fav_icon" srcset="../../assets/images/already_fav_icon.svg">
                                     </a>
                                     <a (click)="actionService.addToFav(singleProduct.data.id)" class="btn add_fav p-0" *ngIf="singleProduct.data.product_fav == false">
                                       <img src="../../../assets/images/favorite_icon.svg" alt="addToFav" srcset="../../assets/images/favorite_icon.svg">                         
-                                    </a>
+                                    </a> -->
                                 </div>
                             </div>
                             <img src="../../assets/images/nego_icon.svg" alt="nego_icon" class="nego_icon" *ngIf="singleProduct.data.negotiable == 1">

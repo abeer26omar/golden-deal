@@ -74,7 +74,10 @@
                                             class="form-control" 
                                             maxlength="1" 
                                             formControlName="plate_chars_ar_{{i}}"
-                                            (keyup)="getCardChar(i,$event)">
+                                            (keyup)="getCardChar(i,$event)"
+                                            [ngClass]="{'invalid_input': (f['plate_chars_filter_6'].get('plate_chars_ar_1')?.errors 
+                                            || f['plate_chars_filter_6'].get('plate_chars_ar_2')?.errors 
+                                            || f['plate_chars_filter_6'].get('plate_chars_ar_3')?.errors)}">
                                     </div>
                                     <p class="small text-muted">{{error_CarPlate}}</p> 
                                 </div>
@@ -99,7 +102,10 @@
                                                 maxlength="1"
                                                 formControlName="plate_number_ar_{{i}}" 
                                                 (input)="convertNumbers(i,$event)"
-                                                >
+                                                [ngClass]="{'invalid_input': (f['plate_numbers_filter_6'].get('plate_number_ar_1')?.errors || 
+                                                f['plate_numbers_filter_6'].get('plate_number_ar_2')?.errors || 
+                                                f['plate_numbers_filter_6'].get('plate_number_ar_3')?.errors || 
+                                                f['plate_numbers_filter_6'].get('plate_number_ar_4')?.errors)}">
                                         </div>
                                 </div>
                             <!-- <div class="row g-3" [formGroupName]="filter.slug_name"

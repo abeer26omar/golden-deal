@@ -39,12 +39,15 @@
                       <img src="{{add.default_image ? add.default_image : '../../assets/images/placeholderimg.jpg'}}" alt="car" width="100%" height="200px !important">
                     </a>
                     <div class="favorite" *ngIf="add.status === 'active'">
-                        <a (click)="actionService.removeFav(add.id)" class="btn add_fav p-0" *ngIf="add.product_fav == true">
+                      <a (click)="addToFav(add)">
+                        <img src="../../assets/images/{{add.product_fav == false ? 'favorite_icon.svg' : 'already_fav_icon.svg'}}" alt="already_fav_icon" >
+                      </a>
+                        <!-- <a (click)="actionService.removeFav(add.id)" class="btn add_fav p-0" *ngIf="add.product_fav == true">
                          <img src="../../assets/images/already_fav_icon.svg" alt="already_fav_icon" srcset="../../assets/images/already_fav_icon.svg">
                         </a>
                         <a (click)="actionService.addToFav(add.id)" class="btn add_fav p-0" *ngIf="add.product_fav == false">
                           <img src="../../assets/images/favorite_icon.svg" alt="addToFav" srcset="../../assets/images/favorite_icon.svg">                         
-                        </a>
+                        </a> -->
                     </div>
                     <div class="favorite" *ngIf="add.status === 'sold'">
                       <img src="../../assets/images/solid-flag.svg" alt="">
@@ -76,12 +79,15 @@
                         src="../../assets/images/car_paletes_details.svg" alt="carplate_img" width="100%" height="200px !important">
                     </a>
                     <div  class="favorite" *ngIf="add.status === 'active'">
-                        <a (click)="actionService.removeFav(add.id)" class="btn add_fav p-0" *ngIf="add.product_fav == true">
+                      <a (click)="addToFav(add)">
+                        <img src="../../assets/images/{{add.product_fav == false ? 'favorite_icon.svg' : 'already_fav_icon.svg'}}" alt="already_fav_icon" >
+                      </a>
+                        <!-- <a (click)="actionService.removeFav(add.id)" class="btn add_fav p-0" *ngIf="add.product_fav == true">
                          <img src="../../assets/images/already_fav_icon.svg" alt="already_fav_icon" srcset="../../assets/images/already_fav_icon.svg">
                         </a>
                         <a (click)="actionService.addToFav(add.id)" class="btn add_fav p-0" *ngIf="add.product_fav == false">
                           <img src="../../assets/images/favorite_icon.svg" alt="addToFav" srcset="../../assets/images/favorite_icon.svg">                         
-                        </a>
+                        </a> -->
                     </div>
                     <div class="favorite" *ngIf="add.status === 'sold'">
                       <img src="../../assets/images/solid-flag.svg" alt="">

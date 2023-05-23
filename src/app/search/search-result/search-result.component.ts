@@ -1,11 +1,13 @@
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { ResponseSuccess } from 'src/app/models/actions.model';
 import { APIResponse, Products, Search } from 'src/app/models/products.model';
 import { ActionsService } from 'src/app/services/actions.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler.service';
 import { ProductsRequestService } from 'src/app/services/products-request.service';
+import { environment as env } from 'src/environments/environment';
 
 @Component({
   selector: 'app-search-result',
@@ -23,10 +25,12 @@ export class SearchResultComponent implements OnInit {
   owner_id: any;
   links: any = {};
   meta: any = {};
+  is_animating: boolean = false;
   constructor(private route: ActivatedRoute,
     private productService: ProductsRequestService,
     private router: Router,
     public actionService: ActionsService,
+    private http: HttpClient,
     private errorHandel: ErrorHandlerService) { 
     } 
     
@@ -36,6 +40,32 @@ export class SearchResultComponent implements OnInit {
       });    
       this.getSearchResult(this.key);
       this.owner_id = localStorage.getItem('userId');
+  }
+  addToFav(product: any){
+    this.is_animating = true;
+    if(product.product_fav == false){
+      this.http.get<ResponseSuccess>(`${env.api_url}/favourites/add-favourite/${product.id}`,this.actionService.httpOptions)
+      .subscribe({
+        next: res=>{
+          // this.actionService.handelRes(res)
+          product.product_fav = true  
+        },
+        error: (err: HttpErrorResponse)=>{
+          this.errorHandel.openErrorModa(err)
+        }
+      })
+    }else{
+      this.http.get<ResponseSuccess>(`${env.api_url}/favourites/remove-favourite/${product.id}`,this.actionService.httpOptions)
+      .subscribe({
+        next: res=>{
+          // this.actionService.handelRes(res)
+          product.product_fav = false  
+        },
+        error: (err: HttpErrorResponse)=>{
+          this.errorHandel.openErrorModa(err)
+        }
+      })
+    }
   }
   getSearchResult(key: string, pageNo?: number){
     this.loader = true;

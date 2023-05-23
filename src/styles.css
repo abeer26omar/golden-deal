@@ -329,7 +329,7 @@ input.star:checked ~ label.star:before {
 }
 .products-row .card .card-header .favorite{
     position: absolute;
-    top: 3%;
+    top: 5%;
     left: 4%;
 }
 .products-row .card-header img{

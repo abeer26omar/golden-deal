@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup} from '@angular/forms';
+import { FormControl, FormGroup, Validators} from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { APIResponse2, APIResponse4, Category, EditProduct, EditProductFilters, Update } from 'src/app/models/products.model';
@@ -374,9 +374,9 @@ export class EditAddComponent implements OnInit {
           if(ele.filter_value !== null){
             if(ele.slug_name == 'plate_chars_filter_6'){
               let plate_chars_filter_6 = this.myForm.get('plate_chars_filter_6') as FormGroup;
-              plate_chars_filter_6.addControl('plate_chars_ar_1', new FormControl(ele.filter_value.filter_value[0]));
-              plate_chars_filter_6.addControl('plate_chars_ar_2', new FormControl(ele.filter_value.filter_value[2]));
-              plate_chars_filter_6.addControl('plate_chars_ar_3', new FormControl(ele.filter_value.filter_value[4]));
+              plate_chars_filter_6.addControl('plate_chars_ar_1', new FormControl(ele.filter_value.filter_value[0],[Validators.required,Validators.pattern(/^[\u0627-\u0628\u062d\u062f\u0631\u0633\u0635\u0637\u0639\u0642\u0643\u0644\u0645\u0646\u0647\u0648\u0649]+$/)]));
+              plate_chars_filter_6.addControl('plate_chars_ar_2', new FormControl(ele.filter_value.filter_value[2],Validators.pattern(/^[\u0627-\u0628\u062d\u062f\u0631\u0633\u0635\u0637\u0639\u0642\u0643\u0644\u0645\u0646\u0647\u0648\u0649]+$/)));
+              plate_chars_filter_6.addControl('plate_chars_ar_3', new FormControl(ele.filter_value.filter_value[4],Validators.pattern(/^[\u0627-\u0628\u062d\u062f\u0631\u0633\u0635\u0637\u0639\u0642\u0643\u0644\u0645\u0646\u0647\u0648\u0649]+$/)));
             }else if(ele.slug_name == 'plate_chars_en_filter_6'){
               let plate_chars_en_filter_6 = this.myForm.get('plate_chars_en_filter_6') as FormGroup  
               plate_chars_en_filter_6.addControl('plate_chars_en_1', new FormControl(ele.filter_value.filter_value[0]));
@@ -384,10 +384,10 @@ export class EditAddComponent implements OnInit {
               plate_chars_en_filter_6.addControl('plate_chars_en_3', new FormControl(ele.filter_value.filter_value[4]));
             }else if(ele.slug_name == 'plate_numbers_filter_6'){
               let plate_numbers_filter_6 = this.myForm.get('plate_numbers_filter_6') as FormGroup;
-              plate_numbers_filter_6.addControl('plate_number_ar_1', new FormControl(ele.filter_value.filter_value[0]));
-              plate_numbers_filter_6.addControl('plate_number_ar_2', new FormControl(ele.filter_value.filter_value[2]));
-              plate_numbers_filter_6.addControl('plate_number_ar_3', new FormControl(ele.filter_value.filter_value[4]));
-              plate_numbers_filter_6.addControl('plate_number_ar_4', new FormControl(ele.filter_value.filter_value[6]));
+              plate_numbers_filter_6.addControl('plate_number_ar_1', new FormControl(ele.filter_value.filter_value[0],[Validators.required,Validators.pattern(/^[\u0660-\u0669]/)]));
+              plate_numbers_filter_6.addControl('plate_number_ar_2', new FormControl(ele.filter_value.filter_value[2],[Validators.pattern(/^[\u0660-\u0669]/)]));
+              plate_numbers_filter_6.addControl('plate_number_ar_3', new FormControl(ele.filter_value.filter_value[4],[Validators.pattern(/^[\u0660-\u0669]/)]));
+              plate_numbers_filter_6.addControl('plate_number_ar_4', new FormControl(ele.filter_value.filter_value[6],[Validators.pattern(/^[\u0660-\u0669]/)]));
             }else if(ele.slug_name == 'plate_numbers_en_filter_6'){
               let plate_numbers_en_filter_6 = this.myForm.get('plate_numbers_en_filter_6') as FormGroup;
               plate_numbers_en_filter_6.addControl('plate_number_en_1', new FormControl(ele.filter_value.filter_value[0]));

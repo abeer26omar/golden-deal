@@ -24,6 +24,13 @@ var configDB = {
   "user"            : "macbereg_gdadmin",
   "password"        : "AA0wDs_njZO_",
   "database"        : "macbereg_gd"
+  // "connectionLimit" : 10,
+  // "host"            : "78.141.219.177",
+  // "port"            : "3306",
+  // "user"            : "golden_deal_admin",
+  // "password"        : "_t3Y9zo93",
+  // "database"        : "golden_deal_db"
+
 };
 
 const connection = mysql.createConnection(configDB);
@@ -47,11 +54,12 @@ io.on('connection', function(socket) {
       var socketId = participants[data.receiver];
       var send_recev_sum = (data.sender + data.receiver);
       var chat_code = 'chat-'+send_recev_sum+'-'+(data.sender * data.receiver)+'-'+(send_recev_sum * 2)+'-code';
-      var result = await connection.awaitQuery(`INSERT INTO messages (chat_code, sender, receiver, message) VALUES (?, ?, ?)`, [chat_code, data.sender, data.receiver, data.message]);
+      var result = await connection.awaitQuery(`INSERT INTO messages (chat_code, sender, receiver, message) VALUES (? ,?, ?, ?)`, [chat_code, data.sender, data.receiver, data.message]);
       var msg = await connection.awaitQuery(`SELECT * FROM messages WHERE id = ?`, [result.insertId]);
       io.to(receiversocketId).emit("new_message", {"sender": msg[0].sender, "receiver": msg[0].receiver, "message": msg[0].message, "created_at": msg[0].created_at });
       io.to(socketId).emit("new_message", {"sender": msg[0].sender, "receiver": msg[0].receiver, "message": msg[0].message, "created_at": msg[0].created_at });
     })();
+    console.log("new msg sent");
   });
 
 });

@@ -46,13 +46,15 @@ export class ActionsService {
       })
     ).subscribe({
       next: res=>{
-        this.handelRes(res)        
+        this.handelRes(res)  
+        this.isFavorite = true              
       },
       error: (err: HttpErrorResponse)=>{
         this.errorHandel.openErrorModa(err)
       }
     })
   }
+  isFavorite: boolean = false;
   removeFav(id: number){
     this.http.get<ResponseSuccess>(`${env.api_url}/favourites/remove-favourite/${id}`,this.httpOptions).pipe(
       tap(()=>{
@@ -60,7 +62,8 @@ export class ActionsService {
       })
     ).subscribe({
       next: res=>{
-        this.handelRes(res)        
+        this.handelRes(res)
+        this.isFavorite = false        
       },
       error: (err: HttpErrorResponse)=>{
         this.errorHandel.openErrorModa(err)

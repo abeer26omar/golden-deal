@@ -35,12 +35,17 @@
                         <img src="{{product.default_image ? product.default_image : '../../assets/images/placeholderimg.jpg'}}" alt="car" width="100%" height="200px !important">
                       </a>
                       <div class="favorite" *ngIf="product.status === 'active'">
-                          <a (click)="actionService.removeFav(product.id)" class="btn add_fav p-0" *ngIf="product.product_fav == true">
-                           <img src="../../assets/images/already_fav_icon.svg" alt="already_fav_icon" srcset="../../assets/images/already_fav_icon.svg">
+                        <a (click)="addToFav(product)">
+                          <img src="../../assets/images/{{product.product_fav == false ? 'favorite_icon.svg' : 'already_fav_icon.svg'}}" alt="already_fav_icon" >
+                        </a>
+                          <!-- <a (click)="isFavorite = !isFavorite;actionService.removeFav(product.id)" 
+                            class="btn add_fav p-0" *ngIf="product.product_fav == true">
+                           <img src="../../assets/images/{{isFavorite ? 'already_fav_icon.svg' : 'favorite_icon.svg'}}" alt="already_fav_icon" srcset="../../assets/images/already_fav_icon.svg">
                           </a>
-                          <a (click)="actionService.addToFav(product.id)" class="btn add_fav p-0" *ngIf="product.product_fav == false">
+                          <a (click)="isFavorite = !isFavorite;actionService.addToFav(product.id)" 
+                            class="btn add_fav p-0" *ngIf="product.product_fav == false">
                             <img src="../../assets/images/favorite_icon.svg" alt="addToFav" srcset="../../assets/images/favorite_icon.svg">                         
-                          </a>
+                          </a> -->
                       </div>
                       <div class="favorite" *ngIf="product.status === 'sold'">
                         <img src="../../assets/images/solid-flag.svg" alt="">
@@ -84,12 +89,15 @@
                       </ng-container>
                       </a>
                       <div  class="favorite" *ngIf="product.status === 'active'">
-                          <a (click)="actionService.removeFav(product.id)" class="btn add_fav p-0" *ngIf="product.product_fav == true">
+                        <a (click)="addToFav(product)">
+                          <img src="../../assets/images/{{product.product_fav == false ? 'favorite_icon.svg' : 'already_fav_icon.svg'}}" alt="already_fav_icon" >
+                        </a>
+                          <!-- <a (click)="actionService.removeFav(product.id)" class="btn add_fav p-0" *ngIf="product.product_fav == true">
                            <img src="../../assets/images/already_fav_icon.svg" alt="already_fav_icon" srcset="../../assets/images/already_fav_icon.svg">
                           </a>
                           <a (click)="actionService.addToFav(product.id)" class="btn add_fav p-0" *ngIf="product.product_fav == false">
                             <img src="../../assets/images/favorite_icon.svg" alt="addToFav" srcset="../../assets/images/favorite_icon.svg">                         
-                          </a>
+                          </a> -->
                       </div>
                       <div class="favorite" *ngIf="product.status === 'sold'">
                         <img src="../../assets/images/solid-flag.svg" alt="">
@@ -130,7 +138,8 @@
           <a ngbNavLink
           (click)="getProducts(category.slug, 1);
           getCategoryFilter(category.slug);
-          getBrandFilter(category.slug);"> 
+          getBrandFilter(category.slug);"
+          [ngClass]="{'pe-3': category.id == 1}"> 
             <span *ngIf="category.id == 1">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 18">
                 <g id="Group_4876" data-name="Group 4876" transform="translate(-208 -242)">
@@ -173,12 +182,15 @@
                         <img src="{{product.default_image ? product.default_image : '../../assets/images/placeholderimg.jpg'}}" alt="car" width="100%" height="200px !important">
                       </a>
                       <div class="favorite" *ngIf="product.status === 'active'">
-                          <a (click)="actionService.removeFav(product.id)" class="btn add_fav p-0" *ngIf="product.product_fav == true">
+                        <a (click)="addToFav(product)">
+                          <img src="../../assets/images/{{product.product_fav == false ? 'favorite_icon.svg' : 'already_fav_icon.svg'}}" alt="already_fav_icon" >
+                        </a>
+                          <!-- <a (click)="actionService.removeFav(product.id)" class="btn add_fav p-0" *ngIf="product.product_fav == true">
                            <img src="../../assets/images/already_fav_icon.svg" alt="already_fav_icon" srcset="../../assets/images/already_fav_icon.svg">
                           </a>
                           <a (click)="actionService.addToFav(product.id)" class="btn add_fav p-0" *ngIf="product.product_fav == false">
                             <img src="../../assets/images/favorite_icon.svg" alt="addToFav" srcset="../../assets/images/favorite_icon.svg">                         
-                          </a>
+                          </a> -->
                       </div>
                       <div class="favorite" *ngIf="product.status === 'sold'">
                         <img src="../../assets/images/solid-flag.svg" alt="">
@@ -222,12 +234,15 @@
                       </ng-container>
                       </a>
                       <div  class="favorite" *ngIf="product.status === 'active'">
-                          <a (click)="actionService.removeFav(product.id)" class="btn add_fav p-0" *ngIf="product.product_fav == true">
+                        <a (click)="addToFav(product)">
+                          <img src="../../assets/images/{{product.product_fav == false ? 'favorite_icon.svg' : 'already_fav_icon.svg'}}" alt="already_fav_icon" >
+                        </a>
+                          <!-- <a (click)="actionService.removeFav(product.id)" class="btn add_fav p-0" *ngIf="product.product_fav == true">
                            <img src="../../assets/images/already_fav_icon.svg" alt="already_fav_icon" srcset="../../assets/images/already_fav_icon.svg">
                           </a>
                           <a (click)="actionService.addToFav(product.id)" class="btn add_fav p-0" *ngIf="product.product_fav == false">
                             <img src="../../assets/images/favorite_icon.svg" alt="addToFav" srcset="../../assets/images/favorite_icon.svg">                         
-                          </a>
+                          </a> -->
                       </div>
                       <div class="favorite" *ngIf="product.status === 'sold'">
                         <img src="../../assets/images/solid-flag.svg" alt="">
@@ -331,7 +346,7 @@
   <ng-container *ngFor="let carplate_filter of fiter_carPlates">
     <div class="filters py-2" *ngIf="carplate_filter.type !== 'text'">
       <mat-radio-group aria-label="Select an option" *ngIf="carplate_filter.slug_name !== 'plate_town_filter_6'" 
-      [formControlName]="carplate_filter.slug_name" (change)="onApplayPlatesFilters($event)">
+      [formControlName]="carplate_filter.slug_name" (change)="change_plate_type($event)">
         <mat-radio-button *ngFor="let option of carplate_filter.filter_options"
          value="{{option.name}}" class="mx-2">{{option.name}}</mat-radio-button>
       </mat-radio-group>
@@ -347,10 +362,10 @@
     </div>
   </ng-container>
 </form>
-  <!-- <div class="d-flex justify-content-center" *ngIf="showBtnAction">
+  <div class="d-flex justify-content-center" *ngIf="showBtnAction">
     <a class="btn btn_find" (click)="onApplayPlatesFilters()">بحث</a>
-    <a class="btn btn_remove me-2" (click)="getProducts('car_plates', 1)">حذف</a>
-  </div> -->
+    <!-- <a class="btn btn_remove me-2" (click)="getProducts('car_plates', 1)">حذف</a> -->
+  </div>
 </div>
 <!-- <div class="loader pt-4 pb-5" *ngIf="loadding" dir="ltr">
   <svg version="1.1" id="L3" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"

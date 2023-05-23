@@ -116,8 +116,8 @@
               aria-expanded="false">
               <img src="../../assets/images/notify_icon.svg" alt="notify_icon" width="30px">
             </button>
-            <div class="collapse notifcation dropdown-menu" aria-labelledby="dropdownMenuButton3">
-              <app-notifications></app-notifications>
+            <div class="collapse notifcation dropdown-menu" aria-labelledby="dropdownMenuButton3" (scroll)="loadMore()">
+              <app-notifications [notifications]="notifications"></app-notifications>
             </div>
           </li>
           <li class="nav-item dropdown">

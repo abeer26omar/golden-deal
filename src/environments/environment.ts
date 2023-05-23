@@ -5,7 +5,8 @@
 export const environment = {
   production: false,
   api_url: 'https://admin.golden-deal.co/api',
-  socket_url: 'https://chat--ahmedgalal16.repl.co/',
+  socket_url: 'https://goldendealchat--msamy1.repl.co/',
+  // socket_url: 'http://localhost:3000/',
   firebase: {
     apiKey: "AIzaSyDWCchVr5xKwG67w1tqhiV3HwYH0fg9l6I",
     authDomain: "golden-deal-angular.firebaseapp.com",

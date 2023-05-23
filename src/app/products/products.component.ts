@@ -1,4 +1,4 @@
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Component, ElementRef, HostListener, Input, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -9,10 +9,10 @@ import { ProductsRequestService } from '../services/products-request.service';
 import Swiper, { SwiperOptions } from 'swiper';
 import { ActionsService } from '../services/actions.service';
 import { AuthService } from '../services/auth.service';
-import { Regions } from '../models/actions.model';
+import { Regions, ResponseSuccess } from '../models/actions.model';
 import { DatePipe } from '@angular/common';
 import { ErrorHandlerService } from '../services/error-handler.service';
-import { OwlOptions } from 'ngx-owl-carousel-o';
+import { environment as env } from 'src/environments/environment';
 import { MatDialog } from '@angular/material/dialog';
 import { AuthRemainderModalComponent } from '../auth-remainder-modal/auth-remainder-modal.component';
 declare var window: any;
@@ -54,6 +54,7 @@ export class ProductsComponent implements OnInit {
   public products: Array<Products> = [];
   links: any = {};
   meta: any = {};
+  isFavorite: boolean = false;
   // public categories : Array<Category> = [];
   active = 0;
   activeSub_brand = 0;
@@ -75,6 +76,7 @@ export class ProductsComponent implements OnInit {
   owner_id: any;
   plate_town_filter_6: any;
   plate_type_filter_6: any;
+  is_animating: boolean = false;
   private routeSub: Subscription = new Subscription;
   private productSub: Subscription = new Subscription;
   private categorySub : Subscription = new Subscription;
@@ -103,8 +105,9 @@ export class ProductsComponent implements OnInit {
     public actionService: ActionsService,
     public authService: AuthService,
     public datepipe: DatePipe,
-    private errorHandel: ErrorHandlerService,
-    private dialogRef: MatDialog) {
+    private http: HttpClient,
+    private dialogRef: MatDialog,
+    private errorHandel: ErrorHandlerService) {
       if(this.route.snapshot.fragment){
         if(this.route.snapshot.fragment == 'cars'){
           this.active = 1
@@ -117,9 +120,9 @@ export class ProductsComponent implements OnInit {
         this.getCategoryFilter(this.route.snapshot.fragment);
         this.getBrandFilter(this.route.snapshot.fragment);
       }
-      this.actionService.refresh.subscribe(()=>{
-        this.getProducts(this.categorySlug, 1);
-      })
+      // this.actionService.refresh.subscribe(()=>{
+      //   this.getProducts(this.categorySlug, 1);
+      // })
     }
     config: SwiperOptions = {
       slidesPerView: 15,
@@ -202,8 +205,8 @@ export class ProductsComponent implements OnInit {
       next:(productsList: APIResponse<Products>)=>{
         this.loadding = false;
         this.products = productsList.data;
-        this.links = productsList.links;
-        this.meta = productsList.meta;                                          
+        this.links = productsList.links;        
+        this.meta = productsList.meta;                 
           if(this.products.length == 0){
             this.errorLength = 'لا يوجد منتجات';
           }else{
@@ -215,6 +218,32 @@ export class ProductsComponent implements OnInit {
         this.errorHandel.openErrorModa(err)
       }
     })
+  }
+  addToFav(product: any){
+    this.is_animating = true;
+    if(product.product_fav == false){
+      this.http.get<ResponseSuccess>(`${env.api_url}/favourites/add-favourite/${product.id}`,this.actionService.httpOptions)
+      .subscribe({
+        next: res=>{
+          product.product_fav = true  
+        },
+        error: (err: HttpErrorResponse)=>{
+          this.errorHandel.openErrorModa(err)
+        }
+      })
+    }else{
+      this.http.get<ResponseSuccess>(`${env.api_url}/favourites/remove-favourite/${product.id}`,this.actionService.httpOptions)
+      .subscribe({
+        next: res=>{
+          // this.actionService.handelRes(res)
+          product.product_fav = false  
+        },
+        error: (err: HttpErrorResponse)=>{
+          this.errorHandel.openErrorModa(err)
+  
+        }
+      })
+    }
   }
   applayForPagination(brand_filter: string,brand_Subfilter: string,page_num: number){
     this.load = true;
@@ -493,9 +522,9 @@ export class ProductsComponent implements OnInit {
   change_plate_twon(event: any){
     this.plate_town_filter_6 = event.target.value    
   }
-  onApplayPlatesFilters(event: any, page_num?: number){
+  onApplayPlatesFilters(page_num?: number){
     this.load = true;       
-     this.filterSub = this.httpService.applayForCar_plates(this.plate_town_filter_6,event.value,page_num).subscribe({
+     this.filterSub = this.httpService.applayForCar_plates(this.valueMin,this.valueMax,this.plate_town_filter_6,this.plate_type_filter_6,page_num).subscribe({
       next: (res: APIResponse<Products>)=>{
           this.load = false;
           this.formModal.hide();
@@ -520,7 +549,7 @@ export class ProductsComponent implements OnInit {
   getRegions(){
     this.filterSub = this.actionService.getRegions().subscribe({
       next: (res: Regions) => {
-        this.regions = res.data        
+        this.regions = res.data;                
       },
       error:(err: HttpErrorResponse)=>{
         this.errorHandel.openErrorModa(err)
@@ -537,6 +566,8 @@ export class ProductsComponent implements OnInit {
           this.load = false;
           this.formModal.hide();
           this.products = res.data;
+          this.links = res.links;
+          this.meta = res.meta;          
           if(this.products.length == 0){
             this.errorLength = 'لا يوجد منتجات';
           }else{

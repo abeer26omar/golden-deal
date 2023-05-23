@@ -33,6 +33,7 @@ import { NzSliderModule } from 'ng-zorro-antd/slider';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 import { SwiperModule } from 'swiper/angular';
 import { NgxGalleryModule } from 'ngx-gallery-9';
 import { ClipboardModule } from 'ngx-clipboard';
@@ -156,6 +157,7 @@ import { NotificationsService } from './services/notifications.service';
     MatSidenavModule,
     MatListModule,
     MatPaginatorModule,
+    ScrollingModule,
     SwiperModule,
     NgxGalleryModule,
     ClipboardModule,

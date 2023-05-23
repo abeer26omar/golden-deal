@@ -112,7 +112,9 @@ export class AddsComponent implements OnInit {
     this.portSub = this.actionService.getPortfolio(id).subscribe({
       next: (resData: Portfolio)=>{
         this.loadding = false;
-        this.portfolio = resData;        
+        this.portfolio = resData;
+        console.log(resData);
+                
       },
       error: (err: HttpErrorResponse)=>{
         this.loadding = false;

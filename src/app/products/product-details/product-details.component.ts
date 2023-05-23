@@ -10,7 +10,8 @@ import { MacPrefixService } from 'src/app/services/mac-prefix.service';
 import { NgxGalleryOptions, NgxGalleryImage, NgxGalleryAnimation } from 'ngx-gallery-9';
 import { ChatService } from 'src/app/services/chat.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler.service';
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { environment as env } from 'src/environments/environment';
 
 declare var window: any;
 
@@ -85,6 +86,7 @@ export class ProductDetailsComponent implements OnInit {
   sucessMsg: string = '';
   admin: any;
   owner_id: any;
+  is_animating: boolean = false;
   private routeSub: Subscription = new Subscription;
   private productSub: Subscription = new Subscription;
   imgUrls :any = [];
@@ -94,7 +96,8 @@ export class ProductDetailsComponent implements OnInit {
     public actionService : ActionsService,
     private macService: MacPrefixService,
     private chatService: ChatService,
-    private errorHandel: ErrorHandlerService) { 
+    private errorHandel: ErrorHandlerService,
+    private http: HttpClient) { 
       this.actionService.refresh.subscribe(()=>{
         this.getProductDetails(this.ProductId);
       })
@@ -170,25 +173,32 @@ export class ProductDetailsComponent implements OnInit {
       }
     })
   }
-   addToFav(){
-  //   this.actionService.addToFav(this.singleProduct.data.id).subscribe({
-  //     next:(res:ResponseSuccess)=>{
-  //       this.sucessMsg = res.data;
-  //       this.success.show();
-  //     },
-  //     error:(err: HttpErrorResponse)=>{
-  //       this.faild.show();
-  //       if(err.error.data){
-  //         this.errMsg = err.error.data;
-  //       } else{
-  //         if(err.statusText == 'Unauthorized'){
-  //           this.errMsg = 'يجب انشاء حساب اولا';
-  //         }else{
-  //           this.errMsg = err.statusText;
-  //         }
-  //       }
-  //     }
-  //   })
+   addToFav(product: any){
+    this.is_animating = true;
+    if(product.product_fav == false){
+      this.http.get<ResponseSuccess>(`${env.api_url}/favourites/add-favourite/${product.id}`,this.actionService.httpOptions)
+      .subscribe({
+        next: res=>{
+          // this.actionService.handelRes(res)
+          product.product_fav = true  
+        },
+        error: (err: HttpErrorResponse)=>{
+          this.errorHandel.openErrorModa(err)
+        }
+      })
+    }else{
+      this.http.get<ResponseSuccess>(`${env.api_url}/favourites/remove-favourite/${product.id}`,this.actionService.httpOptions)
+      .subscribe({
+        next: res=>{
+          // this.actionService.handelRes(res)
+          product.product_fav = false  
+        },
+        error: (err: HttpErrorResponse)=>{
+          this.errorHandel.openErrorModa(err)
+  
+        }
+      })
+    }
    }
   editAdd(id: number){
     this.router.navigate([`edit-add/${id}`])

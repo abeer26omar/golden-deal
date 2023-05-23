@@ -137,6 +137,7 @@ interface FavItem{
         ownership_image_url: string,
         region_name: string,
         status: string,
+        negotiable: number,
         properties: Array<Product_Properties>,
         owner: {
             id: number,

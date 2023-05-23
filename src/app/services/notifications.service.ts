@@ -20,8 +20,8 @@ export class NotificationsService {
   }
   constructor(private http: HttpClient,
     private angularFireMessaging: AngularFireMessaging) { }
-  getMyNotifications(){
-    return this.http.get<Notifications>(`${env.api_url}/notifications/my-notifications?page=1`, this.httpOptions)
+  getMyNotifications(pageNo: number = 1){
+    return this.http.get<Notifications>(`${env.api_url}/notifications/my-notifications?page=${pageNo}`, this.httpOptions)
   }
   requestPermission(){
     this.angularFireMessaging.requestToken.subscribe(

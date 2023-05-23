@@ -111,13 +111,13 @@ export class ProductsRequestService {
       this._refresh.next();
     }))
   }
-  applayForCar_plates(town_filter?: string, 
+  applayForCar_plates(valueMin: number,valueMax: number,town_filter?: string, 
     plate_type_filter?: string, 
     page_num?: number){
     return this.http.post<APIResponse<Products>>(`${env.api_url}/filters/submit-filters?page=${page_num}`,
     {
-      min_price: '0',
-      max_price: '8584040',
+      min_price: valueMin,
+      max_price: valueMax,
       plate_town_filter_6: town_filter,
       plate_type_filter_6: plate_type_filter,
     },this.httpOptions).pipe(tap(()=>{

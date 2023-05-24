@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AsyncPipe, CommonModule } from '@angular/common';  
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { LocationStrategy, HashLocationStrategy } from '@angular/common';
+import { LocationStrategy, HashLocationStrategy ,PathLocationStrategy} from '@angular/common';
 import { HttpHeadersInterceptor } from './interceptors/http-headers.interceptor';
 import { HttpErrorInterceptor } from './interceptors/http-errors.interceptor';
 import { AppRoutingModule } from './app-routing.module';
@@ -167,7 +167,7 @@ import { NotificationsService } from './services/notifications.service';
     CarouselModule
     ], 
   providers: [ NotificationsService, AsyncPipe,
-    {provide: LocationStrategy, useClass: HashLocationStrategy},
+    {provide: LocationStrategy, useClass: PathLocationStrategy},
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpHeadersInterceptor,

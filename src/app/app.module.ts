@@ -167,7 +167,7 @@ import { NotificationsService } from './services/notifications.service';
     CarouselModule
     ], 
   providers: [ NotificationsService, AsyncPipe,
-    {provide: LocationStrategy, useClass: PathLocationStrategy},
+    {provide: LocationStrategy, useClass: HashLocationStrategy},
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpHeadersInterceptor,

@@ -353,6 +353,7 @@
           (click)="getNewPage(meta.current_page,1,meta.path)">
           <i class="fa-solid fa-angles-left"></i>
         </button>
+        <!-- ?.slice(0,1).concat(meta.links?.slice(1, 4)).concat(meta.links?.slice(meta.links.length-1)) -->
         <li class="pagination__item" 
          *ngFor="let page of meta.links"
          [ngClass]="{'pagination--move-next': page.active === true}">
@@ -374,7 +375,8 @@
         </button>
       </ul>
   </section>
-  <!-- <pagination-controls (pageChange)="meta.current_page = $event"></pagination-controls> -->
+  <!-- <pagination-controls [id]="meta.current_page" 
+  (pageChange)="getPageChange($event,meta.current_page,meta.path)"></pagination-controls> -->
 <!-- filter modal -->
 <div class="modal fade"
 id="filterModal"

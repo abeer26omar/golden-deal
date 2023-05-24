@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  api_url: 'https://admin.golden-deal.co/api',
+  api_url: 'https://admin.gooldendeal.com/api',
   socket_url: 'https://goldendealchat--msamy1.repl.co/',
   // socket_url: 'http://localhost:3000/',
   firebase: {

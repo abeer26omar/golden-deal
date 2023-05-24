@@ -113,7 +113,8 @@
             <button class="btn p-0 custom dropdown-toggle" 
               id="dropdownMenuButton3" 
               data-bs-toggle="dropdown" 
-              aria-expanded="false">
+              aria-expanded="false"
+              (click)="getMyNotifications(pageNo)">
               <img src="../../assets/images/notify_icon.svg" alt="notify_icon" width="30px">
             </button>
             <div class="collapse notifcation dropdown-menu" aria-labelledby="dropdownMenuButton3" (scroll)="loadMore()">

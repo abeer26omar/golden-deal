@@ -6,7 +6,7 @@ import { Subscription } from 'rxjs';
 import { APIResponse, Products , APIResponse2, Category, CategoryFilter,BrandFilter, Category_Filter} from '../models/products.model';
 import { MacPrefixService } from '../services/mac-prefix.service';
 import { ProductsRequestService } from '../services/products-request.service';
-import Swiper, { SwiperOptions } from 'swiper';
+import { SwiperOptions } from 'swiper';
 import { ActionsService } from '../services/actions.service';
 import { AuthService } from '../services/auth.service';
 import { Regions, ResponseSuccess } from '../models/actions.model';
@@ -73,6 +73,7 @@ export class ProductsComponent implements OnInit {
   activeClass: boolean = false;
   categorySlug: string = 'all';
   regions: any = [];
+  metaNo: any = [];
   owner_id: any;
   plate_town_filter_6: any;
   plate_type_filter_6: any;
@@ -206,7 +207,9 @@ export class ProductsComponent implements OnInit {
         this.loadding = false;
         this.products = productsList.data;
         this.links = productsList.links;        
-        this.meta = productsList.meta;                 
+        this.meta = productsList.meta;
+        // this.metaNo = this.meta.links?.slice(0,1).concat(this.meta.links?.slice(1, 4)).concat(this.meta.links?.slice(this.meta.links.length-1))
+        // console.log(this.metaNo);
           if(this.products.length == 0){
             this.errorLength = 'لا يوجد منتجات';
           }else{

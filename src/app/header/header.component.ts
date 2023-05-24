@@ -78,7 +78,9 @@ export class HeaderComponent implements OnInit {
     this.toastFaild = new window.bootstrap.Toast(
       document.getElementById('toastFaild'),{backdrop: this.macService.backdrop}
     )
-    this.getMyNotifications(this.pageNo);
+    if(this.authService.IsloggedIn()){      
+      this.notificationService.getMyNotifications(this.pageNo);
+    }
   }
   private categorySub : Subscription = new Subscription;
   stopPropagation(event: any){
@@ -143,7 +145,9 @@ export class HeaderComponent implements OnInit {
     if (scrollPosition === maxScroll) {
       if(this.lastpage !== this.pageNo){
         this.pageNo +=1;
-        this.getMyNotifications(this.pageNo);      
+        setTimeout(()=>{
+          this.getMyNotifications(this.pageNo);      
+        },500)
       }
     }    
   }

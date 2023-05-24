@@ -30,9 +30,11 @@ export class AppComponent implements OnInit{
     });
   }
   ngOnInit(): void {
-    this.notificationService.requestPermission();
-    this.notificationService.getMyNotifications();
-    this.notification = this.notificationService.currentMessage;
-    console.log(this.notification);
+    if(this.authService.IsloggedIn()){
+      this.notificationService.requestPermission();
+      this.notificationService.getMyNotifications();
+      this.notification = this.notificationService.currentMessage;
+      console.log(this.notification);
+    }
   }
 }

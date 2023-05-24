@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  api_url: 'https://admin.golden-deal.co/api',
+  api_url: 'https://admin.gooldendeal.com/api',
   socket_url: 'https://goldendealchat--msamy1.repl.co/',
   firebase: {
     apiKey: "AIzaSyDWCchVr5xKwG67w1tqhiV3HwYH0fg9l6I",

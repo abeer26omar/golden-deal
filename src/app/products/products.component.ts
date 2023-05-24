@@ -83,8 +83,8 @@ export class ProductsComponent implements OnInit {
   private brandSub : Subscription = new Subscription;
   private filterSub : Subscription = new Subscription;
 
-  valueMin: number = 0;
-  valueMax: number = 8584040;
+  valueMin: any = 0;
+  valueMax: any = 8584040;
   value = [this.valueMin, this.valueMax];
   
   formFilter = new FormGroup({
@@ -247,7 +247,7 @@ export class ProductsComponent implements OnInit {
   }
   applayForPagination(brand_filter: string,brand_Subfilter: string,page_num: number){
     this.load = true;
-     this.filterSub = this.httpService.applayForPagination(brand_filter,brand_Subfilter,page_num).subscribe({
+     this.filterSub = this.httpService.applayForPagination(this.valueMin,this.valueMax,brand_filter,brand_Subfilter,page_num).subscribe({
       next: (res: APIResponse<Products>)=>{
           this.load = false;
           this.formModal.hide();          
@@ -324,8 +324,8 @@ export class ProductsComponent implements OnInit {
     this.categorySub = this.httpService.getCategoryFilters(categoryName).subscribe({
       next: (res: CategoryFilter)=>{
         this.filters = res;        
-        this.valueMin = this.filters.data.price.min;
-        this.valueMax = this.filters.data.price.max;
+        this.valueMin = this.filters.data.price.min.toString();
+        this.valueMax = this.filters.data.price.max.toString();
         this.filters.data.filters.forEach(filter=>{
           this.formFilter.addControl(filter.slug_name, new FormControl('')) 
         }) 
@@ -481,7 +481,7 @@ export class ProductsComponent implements OnInit {
     this.load = true;
     this.brand_name = brand_filter;
     this.sub_brand_name = brand_Subfilter;
-     this.filterSub = this.httpService.applayFilterKeys(brand_filter,brand_Subfilter,town_filter,plate_type_filter,plate_category_filter,page_num).subscribe({
+     this.filterSub = this.httpService.applayFilterKeys(this.valueMin,this.valueMax,brand_filter,brand_Subfilter,town_filter,plate_type_filter,plate_category_filter,page_num).subscribe({
       next: (res: APIResponse<Products>)=>{
           this.load = false;
           this.formModal.hide();          

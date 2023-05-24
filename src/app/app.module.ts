@@ -42,7 +42,6 @@ import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { AngularFireMessagingModule} from '@angular/fire/compat/messaging';
 import { AngularFireModule } from '@angular/fire/compat';
 import { CarouselModule } from 'ngx-owl-carousel-o';
-
 //components
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';

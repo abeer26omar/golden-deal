@@ -79,7 +79,7 @@ export class ProductsRequestService {
       this._refresh.next();
     }))
   }
-  applayFilterKeys(brand_filter?: string, 
+  applayFilterKeys(valueMin: any,valueMax: any,brand_filter?: string, 
     brand_Subfilter?: string, 
     town_filter?: string,
     plate_type_filter?: string,
@@ -87,8 +87,8 @@ export class ProductsRequestService {
     page_num?: number){
     return this.http.post<APIResponse<Products>>(`${env.api_url}/filters/submit-filters?page=${page_num}`,
     {
-      min_price: '0',
-      max_price: '8584040',
+      min_price: valueMin,
+      max_price: valueMax,
       car_brand_filter_1: brand_filter,
       car_class_sub_filter_1: brand_Subfilter,
       plate_town_filter_6: town_filter,
@@ -98,20 +98,20 @@ export class ProductsRequestService {
       this._refresh.next();
     }))
   }
-  applayForPagination(brand_filter?: string, 
+  applayForPagination(valueMin: any,valueMax: any,brand_filter?: string, 
     brand_Subfilter?: string, 
     page_num?: number){
     return this.http.post<APIResponse<Products>>(`${env.api_url}/filters/submit-filters?page=${page_num}`,
     {
-      min_price: '0',
-      max_price: '8584040',
+      min_price: valueMin,
+      max_price: valueMax,
       car_brand_filter_1: brand_filter,
       car_class_sub_filter_1: brand_Subfilter,
     },this.httpOptions).pipe(tap(()=>{
       this._refresh.next();
     }))
   }
-  applayForCar_plates(valueMin: number,valueMax: number,town_filter?: string, 
+  applayForCar_plates(valueMin: any,valueMax: any,town_filter?: string, 
     plate_type_filter?: string, 
     page_num?: number){
     return this.http.post<APIResponse<Products>>(`${env.api_url}/filters/submit-filters?page=${page_num}`,

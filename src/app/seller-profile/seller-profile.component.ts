@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { Portfolio, Products } from '../models/actions.model';
+import { Portfolio, Products, ResponseSuccess } from '../models/actions.model';
 import { ActionsService } from '../services/actions.service';
 import { MacPrefixService } from '../services/mac-prefix.service';
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { ErrorHandlerService } from '../services/error-handler.service';
+import { environment as env } from 'src/environments/environment';
 
 declare var window: any;
 
@@ -38,6 +39,7 @@ export class SellerProfileComponent implements OnInit {
       products: []
     }
   }
+  is_animating: boolean = false;
   active_status: string = 'نشطه';
   productsStatus: Array<Products> = [];
   private portSub : Subscription = new Subscription;
@@ -47,7 +49,8 @@ export class SellerProfileComponent implements OnInit {
     private route: ActivatedRoute,
     private actionService: ActionsService,
     private macService: MacPrefixService,
-    private errorHandel: ErrorHandlerService) { 
+    private errorHandel: ErrorHandlerService,
+    private http: HttpClient) { 
       this.actionService.refresh.subscribe(()=>{
         this.getPortfolioInfo(this.portfolioId);
       })
@@ -77,6 +80,32 @@ export class SellerProfileComponent implements OnInit {
         this.errorHandel.openErrorModa(err)
       }
     })
+  }
+  addToFav(product: any){
+    this.is_animating = true;
+    if(product.product_fav == false){
+      this.http.get<ResponseSuccess>(`${env.api_url}/favourites/add-favourite/${product.id}`,this.actionService.httpOptions)
+      .subscribe({
+        next: res=>{
+          product.product_fav = true  
+        },
+        error: (err: HttpErrorResponse)=>{
+          this.errorHandel.openErrorModa(err)
+        }
+      })
+    }else{
+      this.http.get<ResponseSuccess>(`${env.api_url}/favourites/remove-favourite/${product.id}`,this.actionService.httpOptions)
+      .subscribe({
+        next: res=>{
+          // this.actionService.handelRes(res)
+          product.product_fav = false  
+        },
+        error: (err: HttpErrorResponse)=>{
+          this.errorHandel.openErrorModa(err)
+  
+        }
+      })
+    }
   }
   openFilterModal(){
     this.filterModal.show();

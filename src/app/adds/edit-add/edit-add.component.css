@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Mada:wght@300;400&display=swap');
 .card{
     background: #FFFFFF;
     box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.15);
@@ -78,6 +79,9 @@ label.file-upload{
 textarea{
     resize: none;
 }
+input.hChar{
+    font-family: 'Mada', sans-serif !important;
+}
 input:not([type="checkbox"]) ,textarea, select{
     background: transparent;
     border: none;
@@ -156,6 +160,19 @@ select{
     color: var(--primary-color);
     font-size: 1.33rem;
 }
+.modal-body .contnet .order p.pp-1,
+.modal-body .contnet .order p.pp-2,
+.modal-body .contnet .order p.pp-3{
+    color: var(--primary-color);
+    font-size: 1rem;
+    font-weight: 500;
+}
+.modal-body .contnet .order p.pp-2{
+    color: var(--org-color);
+}
+.modal-body .contnet .order p.pp-3 span{
+    color: var(--light-blue);
+} 
 .btn_negotiable{
     border: 1px solid var(--primary-color);
     background-color: transparent;
@@ -174,4 +191,7 @@ input.disabled{
     position: absolute;
     right: 4px;
     /* display: none; */
+}
+input.invalid_input{
+    border: 1px solid var(--semi-red);
 }

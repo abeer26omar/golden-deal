@@ -91,13 +91,6 @@
                     </div>
                     <div class="favorite" *ngIf="add.status === 'sold'">
                       <img src="../../assets/images/solid-flag.svg" alt="">
-                    </div>  
-                  </div>
-                  <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <a (click)="productDetails(add.id)" [ngClass]="{'pe-none': add.status === 'sold' }"
-                        >{{(add.name.length > 20)? (add.name | slice:0:20)+'..':(add.name)}}</a>
-                      <img src="../../assets/images/nego_icon.svg" alt="nego_icon" *ngIf="add.negotiable == 1">
                     </div>
                     <ng-container  *ngFor="let property of add.properties">
                       <span  *ngIf="property.type == 'text'">
@@ -106,7 +99,14 @@
                           <span *ngIf="property.name_ar == 'ارقام اللوحة عربي'" class="card_num_ar">{{property.filter_value.filter_value}}</span>
                           <span *ngIf="property.name_ar == 'ارقام اللوحة انجليزي'" class="card_num_en">{{property.filter_value.filter_value}}</span>
                       </span>
-                    </ng-container>
+                    </ng-container>  
+                  </div>
+                  <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <a (click)="productDetails(add.id)" [ngClass]="{'pe-none': add.status === 'sold' }"
+                        >{{(add.name.length > 20)? (add.name | slice:0:20)+'..':(add.name)}}</a>
+                      <img src="../../assets/images/nego_icon.svg" alt="nego_icon" *ngIf="add.negotiable == 1">
+                    </div>
                     <div class="d-flex justify-content-between align-items-center">
                       <p class="card_num">{{add.price}}</p>
                       <p class="time"><img src="../../assets/images/clock.svg" alt="clock"><span>منذ {{add.created_since | dateAgo}}</span></p>

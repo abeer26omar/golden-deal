@@ -128,8 +128,8 @@ export class ProductsComponent implements OnInit {
     config: SwiperOptions = {
       slidesPerView: 15,
       spaceBetween: 3,
-      navigation: false,
-      pagination: false,
+      navigation: true,     
+      pagination: true,
       scrollbar: false,
       grabCursor: true,
       breakpoints: {

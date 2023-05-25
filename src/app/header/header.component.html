@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light">
     <div class="container-fluid">
-      <a class="navbar-brand" routerLink='/home'>
+      <a class="navbar-brand" routerLink='/'>
         <img src="../../assets/images/new_logo_header.svg" alt="header-logo" width="100%">
       </a>
       <button mat-icon-button 
@@ -13,18 +13,18 @@
         <ul class="navbar-nav main-nv  mb-2 mb-lg-0   align-items-center">
           <li class="nav-item">
             <a class="nav-link" aria-current="page"
-             routerLink='/home' routerLinkActive="active">الرئيسية</a>
+             routerLink='/' routerLinkActive="active" ariaCurrentWhenActive="page" [routerLinkActiveOptions]="{exact: true}">الرئيسية</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="/chat" routerLinkActive="active">الرسائل</a>
+            <a class="nav-link" routerLink="/chat" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">الرسائل</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" [routerLink]="['/adds',userId]"  
-            routerLinkActive="active">إعلاناتي</a>
+            routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">إعلاناتي</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" routerLink="/buyingrecord" 
-            routerLinkActive="active">سجل الشراء</a>
+            routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">سجل الشراء</a>
           </li>
           <li class="nav-item dropdown">
             <button class="btn  custom dropdown-toggle" 
@@ -47,7 +47,7 @@
                       <div class="collapse" id="forms-collapse2" >
                         <ul class="adds-list">
                             <li *ngFor="let category of categories">
-                              <a [routerLink]="['/home']" 
+                              <a [routerLink]="['/']" 
                               fragment="{{category.slug}}"
                               class="d-inline-flex align-items-center rounded">{{category.title}}</a>
                             </li>

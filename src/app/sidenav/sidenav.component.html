@@ -1,7 +1,7 @@
 <mat-nav-list>
     <a class="close" (click)="closeNav()"><img src="../../assets/images/close.svg" alt="close"></a>
     <div class="logo py-4 d-flex align-items-center justify-content-center">
-        <a (click)="closeNav()" routerLink="/home">
+        <a (click)="closeNav()" routerLink="/">
             <img src="../../assets/images/header-logo.svg" alt="header-logo" width="100%">
         </a>
     </div>
@@ -9,19 +9,19 @@
     <ul class="navbar-nav main-nv  mb-2 mb-lg-0   align-items-center">
         <li class="nav-item">
           <a class="nav-link" aria-current="page" (click)="closeNav()"
-           routerLink='/home' routerLinkActive="active">الرئيسية</a>
+           routerLink='/' routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">الرئيسية</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" routerLink="/chat" (click)="closeNav()"
-          routerLinkActive="active">الرسائل</a>
+          routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">الرسائل</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" [routerLink]="['/adds',userId]" (click)="closeNav()" 
-          routerLinkActive="active">إعلاناتي</a>
+          routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">إعلاناتي</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" routerLink="/buyingrecord" (click)="closeNav()"
-          routerLinkActive="active">سجل الشراء</a>
+          routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">سجل الشراء</a>
         </li>
         <li class="nav-item">
           <button class="btn collapsed custom btn-1" 

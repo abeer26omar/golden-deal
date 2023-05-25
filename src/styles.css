@@ -470,6 +470,11 @@ input.star:checked ~ label.star:before {
 .adds_swipe .swiper-wrapper{
     justify-content: flex-start;
 }
+.cars_brands .swiper .swiper-scrollbar, 
+.cars_brands .swiper-scrollbar.swiper-scrollbar-horizontal {
+    background: var(--newColor);
+    width: 20% !important;
+}
 .brand a.active {
     background-color: var(--primary-color) !important;
 }
@@ -565,4 +570,13 @@ input.star:checked ~ label.star:before {
 }
 .card_num_ar {
     top: 33%;
+}
+.carousel-item {
+    max-width: 20%;
+}
+.elements{
+    display: flex;
+    flex-direction: row;
+    outline: none;
+    transition: transform .5s ease-in-out;
 }

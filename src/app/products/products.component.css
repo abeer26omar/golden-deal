@@ -364,3 +364,37 @@ p.error{
       transform: scale(0.75);
     }
   }
+  /* .swiper-button-next,
+.swiper-button-prev {
+  display: block;
+  position: absolute;
+  top: 50%;
+  width: 27px;
+  height: 27px;
+  margin-top: -13.5px;
+  z-index: 10;
+  cursor: pointer;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100% 100%;
+}
+
+.swiper-button-next {
+  right: 10px;
+  background-image: url('../../assets/images/next_arrow.svg');
+}
+
+.swiper-button-prev {
+  left: 10px;
+  background-image: url('../../assets/images/prev_arrow.svg');
+} */
+.cars_brands .swiper {
+  height: 80px;
+}
+.p-element{
+  width: 100%;
+  direction: ltr;
+}
+.carousel {
+  width: 100%;
+}

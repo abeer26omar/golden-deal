@@ -102,7 +102,24 @@ export class ProductDetailsComponent implements OnInit {
         this.getProductDetails(this.ProductId);
       })
     }
-
+  //   responsiveOptions:any[] = [
+  //   {
+  //       breakpoint: '1440px',
+  //       numVisible: 4
+  //   },
+  //   {
+  //       breakpoint: '1024px',
+  //       numVisible: 4
+  //   },
+  //   {
+  //       breakpoint: '768px',
+  //       numVisible: 3
+  //   },
+  //   {
+  //       breakpoint: '560px',
+  //       numVisible: 1
+  //   }
+  // ];
   ngOnInit(): void {
     this.routeSub = this.route.params.subscribe((params: Params) => {
       this.ProductId = params['id'];
@@ -131,7 +148,7 @@ export class ProductDetailsComponent implements OnInit {
       {
           width: '90%',
           height: '750px',
-          thumbnailsColumns: 3,
+          thumbnailsColumns: 4,
           imageAnimation: NgxGalleryAnimation.Slide
       },
       // max-width 800
@@ -158,8 +175,8 @@ export class ProductDetailsComponent implements OnInit {
     .subscribe({
       next:(productDetails: Product)=>{
         this.singleProduct = productDetails;  
-        console.log(productDetails);
         this.receiverId = this.singleProduct.data.owner_id;          
+        // this.galleryImages = productDetails.data.product_images
         [...productDetails.data.product_images].forEach(e=>{
           this.imgUrls.push({
               small: e.image_url,

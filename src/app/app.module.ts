@@ -70,6 +70,7 @@ import { DialogImageComponent } from './profile/dialog-image/dialog-image.compon
 import { DialogCoverComponent } from './adds/dialog-cover/dialog-cover.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { ChatSupportComponent } from './chats/chat-support/chat-support.component';
+import { SingleChatComponent } from './chats/single-chat/single-chat.component';
 import { SellerProfileComponent } from './seller-profile/seller-profile.component';
 import { ResponseModalComponent } from './response-modal/response-modal.component';
 import { PaymentDetailsDialogComponent } from './subscriptions/payment-details-dialog/payment-details-dialog.component';
@@ -81,7 +82,9 @@ import { AuthRemainderModalComponent } from './auth-remainder-modal/auth-remaind
 import { NotificationsComponent } from './notifications/notifications.component';
 import { environment } from 'src/environments/environment';
 import { NotificationsService } from './services/notifications.service';
-import { CarouselModule } from 'primeng/carousel';
+import { PaginatorModule } from 'primeng/paginator';
+import { SlickCarouselModule } from 'ngx-slick-carousel';
+import { GalleriaModule } from 'primeng/galleria';
 
 @NgModule({
   declarations: [
@@ -114,6 +117,7 @@ import { CarouselModule } from 'primeng/carousel';
     DialogCoverComponent,
     SidenavComponent,
     ChatSupportComponent,
+    SingleChatComponent,
     SellerProfileComponent,
     ResponseModalComponent,
     PaymentDetailsDialogComponent,
@@ -164,6 +168,9 @@ import { CarouselModule } from 'primeng/carousel';
     AngularFireAuthModule,
     AngularFireMessagingModule,
     AngularFireModule.initializeApp(environment.firebase),
+    PaginatorModule,
+    SlickCarouselModule,
+    GalleriaModule
   ], 
   providers: [ NotificationsService, AsyncPipe,
     {provide: LocationStrategy, useClass: PathLocationStrategy},

@@ -2,6 +2,18 @@
         <div class="col-lg-9 col-12" >
             <div class="py-3 text-center" *ngIf="singleProduct.data.product_images.length !== 0">
                 <ngx-gallery [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
+                <!-- <p-galleria [value]="singleProduct.data.product_images" [responsiveOptions]="responsiveOptions" 
+                [containerStyle]="{'max-width': '660px'}" [numVisible]="2"
+                    thumbnailsPosition="bottom">
+                    <ng-template pTemplate="item" let-item>
+                        <img [src]="item.image_url" style="width: 100%; display: block;" />
+                    </ng-template>
+                    <ng-template pTemplate="thumbnail" let-item>
+                        <div class="grid grid-nogutter justify-content-center">
+                            <img [src]="item.image_url" style="width: 80px;height: 60px;"/>
+                        </div>
+                    </ng-template>
+                </p-galleria> -->
             </div>
             <div class="d-flex justify-content-center mb-5 plates" *ngIf="singleProduct.data.product_images.length == 0">
                 <ng-container  *ngFor="let property of singleProduct.data.properties">

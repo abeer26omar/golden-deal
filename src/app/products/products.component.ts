@@ -87,7 +87,7 @@ export class ProductsComponent implements OnInit {
   valueMin: any = 0;
   valueMax: any = 8584040;
   value = [this.valueMin, this.valueMax];
-  
+  responsiveOptions!: any;
   formFilter = new FormGroup({
     min_price: new FormControl(''),
     max_price: new FormControl('')
@@ -121,38 +121,38 @@ export class ProductsComponent implements OnInit {
         this.getCategoryFilter(this.route.snapshot.fragment);
         this.getBrandFilter(this.route.snapshot.fragment);
       }
-      // this.actionService.refresh.subscribe(()=>{
-      //   this.getProducts(this.categorySlug, 1);
-      // })
     }
-    config: SwiperOptions = {
-      slidesPerView: 15,
-      spaceBetween: 3,
-      navigation: true,     
-      pagination: true,
-      scrollbar: false,
-      grabCursor: true,
-      breakpoints: {
-        992: {
-          slidesPerView: 10
-        },
-        768: {
-          slidesPerView: 7
-        },
-        575: {
-          slidesPerView: 5
-        },
-        425: {
-          slidesPerView: 4
-        },
-        375: {
-          slidesPerView: 3
-        },
-        320: {
-          slidesPerView: 3
-        }
-      }
-    };
+    // config: SwiperOptions = {
+    //   slidesPerView: 15,
+    //   allowSlideNext: true,
+    //   allowSlidePrev: true,
+    //   slidesPerGroup: 1,
+    //   spaceBetween: 3,
+    //   pagination: true,
+    //   scrollbar: false,
+    //   grabCursor: true,
+    //   navigation: true,
+    //   breakpoints: {
+    //     992: {
+    //       slidesPerView: 10
+    //     },
+    //     768: {
+    //       slidesPerView: 7
+    //     },
+    //     575: {
+    //       slidesPerView: 5
+    //     },
+    //     425: {
+    //       slidesPerView: 4
+    //     },
+    //     375: {
+    //       slidesPerView: 3
+    //     },
+    //     320: {
+    //       slidesPerView: 3
+    //     }
+    //   }
+    // };
     configSub_barnd: SwiperOptions = {
       slidesPerView: 10,
       spaceBetween: 0,
@@ -180,6 +180,52 @@ export class ProductsComponent implements OnInit {
           slidesPerView: 3
         }
       }
+  }
+  slickOptions = {
+    slidesToShow: 10,
+    centerMode: false,
+    focusOnSelect: false,
+    slidesToScroll: 1,
+    infinite: true,
+    centerPadding: "0",
+    responsive: [
+      {
+        breakpoint: 992,
+        settings: {
+          slidesToShow: 8
+        }
+      },
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 6,
+        }
+      },
+      {
+        breakpoint: 575,
+        settings: {
+          slidesToShow: 4,
+        }
+      },
+      {
+        breakpoint: 425,
+        settings: {
+          slidesToShow: 4,
+        }
+      },
+      {
+        breakpoint: 375,
+        settings: {
+          slidesToShow: 3,
+        }
+      },
+      {
+        breakpoint: 320,
+        settings: {
+          slidesToShow: 2,
+        }
+      }
+    ]
   }
   ngOnInit(): void {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
@@ -269,45 +315,58 @@ export class ProductsComponent implements OnInit {
       }
      })    
   }
-  getNewPage(current_page: number,pageNo: any,meta_path: string){        
+  // getNewPage(current_page: number,pageNo: any,meta_path: string){        
+  //   if(meta_path.includes('filters')){
+  //     if(this.categorySlug == 'cars'){
+  //       if(Number.isNaN(+pageNo)){
+  //         if(pageNo.includes('Previous')){
+  //           pageNo = current_page - 1;
+  //           this.applayForPagination(this.brand_name,this.sub_brand_name,+pageNo);
+  //         }else{
+  //           pageNo = current_page + 1;
+  //           this.applayForPagination(this.brand_name,this.sub_brand_name,+pageNo);
+  //         }
+  //       }else{
+  //         this.applayForPagination(this.brand_name,this.sub_brand_name,+pageNo);
+  //       }
+  //     }else if (this.categorySlug == 'car_plates'){        
+  //       if(Number.isNaN(+pageNo)){
+  //         if(pageNo.includes('Previous')){
+  //           pageNo = current_page - 1;
+  //           this.onApplayPlatesFilters(+pageNo);
+  //         }else{
+  //           pageNo = current_page + 1;
+  //           this.onApplayPlatesFilters(+pageNo);
+  //         }
+  //       }else{
+  //         this.onApplayPlatesFilters(+pageNo);
+  //       }
+  //     }      
+  //   }else{
+  //     if(Number.isNaN(+pageNo)){
+  //       if(pageNo.includes('Previous')){
+  //         pageNo = current_page - 1;
+  //         this.getProducts(this.categorySlug,+pageNo);
+  //       }else{
+  //         pageNo = current_page + 1;
+  //         this.getProducts(this.categorySlug,+pageNo); 
+  //       }
+  //     }else{
+  //       this.getProducts(this.categorySlug,+pageNo)
+  //     }
+  //   }
+  // }
+  paginate(event: any,meta_path: string){
     if(meta_path.includes('filters')){
       if(this.categorySlug == 'cars'){
-        if(Number.isNaN(+pageNo)){
-          if(pageNo.includes('Previous')){
-            pageNo = current_page - 1;
-            this.applayForPagination(this.brand_name,this.sub_brand_name,+pageNo);
-          }else{
-            pageNo = current_page + 1;
-            this.applayForPagination(this.brand_name,this.sub_brand_name,+pageNo);
-          }
-        }else{
-          this.applayForPagination(this.brand_name,this.sub_brand_name,+pageNo);
-        }
+        this.applayForPagination(this.brand_name,this.sub_brand_name,event.page+1);
       }else if (this.categorySlug == 'car_plates'){        
-        if(Number.isNaN(+pageNo)){
-          if(pageNo.includes('Previous')){
-            pageNo = current_page - 1;
-            this.onApplayPlatesFilters(+pageNo);
-          }else{
-            pageNo = current_page + 1;
-            this.onApplayPlatesFilters(+pageNo);
-          }
-        }else{
-          this.onApplayPlatesFilters(+pageNo);
-        }
+        this.onApplayPlatesFilters(event.page+1);
+      }else{
+        this.onApplayPlatesFilters(event.page+1);
       }      
     }else{
-      if(Number.isNaN(+pageNo)){
-        if(pageNo.includes('Previous')){
-          pageNo = current_page - 1;
-          this.getProducts(this.categorySlug,+pageNo);
-        }else{
-          pageNo = current_page + 1;
-          this.getProducts(this.categorySlug,+pageNo); 
-        }
-      }else{
-        this.getProducts(this.categorySlug,+pageNo)
-      }
+      this.getProducts(this.categorySlug,event.page+1)
     }
   } 
   getCategories(){

@@ -28,23 +28,14 @@ export interface MessagesList{
 // export interface APIResponse6<T>{
 // }
 export interface Messages{
-            id: number,
-            sender: {
-                id: number,
-                name: string,
-                image_url: string,
-                cover_url: string
-            },
-            receiver: {
-                id: number,
-                name: string,
-                image_url: string,
-                cover_url: string
-            },
-            message: string,
-            seen_at: number,
-            created_at: string,
-            updated_at: string
+    message: string,
+    receiver_avatar: string,
+    receiver_id: number,
+    receiver_name: string,
+    seen_at: number
+    sender_avatar: string,
+    sender_id: number,
+    sender_name: string
 }
 export interface APIResponse7<T>{
     data: Array<T>

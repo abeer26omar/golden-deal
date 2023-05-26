@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { APIResponse7, Messages } from 'src/app/models/chat.model';
+import { Messages } from 'src/app/models/chat.model';
 import { ChatService } from 'src/app/services/chat.service';
 
 @Component({
@@ -31,8 +31,7 @@ export class SingleChatComponent implements OnInit {
   
   ngOnInit(): void {
     this.userInfo = JSON.parse(localStorage.getItem('userInfoDeal') || '') ;
-    console.log(this.userInfo);
-    
+    this.getChat(this.userInfo.owner.id)
   }
   getText(value: any){
     this.messageTxt = value.target.value
@@ -63,9 +62,9 @@ export class SingleChatComponent implements OnInit {
     // this.receiverId = this.admin.id; 
     this.receiverId =  reciever;
     this.chatSub = this.chatService.getAllMessages(this.userId,this.receiverId).subscribe({
-      next: (res: APIResponse7<Messages>)=>{
+      next: (res: Array<Messages>)=>{
         this.load = false;
-        this.usersMsg = res.data;         
+        this.usersMsg = res;         
       },
       error: ()=>{
         this.load = false;

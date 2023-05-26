@@ -125,7 +125,7 @@
               </div>
         </div> 
     </div>
-    <section class="pagination">
+    <!-- <section class="pagination">
       <ul class="pagination__list">
         <button id="pg-button-prev" 
           type="button" class="pagination__button"
@@ -152,6 +152,8 @@
           <i class="fa-solid fa-angles-right"></i>
         </button>
       </ul>
-  </section>
+  </section> -->
+  <p-paginator [rows]="meta.per_page" [totalRecords]="meta.total" 
+  [pageLinkSize]="3" (onPageChange)="paginate($event)"></p-paginator>
 </section>
 <!-- <app-testimonial></app-testimonial> -->

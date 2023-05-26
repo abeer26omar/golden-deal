@@ -52,19 +52,12 @@
                                             <mat-progress-bar mode="indeterminate"  *ngIf="load" id="addprog"></mat-progress-bar>
                                             <div class="ps-container ps-theme-default ps-active-y mt-2" id="chat-content">
                                                 <div class="media media-chat" 
-                                                [ngClass]="{'media-chat-reverse' : msg.sender.id !== userId}"
+                                                [ngClass]="{'media-chat-reverse' : msg.sender_id !== userId}"
                                                     *ngFor="let msg of usersMsg">
                                                     <div class="p-2 m-1 media-1 media-2">
-                                                        <img class="avatar" [src]="user.sender === msg.sender.id ? msg.sender.image_url : msg.receiver.image_url" alt="">
+                                                        <img class="avatar" [src]="user.sender === msg.sender_id ? msg.sender_avatar : msg.receiver_avatar" alt="">
                                                         <p class="msg-txt">{{msg.message}}</p>
                                                     </div>
-                                                    <!-- 
-                                                        [src]="user.receiver === msg.receiver.id ? (msg.sender.image_url == 
-                                                        'https://focused-merkle.185-92-223-5.plesk.page/golden-deal/public/storage/users/avatar/default.png' || !msg.sender.image_url) ?
-                                                         '../../assets/images/Portrait_Placeholder.png' : msg.sender.image_url : (msg.receiver.image_url == 
-                                                        'https://focused-merkle.185-92-223-5.plesk.page/golden-deal/public/storage/users/avatar/default.png' || !msg.receiver.image_url) ?
-                                                         '../../assets/images/Portrait_Placeholder.png' : msg.receiver.image_url"
-                                                     -->
                                                 </div>
                                                 <p class="text-danger text-center" *ngIf="errorTxt">{{errorTxt}}</p>
                                               <div class="ps-scrollbar-x-rail" style="left: 0px; bottom: 0px;">

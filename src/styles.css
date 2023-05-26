@@ -571,12 +571,32 @@ input.star:checked ~ label.star:before {
 .card_num_ar {
     top: 33%;
 }
-.carousel-item {
-    max-width: 20%;
+.p-element{
+    direction: ltr;
 }
-.elements{
+.slick-initialized .slick-slide {
     display: flex;
-    flex-direction: row;
-    outline: none;
-    transition: transform .5s ease-in-out;
+    justify-content: center;
+    align-items: center;
+}
+.slick-prev:before {
+    content: url('assets/images/next_arrow.svg') !important;
+}
+.slick-next:before {
+    content: url('assets/images/prev_arrow.svg') !important;
+}
+.p-paginator-icon{
+    font-family:'primeicons' !important
+}
+.p-paginator{
+    background: none !important;
+}
+@media screen and (max-width: 575px) {
+    .p-paginator .p-paginator-first, 
+    .p-paginator .p-paginator-prev, 
+    .p-paginator .p-paginator-next, 
+    .p-paginator .p-paginator-last{
+        min-width: 1rem;
+        height: 1rem;
+    }
 }

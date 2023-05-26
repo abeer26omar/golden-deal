@@ -77,6 +77,10 @@ p.sorts{
   height: 70px;
   width: 70px;
 }
+.brand_all{
+  height: 30px;
+  width: 30px;
+}
 .brand a{
     color: var( --primary-color);
     font-size: 1.2rem;
@@ -89,8 +93,17 @@ p.sorts{
     justify-content: center;
     align-items: center;
 }
+.brand_all a{
+  height: 30px;
+  width: 30px;
+}
 .nav.nav-tabs.swipers{
-  width: 80%;
+  width: 70%;
+}
+@media screen and (max-width: 1024px) {
+  .nav.nav-tabs.swipers{
+    width: 90%;
+  }
 }
 .nav.nav-tabs.swipy{
   width: 70%;
@@ -364,37 +377,12 @@ p.error{
       transform: scale(0.75);
     }
   }
-  /* .swiper-button-next,
-.swiper-button-prev {
-  display: block;
-  position: absolute;
-  top: 50%;
-  width: 27px;
-  height: 27px;
-  margin-top: -13.5px;
-  z-index: 10;
-  cursor: pointer;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 100% 100%;
-}
-
-.swiper-button-next {
-  right: 10px;
-  background-image: url('../../assets/images/next_arrow.svg');
-}
-
-.swiper-button-prev {
-  left: 10px;
-  background-image: url('../../assets/images/prev_arrow.svg');
-} */
 .cars_brands .swiper {
   height: 80px;
 }
-.p-element{
-  width: 100%;
-  direction: ltr;
-}
 .carousel {
   width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

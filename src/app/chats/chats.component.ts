@@ -71,11 +71,10 @@ export class ChatsComponent implements OnInit {
     // this.receiverId = this.admin.id; 
     this.receiverId =  reciever;
     this.chatSub = this.chatService.getAllMessages(this.userId,this.receiverId).subscribe({
-      next: (res: APIResponse7<Messages>)=>{
+      next: (res: Array<Messages>)=>{
         this.load = false;
-        this.usersMsg = res.data;
+        this.usersMsg = res;
         console.log(this.usersMsg);
-         
       },
       error: ()=>{
         this.load = false;

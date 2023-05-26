@@ -50,7 +50,7 @@ export class ChatService {
     }))
   }
   getAllMessages(receiver: any, sender: any){
-    return this.http.post<APIResponse7<Messages>>(`${env.socket_url}get_messages`,{
+    return this.http.post<Array<Messages>>(`${env.socket_url}get_messages`,{
       receiver: receiver,
       sender: sender
     },this.httpOptions).pipe(tap(()=>{

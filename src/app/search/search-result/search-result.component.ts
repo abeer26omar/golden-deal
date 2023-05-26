@@ -102,18 +102,21 @@ export class SearchResultComponent implements OnInit {
   goLittleRockStar(){
     this.router.navigate(['/new-add'])
   }
-  getNewPage(current_page: number,pageNo: any){        
-      if(Number.isNaN(+pageNo)){
-        if(pageNo.includes('Previous')){
-          pageNo = current_page - 1;
-          this.getSearchResult(this.key,+pageNo);
-        }else{
-          pageNo = current_page + 1;
-          this.getSearchResult(this.key,+pageNo); 
-        }
-      }else{
-        this.getSearchResult(this.key,+pageNo)
-      }
+  // getNewPage(current_page: number,pageNo: any){        
+  //     if(Number.isNaN(+pageNo)){
+  //       if(pageNo.includes('Previous')){
+  //         pageNo = current_page - 1;
+  //         this.getSearchResult(this.key,+pageNo);
+  //       }else{
+  //         pageNo = current_page + 1;
+  //         this.getSearchResult(this.key,+pageNo); 
+  //       }
+  //     }else{
+  //       this.getSearchResult(this.key,+pageNo)
+  //     }
+  // } 
+  paginate(event: any){
+    this.getSearchResult(this.key2,event.page+1)
   } 
   ngOnDestory() :void{
     if(this.routeSub){

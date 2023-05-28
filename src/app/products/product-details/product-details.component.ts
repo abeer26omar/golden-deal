@@ -46,6 +46,7 @@ export class ProductDetailsComponent implements OnInit {
           subscribed: 0,
           image_url: '',
           cover_url: '',
+          phone: ''
       },
       admin_details:{
         cover_url: '',
@@ -149,6 +150,7 @@ export class ProductDetailsComponent implements OnInit {
           width: '90%',
           height: '750px',
           thumbnailsColumns: 4,
+          thumbnailsMargin: 10,
           imageAnimation: NgxGalleryAnimation.Slide
       },
       // max-width 800
@@ -156,15 +158,18 @@ export class ProductDetailsComponent implements OnInit {
           breakpoint: 800,
           width: '100%',
           height: '600px',
-          imagePercent: 80,
-          thumbnailsPercent: 20,
-          thumbnailsMargin: 20,
+          imagePercent: 100,
+          thumbnailsColumns: 3,
+          thumbnailsPercent: 30,
           thumbnailMargin: 20
       },
       // max-width 400
       {
-          breakpoint: 400,
-          preview: false
+          breakpoint: 425,
+          height: '400px',
+          thumbnailsMargin: 0,
+          thumbnailsColumns: 2,
+          preview: true
       }
     ];
     this.galleryImages = this.imgUrls;

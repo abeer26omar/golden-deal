@@ -153,42 +153,48 @@ export class ProductsComponent implements OnInit {
     //     }
     //   }
     // };
-    configSub_barnd: SwiperOptions = {
-      slidesPerView: 10,
-      spaceBetween: 0,
-      navigation: false,
-      pagination: false,
-      scrollbar: false,
-      grabCursor: true,
-      breakpoints: {
-        992: {
-          slidesPerView: 7
-        },
-        768: {
-          slidesPerView: 6
-        },
-        575: {
-          slidesPerView: 5
-        },
-        425: {
-          slidesPerView: 4
-        },
-        375: {
-          slidesPerView: 3
-        },
-        320: {
-          slidesPerView: 3
-        }
-      }
-  }
+  //   configSub_barnd: SwiperOptions = {
+  //     slidesPerView: Math.min(10, this.filterbrandsOptions.length),
+  //     spaceBetween: 0,
+  //     navigation: false,
+  //     pagination: false,
+  //     scrollbar: false,
+  //     grabCursor: true,
+  //     breakpoints: {
+  //       992: {
+  //         slidesPerView: this.filterbrandsOptions.length > 7 ? 7 : this.filterbrandsOptions.length
+  //       },
+  //       768: {
+  //         slidesPerView: this.filterbrandsOptions.length > 6 ? 6 : this.filterbrandsOptions.length
+  //       },
+  //       575: {
+  //         slidesPerView: this.filterbrandsOptions.length > 5 ? 5 : this.filterbrandsOptions.length
+  //       },
+  //       425: {
+  //         slidesPerView: 4 || this.filterbrandsOptions.length
+  //       },
+  //       375: {
+  //         slidesPerView: 3 || this.filterbrandsOptions.length
+  //       },
+  //       320: {
+  //         slidesPerView: 3 || this.filterbrandsOptions.length
+  //       }
+  //     }
+  // }
   slickOptions = {
-    slidesToShow: 10,
+    slidesToShow: 11 || this.brandsOptions.length,
     centerMode: false,
     focusOnSelect: false,
     slidesToScroll: 1,
     infinite: true,
     centerPadding: "0",
     responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 9
+        }
+      },
       {
         breakpoint: 992,
         settings: {
@@ -226,6 +232,58 @@ export class ProductsComponent implements OnInit {
         }
       }
     ]
+  }
+  slickOptionsSubBrands = {
+    slidesToShow: 1,
+    centerMode: false,
+    focusOnSelect: false,
+    slidesToScroll: 1,
+    infinite: true,
+    centerPadding: "0",
+    // responsive: [
+    //   {
+    //     breakpoint: 1024,
+    //     settings: {
+    //       slidesToShow: 9
+    //     }
+    //   },
+    //   {
+    //     breakpoint: 992,
+    //     settings: {
+    //       slidesToShow: 8
+    //     }
+    //   },
+    //   {
+    //     breakpoint: 768,
+    //     settings: {
+    //       slidesToShow: 6,
+    //     }
+    //   },
+    //   {
+    //     breakpoint: 575,
+    //     settings: {
+    //       slidesToShow: 4,
+    //     }
+    //   },
+    //   {
+    //     breakpoint: 425,
+    //     settings: {
+    //       slidesToShow: 4,
+    //     }
+    //   },
+    //   {
+    //     breakpoint: 375,
+    //     settings: {
+    //       slidesToShow: 3,
+    //     }
+    //   },
+    //   {
+    //     breakpoint: 320,
+    //     settings: {
+    //       slidesToShow: 2,
+    //     }
+    //   }
+    // ]
   }
   ngOnInit(): void {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;

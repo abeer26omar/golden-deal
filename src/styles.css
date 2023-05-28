@@ -600,3 +600,11 @@ input.star:checked ~ label.star:before {
         height: 1rem;
     }
 }
+@media screen and (max-width: 425px) {
+    .ngx-gallery-image-size-cover .ngx-gallery-image{
+        background-size: contain !important;
+    }
+    .ngx-gallery-arrow {
+        font-size: 30px !important;
+    }
+}

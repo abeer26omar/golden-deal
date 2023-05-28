@@ -35,6 +35,10 @@ export class ChatsComponent implements OnInit {
   ngOnInit(): void {
     // this.admin = this.adminService.getOption();
     this.getAllPreMsgList()
+    // this.chatService.getMessage().subscribe((data) => {
+    //   console.log('new msg send');
+    //   this.messageArr.push(data);
+    // }); 
   }
   sendMsg(){
     const data = {
@@ -74,7 +78,7 @@ export class ChatsComponent implements OnInit {
       next: (res: Array<Messages>)=>{
         this.load = false;
         this.usersMsg = res;
-        console.log(this.usersMsg);
+        // console.log(this.usersMsg);
       },
       error: ()=>{
         this.load = false;

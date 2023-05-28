@@ -116,7 +116,8 @@ export interface Product{
             name: string,
             subscribed: number,
             image_url: string,
-            cover_url: string
+            cover_url: string,
+            phone: string
         },
         product_images: Array<productImages>,
         owner_ratings: Array<ownerRatings>,

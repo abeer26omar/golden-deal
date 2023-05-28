@@ -32,7 +32,7 @@ export class ChatService {
   }
   getMessage() : Observable<any>{
     return new Observable<{sender: string, receiver: string, message: string}>(observer =>{
-      this.socket.emit('new_message', (data:any)=>{
+      this.socket.on('new_message', (data:any)=>{ 
         observer.next(data)
       })
       return ()=>{

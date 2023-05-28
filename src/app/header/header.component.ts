@@ -118,7 +118,7 @@ export class HeaderComponent implements OnInit {
         this.toastSuccess.show();
         this.msgSucess = res.data
         localStorage.clear();
-        this.route.navigate(['/home'])
+        this.route.navigate(['/'])
         setTimeout(()=>{
           window.location.reload();
         },50)

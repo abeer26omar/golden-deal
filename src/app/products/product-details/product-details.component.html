@@ -319,16 +319,16 @@ aria-hidden="true"
         </div>
         <div class="modal-footer">
           <a style="width:100%" 
-            href="tel:+{{singleProduct.data.seller_phone}}" 
-            class="btn btn-prim" [ngClass]="{'pe-none': singleProduct.data.seller_phone == null}">اتصال <img src="../../../assets/images/call.svg" alt="call"></a>
+            href="tel:+{{singleProduct.data.owner.phone.slice(1) || singleProduct.data.seller_phone}}" 
+            class="btn btn-prim" [ngClass]="{'pe-none': singleProduct.data.seller_phone && singleProduct.data.owner.phone == null}">اتصال <img src="../../../assets/images/call.svg" alt="call"></a>
           <a style="width:100%;" 
             class="btn btn-sec btn-deposit" data-bs-dismiss="modal">عربون <img src="../../../assets/images/deposit_icon.svg" alt="deposit_icon"></a>
         </div>
         <div class="modal-footer justify-content-evenly">
             <a (click)="chat(singleProduct.data)" 
             class="btn btn-sec" data-bs-dismiss="modal">محادثه <img src="../../../assets/images/chat.svg" alt="chat"></a>
-            <a  href="https://api.whatsapp.com/send?phone=966{{singleProduct.data.seller_phone}}" 
-            [ngClass]="{'pe-none': singleProduct.data.seller_phone == null}"
+            <a  href="https://api.whatsapp.com/send?phone={{singleProduct.data.owner.phone.slice(1) || singleProduct.data.seller_phone}}" 
+            [ngClass]="{'pe-none': singleProduct.data.seller_phone && singleProduct.data.owner.phone == null}"
             target="_blank" class="btn btn-prim btn-whats">واتساب <img src="../../../assets/images/whatsapp_icon.svg" alt="whatsapp_icon"></a>
         </div>
       </div>

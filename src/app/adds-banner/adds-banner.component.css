@@ -10,16 +10,17 @@
     overflow: hidden
 }
 .picsum-img-wrapper img{
-    height: 400px;
+    height: 450px;
     position: relative;
     flex-shrink: 0;
     -webkit-flex-shrink: 0;
     /* max-width:70%;
     max-height:90%; */
+    object-fit: fill;
 }
 @media screen and (max-width: 575px) {
     .picsum-img-wrapper img{
-        height: 200px;
+        height: 250px;
     }
 }
 .picsum-img-wrapper img,

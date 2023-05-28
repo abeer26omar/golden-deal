@@ -146,7 +146,7 @@ export class RegisterComponent implements OnInit {
             localStorage.setItem('userImage', resData.data.user.image_url)
             this.actionService.handelRes(resData.status_msg)
             setTimeout(()=>{
-              this.router.navigate(['/home'])
+              this.router.navigate(['/'])
               setTimeout(()=>{
                 window.location.reload();
               },0)
@@ -183,7 +183,7 @@ export class RegisterComponent implements OnInit {
           localStorage.setItem('userImage', resData.data.user.image_url)
           this.actionService.handelRes(resData.status_msg)
           setTimeout(()=>{
-            this.router.navigate(['/home'])
+            this.router.navigate(['/'])
             setTimeout(()=>{
               window.location.reload();
             },0)

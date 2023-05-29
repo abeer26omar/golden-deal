@@ -176,6 +176,12 @@ input:focus , textarea:focus{
     border: 1px solid var(--org-color);
     border-radius: 27px 27px 0px 0px;
 }
+.btn-remove{
+    padding: .7rem 2.9rem;
+    color: var(--white) !important;
+    background-color: var(--semi-red) !important;
+    border: none !important;
+}
 #staticBackdrop .modal-header p{
     color: var(--white);
     text-align: center;

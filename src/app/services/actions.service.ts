@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import { environment as env } from 'src/environments/environment';
 import { Subject, tap } from 'rxjs';
-import { APIresponse, APIresponse2, Favourites, Orders, Portfolio, Provider, ResponseSuccess, Subscriptions, Regions } from '../models/actions.model';
+import { APIresponse, APIresponse2, Favourites, Orders, Portfolio, Provider, ResponseSuccess, Subscriptions, Regions, UserProducts } from '../models/actions.model';
 import { APIResponse, Products, SplashScreen } from '../models/products.model';
 import { MatDialog } from '@angular/material/dialog';
 import { ResponseModalComponent } from '../response-modal/response-modal.component';
@@ -29,6 +29,9 @@ export class ActionsService {
   }
   getPortfolio(id: number){
     return this.http.get<Portfolio>(`${env.api_url}/portfolio/user/${id}`,this.httpOptions)
+  }
+  getPortfolioProducts(id: number,pageNo: number = 1){
+    return this.http.get<UserProducts>(`${env.api_url}/products/user-products?user_id=${id}&page=${pageNo}`,this.httpOptions)
   }
   getMyOrders(){
     return this.http.get<APIresponse2<Orders>>(`${env.api_url}/portfolio/my-orders`,this.httpOptions)

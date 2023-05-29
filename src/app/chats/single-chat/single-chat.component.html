@@ -9,7 +9,7 @@
                         <div class="media media-chat" 
                         *ngFor="let msg of usersMsg" [ngClass]="{'media-chat-reverse' : msg.sender_id !== userId}">
                             <div class="p-2 m-1 media-1 media-2">
-                                <img class="avatar" [src]="userInfo.sender === msg.sender_id ? msg.sender_avatar : msg.receiver_avatar" alt="">
+                                <img class="avatar" src="{{avatar_base_url+msg.sender_avatar}}" alt="">
                                 <p class="msg-txt">{{msg.message}}</p>
                             </div>
                         </div>
@@ -23,10 +23,12 @@
                     <div class="publisher">
                       <div class="outer">
                           <div class="d-flex align-items-center" style="width: 100%;">
-                              <textarea class="publisher-input form-control" 
-                                  type="text" 
-                                  placeholder="اكتب رسالتك هنا"
-                                  (keyup)="$event.keyCode === 13;getText($event)"></textarea>
+                            <textarea class="publisher-input form-control" 
+                            type="text" 
+                            placeholder="اكتب رسالتك هنا"
+                            [(ngModel)]="messageTxt"
+                            [ngModelOptions]="{standalone: true}"
+                            (keyup)="$event.keyCode === 13"></textarea>
                           </div>
                       </div>
                           <button class="btn text-info" (click)="sendMsg()" type="button">

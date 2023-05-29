@@ -20,7 +20,7 @@
 }
 @media screen and (max-width: 575px) {
     .picsum-img-wrapper img{
-        height: 250px;
+        height: 200px;
     }
 }
 .picsum-img-wrapper img,

@@ -2,7 +2,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Component, ElementRef, HostListener, Input, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Subscription, min } from 'rxjs';
 import { APIResponse, Products , APIResponse2, Category, CategoryFilter,BrandFilter, Category_Filter} from '../models/products.model';
 import { MacPrefixService } from '../services/mac-prefix.service';
 import { ProductsRequestService } from '../services/products-request.service';
@@ -153,34 +153,34 @@ export class ProductsComponent implements OnInit {
     //     }
     //   }
     // };
-  //   configSub_barnd: SwiperOptions = {
-  //     slidesPerView: Math.min(10, this.filterbrandsOptions.length),
-  //     spaceBetween: 0,
-  //     navigation: false,
-  //     pagination: false,
-  //     scrollbar: false,
-  //     grabCursor: true,
-  //     breakpoints: {
-  //       992: {
-  //         slidesPerView: this.filterbrandsOptions.length > 7 ? 7 : this.filterbrandsOptions.length
-  //       },
-  //       768: {
-  //         slidesPerView: this.filterbrandsOptions.length > 6 ? 6 : this.filterbrandsOptions.length
-  //       },
-  //       575: {
-  //         slidesPerView: this.filterbrandsOptions.length > 5 ? 5 : this.filterbrandsOptions.length
-  //       },
-  //       425: {
-  //         slidesPerView: 4 || this.filterbrandsOptions.length
-  //       },
-  //       375: {
-  //         slidesPerView: 3 || this.filterbrandsOptions.length
-  //       },
-  //       320: {
-  //         slidesPerView: 3 || this.filterbrandsOptions.length
-  //       }
-  //     }
-  // }
+    // configSub_barnd: SwiperOptions = {
+    //   slidesPerView: 10,
+    //   spaceBetween: 0,
+    //   navigation: false,
+    //   pagination: false,
+    //   scrollbar: false,
+    //   grabCursor: true,
+    //   breakpoints: {
+    //     992: {
+    //       slidesPerView: 7
+    //     },
+    //     768: {
+    //       slidesPerView: 5
+    //     },
+    //     575: {
+    //       slidesPerView: 5
+    //     },
+    //     425: {
+    //       slidesPerView: 4 
+    //     },
+    //     375: {
+    //       slidesPerView: 3 
+    //     },
+    //     320: {
+    //       slidesPerView: 3 
+    //     }
+    //   }
+    // }
   slickOptions = {
     slidesToShow: 11 || this.brandsOptions.length,
     centerMode: false,
@@ -234,7 +234,7 @@ export class ProductsComponent implements OnInit {
     ]
   }
   slickOptionsSubBrands = {
-    slidesToShow: 1,
+    // slidesToShow: this.filterbrandsOptions.length,
     centerMode: false,
     focusOnSelect: false,
     slidesToScroll: 1,
@@ -328,28 +328,35 @@ export class ProductsComponent implements OnInit {
   }
   addToFav(product: any){
     this.is_animating = true;
-    if(product.product_fav == false){
-      this.http.get<ResponseSuccess>(`${env.api_url}/favourites/add-favourite/${product.id}`,this.actionService.httpOptions)
-      .subscribe({
-        next: res=>{
-          product.product_fav = true  
-        },
-        error: (err: HttpErrorResponse)=>{
-          this.errorHandel.openErrorModa(err)
-        }
+    if(this.authService.IsloggedIn()){
+      if(product.product_fav == false){
+        this.http.get<ResponseSuccess>(`${env.api_url}/favourites/add-favourite/${product.id}`,this.actionService.httpOptions)
+        .subscribe({
+          next: res=>{
+            product.product_fav = true  
+          },
+          error: (err: HttpErrorResponse)=>{
+            this.errorHandel.openErrorModa(err)
+          }
+        })
+      }else{
+        this.http.get<ResponseSuccess>(`${env.api_url}/favourites/remove-favourite/${product.id}`,this.actionService.httpOptions)
+        .subscribe({
+          next: res=>{
+            // this.actionService.handelRes(res)
+            product.product_fav = false  
+          },
+          error: (err: HttpErrorResponse)=>{
+            this.errorHandel.openErrorModa(err)
+    
+          }
+        })
+      }
+    } else{
+      this.dialogRef.open(AuthRemainderModalComponent,{
+        data: {}
       })
-    }else{
-      this.http.get<ResponseSuccess>(`${env.api_url}/favourites/remove-favourite/${product.id}`,this.actionService.httpOptions)
-      .subscribe({
-        next: res=>{
-          // this.actionService.handelRes(res)
-          product.product_fav = false  
-        },
-        error: (err: HttpErrorResponse)=>{
-          this.errorHandel.openErrorModa(err)
-  
-        }
-      })
+      // this.route.navigate(['/register']);
     }
   }
   applayForPagination(brand_filter: string,brand_Subfilter: string,page_num: number){

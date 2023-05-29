@@ -98,21 +98,21 @@ p.sorts{
   width: 30px;
 }
 .nav.nav-tabs.swipers{
-  width: 65%;
+  width: 60%;
 }
-.nav.nav-tabs.swipy{
+/* .nav.nav-tabs.swipy{
   width: 20%;
-}
+} */
 @media screen and (max-width: 1024px) {
   .nav.nav-tabs.swipers{
     width: 90%;
   }
 }
-@media screen and (max-width: 575px) {
+/* @media screen and (max-width: 575px) {
   .nav.nav-tabs.swipy{
     width: 50%;
   }
-}
+} */
 .brand a {
     background-color: var(--gray-color);
 }

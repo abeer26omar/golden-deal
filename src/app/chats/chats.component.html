@@ -55,7 +55,7 @@
                                                 [ngClass]="{'media-chat-reverse' : msg.sender_id !== userId}"
                                                     *ngFor="let msg of usersMsg">
                                                     <div class="p-2 m-1 media-1 media-2">
-                                                        <img class="avatar" [src]="user.sender === msg.sender_id ? msg.sender_avatar : msg.receiver_avatar" alt="">
+                                                        <img class="avatar" src="{{avatar_base_url+msg.sender_avatar}}" alt="">
                                                         <p class="msg-txt">{{msg.message}}</p>
                                                     </div>
                                                 </div>
@@ -107,10 +107,37 @@
                                 <app-chat-support></app-chat-support>                    
                               </ng-template>
                             </li>
-                          </ul>
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
         <div class="col-xl-9 col-lg-8 col-12" [ngbNavOutlet]="nav"></div>
     </div>
+    <ng-template #content let-offcanvas>
+        <div class="offcanvas-header">
+            <h4 class="offcanvas-title" id="offcanvas-basic-title">Profile update</h4>
+            <button type="button" class="btn-close" aria-label="Close" (click)="offcanvas.dismiss('Cross click')"></button>
+        </div>
+        <div class="offcanvas-body">
+            <form>
+                <div class="mb-3">
+                    <label for="dateOfBirth">Date of birth</label>
+                    <div class="input-group">
+                        <input
+                            id="dateOfBirth"
+                            class="form-control"
+                            placeholder="yyyy-mm-dd"
+                            name="dp"
+                            ngbDatepicker
+                            #dp="ngbDatepicker"
+                        />
+                        <button class="btn btn-outline-secondary bi bi-calendar3" (click)="dp.toggle()" type="button"></button>
+                    </div>
+                </div>
+            </form>
+            <div class="text-end">
+                <button type="button" class="btn btn-outline-dark" (click)="offcanvas.close('Save click')">Save</button>
+            </div>
+        </div>
+    </ng-template>    

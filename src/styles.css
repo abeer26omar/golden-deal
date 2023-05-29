@@ -608,3 +608,7 @@ input.star:checked ~ label.star:before {
         font-size: 30px !important;
     }
 }
+.mat-button:hover .mat-button-focus-overlay, 
+.mat-stroked-button:hover:not(.mat-button-disabled) .mat-button-focus-overlay {
+    opacity: 0 !important;
+}

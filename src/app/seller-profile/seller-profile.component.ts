@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { Portfolio, Products, ResponseSuccess } from '../models/actions.model';
+import { Portfolio, Products, ResponseSuccess, UserProducts } from '../models/actions.model';
 import { ActionsService } from '../services/actions.service';
 import { MacPrefixService } from '../services/mac-prefix.service';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
@@ -36,11 +36,14 @@ export class SellerProfileComponent implements OnInit {
       provider_ratings: [],
       image_url: '',
       cover_url: '',
-      products: []
     }
   }
+  public products: Array<Products> = [];
+  links: any = {};
+  meta: any = {};  
   is_animating: boolean = false;
   active_status: string = 'نشطه';
+  errProducts: string = '';
   productsStatus: Array<Products> = [];
   private portSub : Subscription = new Subscription;
   private routeSub : Subscription = new Subscription;
@@ -52,7 +55,7 @@ export class SellerProfileComponent implements OnInit {
     private errorHandel: ErrorHandlerService,
     private http: HttpClient) { 
       this.actionService.refresh.subscribe(()=>{
-        this.getPortfolioInfo(this.portfolioId);
+        this.getUserProducts(this.portfolioId)        
       })
     }
 
@@ -66,6 +69,7 @@ export class SellerProfileComponent implements OnInit {
     this.routeSub = this.route.params.subscribe((params: Params) => {
       this.portfolioId = params['id'];
       this.getPortfolioInfo(this.portfolioId);
+      this.getUserProducts(this.portfolioId)
     });
   }
   getPortfolioInfo(id: number){
@@ -74,6 +78,26 @@ export class SellerProfileComponent implements OnInit {
       next: (resData: Portfolio)=>{
         this.loadding = false;
         this.portfolio = resData;
+      },
+      error: (err: HttpErrorResponse)=>{
+        this.loadding = false;
+        this.errorHandel.openErrorModa(err)
+      }
+    })
+  }
+  getUserProducts(id: number, pageNo: number=1){
+    this.portSub = this.actionService.getPortfolioProducts(id,pageNo).subscribe({
+      next: (productsList: UserProducts)=>{
+        this.loadding = false;
+        this.products = productsList.data;
+        this.links = productsList.links;        
+        this.meta = productsList.meta;
+        if(this.products.length == 0){
+          this.errProducts = 'لا يوجد اعلانات';
+          this.products = [];
+        }else{
+          this.errProducts = '';
+        }
       },
       error: (err: HttpErrorResponse)=>{
         this.loadding = false;
@@ -113,17 +137,23 @@ export class SellerProfileComponent implements OnInit {
   productDetails(id:number){
     this.router.navigate(['product-details', id])
   }
-  onSelected(status: any){
+  onSelected(status: any,pageNo: number = 1){
     this.load = true;
-    this.portSub = this.actionService.getPortfolio(this.portfolioId).subscribe({
-      next: (resData: Portfolio)=>{
+    this.portSub = this.actionService.getPortfolioProducts(this.portfolioId,pageNo).subscribe({
+      next: (resData: UserProducts)=>{
         this.load = false;
-        resData.data.products.forEach(ele=>{          
-          if(ele.active == status.target.value){
-            this.portfolio.data.products = resData.data.products;
+        resData.data.forEach(ele=>{          
+          if(ele.status == status.target.value){
+            this.products = resData.data;
+            this.links = resData.links;        
+            this.meta = resData.meta;
           }else{
-            this.result = 'لا يوجد عناصر';
-            this.portfolio.data.products = [];
+            if(this.products.length == 0){
+              this.errProducts = 'لا يوجد اعلانات';
+            }else{
+              this.errProducts = '';
+            }
+            this.products = [];
           }
           this.active_status = status.target.selectedOptions[0].innerText
           this.filterModal.hide();
@@ -136,6 +166,9 @@ export class SellerProfileComponent implements OnInit {
       }
     })
   }
+  paginate(event: any,meta_path: string){
+    this.getUserProducts(this.portfolioId,event.page+1)
+  } 
   ngOnDestory() :void{
     if(this.portSub){
       this.portSub.unsubscribe();

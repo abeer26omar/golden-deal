@@ -18,7 +18,7 @@ export class SingleChatComponent implements OnInit {
   message: string = '';
   messageTxt: string = '';
   public usersMsg: Array<Messages> = []
-  avatar_base_url: string = 'https://focused-merkle.185-92-223-5.plesk.page/golden-deal/public/storage/'
+  avatar_base_url: string = 'https://admin.gooldendeal.com/storage/'
   public chatSub: Subscription = new Subscription;
   errorTxt: string = '';
   formChat = new FormGroup({
@@ -32,9 +32,6 @@ export class SingleChatComponent implements OnInit {
   ngOnInit(): void {
     this.userInfo = JSON.parse(localStorage.getItem('userInfoDeal') || '') ;
     this.getChat(this.userInfo.owner.id)
-  }
-  getText(value: any){
-    this.messageTxt = value.target.value
   }
   sendMsg(){    
     const data = {
@@ -64,7 +61,7 @@ export class SingleChatComponent implements OnInit {
     this.chatSub = this.chatService.getAllMessages(this.userId,this.receiverId).subscribe({
       next: (res: Array<Messages>)=>{
         this.load = false;
-        this.usersMsg = res;         
+        this.usersMsg = res;                 
       },
       error: ()=>{
         this.load = false;

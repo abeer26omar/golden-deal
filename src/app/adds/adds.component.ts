@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { APIresponse2, Favourites, Orders, Portfolio, Products } from '../models/actions.model';
+import { APIresponse2, Favourites, Orders, Portfolio, Products, UserProducts } from '../models/actions.model';
 import { ActionsService } from '../services/actions.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogSolidComponent } from './dialog-solid/dialog-solid.component';
@@ -29,6 +29,7 @@ export class AddsComponent implements OnInit {
   portfolioId!: number;
   error: string = '';
   errFav: string = '';
+  errProducts: string = '';
   errorder: string = '';
   errrecord: string = '';
   successMsg: string = '';
@@ -49,7 +50,6 @@ export class AddsComponent implements OnInit {
       provider_ratings: [],
       image_url: '',
       cover_url: '',
-      products: []
     }
   }
   favoraties: Favourites ={
@@ -61,6 +61,9 @@ export class AddsComponent implements OnInit {
       favourites: []
     }
   }
+  public products: Array<Products> = [];
+  links: any = {};
+  meta: any = {};
   active: number = 2
   productsStatus: Array<Products> = [];
   public orders: Array<Orders> = [];
@@ -86,8 +89,7 @@ export class AddsComponent implements OnInit {
       }else{}
       this.actionService.refresh.subscribe(()=>{
         this.getMyFav();
-        this.getMyOrders();
-        this.getPortfolioInfo(this.portfolioId);
+        this.getUserProducts(this.portfolioId)
       })
     }
   ngOnInit(): void {
@@ -105,6 +107,7 @@ export class AddsComponent implements OnInit {
     this.routeSub = this.route.params.subscribe((params: Params) => {
       this.portfolioId = params['id'];
       this.getPortfolioInfo(this.portfolioId);
+      this.getUserProducts(this.portfolioId)
     });
   }
   getPortfolioInfo(id: number){
@@ -113,8 +116,6 @@ export class AddsComponent implements OnInit {
       next: (resData: Portfolio)=>{
         this.loadding = false;
         this.portfolio = resData;
-        console.log(resData);
-                
       },
       error: (err: HttpErrorResponse)=>{
         this.loadding = false;
@@ -122,17 +123,43 @@ export class AddsComponent implements OnInit {
       }
     })
   }
-  onSelected(status: any){
+  getUserProducts(id: number, pageNo: number=1){    
+    this.portSub = this.actionService.getPortfolioProducts(id,pageNo).subscribe({
+      next: (productsList: UserProducts)=>{
+        this.loadding = false;        
+        this.products = productsList.data;        
+        this.links = productsList.links;        
+        this.meta = productsList.meta;
+        if(this.products.length == 0){
+          this.errProducts = 'لا يوجد اعلانات';
+          this.products = [];
+        }else{
+          this.errProducts = '';
+        }
+      },
+      error: (err: HttpErrorResponse)=>{
+        this.loadding = false;
+        this.errorHandel.openErrorModa(err)
+      }
+    })
+  }
+  onSelected(status: any,pageNo: number = 1){
     this.load = true;
-    this.portSub = this.actionService.getPortfolio(this.portfolioId).subscribe({
-      next: (resData: Portfolio)=>{
+    this.portSub = this.actionService.getPortfolioProducts(this.portfolioId,pageNo).subscribe({
+      next: (resData: UserProducts)=>{
         this.load = false;
-        resData.data.products.forEach(ele=>{          
-          if(ele.active == status.target.value){
-            this.portfolio.data.products = resData.data.products;
+        resData.data.forEach(ele=>{                    
+          if(ele.status == status.target.value){
+            this.products = resData.data;
+            this.links = resData.links;        
+            this.meta = resData.meta;
           }else{
-            this.result = 'لا يوجد عناصر';
-            this.portfolio.data.products = [];
+            if(this.products.length == 0){
+              this.errProducts = 'لا يوجد اعلانات';
+            }else{
+              this.errProducts = '';
+            }
+            this.products = [];
           }
           this.active_status = status.target.selectedOptions[0].innerText
           this.filterModal.hide();
@@ -141,10 +168,13 @@ export class AddsComponent implements OnInit {
       error: (err: HttpErrorResponse)=>{
         this.load = false;
         this.filterModal.hide();
-        this.errorHandel.openErrorModa(err);
+        this.errorHandel.openErrorModa(err)
       }
     })
   }
+  paginate(event: any,meta_path: string){
+    this.getUserProducts(this.portfolioId,event.page+1)
+  } 
   getMyFav(){
     this.favSub = this.actionService.getMyFav().subscribe({
       next: (resData: Favourites)=>{

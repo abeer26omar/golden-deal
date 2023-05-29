@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ChatService } from '../services/chat.service';
 import { MessagesList ,Messages, APIResponse7} from '../models/chat.model';
+import { NgbDatepickerModule, NgbOffcanvas, OffcanvasDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs';
 import { AdminService } from '../services/admin.service';
 
@@ -26,10 +27,11 @@ export class ChatsComponent implements OnInit {
   loader: boolean = false;
   public msgUsersList: Array<MessagesList> = []
   public usersMsg: Array<Messages> = []
-  avatar_base_url: string = 'https://focused-merkle.185-92-223-5.plesk.page/golden-deal/public/storage/'
+  avatar_base_url: string = 'https://admin.gooldendeal.com/storage/'
   public chatSub: Subscription = new Subscription;
   constructor(private chatService: ChatService,
-    private adminService: AdminService) { 
+    private adminService: AdminService,
+    private offcanvasService: NgbOffcanvas) { 
     
   }
   ngOnInit(): void {
@@ -66,7 +68,7 @@ export class ChatsComponent implements OnInit {
     this.chatService.getAllPreMsgList(this.userId).subscribe({
       next: (res: Array<MessagesList>)=>{
         this.loader = false;
-        this.msgUsersList = res;        
+        this.msgUsersList = res;                
       }
     })
   } 
@@ -78,13 +80,33 @@ export class ChatsComponent implements OnInit {
       next: (res: Array<Messages>)=>{
         this.load = false;
         this.usersMsg = res;
-        // console.log(this.usersMsg);
       },
       error: ()=>{
         this.load = false;
       }
     })
   }
+  closeResult : any;
+  open(content: any) {
+		this.offcanvasService.open(content, { ariaLabelledBy: 'offcanvas-basic-title' }).result.then(
+			(result) => {
+				this.closeResult = `Closed with: ${result}`;
+			},
+			(reason) => {
+				this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+			},
+		);
+	}
+
+	private getDismissReason(reason: any): string {
+		if (reason === OffcanvasDismissReasons.ESC) {
+			return 'by pressing ESC';
+		} else if (reason === OffcanvasDismissReasons.BACKDROP_CLICK) {
+			return 'by clicking on the backdrop';
+		} else {
+			return `with: ${reason}`;
+		}
+	}
   ngOnDestory() :void{
     if(this.chatSub){
       this.chatSub.unsubscribe();

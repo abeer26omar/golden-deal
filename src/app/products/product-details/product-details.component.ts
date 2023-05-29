@@ -12,6 +12,9 @@ import { ChatService } from 'src/app/services/chat.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler.service';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { environment as env } from 'src/environments/environment';
+import { AuthService } from 'src/app/services/auth.service';
+import { AuthRemainderModalComponent } from 'src/app/auth-remainder-modal/auth-remainder-modal.component';
+import { MatDialog } from '@angular/material/dialog';
 
 declare var window: any;
 
@@ -98,6 +101,8 @@ export class ProductDetailsComponent implements OnInit {
     private macService: MacPrefixService,
     private chatService: ChatService,
     private errorHandel: ErrorHandlerService,
+    public authService: AuthService,
+    private dialogRef: MatDialog,
     private http: HttpClient) { 
       this.actionService.refresh.subscribe(()=>{
         this.getProductDetails(this.ProductId);
@@ -166,7 +171,7 @@ export class ProductDetailsComponent implements OnInit {
       // max-width 400
       {
           breakpoint: 425,
-          height: '400px',
+          height: '350px',
           thumbnailsMargin: 0,
           thumbnailsColumns: 2,
           preview: true
@@ -195,35 +200,54 @@ export class ProductDetailsComponent implements OnInit {
       }
     })
   }
-   addToFav(product: any){
+  addToFav(product: any){
     this.is_animating = true;
-    if(product.product_fav == false){
-      this.http.get<ResponseSuccess>(`${env.api_url}/favourites/add-favourite/${product.id}`,this.actionService.httpOptions)
-      .subscribe({
-        next: res=>{
-          // this.actionService.handelRes(res)
-          product.product_fav = true  
-        },
-        error: (err: HttpErrorResponse)=>{
-          this.errorHandel.openErrorModa(err)
-        }
+    if(this.authService.IsloggedIn()){
+      if(product.product_fav == false){
+        this.http.get<ResponseSuccess>(`${env.api_url}/favourites/add-favourite/${product.id}`,this.actionService.httpOptions)
+        .subscribe({
+          next: res=>{
+            product.product_fav = true  
+          },
+          error: (err: HttpErrorResponse)=>{
+            this.errorHandel.openErrorModa(err)
+          }
+        })
+      }else{
+        this.http.get<ResponseSuccess>(`${env.api_url}/favourites/remove-favourite/${product.id}`,this.actionService.httpOptions)
+        .subscribe({
+          next: res=>{
+            // this.actionService.handelRes(res)
+            product.product_fav = false  
+          },
+          error: (err: HttpErrorResponse)=>{
+            this.errorHandel.openErrorModa(err)
+    
+          }
+        })
+      }
+    } else{
+      this.dialogRef.open(AuthRemainderModalComponent,{
+        data: {}
       })
-    }else{
-      this.http.get<ResponseSuccess>(`${env.api_url}/favourites/remove-favourite/${product.id}`,this.actionService.httpOptions)
-      .subscribe({
-        next: res=>{
-          // this.actionService.handelRes(res)
-          product.product_fav = false  
-        },
-        error: (err: HttpErrorResponse)=>{
-          this.errorHandel.openErrorModa(err)
-  
-        }
-      })
+      // this.route.navigate(['/register']);
     }
-   }
+  }
   editAdd(id: number){
     this.router.navigate([`edit-add/${id}`])
+  }
+  deleteAdd(id: number,userId: number){
+    this.productSub = this.httpService.deleteProduct(id).subscribe({
+      next:(res: ResponseSuccess)=>{
+        this.actionService.handelRes(res.data)
+        setTimeout(()=>{
+          this.router.navigate([`/adds`,userId])
+        },50)
+      },
+      error: (err: HttpErrorResponse)=>{
+        this.errorHandel.openErrorModa(err);
+      }
+    })
   }
   openFormModal() {
     this.formModal.show();

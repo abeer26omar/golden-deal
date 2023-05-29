@@ -79,7 +79,7 @@
                             style="visibility: visible; 
                             animation-duration: 1.3s; 
                             animation-name: fadeIn;" 
-                            *ngFor="let product of portfolio.data.products">
+                            *ngFor="let product of products">
                               <div class="card h-100" *ngIf="product.category_slug !== 'car_plates'">
                                 <div class="card-header text-center" >
                                     <div ngbDropdown class="btn-dots"*ngIf="product.status === 'active'">
@@ -175,8 +175,10 @@
                               </div>
                           </div>
                         </div>
-                        <p class="none" *ngIf="portfolio.data.products.length == 0">لا يوجد اعلانات</p>
-                        <div class="d-flex justify-content-center pt-5 pb-5">
+                        <p class="none">{{errProducts}}</p>
+                        <p-paginator [rows]="meta.per_page" [totalRecords]="meta.total" 
+                          [pageLinkSize]="3" (onPageChange)="paginate($event,meta.path)"></p-paginator>
+                        <div class="d-flex justify-content-center py-5">
                             <button class="btn btn-adds btn-prim" type="button" (click)="addNewAdd()">اضافه اعلان</button>
                         </div>
                       </ng-template>
@@ -379,14 +381,14 @@ aria-hidden="true"
             <h5 class="modal-title text-center" >اضافه فلتر</h5>
       </div>
         <mat-progress-bar mode="indeterminate" class="my-3" *ngIf="load" id="addprog"></mat-progress-bar>
-        <p class="text-center" *ngIf="result">{{result}}</p>
+        <!-- <p class="text-center" *ngIf="result">{{result}}</p> -->
         <div class="modal-body">
             <div class="sort py-2">
                 <select class="form-select" 
                   aria-label="Default select example" (change)="onSelected($event)">
                     <option value="" selected disabled>حاله الاعلان</option>
-                    <option value="0">منتهية</option>
-                    <option value="1">نشطه</option>
+                    <option value="sold">منتهية</option>
+                    <option value="active">نشطه</option>
                 </select>
             </div>
         </div>

@@ -22,10 +22,10 @@
             <a class="nav-link" [routerLink]="['/adds',userId]"  
             routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">إعلاناتي</a>
           </li>
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a class="nav-link" routerLink="/buyingrecord" 
             routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">سجل الشراء</a>
-          </li>
+          </li> -->
           <li class="nav-item dropdown">
             <button class="btn  custom dropdown-toggle" 
               id="dropdownMenuButton1" 
@@ -90,10 +90,10 @@
                       <a  (click)="termsCondition('privacy_policy')">
                         <img class="ps-2" src="../../assets/images/whoweare_icon.svg" alt="whoweare_icon">من نحن</a>
                     </li>
-                    <li>
+                    <!-- <li>
                       <a  [routerLink]="['/adds',userId]" fragment="orders">
                         <img class="ps-2" src="../../assets/images/myorders_icon.svg" alt="myorders_icon">طلباتى</a>
-                    </li>
+                    </li> -->
                     <li class="spec">
                       <a class="" (click)="termsCondition('terms_conditions')">
                         <img class="ps-2" src="../../assets/images/termsandcondition_icon.svg" alt="termsandcondition_icon">الشروط والاحكام</a>
@@ -121,7 +121,7 @@
               <app-notifications [notifications]="notifications"></app-notifications>
             </div>
           </li>
-          <li class="nav-item dropdown">
+          <!-- <li class="nav-item dropdown">
             <button class="btn custom dropdown-toggle" 
               id="dropdownMenuButton2" 
               data-bs-toggle="dropdown" 
@@ -137,7 +137,7 @@
                 </li>
               </ul>
             </div>
-          </li>
+          </li> -->
             <li class="nav-item p-0" *ngIf="!(authService.isRegister | async)">
               <button class="btn create-account" routerLink="register">تسجيل الدخول</button>
             </li>

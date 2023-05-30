@@ -1,7 +1,7 @@
 <div class="img-banner">
   <p class="alert alert-danger text-center" *ngIf="error">{{error}}</p>
   <ngb-carousel>
-    <ng-template ngbSlide *ngFor="let add of addsSplash">
+    <ng-template ngbSlide *ngFor="let add of adds">
       <div class="picsum-img-wrapper">
         <img src="{{add.image_url}}" class="d-block w-100" alt="Mask Group">
       </div>

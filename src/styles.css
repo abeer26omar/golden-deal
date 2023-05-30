@@ -442,7 +442,7 @@ input.star:checked ~ label.star:before {
     width: 0 !important;
 }
 .mat-drawer {
-    width: 30%;
+    width: 35%;
     transition: all;
     z-index: 9999 !important;
 }

@@ -24,7 +24,7 @@ declare var window: any;
   providers: [DatePipe]
 })
 export class ProductsComponent implements OnInit {
-  @Input() categoriesSplash: any = [];
+  // @Input() categoriesSplash: any = [];
   filters: CategoryFilter = {
     data: {
       filters: [],
@@ -55,7 +55,7 @@ export class ProductsComponent implements OnInit {
   links: any = {};
   meta: any = {};
   isFavorite: boolean = false;
-  // public categories : Array<Category> = [];
+  public categories : Array<Category> = [];
   active = 0;
   activeSub_brand = 0;
   brand_name: any;
@@ -109,7 +109,7 @@ export class ProductsComponent implements OnInit {
     private http: HttpClient,
     private dialogRef: MatDialog,
     private errorHandel: ErrorHandlerService) {
-      if(this.route.snapshot.fragment){
+      if(this.route.snapshot.fragment){        
         if(this.route.snapshot.fragment == 'cars'){
           this.active = 1
         }else if(this.route.snapshot.fragment == 'car_plates'){
@@ -293,9 +293,9 @@ export class ProductsComponent implements OnInit {
     this.faildProducts = new window.bootstrap.Modal(
       document.getElementById('faildProducts'),{backdrop: this.macService.backdrop}
     );
-    // this.getCategories();
+    this.getCategories();
     // this.categoriesSplash = this.categories;    
-    this.getProducts('all', 1);
+    this.getProducts(this.route.snapshot.fragment ? this.route.snapshot.fragment: 'all', 1);
     this.getRegions();
     this.owner_id = localStorage.getItem('userId')
   }
@@ -439,7 +439,7 @@ export class ProductsComponent implements OnInit {
     getProductsCategories().
     subscribe({
       next: (categoryList: APIResponse2<Category>)=>{ 
-        this.categoriesSplash = categoryList.data;       
+        this.categories = categoryList.data;               
       },
       error:(err: HttpErrorResponse)=>{
         this.loadding = false;

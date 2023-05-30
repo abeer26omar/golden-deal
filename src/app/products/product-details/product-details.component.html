@@ -90,11 +90,14 @@
                         <span>الوصف</span>
                         <p class="prod-desc m-0">{{singleProduct.data.desc}}</p>
                     </div>
-                    <div class="btn-buy d-flex justify-content-center pt-5">
-                        <button class="btn btn-site" (click)="onBuy()" *ngIf="owner_id != singleProduct.data.owner_id">شراء</button>
-                        <button class="btn btn-site" (click)="editAdd(singleProduct.data.id)" *ngIf="owner_id == singleProduct.data.owner_id">تعديل الاعلان</button>
-                        <button class="btn btn-remove me-2" (click)="deleteAdd(singleProduct.data.id,singleProduct.data.owner.id)" *ngIf="owner_id == singleProduct.data.owner_id">حذف الاعلان</button>
-                    </div>
+                        <div class="btn-buy d-flex justify-content-center pt-5" *ngIf="!showOwner">
+                            <button class="btn btn-site" (click)="onBuy()">شراء</button>
+                        </div>
+                        <div class="btn-buy d-flex justify-content-center pt-5" *ngIf="showOwner">
+                            <button class="btn btn-site" (click)="editAdd(singleProduct.data.id)">تعديل الاعلان</button>
+                            <button class="btn btn-remove me-2" 
+                            (click)="deleteAdd(singleProduct.data.id,singleProduct.data.owner.id)">حذف الاعلان</button>
+                        </div>
                 </div>
                 <!-- <div class="card-body">
                     <div class="content">

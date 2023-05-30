@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Product} from '../../models/products.model';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -23,7 +23,7 @@ declare var window: any;
   templateUrl: './product-details.component.html',
   styleUrls: ['./product-details.component.css']
 })
-export class ProductDetailsComponent implements OnInit {
+export class ProductDetailsComponent implements OnInit ,AfterViewInit{
   galleryOptions: NgxGalleryOptions[] = [];
   galleryImages: NgxGalleryImage[] = [];
   singleProduct : Product = {
@@ -89,6 +89,7 @@ export class ProductDetailsComponent implements OnInit {
   errMsg: string = '';
   sucessMsg: string = '';
   admin: any;
+  showOwner: boolean = false;
   owner_id: any;
   is_animating: boolean = false;
   private routeSub: Subscription = new Subscription;
@@ -129,9 +130,9 @@ export class ProductDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.routeSub = this.route.params.subscribe((params: Params) => {
       this.ProductId = params['id'];
-      this.getProductDetails(this.ProductId);
     });
-    this.owner_id = localStorage.getItem('userId')
+    this.getProductDetails(this.ProductId);
+    this.owner_id = localStorage.getItem('userId')    
     this.formModal = new window.bootstrap.Modal(
       document.getElementById('myModal'),{backdrop: this.macService.backdrop}
     );
@@ -180,13 +181,19 @@ export class ProductDetailsComponent implements OnInit {
     this.galleryImages = this.imgUrls;
 
   }
+  ngAfterViewInit() {
+  }
   getProductDetails(id: string){
     this.productSub = this.httpService.getDetails(id)
     .subscribe({
       next:(productDetails: Product)=>{
         this.singleProduct = productDetails;  
-        this.receiverId = this.singleProduct.data.owner_id;          
-        // this.galleryImages = productDetails.data.product_images
+        this.receiverId = this.singleProduct.data.owner_id;        
+        if (this.owner_id == this.singleProduct.data.owner_id) {
+          this.showOwner = true
+        } else {
+          this.showOwner = false
+        }
         [...productDetails.data.product_images].forEach(e=>{
           this.imgUrls.push({
               small: e.image_url,

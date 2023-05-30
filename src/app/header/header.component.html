@@ -143,7 +143,7 @@
             </li>
             <li class="nav-item" *ngIf="authService.isRegister | async">
               <a class="nav-link p-0" routerLink="/profile">
-                <img src="{{userImage}}" alt="profile_icon" class="profile_icon">
+                <img src="{{userImage ? userImage : '../../../../assets/images/profile_icon (2).svg'}}" alt="profile_icon" class="profile_icon">
               </a>
             </li>
             <li class="nav-item" *ngIf="authService.isRegister | async">

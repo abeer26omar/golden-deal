@@ -44,6 +44,8 @@ export class RegisterComponent implements OnInit {
     },
     status_msg: ''
   }
+  hide = true;
+  hideConf = true;
   otpModal: any;
   signin: any;
   signup: any;
@@ -69,10 +71,11 @@ export class RegisterComponent implements OnInit {
   //register
   registerForm = new FormGroup({
     name: new FormControl('', [Validators.required]),
-    gender: new FormControl('', [Validators.required]),
-    dateOfBirth: new FormControl('', [Validators.required]),
+    password: new FormControl('', [Validators.required,Validators.minLength(6)]),
+    confirmPassword: new FormControl('', [Validators.required,Validators.minLength(6)]),
     phone: new FormControl('', [Validators.required, Validators.pattern("[0-9]{9}")]),
-    region: new FormControl('', [Validators.required])
+    region: new FormControl('', [Validators.required]),
+    check: new FormControl('',[Validators.required])
   });
   private authSub : Subscription = new Subscription;
   private actionSub : Subscription = new Subscription;
@@ -123,34 +126,55 @@ export class RegisterComponent implements OnInit {
     this.mac = this.macService.macphone;
     this.getRegions();
   }
+  getErrorPassword(){
+    // console.log(this.fRegister['password']);
+    if (this.fRegister['password'].hasError('required')) {
+      return 'يجب ادخال كلمه السر';
+    }
+
+    return this.fRegister['password'].hasError('minlength') ? 'كلمه السر يجب ان لا تقل عن 6 احرف' : '';
+  }
+  getErrorConfirmPass(){
+    // console.log(this.fRegister['confirmPassword']);
+    if (this.fRegister['confirmPassword'].hasError('required')) {
+      return 'يجب تأكيد كلمه السر';
+    }
+    
+    return this.fRegister['confirmPassword'].hasError('mismatch') ? 'كلمه السر يجب ان تتطابق' : '';
+  }
+  mustMatch() {
+    return this.fRegister['password'].value !== this.fRegister['confirmPassword'].value
+       ? console.log(this.fRegister['confirmPassword']) : null;
+  }
   submitData() {
-    const userName = this.registerForm.get('name')?.value;
-    const userGender = this.registerForm.get('gender')?.value;
-    const userDateOfBirth = this.datePipe.transform(this.registerForm.get('dateOfBirth')?.value,"yyyy-MM-dd");
     const userPhone = '+966' + this.registerForm.get('phone')?.value;
+    const userName = this.registerForm.get('name')?.value;
     const region_id = this.registerForm.get('region')?.value;
+    const userPass = this.registerForm.get('password')?.value;
+    const userConfPass = this.registerForm.get('confirmPassword')?.value;
     if(this.registerForm.valid){
       this.loader = true;
       this.error = '';      
       this.authSub = this.auth
-      .signUp(userName, userGender, userDateOfBirth, userPhone, region_id)
+      .signUp(userName, userPhone, region_id, userPass, userConfPass)
       .subscribe({
         next: resData =>{
             this.token = resData.data.token;
             this.id = resData.data.user.id;
             this.region_id = resData.data.user.region_id
             this.loader = false;
-            localStorage.setItem('token_deal', this.token);
-            localStorage.setItem('userId', JSON.stringify(this.id));
-            localStorage.setItem('region_id', this.region_id);
-            localStorage.setItem('userImage', resData.data.user.image_url)
-            this.actionService.handelRes(resData.status_msg)
-            setTimeout(()=>{
-              this.router.navigate(['/'])
-              setTimeout(()=>{
-                window.location.reload();
-              },0)
-            },50)
+            this.openOtpModal()
+            // localStorage.setItem('token_deal', this.token);
+            // localStorage.setItem('userId', JSON.stringify(this.id));
+            // localStorage.setItem('region_id', this.region_id);
+            // localStorage.setItem('userImage', resData.data.user.image_url)
+            // this.actionService.handelRes(resData.status_msg)
+            // setTimeout(()=>{
+            //   this.router.navigate(['/'])
+            //   setTimeout(()=>{
+            //     window.location.reload();
+            //   },0)
+            // },50)
         },
         error: (err: HttpErrorResponse) =>{
             this.loader = false;
@@ -170,24 +194,24 @@ export class RegisterComponent implements OnInit {
       this.errorLogin = '';    
       this.authSub = this.auth.signIn(phoneNo).subscribe({
         next: (resData: Login) =>{
-          console.log(resData);
           this.token = resData.data.token;
           this.id = resData.data.user.id;
           this.region_id = resData.data.user.region_id;
           this.loaderLogin = false;
           this.userData = resData;
           this.login = true;
-          localStorage.setItem('token_deal', this.token);
-          localStorage.setItem('userId', JSON.stringify(this.id));
-          localStorage.setItem('region_id', this.region_id);
-          localStorage.setItem('userImage', resData.data.user.image_url)
-          this.actionService.handelRes(resData.status_msg)
-          setTimeout(()=>{
-            this.router.navigate(['/'])
-            setTimeout(()=>{
-              window.location.reload();
-            },0)
-          },50)
+          this.openOtpModal();
+          // localStorage.setItem('token_deal', this.token);
+          // localStorage.setItem('userId', JSON.stringify(this.id));
+          // localStorage.setItem('region_id', this.region_id);
+          // localStorage.setItem('userImage', resData.data.user.image_url)
+          // this.actionService.handelRes(resData.status_msg)
+          // setTimeout(()=>{
+          //   this.router.navigate(['/'])
+          //   setTimeout(()=>{
+          //     window.location.reload();
+          //   },0)
+          // },50)
         },
         error: (err: HttpErrorResponse)=>{
           this.loaderLogin = false;
@@ -200,87 +224,88 @@ export class RegisterComponent implements OnInit {
   //otp input
   otp!: number ;
   showOtpComponent = true;
-  // config:NgOtpInputConfig = {
-  //   allowNumbersOnly: true,
-  //   length: 4,
-  //   isPasswordInput: false,
-  //   disableAutoFocus: false,
-  //   placeholder: '',
-  //   containerStyles:{
-  //     'direction': 'ltr'
-  //   }  
-  // };
-  // onOtpChange(otp:any) {
-  //   this.otp = otp;
-  //   if(otp.length == 4){
-  //     this.subOtp = !this.subOtp;
-  //   }
-  // }
-  //timer to resend
-  // startTimer() {
-  //   this.interval = setInterval(() => {
-  //     if(this.timeLeft > 0) {
-  //       this.timeLeft--;
-  //     } else{
-  //       this.resend = false;
-  //     }
-  //   },1000)
-  // }
-  // onOtpSubmmit(){
-  //   this.succMsg ='';
-  //   const otp = this.otp;
-  //   this.loaderOtp = true;
-  //   this.authSub = this.auth.otpVerify(otp,this.token,this.id).subscribe({
-  //   next:(res: Verify)=>{
-  //     this.succMsg = res.data;
-  //     this.loaderOtp = false;
-  //     this.login = true;
-  //     localStorage.setItem('token_deal', this.token);
-  //     localStorage.setItem('userId', JSON.stringify(this.id));
-  //     localStorage.setItem('region_id', this.region_id)
-  //     setTimeout(()=>{
-  //       this.otpModal.hide();
-  //       this.router.navigate(['/home'])
-  //       setTimeout(()=>{
-  //         window.location.reload();
-  //       },50)
-  //     },50)
-  //   },
-  //   error: (err: HttpErrorResponse) =>{
-  //     this.loaderOtp = false;
-  //     localStorage.clear();
-  //     this.errorHandel.openErrorModa(err);
-  //   }
-  //  })
-  // }
-  // openOtpModal(){
-  //   this.otpModal.show();
-  //   this.startTimer();
-  // }
-  // resendOtp(){
-  //   this.loaderOtp = true;
-  //   this.authSub = this.auth.resendOtp(this.token).subscribe({
-  //     next: (res: Verify)=>{
-  //       this.succMsg = res.data;
-  //       this.resMsg = true ;
-  //       this.loaderOtp = false;
-  //       setTimeout(()=>{
-  //         this.resMsg = false;
-  //         this.resend = true;
-  //         this.timeLeft = 60;
-  //       },1500)
-  //     },
-  //     error: (err: HttpErrorResponse)=>{
-  //       this.loaderOtp = false;
-  //       localStorage.clear()
-  //       this.errorHandel.openErrorModa(err);
-  //     }
-  //   })
-  // }
-  // closeOtp(){
-  //   this.timeLeft = 60;
-  //   this.otpModal.hide();
-  // }
+  config:NgOtpInputConfig = {
+    allowNumbersOnly: true,
+    length: 4,
+    isPasswordInput: false,
+    disableAutoFocus: false,
+    placeholder: '',
+    containerStyles:{
+      'direction': 'ltr'
+    }  
+  };
+  onOtpChange(otp:any) {
+    this.otp = otp;
+    if(otp.length == 4){
+      this.subOtp = !this.subOtp;
+    }
+  }
+  // timer to resend
+  startTimer() {
+    this.interval = setInterval(() => {
+      if(this.timeLeft > 0) {
+        this.timeLeft--;
+      } else{
+        this.resend = false;
+      }
+    },1000)
+  }
+  onOtpSubmmit(){
+    this.succMsg ='';
+    const otp = this.otp;
+    this.loaderOtp = true;
+    this.authSub = this.auth.otpVerify(otp,this.token,this.id).subscribe({
+    next:(res: Verify)=>{
+      this.succMsg = res.data;
+      this.loaderOtp = false;
+      this.login = true;
+      localStorage.setItem('token_deal', this.token);
+      localStorage.setItem('userId', JSON.stringify(this.id));
+      localStorage.setItem('region_id', this.region_id);
+      localStorage.setItem('userImage', this.userData.data.user.image_url)
+      setTimeout(()=>{
+        this.otpModal.hide();
+        this.router.navigate(['/'])
+        setTimeout(()=>{
+          window.location.reload();
+        },0)
+      },50)
+    },
+    error: (err: HttpErrorResponse) =>{
+      this.loaderOtp = false;
+      localStorage.clear();
+      this.errorHandel.openErrorModa(err);
+    }
+   })
+  }
+  openOtpModal(){
+    this.otpModal.show();
+    this.startTimer();
+  }
+  resendOtp(){
+    this.loaderOtp = true;
+    this.authSub = this.auth.resendOtp(this.token).subscribe({
+      next: (res: Verify)=>{
+        this.succMsg = res.data;
+        this.resMsg = true ;
+        this.loaderOtp = false;
+        setTimeout(()=>{
+          this.resMsg = false;
+          this.resend = true;
+          this.timeLeft = 60;
+        },1500)
+      },
+      error: (err: HttpErrorResponse)=>{
+        this.loaderOtp = false;
+        localStorage.clear()
+        this.errorHandel.openErrorModa(err);
+      }
+    })
+  }
+  closeOtp(){
+    this.timeLeft = 60;
+    this.otpModal.hide();
+  }
   ngOnDestory() :void{
     if(this.authSub){
       this.authSub.unsubscribe();

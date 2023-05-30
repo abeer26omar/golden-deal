@@ -33,6 +33,7 @@ import { NzSliderModule } from 'ng-zorro-antd/slider';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { SwiperModule } from 'swiper/angular';
 import { NgxGalleryModule } from 'ngx-gallery-9';
@@ -160,6 +161,7 @@ import { GalleriaModule } from 'primeng/galleria';
     MatSidenavModule,
     MatListModule,
     MatPaginatorModule,
+    MatCheckboxModule,
     ScrollingModule,
     SwiperModule,
     NgxGalleryModule,

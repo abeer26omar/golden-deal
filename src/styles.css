@@ -612,3 +612,9 @@ input.star:checked ~ label.star:before {
 .mat-stroked-button:hover:not(.mat-button-disabled) .mat-button-focus-overlay {
     opacity: 0 !important;
 }
+.material-icons{
+    font-family: 'Material Icons' !important;
+}
+.required .mat-checkbox-frame {
+    border-color: var(--semi-red) !important;
+  }

@@ -83,12 +83,15 @@ export class AddsComponent implements OnInit {
       if(this.route.snapshot.fragment == 'fav'){
         this.active = 3;
         this.getMyFav()
-      }else if(this.route.snapshot.fragment == 'orders'){
-        this.active = 4;
-        this.getMyOrders()
-      }else{}
+      }
+      // else if(this.route.snapshot.fragment == 'orders'){
+      //   this.active = 4;
+      //   this.getMyOrders()
+      // }
+      else{}
       this.actionService.refresh.subscribe(()=>{
         this.getMyFav();
+        this.getPortfolioInfo(this.portfolioId);
         this.getUserProducts(this.portfolioId)
       })
     }

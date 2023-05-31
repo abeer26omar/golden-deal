@@ -1,5 +1,5 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Component, ElementRef, HostListener, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription, min } from 'rxjs';
@@ -23,7 +23,7 @@ declare var window: any;
   styleUrls: ['./products.component.css'],
   providers: [DatePipe]
 })
-export class ProductsComponent implements OnInit {
+export class ProductsComponent implements OnInit, OnChanges {
   // @Input() categoriesSplash: any = [];
   filters: CategoryFilter = {
     data: {
@@ -153,139 +153,148 @@ export class ProductsComponent implements OnInit {
     //     }
     //   }
     // };
-    // configSub_barnd: SwiperOptions = {
-    //   slidesPerView: 10,
-    //   spaceBetween: 0,
-    //   navigation: false,
-    //   pagination: false,
-    //   scrollbar: false,
-    //   grabCursor: true,
-    //   breakpoints: {
-    //     992: {
-    //       slidesPerView: 7
-    //     },
-    //     768: {
-    //       slidesPerView: 5
-    //     },
-    //     575: {
-    //       slidesPerView: 5
-    //     },
-    //     425: {
-    //       slidesPerView: 4 
-    //     },
-    //     375: {
-    //       slidesPerView: 3 
-    //     },
-    //     320: {
-    //       slidesPerView: 3 
-    //     }
-    //   }
+    configSub_barnd: SwiperOptions = {
+      // slidesPerView:  10,
+      spaceBetween: 0,
+      navigation: false,
+      pagination: false,
+      scrollbar: false,
+      grabCursor: true,
+      // breakpoints: {
+      //   992: {
+      //     slidesPerView: 7
+      //   },
+      //   768: {
+      //     slidesPerView: 5
+      //   },
+      //   575: {
+      //     slidesPerView: 5
+      //   },
+      //   425: {
+      //     slidesPerView: 4 
+      //   },
+      //   375: {
+      //     slidesPerView: 3 
+      //   },
+      //   320: {
+      //     slidesPerView: 3 
+      //   }
+      // }
+    }
+    slickOptions = {
+      slidesToShow: 11 || this.brandsOptions.length,
+      centerMode: false,
+      focusOnSelect: false,
+      slidesToScroll: 1,
+      infinite: true,
+      centerPadding: "0",
+      responsive: [
+        {
+          breakpoint: 1024,
+          settings: {
+            slidesToShow: 9
+          }
+        },
+        {
+          breakpoint: 992,
+          settings: {
+            slidesToShow: 8
+          }
+        },
+        {
+          breakpoint: 768,
+          settings: {
+            slidesToShow: 6,
+          }
+        },
+        {
+          breakpoint: 575,
+          settings: {
+            slidesToShow: 4,
+          }
+        },
+        {
+          breakpoint: 425,
+          settings: {
+            slidesToShow: 4,
+          }
+        },
+        {
+          breakpoint: 375,
+          settings: {
+            slidesToShow: 3,
+          }
+        },
+        {
+          breakpoint: 320,
+          settings: {
+            slidesToShow: 2,
+          }
+        }
+      ]
+    }
+    // slickOptionsSubBrands = {
+    //   slidesToShow: this.filterbrandsOptions.length,
+    //   centerMode: false,
+    //   focusOnSelect: false,
+    //   slidesToScroll: 1,
+    //   infinite: true,
+    //   centerPadding: "0",
+    //   // responsive: [
+    //   //   {
+    //   //     breakpoint: 1024,
+    //   //     settings: {
+    //   //       slidesToShow: 9
+    //   //     }
+    //   //   },
+    //   //   {
+    //   //     breakpoint: 992,
+    //   //     settings: {
+    //   //       slidesToShow: 8
+    //   //     }
+    //   //   },
+    //   //   {
+    //   //     breakpoint: 768,
+    //   //     settings: {
+    //   //       slidesToShow: 6,
+    //   //     }
+    //   //   },
+    //   //   {
+    //   //     breakpoint: 575,
+    //   //     settings: {
+    //   //       slidesToShow: 4,
+    //   //     }
+    //   //   },
+    //   //   {
+    //   //     breakpoint: 425,
+    //   //     settings: {
+    //   //       slidesToShow: 4,
+    //   //     }
+    //   //   },
+    //   //   {
+    //   //     breakpoint: 375,
+    //   //     settings: {
+    //   //       slidesToShow: 3,
+    //   //     }
+    //   //   },
+    //   //   {
+    //   //     breakpoint: 320,
+    //   //     settings: {
+    //   //       slidesToShow: 2,
+    //   //     }
+    //   //   }
+    //   // ]
     // }
-  slickOptions = {
-    slidesToShow: 11 || this.brandsOptions.length,
-    centerMode: false,
-    focusOnSelect: false,
-    slidesToScroll: 1,
-    infinite: true,
-    centerPadding: "0",
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 9
-        }
-      },
-      {
-        breakpoint: 992,
-        settings: {
-          slidesToShow: 8
-        }
-      },
-      {
-        breakpoint: 768,
-        settings: {
-          slidesToShow: 6,
-        }
-      },
-      {
-        breakpoint: 575,
-        settings: {
-          slidesToShow: 4,
-        }
-      },
-      {
-        breakpoint: 425,
-        settings: {
-          slidesToShow: 4,
-        }
-      },
-      {
-        breakpoint: 375,
-        settings: {
-          slidesToShow: 3,
-        }
-      },
-      {
-        breakpoint: 320,
-        settings: {
-          slidesToShow: 2,
-        }
-      }
-    ]
-  }
-  slickOptionsSubBrands = {
-    // slidesToShow: this.filterbrandsOptions.length,
-    centerMode: false,
-    focusOnSelect: false,
-    slidesToScroll: 1,
-    infinite: true,
-    centerPadding: "0",
-    // responsive: [
-    //   {
-    //     breakpoint: 1024,
-    //     settings: {
-    //       slidesToShow: 9
-    //     }
-    //   },
-    //   {
-    //     breakpoint: 992,
-    //     settings: {
-    //       slidesToShow: 8
-    //     }
-    //   },
-    //   {
-    //     breakpoint: 768,
-    //     settings: {
-    //       slidesToShow: 6,
-    //     }
-    //   },
-    //   {
-    //     breakpoint: 575,
-    //     settings: {
-    //       slidesToShow: 4,
-    //     }
-    //   },
-    //   {
-    //     breakpoint: 425,
-    //     settings: {
-    //       slidesToShow: 4,
-    //     }
-    //   },
-    //   {
-    //     breakpoint: 375,
-    //     settings: {
-    //       slidesToShow: 3,
-    //     }
-    //   },
-    //   {
-    //     breakpoint: 320,
-    //     settings: {
-    //       slidesToShow: 2,
-    //     }
-    //   }
-    // ]
-  }
+    // updateSlickOptionsSubBrands() {
+    //   this.slickOptionsSubBrands.slidesToShow = this.filterbrandsOptions.length;
+    // }
+    ngOnChanges(changes: SimpleChanges) {
+      // if (changes['filterbrandsOptions']) {
+      //   this.updateSlickOptionsSubBrands();
+      // }
+    }    
   ngOnInit(): void {
+    // this.updateSlickOptionsSubBrands()
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     this.formModal = new window.bootstrap.Modal(
       document.getElementById('filterModal'),{backdrop: this.macService.backdrop}
@@ -635,6 +644,7 @@ export class ProductsComponent implements OnInit {
           this.loadding = false;          
           if(res.data != null){
             this.filterbrandsOptions = res.data.filter_options;
+            this.configSub_barnd.slidesPerView = this.filterbrandsOptions.length;
           }
       },
       error:(err: HttpErrorResponse)=>{

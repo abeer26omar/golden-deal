@@ -116,7 +116,7 @@ p.pref{
     transition-delay: 0s;
   }
  .form.active .sign-up-form {
-    left: -500%;
+    left: -800%;
   }
   .form p.agree{
     color: var( --light-grey);
@@ -255,3 +255,6 @@ p.pref{
     display: none;
   }
 }
+/* *{
+  border: 1px solid red;
+} */

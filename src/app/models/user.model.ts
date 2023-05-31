@@ -149,3 +149,9 @@ export interface APIResponse4<T>{
 export interface Verify{
     data: string;
 }
+export interface OtpForgetPass{
+    data: {
+        msg: string,
+        code: number
+    }
+}

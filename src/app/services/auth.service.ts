@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import { throwError, catchError, tap,BehaviorSubject, Subject} from 'rxjs';
 import { environment as env } from 'src/environments/environment';
-import { Register, Login, Verify} from '../models/user.model';
+import { Register, Login, Verify, OtpForgetPass} from '../models/user.model';
 import { ResponseSuccess } from '../models/actions.model';
 @Injectable({
   providedIn: 'root'
@@ -52,9 +52,22 @@ export class AuthService {
     }) 
     return this.http.get<Verify>(`${env.api_url}/auth/resend-otp`,{headers})
   }
-  signIn(phone: string){
+  signIn(phone: string,password: string){
     return this.http.post<Login>(`${env.api_url}/auth/login`,{
+      phone: phone,
+      password: password
+    })
+  }
+  getOtpForRestPass(phone: string){
+    return this.http.post<OtpForgetPass>(`${env.api_url}/auth/forget-password`,{
       phone: phone
+    })
+  }
+  changePassword(phone: string, password: string, confirmPassword: string){
+    return this.http.post<ResponseSuccess>(`${env.api_url}/auth/change-password`, {
+      phone: phone,
+      password: password,
+      password_confirmation: confirmPassword
     })
   }
   logOut(){

@@ -11,6 +11,9 @@ import { Subscription } from 'rxjs';
 import { ActionsService } from 'src/app/services/actions.service';
 import { Regions } from 'src/app/models/actions.model';
 import { ErrorHandlerService } from 'src/app/services/error-handler.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ResetPassModalComponent } from '../reset-pass-modal/reset-pass-modal.component';
+import { MustMatchService } from 'src/app/services/must-match.service';
 declare var window: any;
 
 @Component({
@@ -76,22 +79,24 @@ export class RegisterComponent implements OnInit {
     phone: new FormControl('', [Validators.required, Validators.pattern("[0-9]{9}")]),
     region: new FormControl('', [Validators.required]),
     check: new FormControl('',[Validators.required])
-  });
+  },{ validators: this.passMatchService.mustMatch('password', 'confirmPassword') });
+
   private authSub : Subscription = new Subscription;
   private actionSub : Subscription = new Subscription;
 
   //login
   loginForm = new FormGroup({
-    phone: new FormControl('',[Validators.required, Validators.pattern("[0-9]{9}")])
+    phone: new FormControl('',[Validators.required, Validators.pattern("[0-9]{9}")]),
+    userPassword: new FormControl('',[Validators.required])
   });
 
   constructor(private auth: AuthService, 
     private router: Router,
     private macService: MacPrefixService,
-    private datePipe: DatePipe,
+    private passMatchService: MustMatchService,
     private actionService: ActionsService,
-    private errorHandel: ErrorHandlerService) { 
-    }
+    private errorHandel: ErrorHandlerService,
+    private dialogRef: MatDialog) { }
     //get forms controls
     get fRegister(){
       return this.registerForm.controls;
@@ -140,11 +145,7 @@ export class RegisterComponent implements OnInit {
       return 'يجب تأكيد كلمه السر';
     }
     
-    return this.fRegister['confirmPassword'].hasError('mismatch') ? 'كلمه السر يجب ان تتطابق' : '';
-  }
-  mustMatch() {
-    return this.fRegister['password'].value !== this.fRegister['confirmPassword'].value
-       ? console.log(this.fRegister['confirmPassword']) : null;
+    return this.fRegister['confirmPassword'].hasError('mustMatch') ? 'كلمه السر غير متطابقه ' : '';
   }
   submitData() {
     const userPhone = '+966' + this.registerForm.get('phone')?.value;
@@ -188,11 +189,12 @@ export class RegisterComponent implements OnInit {
     }    
   }
   submitLogin(){
-    const phoneNo = '+966' + this.loginForm.get('phone')?.value  ;
+    const phoneNo = '+966' + this.loginForm.get('phone')?.value;
+    const userPassword = this.loginForm.get('userPassword')?.value;
     if(this.loginForm.valid){
       this.loaderLogin = true;
       this.errorLogin = '';    
-      this.authSub = this.auth.signIn(phoneNo).subscribe({
+      this.authSub = this.auth.signIn(phoneNo,userPassword).subscribe({
         next: (resData: Login) =>{
           this.token = resData.data.token;
           this.id = resData.data.user.id;
@@ -200,18 +202,18 @@ export class RegisterComponent implements OnInit {
           this.loaderLogin = false;
           this.userData = resData;
           this.login = true;
-          this.openOtpModal();
-          // localStorage.setItem('token_deal', this.token);
-          // localStorage.setItem('userId', JSON.stringify(this.id));
-          // localStorage.setItem('region_id', this.region_id);
-          // localStorage.setItem('userImage', resData.data.user.image_url)
-          // this.actionService.handelRes(resData.status_msg)
-          // setTimeout(()=>{
-          //   this.router.navigate(['/'])
-          //   setTimeout(()=>{
-          //     window.location.reload();
-          //   },0)
-          // },50)
+          // this.openOtpModal();
+          localStorage.setItem('token_deal', this.token);
+          localStorage.setItem('userId', JSON.stringify(this.id));
+          localStorage.setItem('region_id', this.region_id);
+          localStorage.setItem('userImage', resData.data.user.image_url)
+          this.actionService.handelRes(resData.status_msg)
+          setTimeout(()=>{
+            this.router.navigate(['/'])
+            setTimeout(()=>{
+              window.location.reload();
+            },0)
+          },50)
         },
         error: (err: HttpErrorResponse)=>{
           this.loaderLogin = false;
@@ -220,6 +222,14 @@ export class RegisterComponent implements OnInit {
         }
       })
     }
+  }
+  // reset password
+  openRestPassDialog(){
+    this.dialogRef.open(ResetPassModalComponent,{
+      width: '500px',
+      enterAnimationDuration: '800ms',
+      exitAnimationDuration: '500ms',
+    })
   }
   //otp input
   otp!: number ;

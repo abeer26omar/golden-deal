@@ -49,12 +49,9 @@
                                                 placeholder="رقم الهاتف" 
                                                 formControlName="phone">
                                                 <span matPrefix>+966 &nbsp;</span>
-                                                </mat-form-field>
+                                                <mat-error *ngIf="fRegister['phone'].touched && fRegister['phone'].invalid">ارقام سعوديه فقط</mat-error>
+                                            </mat-form-field>
                                         </div>
-                                        <span *ngIf="fRegister['phone'].touched && fRegister['phone'].invalid" 
-                                        class="text-danger text-center m-0">
-                                            ارقام سعوديه فقط
-                                        </span>
                                         <mat-form-field appearance="fill">
                                             <mat-label>الاسم</mat-label>
                                             <input matInput  formControlName="name">
@@ -102,7 +99,7 @@
                                                     بادخال رقم هاتقك المحمول فانت توافق على <a routerLink="/termsandconditions/terms_conditions" class="link text-center">الشروط و الاحكام</a> و<a routerLink="/termsandconditions/privacy_policy" class="link text-center">سياسه الخصوصيه</a>  
                                                 </span>
                                             </mat-checkbox>
-                                          <div class="d-flex justify-content-center pt-3">
+                                          <div class="d-flex justify-content-center py-3">
                                               <button class="btn btn-prim" type="submit">انشاء حساب</button>
                                           </div>
                                           
@@ -128,22 +125,20 @@
                                                     placeholder="رقم الهاتف" 
                                                     formControlName="phone">
                                                     <span matPrefix>+966 &nbsp;</span>
+                                                    <mat-error *ngIf="fLogin['phone'].touched && fLogin['phone'].invalid">ارقام سعوديه فقط</mat-error>
                                             </mat-form-field>
                                         </div>
-                                          <span *ngIf="fLogin['phone'].touched && fLogin['phone'].invalid" 
-                                          class="text-danger text-center m-0">
-                                            ارقام سعوديه فقط
-                                        </span>
                                         <mat-form-field appearance="fill">
                                             <mat-label>كلمه السر</mat-label>
-                                            <input matInput [type]="hide ? 'password' : 'text'" formControlName="password"> 
+                                            <input matInput [type]="hide ? 'password' : 'text'" formControlName="userPassword"> 
                                             <a class="btn_hidepass" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                                                 <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                                             </a>
-                                            <mat-error *ngIf="fLogin['userPassword'].touched && fLogin['password'].invalid">{{getErrorPassword()}}</mat-error>
+                                            <mat-error *ngIf="fLogin['userPassword'].touched && fLogin['userPassword'].invalid">{{getErrorPassword()}}</mat-error>
                                         </mat-form-field>
+                                        <a (click)="openRestPassDialog()">هل نسيت كلمه المرور الخاصه بك ؟</a>
                                           <p class="agree">بالنقر فوق تسجيل الدخول ، فإنك توافق على شروطنا. تعرف على كيفية معالجة بياناتك في سياسة الخصوصية وسياسة ملفات تعريف الارتباط. بالنقر فوق تسجيل الدخول ، فإنك توافق على شروطنا. تعرف على كيفية معالجة بياناتك في سياسة الخصوصية وملفات تعريف الارتباط الخاصة بنا </p>
-                                          <div class="d-flex justify-content-center pt-3">
+                                          <div class="d-flex justify-content-center py-3">
                                               <button class="btn btn-prim" type="submit">تسجيل الدخول</button>
                                           </div>   
                                     </form> 

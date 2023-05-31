@@ -210,25 +210,37 @@ input.star:checked ~ label.star:before {
 .mat-form-field-appearance-outline.mat-form-field-can-float .mat-input-server:focus+.mat-form-field-label-wrapper .mat-form-field-label {
     padding-right: 13px;
 }
-#otpModel .modal-body .otp-input{
+.otp-input{
     width: 50px;
     height: 50px;
     border-radius: 4px;
     border: none; 
     text-align: center;
-    font-size: 20px;
-    margin: 1rem .5rem;
-    background: #F7F9FD;
+    font-size: 20px !important;
+    background: #F7F9FD !important;
+    color: var(--sec-text) !important;
     box-shadow: 0px 1.86006px 7.44023px rgba(0, 0, 0, 0.25);
     caret-color: var(--org-color);
 }
-#otpModel .modal-body .otp-input:focus {
+#otpModel .modal-body .otp-input{
+    margin: 1rem .5rem;   
+}
+.otp-input:focus {
     border: 1px solid var(--org-color) !important;
 }
 .mat-progress-spinner,
 .mat-progress-spinner svg {
     width: 40px !important;
     height: 40px !important;
+}
+.btn-prim .mat-progress-spinner,
+.btn-prim .mat-progress-spinner svg {
+    width: 25px !important;
+    height: 25px !important;
+}
+.btn-prim .mat-progress-spinner circle, 
+.btn-prim .mat-spinner circle {
+    stroke: var(--white);
 }
 .mat-progress-bar{
     width: 50% !important;
@@ -617,4 +629,21 @@ input.star:checked ~ label.star:before {
 }
 .required .mat-checkbox-frame {
     border-color: var(--semi-red) !important;
-  }
+}
+.mat-checkbox-layout {
+    white-space: normal !important;
+}
+.mat-step-header {
+    -webkit-tap-highlight-color: transparent !important;
+}
+.mat-step-header.cdk-keyboard-focused, 
+.mat-step-header.cdk-program-focused, 
+.mat-step-header:hover:not([aria-disabled]),
+ .mat-step-header:hover[aria-disabled=false] {
+    background-color: transparent !important;
+}
+.mat-step-header .mat-step-icon-selected, 
+.mat-step-header .mat-step-icon-state-done, 
+.mat-step-header .mat-step-icon-state-edit {
+    background-color: var(--newColor) !important;
+}

@@ -34,6 +34,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatStepperModule } from '@angular/material/stepper';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { SwiperModule } from 'swiper/angular';
 import { NgxGalleryModule } from 'ngx-gallery-9';
@@ -86,6 +87,7 @@ import { NotificationsService } from './services/notifications.service';
 import { PaginatorModule } from 'primeng/paginator';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { GalleriaModule } from 'primeng/galleria';
+import { ResetPassModalComponent } from './Auth/reset-pass-modal/reset-pass-modal.component';
 
 @NgModule({
   declarations: [
@@ -128,6 +130,7 @@ import { GalleriaModule } from 'primeng/galleria';
     DateAgoPipe,
     AuthRemainderModalComponent,
     NotificationsComponent,
+    ResetPassModalComponent,
   ],
   imports: [
     BrowserModule,
@@ -162,6 +165,7 @@ import { GalleriaModule } from 'primeng/galleria';
     MatListModule,
     MatPaginatorModule,
     MatCheckboxModule,
+    MatStepperModule,
     ScrollingModule,
     SwiperModule,
     NgxGalleryModule,

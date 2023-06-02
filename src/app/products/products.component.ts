@@ -154,32 +154,32 @@ export class ProductsComponent implements OnInit, OnChanges {
     //   }
     // };
     configSub_barnd: SwiperOptions = {
-      // slidesPerView:  10,
+      slidesPerView:  10,
       spaceBetween: 0,
       navigation: false,
       pagination: false,
       scrollbar: false,
       grabCursor: true,
-      // breakpoints: {
-      //   992: {
-      //     slidesPerView: 7
-      //   },
-      //   768: {
-      //     slidesPerView: 5
-      //   },
-      //   575: {
-      //     slidesPerView: 5
-      //   },
-      //   425: {
-      //     slidesPerView: 4 
-      //   },
-      //   375: {
-      //     slidesPerView: 3 
-      //   },
-      //   320: {
-      //     slidesPerView: 3 
-      //   }
-      // }
+      breakpoints: {
+        992: {
+          slidesPerView: 7
+        },
+        768: {
+          slidesPerView: 5
+        },
+        575: {
+          slidesPerView: 5
+        },
+        425: {
+          slidesPerView: 4 
+        },
+        375: {
+          slidesPerView: 3 
+        },
+        320: {
+          slidesPerView: 3 
+        }
+      }
     }
     slickOptions = {
       slidesToShow: 11 || this.brandsOptions.length,
@@ -644,7 +644,7 @@ export class ProductsComponent implements OnInit, OnChanges {
           this.loadding = false;          
           if(res.data != null){
             this.filterbrandsOptions = res.data.filter_options;
-            this.configSub_barnd.slidesPerView = this.filterbrandsOptions.length;
+            // this.configSub_barnd.slidesPerView = this.filterbrandsOptions.length;
           }
       },
       error:(err: HttpErrorResponse)=>{

@@ -78,7 +78,7 @@ export class RegisterComponent implements OnInit {
     confirmPassword: new FormControl('', [Validators.required,Validators.minLength(6)]),
     phone: new FormControl('', [Validators.required, Validators.pattern("[0-9]{9}")]),
     region: new FormControl('', [Validators.required]),
-    check: new FormControl('',[Validators.required])
+    check: new FormControl('')
   },{ validators: this.passMatchService.mustMatch('password', 'confirmPassword') });
 
   private authSub : Subscription = new Subscription;
@@ -283,8 +283,9 @@ export class RegisterComponent implements OnInit {
     },
     error: (err: HttpErrorResponse) =>{
       this.loaderOtp = false;
+      this.errorOtp = err.error.data
       localStorage.clear();
-      this.errorHandel.openErrorModa(err);
+      // this.errorHandel.openErrorModa(err);
     }
    })
   }

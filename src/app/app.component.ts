@@ -1,6 +1,7 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { AuthService } from './services/auth.service';
 import { NotificationsService } from './services/notifications.service';
+import { ClearStorageService } from './services/clear-storage.service'
 declare var window: any;
 
 
@@ -21,7 +22,8 @@ export class AppComponent implements OnInit{
     this.sidebarOpen = !this.sidebarOpen;
   }
   constructor(public authService: AuthService,
-    private notificationService: NotificationsService){
+    private notificationService: NotificationsService,
+    private ClearStorageService: ClearStorageService){
     this.hidebackdrop()
   }
   hidebackdrop(){
@@ -34,7 +36,8 @@ export class AppComponent implements OnInit{
       this.notificationService.requestPermission();
       this.notificationService.getMyNotifications();
       this.notification = this.notificationService.currentMessage;
-      console.log(this.notification);
+      // console.log(this.notification);
     }
+    // this.ClearStorageService.listenForBeforeUnload()
   }
 }

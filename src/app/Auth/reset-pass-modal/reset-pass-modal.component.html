@@ -6,7 +6,7 @@
             <mat-label>رقم الهاتف</mat-label>
             <input matInput 
                 type="tel" 
-                placeholder="رقم الهاتف" 
+                placeholder="ادخل رقم الهاتف بدون 0" 
                 formControlName="phone">
                 <span matPrefix>+966 &nbsp;</span>
                 <mat-error *ngIf="FphoneSend['phone'].touched && FphoneSend['phone'].invalid">ارقام سعوديه فقط</mat-error>

@@ -45,7 +45,7 @@
                                     <img src="../../../assets/images/wishlisticon.svg" alt="wishlisticon">
                                 </a> -->
                                 <div class="favorite" *ngIf="singleProduct.data.status === 'active'">
-                                    <a (click)="addToFav(singleProduct.data)">
+                                    <a (click)="addToFav(singleProduct.data, $event)">
                                         <img src="../../assets/images/{{singleProduct.data.product_fav == false ? 'favorite_icon.svg' : 'already_fav_icon.svg'}}" alt="already_fav_icon" >
                                     </a>
                                     <!-- <a (click)="actionService.removeFav(singleProduct.data.id)" class="btn add_fav p-0" *ngIf="singleProduct.data.product_fav == true">

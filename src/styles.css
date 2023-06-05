@@ -597,6 +597,15 @@ input.star:checked ~ label.star:before {
 .slick-next:before {
     content: url('assets/images/prev_arrow.svg') !important;
 }
+.subbrand .slick-prev:before {
+    content: url('assets/images/prev_arrow.svg') !important;
+}
+.subbrand .slick-next:before {
+    content: url('assets/images/next_arrow.svg') !important;
+}
+.subbrand .slick-list{
+    direction: rtl !important;
+}
 .p-paginator-icon{
     font-family:'primeicons' !important
 }
@@ -647,3 +656,24 @@ input.star:checked ~ label.star:before {
 .mat-step-header .mat-step-icon-state-edit {
     background-color: var(--newColor) !important;
 }
+.favorite .svg-inline--fa {
+    height: 1.4em !important;
+}
+.favorite .svg-inline--fa path{
+    fill: var(--newColor);
+}
+.favorite .svg-inline--fa.loved path{
+    fill: var(--semi-red);
+}
+.heart_beat {
+    animation: heartPulse 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+}
+  
+  @keyframes heartPulse {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.5);
+    }
+  }

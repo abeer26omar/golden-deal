@@ -207,13 +207,14 @@ export class ProductDetailsComponent implements OnInit ,AfterViewInit{
       }
     })
   }
-  addToFav(product: any){
+  addToFav(product: any, event: MouseEvent){
     this.is_animating = true;
     if(this.authService.IsloggedIn()){
       if(product.product_fav == false){
         this.http.get<ResponseSuccess>(`${env.api_url}/favourites/add-favourite/${product.id}`,this.actionService.httpOptions)
         .subscribe({
           next: res=>{
+            (event.target as HTMLElement).classList.toggle('heart_beat');
             product.product_fav = true  
           },
           error: (err: HttpErrorResponse)=>{

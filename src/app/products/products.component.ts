@@ -184,13 +184,20 @@ export class ProductsComponent implements OnInit {
     //   }
     // }
     slickOptions = {
-      slidesToShow: 11 || this.brandsOptions.length,
+      slidesToShow: 11,
       centerMode: false,
       focusOnSelect: false,
-      slidesToScroll: 1,
-      infinite: true,
+      slidesToScroll: 3,
+      infinite: false,
       centerPadding: "0",
+      rtl: true,
       responsive: [
+        {
+          breakpoint: 1440,
+          settings: {
+            slidesToShow: 10
+          }
+        }, 
         {
           breakpoint: 1024,
           settings: {
@@ -238,18 +245,19 @@ export class ProductsComponent implements OnInit {
     
     getSlickOptionsSubBrands(length: any){
       return {
-      slidesToShow: Math.min(length, 8),
+      slidesToShow: Math.min(length, 7),
       centerMode: false,
       focusOnSelect: false,
-      slidesToScroll: 1,
-      infinite: true,
+      slidesToScroll: 3,
+      infinite: false,
       cssEase: 'linear',
       centerPadding: "0",
+      rtl: true,
       responsive: [
         {
           breakpoint: 1024,
           settings: {
-            slidesToShow: Math.min(length, 6)
+            slidesToShow: Math.min(length, 5)
           }
         },
         {
@@ -333,13 +341,14 @@ export class ProductsComponent implements OnInit {
       }
     })
   }
-  addToFav(product: any){
+  addToFav(product: any, event: MouseEvent){
     this.is_animating = true;
     if(this.authService.IsloggedIn()){
       if(product.product_fav == false){
         this.http.get<ResponseSuccess>(`${env.api_url}/favourites/add-favourite/${product.id}`,this.actionService.httpOptions)
         .subscribe({
           next: res=>{
+            (event.target as HTMLElement).classList.toggle('heart_beat');
             product.product_fav = true  
           },
           error: (err: HttpErrorResponse)=>{

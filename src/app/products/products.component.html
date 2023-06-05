@@ -166,6 +166,11 @@
             <p class="m-0"> {{category.title}}</p>
            </a>
           <ng-template ngbNavContent>
+            <div class="loader" *ngIf="loader">
+              <div class="dot1"></div>
+              <div class="dot2"></div>
+              <div class="dot3"></div>
+            </div>
             <div class="products-row row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4 justify-content-start">
               <div class="alert alert-danger text-center" *ngIf="error">{{error}}</div>
                 <div class="col wow fadeIn" data-wow-duration="1.3s" 
@@ -395,7 +400,7 @@
     </div>
 <div class="d-flex justify-content-center my-1">
   <ul class="nav nav-tabs swipers swipy" id="myTab" role="tablist" *ngIf="showBrandsOptions">
-    <swiper [config]="configSub_barnd" dir="ltr">
+    <!-- <swiper [config]="configSub_barnd" dir="ltr">
     <ng-container *ngFor="let brand of filterbrandsOptions">
       <ng-template swiperSlide>
           <li class="nav-item sub_brand d-flex justify-content-center px-1" role="presentation">
@@ -409,8 +414,8 @@
         </li> 
       </ng-template>
     </ng-container>
-    </swiper>
-    <!-- <ngx-slick-carousel class="carousel" 
+    </swiper> -->
+    <ngx-slick-carousel class="carousel" 
         #slickModal="slick-carousel" 
         [config]= 'slickOptionsSubBrands'>
           <div  ngxSlickItem *ngFor="let brand of filterbrandsOptions" class="slide">
@@ -424,7 +429,7 @@
               aria-selected="true">{{brand.name}}</a>
             </li> 
           </div>
-    </ngx-slick-carousel> -->
+    </ngx-slick-carousel>
   </ul>
 </div>
 <div class="fiter_carPlates text-center py-1">

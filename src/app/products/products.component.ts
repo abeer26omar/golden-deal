@@ -23,7 +23,7 @@ declare var window: any;
   styleUrls: ['./products.component.css'],
   providers: [DatePipe]
 })
-export class ProductsComponent implements OnInit, OnChanges {
+export class ProductsComponent implements OnInit {
   // @Input() categoriesSplash: any = [];
   filters: CategoryFilter = {
     data: {
@@ -64,6 +64,7 @@ export class ProductsComponent implements OnInit, OnChanges {
   showBtnAction: boolean = false;
   loadding = false;
   load: boolean = false;
+  loader: boolean = false;
   error: string = '';
   formModal: any;
   faildProducts: any;
@@ -75,6 +76,7 @@ export class ProductsComponent implements OnInit, OnChanges {
   regions: any = [];
   metaNo: any = [];
   owner_id: any;
+  slickOptionsSubBrands: any;
   plate_town_filter_6: any;
   plate_type_filter_6: any;
   is_animating: boolean = false;
@@ -153,34 +155,34 @@ export class ProductsComponent implements OnInit, OnChanges {
     //     }
     //   }
     // };
-    configSub_barnd: SwiperOptions = {
-      slidesPerView:  10,
-      spaceBetween: 0,
-      navigation: false,
-      pagination: false,
-      scrollbar: false,
-      grabCursor: true,
-      breakpoints: {
-        992: {
-          slidesPerView: 7
-        },
-        768: {
-          slidesPerView: 5
-        },
-        575: {
-          slidesPerView: 5
-        },
-        425: {
-          slidesPerView: 4 
-        },
-        375: {
-          slidesPerView: 3 
-        },
-        320: {
-          slidesPerView: 3 
-        }
-      }
-    }
+    // configSub_barnd: SwiperOptions = {
+    //   slidesPerView:  10,
+    //   spaceBetween: 0,
+    //   navigation: false,
+    //   pagination: false,
+    //   scrollbar: false,
+    //   grabCursor: true,
+    //   breakpoints: {
+    //     992: {
+    //       slidesPerView: 7
+    //     },
+    //     768: {
+    //       slidesPerView: 5
+    //     },
+    //     575: {
+    //       slidesPerView: 5
+    //     },
+    //     425: {
+    //       slidesPerView: 4 
+    //     },
+    //     375: {
+    //       slidesPerView: 3 
+    //     },
+    //     320: {
+    //       slidesPerView: 3 
+    //     }
+    //   }
+    // }
     slickOptions = {
       slidesToShow: 11 || this.brandsOptions.length,
       centerMode: false,
@@ -233,68 +235,63 @@ export class ProductsComponent implements OnInit, OnChanges {
         }
       ]
     }
-    // slickOptionsSubBrands = {
-    //   slidesToShow: this.filterbrandsOptions.length,
-    //   centerMode: false,
-    //   focusOnSelect: false,
-    //   slidesToScroll: 1,
-    //   infinite: true,
-    //   centerPadding: "0",
-    //   // responsive: [
-    //   //   {
-    //   //     breakpoint: 1024,
-    //   //     settings: {
-    //   //       slidesToShow: 9
-    //   //     }
-    //   //   },
-    //   //   {
-    //   //     breakpoint: 992,
-    //   //     settings: {
-    //   //       slidesToShow: 8
-    //   //     }
-    //   //   },
-    //   //   {
-    //   //     breakpoint: 768,
-    //   //     settings: {
-    //   //       slidesToShow: 6,
-    //   //     }
-    //   //   },
-    //   //   {
-    //   //     breakpoint: 575,
-    //   //     settings: {
-    //   //       slidesToShow: 4,
-    //   //     }
-    //   //   },
-    //   //   {
-    //   //     breakpoint: 425,
-    //   //     settings: {
-    //   //       slidesToShow: 4,
-    //   //     }
-    //   //   },
-    //   //   {
-    //   //     breakpoint: 375,
-    //   //     settings: {
-    //   //       slidesToShow: 3,
-    //   //     }
-    //   //   },
-    //   //   {
-    //   //     breakpoint: 320,
-    //   //     settings: {
-    //   //       slidesToShow: 2,
-    //   //     }
-    //   //   }
-    //   // ]
-    // }
-    // updateSlickOptionsSubBrands() {
-    //   this.slickOptionsSubBrands.slidesToShow = this.filterbrandsOptions.length;
-    // }
-    ngOnChanges(changes: SimpleChanges) {
-      // if (changes['filterbrandsOptions']) {
-      //   this.updateSlickOptionsSubBrands();
-      // }
-    }    
+    
+    getSlickOptionsSubBrands(length: any){
+      return {
+      slidesToShow: Math.min(length, 8),
+      centerMode: false,
+      focusOnSelect: false,
+      slidesToScroll: 1,
+      infinite: true,
+      cssEase: 'linear',
+      centerPadding: "0",
+      responsive: [
+        {
+          breakpoint: 1024,
+          settings: {
+            slidesToShow: Math.min(length, 6)
+          }
+        },
+        {
+          breakpoint: 992,
+          settings: {
+            slidesToShow: Math.min(length, 4)
+          }
+        },
+        {
+          breakpoint: 768,
+          settings: {
+            slidesToShow: Math.min(length, 4),
+          }
+        },
+        {
+          breakpoint: 575,
+          settings: {
+            slidesToShow: Math.min(length, 3),
+          }
+        },
+        {
+          breakpoint: 425,
+          settings: {
+            slidesToShow: Math.min(length, 3),
+          }
+        },
+        {
+          breakpoint: 375,
+          settings: {
+            slidesToShow: Math.min(length, 2),
+          }
+        },
+        {
+          breakpoint: 320,
+          settings: {
+            slidesToShow: Math.min(length, 1),
+          }
+        }
+      ]
+    }
+  }
   ngOnInit(): void {
-    // this.updateSlickOptionsSubBrands()
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     this.formModal = new window.bootstrap.Modal(
       document.getElementById('filterModal'),{backdrop: this.macService.backdrop}
@@ -309,7 +306,8 @@ export class ProductsComponent implements OnInit, OnChanges {
     this.owner_id = localStorage.getItem('userId')
   }
   getProducts(categorySlug: string, pageNo: number){
-    this.loadding = true;
+    this.loader = true;
+    this.errorLength = '';
     this.formPlatesFilter.reset();
     this.categorySlug = categorySlug;
     this.filterbrandsOptions = [];
@@ -317,7 +315,7 @@ export class ProductsComponent implements OnInit, OnChanges {
     .getProductsList(categorySlug, pageNo)
     .subscribe({
       next:(productsList: APIResponse<Products>)=>{
-        this.loadding = false;
+        this.loader = false;
         this.products = productsList.data;
         this.links = productsList.links;        
         this.meta = productsList.meta;
@@ -330,7 +328,7 @@ export class ProductsComponent implements OnInit, OnChanges {
           }
       },
       error:(err: HttpErrorResponse)=>{
-        this.loadding = false;
+        this.loader = false;
         this.errorHandel.openErrorModa(err)
       }
     })
@@ -550,6 +548,7 @@ export class ProductsComponent implements OnInit, OnChanges {
   }
   apllyAllFilter(){
     let value = this.filterAllProducts.get('filterAll')?.value;
+    this.errorLength = '';
     if(value == 'new'){
       this.load = false;
       this.getProducts('all', 1);
@@ -583,7 +582,8 @@ export class ProductsComponent implements OnInit, OnChanges {
     }
   }
   onApplayFilters(){
-    this.load = true;
+    this.loader = true;
+    this.errorLength = '';
     this.formFilter.get('min_price')?.setValue(this.valueMin);
     this.formFilter.get('max_price')?.setValue(this.valueMax);
     const formData = new FormData()
@@ -594,7 +594,7 @@ export class ProductsComponent implements OnInit, OnChanges {
       }        
      this.filterSub = this.httpService.applayFilter(formData).subscribe({
       next: (res: APIResponse<Products>)=>{
-          this.load = false;
+          this.loader = false;
           this.formModal.hide();
           this.products = res.data;
           this.links = res.links;
@@ -606,7 +606,7 @@ export class ProductsComponent implements OnInit, OnChanges {
           }
       },
       error:(err: HttpErrorResponse)=>{
-        this.load = false;
+        this.loader = false;
         this.errorHandel.openErrorModa(err)
       }
      })
@@ -615,11 +615,14 @@ export class ProductsComponent implements OnInit, OnChanges {
     plate_type_filter?: string,
     plate_category_filter?: string,page_num?: number){
     this.load = true;
+    this.loader = true;
+    this.errorLength = '';            
     this.brand_name = brand_filter;
     this.sub_brand_name = brand_Subfilter;
      this.filterSub = this.httpService.applayFilterKeys(this.valueMin,this.valueMax,brand_filter,brand_Subfilter,town_filter,plate_type_filter,plate_category_filter,page_num).subscribe({
       next: (res: APIResponse<Products>)=>{
           this.load = false;
+          this.loader = false;            
           this.formModal.hide();          
           this.products = res.data;
           this.links = res.links;
@@ -632,23 +635,29 @@ export class ProductsComponent implements OnInit, OnChanges {
       },
       error:(err: HttpErrorResponse)=>{
         this.load = false;
+        this.loader = false;
         this.errorHandel.openErrorModa(err)
       }
      })    
   }
   onApplayBrandFilters(filter_key: number){
-    this.loadding = true;   
+    this.load = true;
+    this.loader = true;   
     this.filterbrandsOptions = [];
+    this.errorLength = '';
     this.filterSub = this.httpService.applayBarndFilter(filter_key).subscribe({
       next: (res: any)=>{
-          this.loadding = false;          
+          this.load = false;
+          this.loader = false;            
           if(res.data != null){
             this.filterbrandsOptions = res.data.filter_options;
+            this.slickOptionsSubBrands = this.getSlickOptionsSubBrands(this.filterbrandsOptions.length)
             // this.configSub_barnd.slidesPerView = this.filterbrandsOptions.length;
           }
       },
       error:(err: HttpErrorResponse)=>{
         this.load = false;
+        this.loader = false;            
         this.errorHandel.openErrorModa(err)
       }
      })
@@ -660,10 +669,13 @@ export class ProductsComponent implements OnInit, OnChanges {
     this.plate_town_filter_6 = event.target.value    
   }
   onApplayPlatesFilters(page_num?: number){
-    this.load = true;       
+    this.load = true;
+    this.loader = true;
+    this.errorLength = '';                  
      this.filterSub = this.httpService.applayForCar_plates(this.valueMin,this.valueMax,this.plate_town_filter_6,this.plate_type_filter_6,page_num).subscribe({
       next: (res: APIResponse<Products>)=>{
           this.load = false;
+          this.loader = false;
           this.formModal.hide();
           this.products = res.data;
           this.links = res.links;
@@ -676,6 +688,7 @@ export class ProductsComponent implements OnInit, OnChanges {
       },
       error:(err: HttpErrorResponse)=>{
         this.load = false;
+        this.loader = false;
         this.errorHandel.openErrorModa(err)
       }
      })

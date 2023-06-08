@@ -12,6 +12,7 @@ import { MacPrefixService } from '../services/mac-prefix.service';
 import { DatePipe } from '@angular/common';
 import { ActionsService } from '../services/actions.service';
 import { ErrorHandlerService } from '../services/error-handler.service';
+import { Router } from '@angular/router';
 
 declare var window: any;
 
@@ -55,6 +56,7 @@ export class ProfileComponent implements OnInit {
   regions: any = [];
   private userSub: Subscription = new Subscription;
   constructor(public authService: AuthService,
+    private router: Router,
     private macService: MacPrefixService,
     private profileService: ProfileService,
     private dialogRef: MatDialog,
@@ -179,10 +181,13 @@ export class ProfileComponent implements OnInit {
         this.sucMsg = res.data
         this.successModal.show();
         setTimeout(()=>{
-        this.successModal.hide();
-        localStorage.clear();
-        window.location.reload();
-        }, 1000);
+          this.successModal.hide();
+          localStorage.clear();
+          this.router.navigate(['/register'])
+          setTimeout(()=>{
+            window.location.reload();
+          },0)
+        },50)
       },
       error:(err: HttpErrorResponse)=>{
         this.errorHandel.openErrorModa(err)

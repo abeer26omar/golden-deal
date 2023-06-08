@@ -34,7 +34,7 @@ export class ProfileService {
       }))
     }
     deleteAccount(){
-      return this.http.get<ResponseSuccess>(`${env.api_url}/profile/delete-user-account`,this.httpOptions).pipe(tap(()=>{
+      return this.http.get<ResponseSuccess>(`${env.api_url}/profile/delete-account`,this.httpOptions).pipe(tap(()=>{
         this._refresh.next();
       }))
     }

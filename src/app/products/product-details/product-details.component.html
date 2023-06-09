@@ -1,19 +1,33 @@
     <div class="product-row row g-4 justify-content-center pt-5 pb-5">
         <div class="col-lg-9 col-12" >
             <div class="py-3 text-center" *ngIf="singleProduct.data.product_images.length !== 0">
-                <ngx-gallery [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
-                <!-- <p-galleria [value]="singleProduct.data.product_images" [responsiveOptions]="responsiveOptions" 
-                [containerStyle]="{'max-width': '660px'}" [numVisible]="2"
-                    thumbnailsPosition="bottom">
-                    <ng-template pTemplate="item" let-item>
-                        <img [src]="item.image_url" style="width: 100%; display: block;" />
-                    </ng-template>
-                    <ng-template pTemplate="thumbnail" let-item>
-                        <div class="grid grid-nogutter justify-content-center">
-                            <img [src]="item.image_url" style="width: 80px;height: 60px;"/>
+                <!-- <div dir="rtl">
+                    <ngx-gallery [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
+                </div> -->
+                <gallery gallerize [items]="cameraImages" 
+                    [nav]="false" [dots]="true" [counter]="false"></gallery>
+                <!-- <div dir="rtl">
+                    <div class="container_productImages" >
+                        <img *ngFor="let item of items; index as i" 
+                         [lightbox]="i"
+                         [src]="item.data.thumb">
+                    </div>
+                </div> -->
+                <!-- <div class="container">
+                        <ng-container *ngFor="let img of singleProduct.data.product_images">
+                            <div class="mySlides" #slides>
+                              <img src={{img.image_url}} style="width:100%">
+                            </div>
+                        </ng-container>
+                        <a class="prev" (click)="plusSlides(-1)"> ❮</a>
+                        <a class="next" (click)="plusSlides(1)"> ❯</a>
+                      
+                        <div class="row">
+                          <div class="column" *ngFor="let img of singleProduct.data.product_images">
+                            <img class="demo cursor" #dots src="{{img.image_url}}" style="width:100%" (click)="currentSlide(1)" >
+                          </div>
                         </div>
-                    </ng-template>
-                </p-galleria> -->
+                      </div>-->                
             </div>
             <div class="d-flex justify-content-center mb-5 plates" *ngIf="singleProduct.data.product_images.length == 0">
                 <ng-container  *ngFor="let property of singleProduct.data.properties">

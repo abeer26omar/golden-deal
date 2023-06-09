@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Renderer2, ViewChild, ElementRef } from '@angular/core';
 import { Product} from '../../models/products.model';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -15,6 +15,8 @@ import { environment as env } from 'src/environments/environment';
 import { AuthService } from 'src/app/services/auth.service';
 import { AuthRemainderModalComponent } from 'src/app/auth-remainder-modal/auth-remainder-modal.component';
 import { MatDialog } from '@angular/material/dialog';
+// import { Gallery, GalleryItem, ImageItem, ThumbnailsPosition, ImageSize } from '@ngx-gallery/core';
+import { GalleryItem, ImageItem } from 'ng-gallery';
 
 declare var window: any;
 
@@ -26,6 +28,9 @@ declare var window: any;
 export class ProductDetailsComponent implements OnInit ,AfterViewInit{
   galleryOptions: NgxGalleryOptions[] = [];
   galleryImages: NgxGalleryImage[] = [];
+  // items: GalleryItem[] = [];
+  cameraImages: GalleryItem[] = [];
+
   singleProduct : Product = {
     data: {
       id: 0,
@@ -104,7 +109,10 @@ export class ProductDetailsComponent implements OnInit ,AfterViewInit{
     private errorHandel: ErrorHandlerService,
     public authService: AuthService,
     private dialogRef: MatDialog,
-    private http: HttpClient) { 
+    private http: HttpClient,
+    private renderer: Renderer2,
+    // public gallery: Gallery
+    ) { 
       this.actionService.refresh.subscribe(()=>{
         this.getProductDetails(this.ProductId);
       })
@@ -179,7 +187,7 @@ export class ProductDetailsComponent implements OnInit ,AfterViewInit{
       }
     ];
     this.galleryImages = this.imgUrls;
-
+    // this.cameraImages = this.imgUrls;
   }
   ngAfterViewInit() {
   }
@@ -193,20 +201,59 @@ export class ProductDetailsComponent implements OnInit ,AfterViewInit{
           this.showOwner = true
         } else {
           this.showOwner = false
-        }
+        }        
         [...productDetails.data.product_images].forEach(e=>{
           this.imgUrls.push({
               small: e.image_url,
               medium: e.image_url,
               big: e.image_url
           })
-        })
+        });
+        this.cameraImages = productDetails.data.product_images.map(item => new ImageItem({ src: item.image_url, thumb: item.image_url }));
+        // [...productDetails.data.product_images].forEach(e=>{
+        //   this.cameraImages.push(new ImageItem({ src: e.image_url, thumb: e.image_url }))
+        // });
+        console.log(this.cameraImages);
+        // [...productDetails.data.product_images].forEach(e => {
+        //   const image = new ImageItem({ src: e.image_url, thumb: e.image_url });
+        //   this.cameraImages.push(image);
+        // });
+        // console.log(this.cameraImages);
+        
+        // this.showSlides(this.slideIndex);
+        // this.items = this.singleProduct.data.product_images.map(item =>
+        //   new ImageItem({ src: item.image_url, thumb: item.image_url })
+        // );
+    
+        // // Load items into the lightbox
+        // this.basicLightboxExample();
+    
+        // // Load item into different lightbox instance
+        // // With custom gallery config
+        // this.withCustomGalleryConfig();
       },
       error: (err: HttpErrorResponse)=>{
         this.errorHandel.openErrorModa(err)
       }
     })
   }
+  // basicLightboxExample() {
+  //   this.gallery.ref().load(this.items);
+  // }
+  // withCustomGalleryConfig() {
+
+  //   // 2. Get a lightbox gallery ref
+  //   const lightboxGalleryRef = this.gallery.ref('anotherLightbox');
+
+  //   // (Optional) Set custom gallery config to this lightbox
+  //   lightboxGalleryRef.setConfig({
+  //     imageSize: ImageSize.Cover,
+  //     thumbPosition: ThumbnailsPosition.Top
+  //   });
+
+  //   // 3. Load the items into the lightbox
+  //   lightboxGalleryRef.load(this.items);
+  // }
   addToFav(product: any, event: MouseEvent){
     this.is_animating = true;
     if(this.authService.IsloggedIn()){
@@ -317,6 +364,32 @@ export class ProductDetailsComponent implements OnInit ,AfterViewInit{
       this.router.navigate(['seller-profile',id])
     }
   }
+  // gallery
+  @ViewChild('slides') slidesRef!: ElementRef;
+  @ViewChild('dots') dotsRef!: ElementRef;
+slideIndex: number = 1;
+plusSlides(n: number) {
+  this.showSlides(this.slideIndex += n);
+}
+
+currentSlide(n: number) {
+  this.showSlides(this.slideIndex = n);
+}
+
+showSlides(n: number) {
+  const slides = this.slidesRef.nativeElement.getElementsByClassName('mySlides');
+  const dots = this.dotsRef.nativeElement.getElementsByClassName('demo');  
+  if (n > slides.length) { this.slideIndex = 1; }
+  if (n < 1) { this.slideIndex = slides.length; }
+  for (let i = 0; i < slides.length; i++) {
+    this.renderer.setStyle(slides[i], 'display', 'none');
+  }
+  for (let i = 0; i < dots.length; i++) {
+    dots[i].className = dots[i].className.replace(' active', '');
+  }
+  this.renderer.setStyle(slides[this.slideIndex-1], 'display', 'block');
+  dots[this.slideIndex-1].className += ' active';
+}
   ngOnDestory() :void{
     if(this.productSub){
       this.productSub.unsubscribe();

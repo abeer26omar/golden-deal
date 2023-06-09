@@ -43,6 +43,11 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { AngularFireMessagingModule} from '@angular/fire/compat/messaging';
 import { AngularFireModule } from '@angular/fire/compat';
+// import { GalleryModule } from '@ngx-gallery/core';
+// import { LightboxModule } from '@ngx-gallery/lightbox';
+import { GalleryModule } from  'ng-gallery';
+import { LightboxModule } from  'ng-gallery/lightbox';
+
 //components
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
@@ -86,7 +91,6 @@ import { environment } from 'src/environments/environment';
 import { NotificationsService } from './services/notifications.service';
 import { PaginatorModule } from 'primeng/paginator';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
-import { GalleriaModule } from 'primeng/galleria';
 import { ResetPassModalComponent } from './Auth/reset-pass-modal/reset-pass-modal.component';
 
 @NgModule({
@@ -176,7 +180,8 @@ import { ResetPassModalComponent } from './Auth/reset-pass-modal/reset-pass-moda
     AngularFireModule.initializeApp(environment.firebase),
     PaginatorModule,
     SlickCarouselModule,
-    GalleriaModule
+    GalleryModule,
+    LightboxModule
   ], 
   providers: [ NotificationsService, AsyncPipe,
     {provide: LocationStrategy, useClass: PathLocationStrategy},

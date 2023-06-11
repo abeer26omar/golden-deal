@@ -706,3 +706,6 @@ input.star:checked ~ label.star:before {
         object-fit: contain !important;
     }
   }
+  lightbox gallery {
+    height: 100% !important;
+  }

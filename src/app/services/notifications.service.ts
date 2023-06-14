@@ -27,6 +27,8 @@ export class NotificationsService {
     this.angularFireMessaging.requestToken.subscribe(
       {        
         next: (token)=>{
+          console.log(token);
+          
           this.http.post(`${env.api_url}/notifications/store-fcm`,{
             fcm_token: token
           }, this.httpOptions).subscribe({

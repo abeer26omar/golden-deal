@@ -341,7 +341,7 @@ export class NewAddComponent implements OnInit {
   }
   getCardChar(key: number,value: any){
     let plate_char = value.target.value;
-    let trans_value:any;
+    let trans_value: any;
     this.error_CarPlate = '';
     let foundChar = false;
     switch(key){
@@ -404,6 +404,7 @@ export class NewAddComponent implements OnInit {
   convertNumbers(key: number,value: any){
     let plate_num = value.target.value;
     let foundChar = false;
+    let trans_value: any;
     switch(key){
       case 1: 
           this.card_num_ar_1 = '';
@@ -414,13 +415,14 @@ export class NewAddComponent implements OnInit {
                 this.card_num_ar_1 = char.char;
                 this.card_num_en_1 = char.trans;
                 this.myForm.get('plate_numbers_en_filter_6')?.get('plate_number_en_1')?.setValue(char.trans);
-            }
-            else if(char.trans == plate_num){
+            }else if(char.trans == plate_num){
               foundChar = true;
               this.card_num_ar_1 = char.char;
               this.card_num_en_1 = char.trans;
               this.myForm.get('plate_numbers_filter_6')?.get('plate_number_ar_1')?.setValue(char.char);
               this.myForm.get('plate_numbers_en_filter_6')?.get('plate_number_en_1')?.setValue(char.trans); 
+            }else if(plate_num == ''){
+              this.myForm.get('plate_numbers_en_filter_6')?.get('plate_number_en_1')?.setValue('');
             }
           });
             if(!foundChar){
@@ -438,13 +440,14 @@ export class NewAddComponent implements OnInit {
               this.card_num_ar_2 = char.char;
               this.card_num_en_2 = char.trans;
               this.myForm.get('plate_numbers_en_filter_6')?.get('plate_number_en_2')?.setValue(char.trans);
-          }
-          else if(char.trans == plate_num){
+          }else if(char.trans == plate_num){
             foundChar = true;
             this.card_num_ar_2 = char.char;
             this.card_num_en_2 = char.trans;
             this.myForm.get('plate_numbers_filter_6')?.get('plate_number_ar_2')?.setValue(char.char);
             this.myForm.get('plate_numbers_en_filter_6')?.get('plate_number_en_2')?.setValue(char.trans); 
+          }else if(plate_num == ''){
+            this.myForm.get('plate_numbers_en_filter_6')?.get('plate_number_en_2')?.setValue(''); 
           }
         });
         if(!foundChar){
@@ -462,13 +465,14 @@ export class NewAddComponent implements OnInit {
               this.card_num_ar_3 = char.char;
               this.card_num_en_3 = char.trans;
               this.myForm.get('plate_numbers_en_filter_6')?.get('plate_number_en_3')?.setValue(char.trans);
-          }
-          else if(char.trans == plate_num){
+          }else if(char.trans == plate_num){
             foundChar = true;
             this.card_num_ar_3 = char.char;
             this.card_num_en_3 = char.trans;
             this.myForm.get('plate_numbers_filter_6')?.get('plate_number_ar_3')?.setValue(char.char);
             this.myForm.get('plate_numbers_en_filter_6')?.get('plate_number_en_3')?.setValue(char.trans); 
+          }else if(plate_num == ''){
+            this.myForm.get('plate_numbers_en_filter_6')?.get('plate_number_en_3')?.setValue(''); 
           }
         });
         if(!foundChar){
@@ -486,13 +490,14 @@ export class NewAddComponent implements OnInit {
               this.card_num_ar_4 = char.char;
               this.card_num_en_4 = char.trans;
               this.myForm.get('plate_numbers_en_filter_6')?.get('plate_number_en_4')?.setValue(char.trans);
-          }
-          else if(char.trans == plate_num){
+          }else if(char.trans == plate_num){
             foundChar = true;
             this.card_num_ar_4 = char.char;
             this.card_num_en_4 = char.trans;
             this.myForm.get('plate_numbers_filter_6')?.get('plate_number_ar_4')?.setValue(char.char);
             this.myForm.get('plate_numbers_en_filter_6')?.get('plate_number_en_4')?.setValue(char.trans); 
+          }else if(plate_num == ''){
+            this.myForm.get('plate_numbers_en_filter_6')?.get('plate_number_en_4')?.setValue(''); 
           }
         });
           if(!foundChar){

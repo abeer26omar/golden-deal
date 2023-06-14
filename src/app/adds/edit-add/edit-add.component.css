@@ -1,4 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Mada:wght@300;400&display=swap');
+.plates{
+    position: relative;
+}
 .card{
     background: #FFFFFF;
     box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.15);
@@ -194,4 +197,38 @@ input.disabled{
 }
 input.invalid_input{
     border: 1px solid var(--semi-red);
+}
+.card_num_ar {
+    top: 20%;
+    left: 24%;
+}
+.card_num_en {
+    bottom: 28%;
+    left: 24%;
+}
+.card_chars_ar {
+    top: 20%;
+    right: 25%;
+}
+.card_chars_en{
+    bottom: 28%;
+    right: 25%;
+}
+@media screen and (max-width: 575px) {
+    .card_num_ar {
+        top: 11.5%;
+        font-size: 14px;
+    }
+    .card_num_en {
+        bottom: 20%;
+        font-size: 14px;
+    }
+    .card_chars_ar {
+        top: 11.5%;
+        font-size: 14px;
+    }
+    .card_chars_en{
+        bottom: 20%;
+        font-size: 14px;
+    }
 }

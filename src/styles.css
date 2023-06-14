@@ -45,6 +45,8 @@ body {
     padding: 0;
     direction: rtl;
     overflow-x: hidden;
+    -webkit-transition: all ease 500ms ;
+    transition: all ease 500ms;
 }
 *{
     font-family: var(--font-family) !important;

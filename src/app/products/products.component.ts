@@ -243,7 +243,7 @@ export class ProductsComponent implements OnInit {
       ]
     }
     
-    getSlickOptionsSubBrands(length: any){
+  getSlickOptionsSubBrands(length: any){
       return {
       slidesToShow: Math.min(length, 7),
       centerMode: false,

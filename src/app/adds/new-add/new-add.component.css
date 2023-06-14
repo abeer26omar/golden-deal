@@ -25,6 +25,9 @@
     font-weight: 900;
     font-size: 1.2rem;
 }
+.plates{
+    position: relative;
+}
 .form-check {
     padding-right: 2.5em;
     padding-left: 0em;
@@ -211,4 +214,38 @@ input.invalid_input{
 .rest_icon{
     position: absolute;
     right: 4px;
+}
+.card_num_ar {
+    top: 20%;
+    left: 24%;
+}
+.card_num_en {
+    bottom: 28%;
+    left: 24%;
+}
+.card_chars_ar {
+    top: 20%;
+    right: 25%;
+}
+.card_chars_en{
+    bottom: 28%;
+    right: 25%;
+}
+@media screen and (max-width: 575px) {
+    .card_num_ar {
+        top: 11.5%;
+        font-size: 14px;
+    }
+    .card_num_en {
+        bottom: 20%;
+        font-size: 14px;
+    }
+    .card_chars_ar {
+        top: 11.5%;
+        font-size: 14px;
+    }
+    .card_chars_en{
+        bottom: 20%;
+        font-size: 14px;
+    }
 }

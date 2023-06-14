@@ -681,30 +681,26 @@ input.star:checked ~ label.star:before {
   }
   lightbox {
     direction: rtl !important;
-    background-color: #000 !important;
+    box-shadow: none !important;
   }
   gallery {
     background-color: transparent !important;
-    height: 600px !important;
-  }
-  .g-nav-prev,
-  .g-nav-next{
+    /* width: 100% !important; */
+}
+.g-nav-prev,
+.g-nav-next{
     display: none !important;
-  }
-  gallery-item{
-    border-radius: 8px !important;
-  }
-  .g-image-item {
-    -o-object-fit: cover !important;
-    object-fit: cover !important;
-    object-position: center !important;
-  }
-  @media screen and (max-width: 575px) {
-    gallery {
-        height: 400px !important;
-      }
+}
+@media screen and (max-width: 575px) {
+    
     .g-image-item {
         -o-object-fit: contain !important;
         object-fit: contain !important;
     }
   }
+gallery-core[thumbPosition=bottom] gallery-thumbs .g-slider {
+    justify-content: center !important;
+}
+.g-backdrop {
+    background-color: #000000b8 !important;
+}

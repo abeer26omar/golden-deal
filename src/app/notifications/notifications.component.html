@@ -1,3 +1,8 @@
+<div class="loader d-flex justify-content-center" *ngIf="load">
+    <div class="dot1"></div>
+    <div class="dot2"></div>
+    <div class="dot3"></div>
+</div>
 <ul class="more-list p-0" id="notification_list">
     <li *ngFor="let notify of notifications.data" class="py-1">
         <div class="notify py-1 px-2 d-flex justify-content-between">
@@ -11,5 +16,5 @@
             <p class="created_at align-self-end">{{notify.created_at | date:'M/d/yyyy'}}</p>
         </div>
     </li>
-    <p *ngIf="notifications.data.length == 0" class="text-center">لا يوجد اشعارات</p>
+    <p class="text-center">{{errorNot}}</p>
 </ul>

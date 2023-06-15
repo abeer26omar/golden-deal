@@ -8,15 +8,15 @@ export const environment = {
   socket_url: 'https://goldendealchat--msamy1.repl.co/',
   // socket_url: 'http://localhost:3000/',
   firebase: {
-    apiKey: "AIzaSyDWCchVr5xKwG67w1tqhiV3HwYH0fg9l6I",
+    apiKey: "AIzaSyCLLjhhfMEuj5Cklm5qQBUjYCmtCity8fc",
     authDomain: "golden-deal-angular.firebaseapp.com",
     projectId: "golden-deal-angular",
     storageBucket: "golden-deal-angular.appspot.com",
     messagingSenderId: "789293992920",
-    appId: "1:789293992920:web:a60de3b33a404ebbde00ad",
-    measurementId: "G-086W67L99V"
+    appId: "1:789293992920:web:0414009ca9d43480de00ad",
+    measurementId: "G-JWFWSFMBBK",
+    vapidKey: "BEBUzl6M-0aLWuU0d8Knm8qG2jjxfY_C2SYeXK5f2FIZF5wGhI28sQFINvUqk--mdBbvf70zLwwryOoyR9ilgK4"
   }
-
 };
 
 /*

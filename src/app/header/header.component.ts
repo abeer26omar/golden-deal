@@ -18,6 +18,7 @@ declare var window: any;
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
+  @Output() load: boolean = false;
   @Output() toggleSideBar: EventEmitter<any> = new EventEmitter();
   @Output() notifications: Notifications = {
     data: [],
@@ -44,6 +45,7 @@ export class HeaderComponent implements OnInit {
         total: 0
     }
   }
+  @Output() errorNot: string = '';
   panelOpenState = false;
   httpService: any;
   public categories : Array<Category> = [];
@@ -89,13 +91,21 @@ export class HeaderComponent implements OnInit {
   pageNo: number = 1;
   lastpage: number = 1;
   getMyNotifications(pageNo:number){
+    this.load = true;
     this.notifiSub = this.notificationService.getMyNotifications(this.pageNo).subscribe({
       next: (resData: Notifications)=>{
+        this.load = false;
+        if(resData.data.length == 0){
+          this.errorNot = 'لا يوجد اشعارات';
+        }else{
+          this.errorNot = '';
+        }
         this.lastpage = resData.meta.last_page;
         resData.meta.current_page = this.pageNo;
         this.notifications.data = this.notifications.data.concat(resData.data)                
       },
       error: (err: HttpErrorResponse)=>{
+        this.load = false;
         this.errorHandel.openErrorModa(err)
       }
     })

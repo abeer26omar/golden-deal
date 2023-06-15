@@ -35,6 +35,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatStepperModule } from '@angular/material/stepper';
+import { MatBadgeModule } from '@angular/material/badge';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { SwiperModule } from 'swiper/angular';
 import { NgxGalleryModule } from 'ngx-gallery-9';
@@ -170,6 +171,7 @@ import { ResetPassModalComponent } from './Auth/reset-pass-modal/reset-pass-moda
     MatPaginatorModule,
     MatCheckboxModule,
     MatStepperModule,
+    MatBadgeModule,
     ScrollingModule,
     SwiperModule,
     NgxGalleryModule,

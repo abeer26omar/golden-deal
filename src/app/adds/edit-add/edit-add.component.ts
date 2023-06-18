@@ -140,7 +140,7 @@ export class EditAddComponent implements OnInit {
     { char: 'ل' , trans: 'L' },
     { char: 'م' , trans: 'Z' },
     { char: 'ن' , trans: 'N' },
-    { char: 'هـ' , trans: 'H' },
+    { char: 'ه' , trans: 'H' },
     { char: 'و' , trans: 'U' },
     { char: 'ى' , trans: 'V' }
   ]

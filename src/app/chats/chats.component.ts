@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { HttpErrorResponse } from '@angular/common/http';
+import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ChatService } from '../services/chat.service';
-import { MessagesList ,Messages, APIResponse7} from '../models/chat.model';
-import { NgbDatepickerModule, NgbOffcanvas, OffcanvasDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { MessagesList ,Messages, APIResponse7, Support} from '../models/chat.model';
 import { Subscription } from 'rxjs';
-import { AdminService } from '../services/admin.service';
+import { BreakpointObserver } from '@angular/cdk/layout';
+import { ResponseSuccess } from '../models/actions.model';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-chats',
@@ -16,7 +16,6 @@ export class ChatsComponent implements OnInit {
   receiverId: any;
   admin: any;
   message: string = '';
-  messageArr: {user: string, msg: string}[] = []
   currUser: any;
   messageTxt: string = '';
   errorTxt: string = '';
@@ -29,18 +28,80 @@ export class ChatsComponent implements OnInit {
   public usersMsg: Array<Messages> = []
   avatar_base_url: string = 'https://admin.gooldendeal.com/storage/'
   public chatSub: Subscription = new Subscription;
-  constructor(private chatService: ChatService,
-    private adminService: AdminService,
-    private offcanvasService: NgbOffcanvas) { 
-    
+  @ViewChild('chatWindow') chatWindow!: ElementRef;
+  @ViewChild('sideNav') sideNav!: ElementRef;
+  @ViewChild('backDrop') backDrop!: ElementRef;
+  toggle: boolean = false;
+  opend: boolean = false;
+  chatType: boolean = false;
+  supportRes: string = '';
+  supportData: any;
+  messages: any;
+  supportErr: string = '';
+  formSupport = new FormGroup({
+    message: new FormControl('')
+  })
+  get fSupport(){
+    return this.formSupport.controls;
   }
+  constructor(private chatService: ChatService,
+    private cdr: ChangeDetectorRef,
+    private el: ElementRef,
+    private breakPointObserver: BreakpointObserver) { 
+    }
   ngOnInit(): void {
-    // this.admin = this.adminService.getOption();
-    this.getAllPreMsgList()
-    // this.chatService.getMessage().subscribe((data) => {
-    //   console.log('new msg send');
-    //   this.messageArr.push(data);
-    // }); 
+      this.getAllPreMsgList();
+      this.getAllSupportMsg();
+      this.getNewMsg();
+  }
+  ngAfterViewInit() {
+    this.scrollToBottom();
+    this.breakPointObserver.observe(['(max-width: 992px)']).subscribe((res)=>{
+      if(res.matches){
+        this.sideNav.nativeElement.classList.add('hidden');
+        this.toggle = true;
+      }else{
+        this.sideNav.nativeElement.classList.remove('hidden');
+        this.toggle = false;
+      }
+    })
+  }
+  toggleSideMenu(){
+    this.opend != this.opend;
+    this.sideNav.nativeElement.classList.toggle('hidden');
+    this.sideNav.nativeElement.classList.toggle('wavy');
+    this.backDrop.nativeElement.classList.toggle('active');
+  }
+  scrollToBottom() {
+    try {
+      const chatContent = document.getElementById('chat-content');
+      chatContent!.scrollTop = chatContent!.scrollHeight;
+    } catch(err) { }
+  }
+  getAllSupportMsg(){
+    this.chatSub = this.chatService.getAllSupportMsg().subscribe({
+      next: (res: Support)=>{
+        this.load = false;
+        this.supportData = res.data;
+        this.messages = res.data.support_messages;
+      }
+    })
+  }
+  sendSupport(){
+    this.load = true;
+    const formdata = new FormData();
+    formdata.append('message', this.fSupport['message'].value)
+    this.chatSub = this.chatService.sendMsgSuport(formdata).subscribe({
+      next: (res: ResponseSuccess)=>{
+        this.load = true;
+        this.supportRes = res.data;
+        this.getAllSupportMsg();
+        this.formSupport.reset()
+      },
+      error: ()=>{
+        this.load = false;
+      }
+    })
   }
   sendMsg(){
     const data = {
@@ -53,15 +114,11 @@ export class ChatsComponent implements OnInit {
     this.getNewMsg();
   }
   getNewMsg(){
-    const data = {
-      sender: this.userId,
-      receiver: this.receiverId,
-      message: this.messageTxt
-    }
     this.chatService.getMessage().subscribe((data)=>{
       this.usersMsg.push(data)
+      this.cdr.detectChanges();
     })
-    this.getChat(data.receiver)
+    this.getChat(this.receiverId)
   }
   getAllPreMsgList(){
     this.loader = true;
@@ -80,33 +137,13 @@ export class ChatsComponent implements OnInit {
       next: (res: Array<Messages>)=>{
         this.load = false;
         this.usersMsg = res;
+        this.scrollToBottom();
       },
       error: ()=>{
         this.load = false;
       }
     })
   }
-  closeResult : any;
-  open(content: any) {
-		this.offcanvasService.open(content, { ariaLabelledBy: 'offcanvas-basic-title' }).result.then(
-			(result) => {
-				this.closeResult = `Closed with: ${result}`;
-			},
-			(reason) => {
-				this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-			},
-		);
-	}
-
-	private getDismissReason(reason: any): string {
-		if (reason === OffcanvasDismissReasons.ESC) {
-			return 'by pressing ESC';
-		} else if (reason === OffcanvasDismissReasons.BACKDROP_CLICK) {
-			return 'by clicking on the backdrop';
-		} else {
-			return `with: ${reason}`;
-		}
-	}
   ngOnDestory() :void{
     if(this.chatSub){
       this.chatSub.unsubscribe();

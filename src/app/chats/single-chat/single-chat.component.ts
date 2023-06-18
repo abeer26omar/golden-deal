@@ -7,7 +7,7 @@ import { ChatService } from 'src/app/services/chat.service';
 @Component({
   selector: 'app-single-chat',
   templateUrl: './single-chat.component.html',
-  styleUrls: ['../chat-support/chat-support.component.css','./single-chat.component.css']
+  styleUrls: ['../chat-support/chat-support.component.css']
 })
 export class SingleChatComponent implements OnInit {
   userInfo: any;

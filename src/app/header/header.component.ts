@@ -10,6 +10,8 @@ import { GetproductsService } from '../services/getproducts.service';
 import { ErrorHandlerService } from '../services/error-handler.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NotificationsService } from '../services/notifications.service';
+import { ChatService } from '../services/chat.service';
+import { MessagesList } from '../models/chat.model';
 declare var window: any;
 
 @Component({
@@ -57,17 +59,22 @@ export class HeaderComponent implements OnInit {
   toastFaild: any;
   payDepositModal: any;
   deposit: any;
+  count_msgs: number = 0;
   constructor(public authService: AuthService,
     private route: Router,
     private categoryService: ProductsRequestService,
     private macService: MacPrefixService,
     public getProducts: GetproductsService,
     private errorHandel: ErrorHandlerService,
-    private notificationService: NotificationsService) { 
+    private notificationService: NotificationsService,
+    private chatService: ChatService) { 
       this.userId = localStorage.getItem('userId');
       this.userImage = localStorage.getItem('userImage')
       this.authService.refresh.subscribe(()=>{
       this.userImage = localStorage.getItem('userImage')
+      // this.chatService.refresh.subscribe(()=>{
+      //   this.getAllPreMsgList();
+      // })
     })
   }
   private notifiSub : Subscription = new Subscription;
@@ -83,6 +90,7 @@ export class HeaderComponent implements OnInit {
     if(this.authService.IsloggedIn()){      
       this.notificationService.getMyNotifications(this.pageNo);
     }
+    // this.getAllPreMsgList()
   }
   private categorySub : Subscription = new Subscription;
   stopPropagation(event: any){
@@ -160,6 +168,17 @@ export class HeaderComponent implements OnInit {
         },500)
       }
     }    
+  }
+  getAllPreMsgList(){
+    this.chatService.getAllPreMsgList(this.userId).subscribe({
+      next: (res: Array<MessagesList>)=>{
+        res.forEach(e=>{
+          if(e.receiver == this.userId && e.seen_at == 0){
+            this.count_msgs += this.count_msgs;
+          }
+        })
+      }
+    })
   }
   ngOnDestory() :void{
    if(this.categorySub){

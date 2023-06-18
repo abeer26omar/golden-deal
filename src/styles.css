@@ -711,6 +711,11 @@ gallery-core[thumbPosition=bottom] gallery-thumbs .g-slider {
     width: 17px;
     height: 17px;
 }
+.chat .mat-badge-small.mat-badge-overlap.mat-badge-after .mat-badge-content {
+    left: -64px;
+    top: -2px;
+    right: unset;
+}
 .loader>div{
     width: 8px;
     height: 8px;

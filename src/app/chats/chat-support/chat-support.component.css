@@ -28,7 +28,7 @@ p.card-title{
 #chat-content{
     padding: 1rem;
     overflow-y: scroll !important;
-    height:400px !important;
+    height: 425px !important;
 }
 .media{
     display: flex;

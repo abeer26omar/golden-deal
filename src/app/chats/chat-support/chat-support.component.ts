@@ -10,7 +10,7 @@ import { ChatService } from '../../services/chat.service';
 @Component({
   selector: 'app-chat-support',
   templateUrl: './chat-support.component.html',
-  styleUrls: ['./chat-support.component.css']
+  styleUrls: ['../chats.component.css']
 })
 export class ChatSupportComponent implements OnInit {
   public chatSub: Subscription = new Subscription;

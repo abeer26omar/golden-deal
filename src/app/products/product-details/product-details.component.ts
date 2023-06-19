@@ -213,7 +213,7 @@ export class ProductDetailsComponent implements OnInit ,AfterViewInit{
         // [...productDetails.data.product_images].forEach(e=>{
         //   this.cameraImages.push(new ImageItem({ src: e.image_url, thumb: e.image_url }))
         // });
-        console.log(this.cameraImages);
+        // console.log(this.cameraImages);
         // [...productDetails.data.product_images].forEach(e => {
         //   const image = new ImageItem({ src: e.image_url, thumb: e.image_url });
         //   this.cameraImages.push(image);

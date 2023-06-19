@@ -7,8 +7,9 @@ import { Notifications } from '../models/actions.model';
   styleUrls: ['./notifications.component.css']
 })
 export class NotificationsComponent implements OnInit {
-  @Input() notifications!: Notifications 
-  
+  @Input() notifications!: Notifications ;
+  @Input() load!: boolean;
+  @Input() errorNot!: string;
   constructor() { 
     }
 

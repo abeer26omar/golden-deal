@@ -23,7 +23,8 @@ export interface MessagesList{
     receiver_name: string,
     sender: number,
     sender_avatar: string,
-    sender_name: string
+    sender_name: string,
+    seen_at: number
 }
 // export interface APIResponse6<T>{
 // }

@@ -18,6 +18,12 @@
                     </div>
                     <div class="d-flex justify-content-center mb-5 plates" *ngIf="Add.data.category_slug == 'car_plates'">
                         <img src="../../../assets/images/car_palets_show.svg" alt="car_plates_icon" width="80%">
+                        <ng-container>
+                            <span  class="card_chars_ar">{{card_chars_ar_1}} {{card_chars_ar_2}} {{card_chars_ar_3}}</span>
+                            <span  class="card_chars_en">{{card_chars_en_3}} {{card_chars_en_2}} {{card_chars_en_1}}</span>
+                            <span  class="card_num_ar">{{card_num_ar_1}} {{card_num_ar_2}} {{card_num_ar_3}} {{card_num_ar_4}}</span>
+                            <span  class="card_num_en">{{card_num_en_1}} {{card_num_en_2}} {{card_num_en_3}} {{card_num_en_4}}</span>
+                        </ng-container>
                     </div>
                     <div class="col-12" *ngIf="Add.data.category_slug == 'cars'">
                                 <div class="row row-cols-md-4 row-cols-lg-6 g-3 justify-content-center">

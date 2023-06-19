@@ -1,5 +1,5 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Component, ElementRef, HostListener, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription, min } from 'rxjs';
@@ -243,7 +243,7 @@ export class ProductsComponent implements OnInit {
       ]
     }
     
-    getSlickOptionsSubBrands(length: any){
+  getSlickOptionsSubBrands(length: any){
       return {
       slidesToShow: Math.min(length, 7),
       centerMode: false,

@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../services/auth.service';
@@ -22,7 +22,7 @@ declare var window: any;
   styleUrls: ['./profile.component.css'],
   providers:[DatePipe]
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent implements OnInit, OnDestroy {
   userData : Profile = {
     data: {
         id: 0,
@@ -208,7 +208,7 @@ export class ProfileComponent implements OnInit {
       }
     })
   }
-  ngOnDestory() :void{ 
+  ngOnDestroy() :void{ 
     if(this.userSub){
       this.userSub.unsubscribe();
     }

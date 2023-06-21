@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, OnDestroy } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -14,7 +14,7 @@ declare var window: any;
   templateUrl: './sidenav.component.html',
   styleUrls: ['./sidenav.component.css']
 })
-export class SidenavComponent implements OnInit {
+export class SidenavComponent implements OnInit, OnDestroy {
   @Output() closeSideNav:EventEmitter<any> = new EventEmitter();
 
   panelOpenState = false;
@@ -82,7 +82,7 @@ export class SidenavComponent implements OnInit {
   termsCondition(slug: string){
     this.route.navigate(['/termsandconditions',slug])
   }
-  ngOnDestory() :void{
+  ngOnDestroy() :void{
    if(this.categorySub){
      this.categorySub.unsubscribe();
    }

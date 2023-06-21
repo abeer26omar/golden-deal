@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { APIresponse2, Favourites, Orders, Portfolio, Products, UserProducts } from '../models/actions.model';
@@ -20,7 +20,7 @@ declare var window: any;
   templateUrl: './adds.component.html',
   styleUrls: ['./adds.component.css']
 })
-export class AddsComponent implements OnInit {
+export class AddsComponent implements OnInit, OnDestroy {
   filterModal: any;
   deleteModal: any;
   solidModal: any;
@@ -284,7 +284,7 @@ export class AddsComponent implements OnInit {
   editAdd(id: number){
     this.router.navigate([`edit-add/${id}`])
   }
-  ngOnDestory() :void{
+  ngOnDestroy() :void{
     if(this.portSub){
       this.portSub.unsubscribe();
     } 

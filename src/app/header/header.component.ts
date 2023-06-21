@@ -1,4 +1,4 @@
-import { Component, EventEmitter, HostListener, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Notifications, ResponseSuccess } from '../models/actions.model';
@@ -19,7 +19,7 @@ declare var window: any;
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
   @Output() load: boolean = false;
   @Output() toggleSideBar: EventEmitter<any> = new EventEmitter();
   @Output() notifications: Notifications = {
@@ -180,7 +180,7 @@ export class HeaderComponent implements OnInit {
       }
     })
   }
-  ngOnDestory() :void{
+  ngOnDestroy() :void{
    if(this.categorySub){
      this.categorySub.unsubscribe();
    }

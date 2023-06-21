@@ -1,17 +1,18 @@
-import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { ChatService } from '../services/chat.service';
 import { MessagesList ,Messages, APIResponse7, Support} from '../models/chat.model';
 import { Subscription } from 'rxjs';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { ResponseSuccess } from '../models/actions.model';
 import { FormControl, FormGroup } from '@angular/forms';
+import { NotificationsService } from '../services/notifications.service';
 
 @Component({
   selector: 'app-chats',
   templateUrl: './chats.component.html',
   styleUrls: ['./chats.component.css']
 })
-export class ChatsComponent implements OnInit {
+export class ChatsComponent implements OnInit, OnDestroy {
   userId = parseInt(localStorage.getItem('userId') || '') ;
   receiverId: any;
   admin: any;
@@ -31,6 +32,7 @@ export class ChatsComponent implements OnInit {
   @ViewChild('chatWindow') chatWindow!: ElementRef;
   @ViewChild('sideNav') sideNav!: ElementRef;
   @ViewChild('backDrop') backDrop!: ElementRef;
+  @ViewChild('textArea') textArea!: ElementRef;
   toggle: boolean = false;
   opend: boolean = false;
   chatType: boolean = false;
@@ -45,17 +47,32 @@ export class ChatsComponent implements OnInit {
     return this.formSupport.controls;
   }
   constructor(private chatService: ChatService,
-    private cdr: ChangeDetectorRef,
     private el: ElementRef,
+    private notificationService: NotificationsService,
     private breakPointObserver: BreakpointObserver) { 
     }
-  ngOnInit(): void {
+    ngOnInit(): void {
+      this.notificationService._insideChatComponent.next(true)
+      this.chatService.connect(this.userId)
+      this.chatSub = this.chatService.getMessage().subscribe((data)=>{
+        const mappedData = {
+          message: data.message,
+          receiver_avatar: '',
+          receiver_id: data.receiver,
+          receiver_name: '',
+          seen_at: 0,
+          sender_avatar: '',
+          sender_id: data.sender,
+          sender_name: ''
+        }
+        this.usersMsg.push(mappedData)
+      })
       this.getAllPreMsgList();
       this.getAllSupportMsg();
-      this.getNewMsg();
+      // this.scrollToBottom();
   }
   ngAfterViewInit() {
-    this.scrollToBottom();
+    // this.scrollToBottom();
     this.breakPointObserver.observe(['(max-width: 992px)']).subscribe((res)=>{
       if(res.matches){
         this.sideNav.nativeElement.classList.add('hidden');
@@ -73,10 +90,13 @@ export class ChatsComponent implements OnInit {
     this.backDrop.nativeElement.classList.toggle('active');
   }
   scrollToBottom() {
-    try {
-      const chatContent = document.getElementById('chat-content');
-      chatContent!.scrollTop = chatContent!.scrollHeight;
-    } catch(err) { }
+    setTimeout(() => {
+      try {
+        const chatContent = document.getElementById('chat-content');
+        const lastMessage = chatContent!.lastElementChild as HTMLElement;
+        lastMessage.scrollIntoView({ behavior: 'smooth' });
+      } catch(err) { }
+    }, 100);
   }
   getAllSupportMsg(){
     this.chatSub = this.chatService.getAllSupportMsg().subscribe({
@@ -84,6 +104,7 @@ export class ChatsComponent implements OnInit {
         this.load = false;
         this.supportData = res.data;
         this.messages = res.data.support_messages;
+        this.scrollToBottom();
       }
     })
   }
@@ -109,16 +130,14 @@ export class ChatsComponent implements OnInit {
       receiver: this.receiverId,
       message: this.messageTxt
     }
-    this.chatService.sendMessage(data);
-    this.messageTxt = '';
-    this.getNewMsg();
-  }
-  getNewMsg(){
-    this.chatService.getMessage().subscribe((data)=>{
-      this.usersMsg.push(data)
-      this.cdr.detectChanges();
-    })
-    this.getChat(this.receiverId)
+    if(this.messageTxt == ''){
+      this.textArea.nativeElement.classList.add('inValid')
+    }else{
+      this.textArea.nativeElement.classList.remove('inValid')
+      this.chatService.sendMessage(data);
+      this.messageTxt = '';
+    }
+    // this.getNewMsg();
   }
   getAllPreMsgList(){
     this.loader = true;
@@ -144,10 +163,11 @@ export class ChatsComponent implements OnInit {
       }
     })
   }
-  ngOnDestory() :void{
-    if(this.chatSub){
+  ngOnDestroy(): void {
+    this.notificationService._insideChatComponent.next(false);
+    if (this.chatSub) {
       this.chatSub.unsubscribe();
     }
-  } 
+  }
 }
  

@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgOtpInputConfig } from 'ng-otp-input';
 import { MAT_DIALOG_DATA, MatDialogClose, MatDialogRef } from '@angular/material/dialog';
@@ -15,7 +15,7 @@ import { MustMatchService } from 'src/app/services/must-match.service';
   templateUrl: './reset-pass-modal.component.html',
   styleUrls: ['./reset-pass-modal.component.css']
 })
-export class ResetPassModalComponent implements OnInit {
+export class ResetPassModalComponent implements OnInit, OnDestroy {
   private authSub : Subscription = new Subscription;
   result: string = '';
   resultErr: string = '';
@@ -166,7 +166,7 @@ export class ResetPassModalComponent implements OnInit {
       return;
     }
   }
-  ngOnDestory() :void{
+  ngOnDestroy() :void{
     if(this.authSub){
       this.authSub.unsubscribe();
     }

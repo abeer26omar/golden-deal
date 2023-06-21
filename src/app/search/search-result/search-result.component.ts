@@ -1,5 +1,5 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ResponseSuccess } from 'src/app/models/actions.model';
@@ -14,7 +14,7 @@ import { environment as env } from 'src/environments/environment';
   templateUrl: './search-result.component.html',
   styleUrls: ['../search.component.css','./search-result.component.css']
 })
-export class SearchResultComponent implements OnInit {
+export class SearchResultComponent implements OnInit, OnDestroy {
   key: any;
   errMsg: string = '';
   error : boolean = false;
@@ -118,7 +118,7 @@ export class SearchResultComponent implements OnInit {
   paginate(event: any){
     this.getSearchResult(this.key2,event.page+1)
   } 
-  ngOnDestory() :void{
+  ngOnDestroy() :void{
     if(this.routeSub){
       this.routeSub.unsubscribe();
     }

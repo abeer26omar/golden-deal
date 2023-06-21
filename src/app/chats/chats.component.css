@@ -210,8 +210,9 @@ textarea{
     color: #fff;
     background-color: hsl(0, 0%, 97%);
 }
-.conversation_list{
-    transition: all ease 3ms;
+.conversation_list.wavy{
+    transition: width 500ms ease,-webkit-transform 500ms ease;
+    transition: width 500ms ease;
 }
 .hidden{
     display: none;

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router,ActivatedRoute, Params } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -14,7 +14,7 @@ declare var window: any;
   templateUrl: './add-edit-address.component.html',
   styleUrls: ['./add-edit-address.component.css']
 })
-export class AddEditAddressComponent implements OnInit {
+export class AddEditAddressComponent implements OnInit, OnDestroy {
   edit: boolean = false;
   successAdd: any;
   faildAdd: any;
@@ -150,7 +150,7 @@ export class AddEditAddressComponent implements OnInit {
       }
     })
   }
-  ngOnDestory() :void{
+  ngOnDestroy() :void{
     if(this.addSub){
       this.addSub.unsubscribe();
     }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AddressesService } from '../services/addresses.service';
@@ -15,7 +15,7 @@ declare var window: any;
   templateUrl: './address.component.html',
   styleUrls: ['./address.component.css']
 })
-export class AddressComponent implements OnInit {
+export class AddressComponent implements OnInit, OnDestroy {
   faildAddress: any;
   error: string = '';
   public adds: Array<Addresses> = [];
@@ -73,7 +73,7 @@ export class AddressComponent implements OnInit {
   addNewAdd(){
     this.router.navigate(['/add']);
   }
-  ngOnDestory() :void{
+  ngOnDestroy() :void{
     if(this.addSub){
       this.addSub.unsubscribe();
     }

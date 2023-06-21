@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, Validators} from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -17,7 +17,7 @@ declare var window: any;
   templateUrl: './edit-add.component.html',
   styleUrls: ['./edit-add.component.css']
 })
-export class EditAddComponent implements OnInit {
+export class EditAddComponent implements OnInit, OnDestroy {
   images : string[] = [];
   addId!: number;
   addCategory: string = '';
@@ -672,7 +672,7 @@ export class EditAddComponent implements OnInit {
   close(){
     this.modelAddImages.hide()
   }
-  ngOnDestory() :void{
+  ngOnDestroy() :void{
     if(this.editSub){
       this.editSub.unsubscribe();
     }

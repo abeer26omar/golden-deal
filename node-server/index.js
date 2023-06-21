@@ -37,7 +37,7 @@ const connection = mysql.createConnection(configDB);
 
 io.on('connection', function(socket) {
   var client = {};
-  console.log("new user is connected ");
+  // console.log("new user is connected ");
 
   //Golden Deal chat
   socket.on('user_connected' ,function (data){
@@ -59,7 +59,7 @@ io.on('connection', function(socket) {
       io.to(receiversocketId).emit("new_message", {"sender": msg[0].sender, "receiver": msg[0].receiver, "message": msg[0].message, "created_at": msg[0].created_at });
       io.to(socketId).emit("new_message", {"sender": msg[0].sender, "receiver": msg[0].receiver, "message": msg[0].message, "created_at": msg[0].created_at });
     })();
-    console.log("new msg sent");
+    // console.log("new msg sent");
   });
 
 });

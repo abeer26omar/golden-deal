@@ -4,7 +4,6 @@ import { NotificationsService } from './services/notifications.service';
 import { ClearStorageService } from './services/clear-storage.service'
 declare var window: any;
 
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -24,19 +23,22 @@ export class AppComponent implements OnInit{
   constructor(public authService: AuthService,
     private notificationService: NotificationsService,
     private ClearStorageService: ClearStorageService){
-    this.hidebackdrop()
-  }
-  hidebackdrop(){
-    this.backdrops.forEach(element => {
-      element.style.opacity = '1';
-    });
-  }
-  ngOnInit(): void {
-    if(this.authService.IsloggedIn()){
-      // this.notificationService.requestPermission();
-      this.notificationService.getMyNotifications();
-      // this.notification = this.notificationService.currentMessage;      
+      this.hidebackdrop()
     }
-    // this.ClearStorageService.listenForBeforeUnload()
+    hidebackdrop(){
+      this.backdrops.forEach(element => {
+        element.style.opacity = '1';
+      });
+    }
+    ngOnInit(): void {
+      if(this.authService.IsloggedIn()){
+        this.notificationService.insideChatComponent.subscribe((insideChat)=>{
+          console.log(insideChat);
+          if(!insideChat){
+            // this.notificationService.requestPermission();
+            this.notificationService.getMyNotifications();
+          }
+        })
+      }
   }
 }

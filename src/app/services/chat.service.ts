@@ -3,7 +3,7 @@ import { environment as env } from 'src/environments/environment';
 import { io, Socket } from 'socket.io-client';
 import { Observable, Subject, tap } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { APIResponse7, Messages, MessagesList, Support } from '../models/chat.model';
+import { Messages, MessagesList, Support } from '../models/chat.model';
 import { ResponseSuccess } from '../models/actions.model';
 
 @Injectable({
@@ -22,25 +22,28 @@ export class ChatService {
     return this._refresh;
   }
   constructor(private http: HttpClient) {
-    this.socket = io(env.socket_url)
   }
-  connect(userId: number): void{
-    this.socket.emit('user_connected', userId)
+  connect(userId: number): void{  
+    this.socket = io(env.socket_url);
+    this.socket.on('connect', () => {
+      this.socket.emit('user_connected', {userid: userId});
+    });
+    this.socket.on('disconnect', () => {
+      console.log('Socket is disconnected');
+    });
   }
   sendMessage(data: any){
-    this.socket.emit('send_message', data) 
+    this.socket.emit('send_message', {sender: data.sender, receiver: data.receiver, message: data.message}) 
   }
   getMessage() : Observable<any>{
-    return new Observable<{sender: string, receiver: string, message: string}>(observer =>{
-      this.socket.on('new_message', (data:any)=>{ 
-        observer.next(data)
+    return new Observable<any>(observer =>{
+      this.socket.on('new_message', (data: any)=>{
+        observer.next(data);
       })
       return ()=>{
         this.socket.disconnect();
       }
-    }).pipe(tap(()=>{
-      this._refresh.next();
-    }))
+    })
   }
   getAllPreMsgList(userId: any){
     return this.http.post<Array<MessagesList>>(`${env.socket_url}get_conversation_list`,{

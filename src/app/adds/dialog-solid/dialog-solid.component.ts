@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
 import { MatDialogClose, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { ResponseSuccess } from 'src/app/models/actions.model';
@@ -9,7 +9,7 @@ import { ProductsRequestService } from 'src/app/services/products-request.servic
   templateUrl: './dialog-solid.component.html',
   styleUrls: ['./dialog-solid.component.css']
 })
-export class DialogSolidComponent implements OnInit {
+export class DialogSolidComponent implements OnInit, OnDestroy {
   id!: number;
   load: boolean = false;
   sucMsg: string = '';
@@ -43,7 +43,7 @@ export class DialogSolidComponent implements OnInit {
   onNoClick(): void {
     this.dialogRef.close();
   }
-  ngOnDestory() :void{
+  ngOnDestroy() :void{
     if(this.solidSub){
       this.solidSub.unsubscribe();
     }

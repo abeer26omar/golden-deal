@@ -76,7 +76,8 @@
                     [ngClass]="{'pe-none': add.status === 'sold' }">
                       <img
                         *ngIf="add.category_slug == 'car_plates'" 
-                        src="../../assets/images/car_paletes_details.svg" alt="carplate_img" width="100%" height="200px !important">
+                        class="car_plates"
+                        src="../../assets/images/car_paletes_details.svg" alt="carplate_img" width="100%">
                     </a>
                     <div  class="favorite" *ngIf="add.status === 'active'">
                       <a (click)="addToFav(add)">

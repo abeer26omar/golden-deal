@@ -353,6 +353,14 @@ input.star:checked ~ label.star:before {
 .products-row .card-header.plates img{
     object-fit: unset;
 }
+.products-row .card-header img.car_plates{
+    height: 200px;
+}
+@media screen and (min-width: 992px) {
+    .products-row .card-header img.car_plates{
+        height: 215px;
+    }
+}
 .products-row .card-body{
     background-color: var(--bg-color);
     border-radius: 15.3114px;
@@ -743,3 +751,6 @@ gallery-core[thumbPosition=bottom] gallery-thumbs .g-slider {
     60% { transform: scale(1)}
     100% { transform: scale(1)}
   }
+.inValid{
+    border: 1px solid var(--semi-red) !important;
+}

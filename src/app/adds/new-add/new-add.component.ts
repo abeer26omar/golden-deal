@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription, from } from 'rxjs';
@@ -20,7 +20,7 @@ declare var window: any;
   templateUrl: './new-add.component.html',
   styleUrls: ['./new-add.component.css']
 })
-export class NewAddComponent implements OnInit {
+export class NewAddComponent implements OnInit, OnDestroy {
   step: any = 1;
   active = 0;
   defaultImage_add: boolean = true;
@@ -696,7 +696,7 @@ export class NewAddComponent implements OnInit {
   openImgDialog(){
     this.modelAddImages.show();
   }
-  ngOnDestory() :void{
+  ngOnDestroy() :void{
     if(this.categorySub){
       this.categorySub.unsubscribe();
     } 

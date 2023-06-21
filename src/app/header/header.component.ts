@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Notifications, ResponseSuccess } from '../models/actions.model';
@@ -48,6 +48,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
   }
   @Output() errorNot: string = '';
+  @Input() not_count: number = 0;
   panelOpenState = false;
   httpService: any;
   public categories : Array<Category> = [];
@@ -90,7 +91,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     if(this.authService.IsloggedIn()){      
       this.notificationService.getMyNotifications(this.pageNo);
     }
-    // this.getAllPreMsgList()
+    this.getAllPreMsgList()
   }
   private categorySub : Subscription = new Subscription;
   stopPropagation(event: any){

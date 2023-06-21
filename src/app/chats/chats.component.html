@@ -34,7 +34,7 @@
                         <ul ngbNav #nav="ngbNav"  #chatWindow
                             class="nav-pills p-0" orientation="vertical">
                             <li ngbNavItem *ngFor="let user of msgUsersList">
-                              <a ngbNavLink (click)="getChat(user.sender === userId ? user.receiver : user.sender)" 
+                              <a ngbNavLink (click)="getChat(user.sender === userId ? user.receiver : user.sender);toggleSideMenu()" 
                                 [ngClass]="{'new_msg': user.receiver == userId && user.seen_at == 0}">
                                 <div class="column">
                                     <div class="chats">
@@ -46,7 +46,7 @@
                                             <p class="chat-desc">{{user.message}}</p>
                                         </div>
                                         <div *ngIf="user.receiver == userId && user.seen_at == 0">
-                                            <span matBadge="1" matBadgeSize="small"></span>
+                                            <span matBadgeSize="small"></span>
                                         </div>
                                     </div>
                                 </div>
@@ -106,7 +106,7 @@
                             <mat-divider class="my-3"></mat-divider>
                             <p class="text-center text-danger" *ngIf="errorlist">{{errorlist}}</p>
                             <li ngbNavItem="support">
-                              <a ngbNavLink >
+                              <a ngbNavLink (click)="toggleSideMenu()">
                                 <div class="column">
                                     <div class="chats">
                                         <div class="avatar">
@@ -185,4 +185,4 @@
         </div>
         <div class="col-xl-9 col-lg-8 col-12" [ngbNavOutlet]="nav"></div>
     </div>
-<div class="backDrop" #backDrop></div>
+<div class="backDrop" #backDrop (click)="toggleSideMenu()"></div>

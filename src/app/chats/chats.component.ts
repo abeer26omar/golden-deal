@@ -1,22 +1,22 @@
-import { Component, OnInit } from '@angular/core';
-import { HttpErrorResponse } from '@angular/common/http';
+import { Component, ElementRef, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { ChatService } from '../services/chat.service';
-import { MessagesList ,Messages, APIResponse7} from '../models/chat.model';
-import { NgbDatepickerModule, NgbOffcanvas, OffcanvasDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { MessagesList ,Messages, APIResponse7, Support} from '../models/chat.model';
 import { Subscription } from 'rxjs';
-import { AdminService } from '../services/admin.service';
+import { BreakpointObserver } from '@angular/cdk/layout';
+import { ResponseSuccess } from '../models/actions.model';
+import { FormControl, FormGroup } from '@angular/forms';
+import { NotificationsService } from '../services/notifications.service';
 
 @Component({
   selector: 'app-chats',
   templateUrl: './chats.component.html',
   styleUrls: ['./chats.component.css']
 })
-export class ChatsComponent implements OnInit {
+export class ChatsComponent implements OnInit, OnDestroy {
   userId = parseInt(localStorage.getItem('userId') || '') ;
   receiverId: any;
   admin: any;
   message: string = '';
-  messageArr: {user: string, msg: string}[] = []
   currUser: any;
   messageTxt: string = '';
   errorTxt: string = '';
@@ -29,18 +29,100 @@ export class ChatsComponent implements OnInit {
   public usersMsg: Array<Messages> = []
   avatar_base_url: string = 'https://admin.gooldendeal.com/storage/'
   public chatSub: Subscription = new Subscription;
-  constructor(private chatService: ChatService,
-    private adminService: AdminService,
-    private offcanvasService: NgbOffcanvas) { 
-    
+  @ViewChild('chatWindow') chatWindow!: ElementRef;
+  @ViewChild('sideNav') sideNav!: ElementRef;
+  @ViewChild('backDrop') backDrop!: ElementRef;
+  @ViewChild('textArea') textArea!: ElementRef;
+  toggle: boolean = false;
+  opend: boolean = false;
+  chatType: boolean = false;
+  supportRes: string = '';
+  supportData: any;
+  messages: any;
+  supportErr: string = '';
+  formSupport = new FormGroup({
+    message: new FormControl('')
+  })
+  get fSupport(){
+    return this.formSupport.controls;
   }
-  ngOnInit(): void {
-    // this.admin = this.adminService.getOption();
-    this.getAllPreMsgList()
-    // this.chatService.getMessage().subscribe((data) => {
-    //   console.log('new msg send');
-    //   this.messageArr.push(data);
-    // }); 
+  constructor(private chatService: ChatService,
+    private el: ElementRef,
+    private notificationService: NotificationsService,
+    private breakPointObserver: BreakpointObserver) { 
+    }
+    ngOnInit(): void {
+      this.notificationService._insideChatComponent.next(true)
+      this.chatService.connect(this.userId)
+      this.chatSub = this.chatService.getMessage().subscribe((data)=>{
+        const mappedData = {
+          message: data.message,
+          receiver_avatar: '',
+          receiver_id: data.receiver,
+          receiver_name: '',
+          seen_at: 0,
+          sender_avatar: '',
+          sender_id: data.sender,
+          sender_name: ''
+        }
+        this.usersMsg.push(mappedData)
+      })
+      this.getAllPreMsgList();
+      this.getAllSupportMsg();
+      // this.scrollToBottom();
+  }
+  ngAfterViewInit() {
+    // this.scrollToBottom();
+    this.breakPointObserver.observe(['(max-width: 992px)']).subscribe((res)=>{
+      if(res.matches){
+        this.sideNav.nativeElement.classList.add('hidden');
+        this.toggle = true;
+      }else{
+        this.sideNav.nativeElement.classList.remove('hidden');
+        this.toggle = false;
+      }
+    })
+  }
+  toggleSideMenu(){
+    this.opend != this.opend;
+    this.sideNav.nativeElement.classList.toggle('hidden');
+    this.sideNav.nativeElement.classList.toggle('wavy');
+    this.backDrop.nativeElement.classList.toggle('active');
+  }
+  scrollToBottom() {
+    setTimeout(() => {
+      try {
+        const chatContent = document.getElementById('chat-content');
+        const lastMessage = chatContent!.lastElementChild as HTMLElement;
+        lastMessage.scrollIntoView({ behavior: 'smooth' });
+      } catch(err) { }
+    }, 100);
+  }
+  getAllSupportMsg(){
+    this.chatSub = this.chatService.getAllSupportMsg().subscribe({
+      next: (res: Support)=>{
+        this.load = false;
+        this.supportData = res.data;
+        this.messages = res.data.support_messages;
+        this.scrollToBottom();
+      }
+    })
+  }
+  sendSupport(){
+    this.load = true;
+    const formdata = new FormData();
+    formdata.append('message', this.fSupport['message'].value)
+    this.chatSub = this.chatService.sendMsgSuport(formdata).subscribe({
+      next: (res: ResponseSuccess)=>{
+        this.load = true;
+        this.supportRes = res.data;
+        this.getAllSupportMsg();
+        this.formSupport.reset()
+      },
+      error: ()=>{
+        this.load = false;
+      }
+    })
   }
   sendMsg(){
     const data = {
@@ -48,20 +130,14 @@ export class ChatsComponent implements OnInit {
       receiver: this.receiverId,
       message: this.messageTxt
     }
-    this.chatService.sendMessage(data);
-    this.messageTxt = '';
-    this.getNewMsg();
-  }
-  getNewMsg(){
-    const data = {
-      sender: this.userId,
-      receiver: this.receiverId,
-      message: this.messageTxt
+    if(this.messageTxt == ''){
+      this.textArea.nativeElement.classList.add('inValid')
+    }else{
+      this.textArea.nativeElement.classList.remove('inValid')
+      this.chatService.sendMessage(data);
+      this.messageTxt = '';
     }
-    this.chatService.getMessage().subscribe((data)=>{
-      this.usersMsg.push(data)
-    })
-    this.getChat(data.receiver)
+    // this.getNewMsg();
   }
   getAllPreMsgList(){
     this.loader = true;
@@ -80,37 +156,18 @@ export class ChatsComponent implements OnInit {
       next: (res: Array<Messages>)=>{
         this.load = false;
         this.usersMsg = res;
+        this.scrollToBottom();
       },
       error: ()=>{
         this.load = false;
       }
     })
   }
-  closeResult : any;
-  open(content: any) {
-		this.offcanvasService.open(content, { ariaLabelledBy: 'offcanvas-basic-title' }).result.then(
-			(result) => {
-				this.closeResult = `Closed with: ${result}`;
-			},
-			(reason) => {
-				this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-			},
-		);
-	}
-
-	private getDismissReason(reason: any): string {
-		if (reason === OffcanvasDismissReasons.ESC) {
-			return 'by pressing ESC';
-		} else if (reason === OffcanvasDismissReasons.BACKDROP_CLICK) {
-			return 'by clicking on the backdrop';
-		} else {
-			return `with: ${reason}`;
-		}
-	}
-  ngOnDestory() :void{
-    if(this.chatSub){
+  ngOnDestroy(): void {
+    this.notificationService._insideChatComponent.next(false);
+    if (this.chatSub) {
       this.chatSub.unsubscribe();
     }
-  } 
+  }
 }
  

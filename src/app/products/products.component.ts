@@ -1,5 +1,5 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Component, ElementRef, HostListener, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription, min } from 'rxjs';
@@ -23,7 +23,7 @@ declare var window: any;
   styleUrls: ['./products.component.css'],
   providers: [DatePipe]
 })
-export class ProductsComponent implements OnInit {
+export class ProductsComponent implements OnInit, OnDestroy {
   // @Input() categoriesSplash: any = [];
   filters: CategoryFilter = {
     data: {
@@ -774,7 +774,7 @@ export class ProductsComponent implements OnInit {
       this.newScroll = false;
     }    
   }
-  ngOnDestory() :void{
+  ngOnDestroy() :void{
     if(this.productSub){
       this.productSub.unsubscribe();
     }

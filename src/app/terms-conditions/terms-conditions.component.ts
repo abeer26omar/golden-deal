@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { HomeAddsService } from '../services/home-adds.service';
@@ -13,7 +13,7 @@ declare var window: any;
   templateUrl: './terms-conditions.component.html',
   styleUrls: ['./terms-conditions.component.css']
 })
-export class TermsConditionsComponent implements OnInit {
+export class TermsConditionsComponent implements OnInit, OnDestroy{
   private pageSub: Subscription = new Subscription;
   private routeSub: Subscription = new Subscription;
   public pages: Array<Pages> = [];
@@ -58,7 +58,7 @@ export class TermsConditionsComponent implements OnInit {
       }
     })
   }
-  ngOnDestory() :void{
+  ngOnDestroy() :void{
     if(this.pageSub){
      this.pageSub.unsubscribe();
     }

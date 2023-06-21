@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit ,Inject} from '@angular/core';
+import { Component, OnInit, Inject, OnDestroy} from '@angular/core';
 import { MatDialogClose, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Subscription } from 'rxjs';
 import { ResponseSuccess } from 'src/app/models/actions.model';
 import { ProfileService } from 'src/app/services/profile.service';
 
@@ -9,7 +10,7 @@ import { ProfileService } from 'src/app/services/profile.service';
   templateUrl: './dialog-cover.component.html',
   styleUrls: ['./dialog-cover.component.css']
 })
-export class DialogCoverComponent implements OnInit {
+export class DialogCoverComponent implements OnInit, OnDestroy {
   imgSrc: any;
   load: boolean = false;
   file!: File;
@@ -19,7 +20,8 @@ export class DialogCoverComponent implements OnInit {
   public dialogRef: MatDialogRef<MatDialogClose>,
   private profileService: ProfileService) {
     this.imgSrc = data.imgSrc;
-   }  
+   } 
+  private addSub: Subscription = new Subscription;
   ngOnInit(): void {
   }
   onFileChange(event:any) {
@@ -34,7 +36,7 @@ export class DialogCoverComponent implements OnInit {
     this.load = true;
     let formData = new FormData();
     formData.append('cover',this.file,this.file.name);
-    this.profileService.updateCover(formData).subscribe({
+    this.addSub = this.profileService.updateCover(formData).subscribe({
       next: (res: ResponseSuccess)=>{
         this.load = false;
         this.msg = res.data;
@@ -48,5 +50,10 @@ export class DialogCoverComponent implements OnInit {
         }
       }
     })
+  }
+  ngOnDestroy() :void{
+    if(this.addSub){
+      this.addSub.unsubscribe()
+    }
   }
 }

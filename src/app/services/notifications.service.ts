@@ -18,8 +18,11 @@ export class NotificationsService {
   get refresh(){
       return this._refresh;
   }
+  _insideChatComponent = new BehaviorSubject<boolean>(false);
+  insideChatComponent = this._insideChatComponent.asObservable();
   constructor(private http: HttpClient,
-    private angularFireMessaging: AngularFireMessaging) { }
+    private angularFireMessaging: AngularFireMessaging) { 
+  }
   getMyNotifications(pageNo: number = 1){
     return this.http.get<Notifications>(`${env.api_url}/notifications/my-notifications?page=${pageNo}`, this.httpOptions)
   }
@@ -27,13 +30,11 @@ export class NotificationsService {
     this.angularFireMessaging.requestToken.subscribe(
       {        
         next: (token)=>{
-          console.log(token);
-          
           this.http.post(`${env.api_url}/notifications/store-fcm`,{
             fcm_token: token
           }, this.httpOptions).subscribe({
             next: (res)=>{
-              console.log(res);
+              // console.log(res);
             },
             error: (err)=>{
               console.log(err);
@@ -47,8 +48,10 @@ export class NotificationsService {
     )
   }
   getNotifications(){
-    this.angularFireMessaging.messages.subscribe((payload)=>{      
-      this.currentMessage.next(payload)
-    })
+    this.angularFireMessaging.messages.subscribe(
+      (payload)=>{  
+        console.log('new message received. ', payload);    
+        this.currentMessage.next(payload)
+      })
   }
 }

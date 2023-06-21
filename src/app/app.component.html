@@ -1,10 +1,10 @@
-<mat-sidenav-container>
+<mat-sidenav-container class="mainSideNav">
     <mat-sidenav #sidenav mode='over' [opened]='!sidebarOpen' 
     fixedInViewport="true">
       <app-sidenav (closeSideNav)="close()"></app-sidenav>
     </mat-sidenav>
     <mat-sidenav-content>
-      <app-header (toggleSideBar)= "toggle()"></app-header>
+      <app-header (toggleSideBar)= "toggle()" [not_count]="not_count"></app-header>
       <div class="container-fluid">
         <router-outlet></router-outlet>
       </div>

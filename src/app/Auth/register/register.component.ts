@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgOtpInputConfig } from 'ng-otp-input';
@@ -22,7 +22,7 @@ declare var window: any;
   styleUrls: ['./register.component.css'],
   providers:[DatePipe]
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent implements OnInit, OnDestroy {
   userData : Login = {
     data:{
       user: {
@@ -317,7 +317,7 @@ export class RegisterComponent implements OnInit {
     this.timeLeft = 60;
     this.otpModal.hide();
   }
-  ngOnDestory() :void{
+  ngOnDestroy() :void{
     if(this.authSub){
       this.authSub.unsubscribe();
     }

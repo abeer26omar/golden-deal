@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit,Inject } from '@angular/core';
+import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
 import { MatDialogClose, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { ResponseSuccess } from 'src/app/models/actions.model';
@@ -10,7 +10,7 @@ import { AddressesService } from 'src/app/services/addresses.service';
   templateUrl: './dialog-major.component.html',
   styleUrls: ['./dialog-major.component.css']
 })
-export class DialogMajorComponent implements OnInit {
+export class DialogMajorComponent implements OnInit, OnDestroy {
   id!: number;
   load: boolean = false;
   sucMsg: string = '';
@@ -45,7 +45,7 @@ export class DialogMajorComponent implements OnInit {
   onNoClick(): void {
     this.dialogRef.close();
   }
-  ngOnDestory() :void{
+  ngOnDestroy() :void{
     if(this.addSub){
       this.addSub.unsubscribe();
     }

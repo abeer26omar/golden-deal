@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, Renderer2, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Renderer2, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { Product} from '../../models/products.model';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -25,7 +25,7 @@ declare var window: any;
   templateUrl: './product-details.component.html',
   styleUrls: ['./product-details.component.css']
 })
-export class ProductDetailsComponent implements OnInit ,AfterViewInit{
+export class ProductDetailsComponent implements OnInit ,AfterViewInit ,OnDestroy{
   galleryOptions: NgxGalleryOptions[] = [];
   galleryImages: NgxGalleryImage[] = [];
   // items: GalleryItem[] = [];
@@ -213,7 +213,7 @@ export class ProductDetailsComponent implements OnInit ,AfterViewInit{
         // [...productDetails.data.product_images].forEach(e=>{
         //   this.cameraImages.push(new ImageItem({ src: e.image_url, thumb: e.image_url }))
         // });
-        console.log(this.cameraImages);
+        // console.log(this.cameraImages);
         // [...productDetails.data.product_images].forEach(e => {
         //   const image = new ImageItem({ src: e.image_url, thumb: e.image_url });
         //   this.cameraImages.push(image);
@@ -390,7 +390,7 @@ showSlides(n: number) {
   this.renderer.setStyle(slides[this.slideIndex-1], 'display', 'block');
   dots[this.slideIndex-1].className += ' active';
 }
-  ngOnDestory() :void{
+ngOnDestroy() :void{
     if(this.productSub){
       this.productSub.unsubscribe();
     }

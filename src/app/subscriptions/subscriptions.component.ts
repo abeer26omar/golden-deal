@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
@@ -15,7 +15,7 @@ declare var window: any;
   templateUrl: './subscriptions.component.html',
   styleUrls: ['./subscriptions.component.css']
 })
-export class SubscriptionsComponent implements OnInit {
+export class SubscriptionsComponent implements OnInit, OnDestroy {
   paymentModal: any;
   reviewModal: any;
   faildSubscribtion: any;
@@ -79,7 +79,7 @@ export class SubscriptionsComponent implements OnInit {
   openReviewModal(){
     this.reviewModal.show();
   }
-  ngOnDestory() :void{
+  ngOnDestroy() :void{
     if(this.subscriptionSub){
       this.subscriptionSub.unsubscribe();
     }

@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription, from } from 'rxjs';
@@ -20,7 +20,7 @@ declare var window: any;
   templateUrl: './new-add.component.html',
   styleUrls: ['./new-add.component.css']
 })
-export class NewAddComponent implements OnInit {
+export class NewAddComponent implements OnInit, OnDestroy {
   step: any = 1;
   active = 0;
   defaultImage_add: boolean = true;
@@ -113,7 +113,7 @@ export class NewAddComponent implements OnInit {
     { char: 'ل' , trans: 'L' },
     { char: 'م' , trans: 'Z' },
     { char: 'ن' , trans: 'N' },
-    { char: 'هـ' , trans: 'H' },
+    { char: 'ه' , trans: 'H' },
     { char: 'و' , trans: 'U' },
     { char: 'ى' , trans: 'V' }
   ]
@@ -529,15 +529,15 @@ export class NewAddComponent implements OnInit {
     this.categoryName = event.value;
     if(this.categoryName == 'car_plates'){
       this.defaultImage_add = false;
-      this.myForm.get('plate_chars_filter_6')?.get('plate_chars_ar_1')?.setValidators([Validators.required,Validators.pattern(/^[\u0627-\u0628\u062d\u062f\u0631\u0633\u0635\u0637\u0639\u0642\u0643\u0644\u0645\u0646\u0647\u0648\u0649]+$/)]);
-      this.myForm.get('plate_chars_filter_6')?.get('plate_chars_ar_2')?.setValidators([Validators.pattern(/^[\u0627-\u0628\u062d\u062f\u0631\u0633\u0635\u0637\u0639\u0642\u0643\u0644\u0645\u0646\u0647\u0648\u0649]+$/)]);
-      this.myForm.get('plate_chars_filter_6')?.get('plate_chars_ar_3')?.setValidators([Validators.pattern(/^[\u0627-\u0628\u062d\u062f\u0631\u0633\u0635\u0637\u0639\u0642\u0643\u0644\u0645\u0646\u0647\u0648\u0649]+$/)]);
+      this.myForm.get('plate_chars_filter_6')?.get('plate_chars_ar_1')?.setValidators([Validators.required,Validators.maxLength(1),Validators.pattern(/^[\u0627-\u0628\u062d\u062f\u0631\u0633\u0635\u0637\u0639\u0642\u0643\u0644\u0645\u0646\u0647\u0648\u0649]+$/)]);
+      this.myForm.get('plate_chars_filter_6')?.get('plate_chars_ar_2')?.setValidators([Validators.maxLength(1),Validators.pattern(/^[\u0627-\u0628\u062d\u062f\u0631\u0633\u0635\u0637\u0639\u0642\u0643\u0644\u0645\u0646\u0647\u0648\u0649]+$/)]);
+      this.myForm.get('plate_chars_filter_6')?.get('plate_chars_ar_3')?.setValidators([Validators.maxLength(1),Validators.pattern(/^[\u0627-\u0628\u062d\u062f\u0631\u0633\u0635\u0637\u0639\u0642\u0643\u0644\u0645\u0646\u0647\u0648\u0649]+$/)]);
       // this.myForm.get('plate_chars_en_filter_6')?.get('plate_chars_en_1')?.setValidators([Validators.required]);
-      this.myForm.get('plate_numbers_filter_6')?.get('plate_number_ar_1')?.setValidators([Validators.required]);
-      this.myForm.get('plate_numbers_en_filter_6')?.get('plate_number_en_1')?.setValidators([Validators.required]);
-      // this.myForm.get('plate_numbers_filter_6')?.get('plate_number_ar_2')?.setValidators([Validators.pattern(/^[\u0660-\u0669]/)]);
-      // this.myForm.get('plate_numbers_filter_6')?.get('plate_number_ar_3')?.setValidators([Validators.pattern(/^[\u0660-\u0669]/)]);
-      // this.myForm.get('plate_numbers_filter_6')?.get('plate_number_ar_4')?.setValidators([Validators.pattern(/^[\u0660-\u0669]/)]);
+      this.myForm.get('plate_numbers_filter_6')?.get('plate_number_ar_1')?.setValidators([Validators.maxLength(1),Validators.required]);
+      this.myForm.get('plate_numbers_en_filter_6')?.get('plate_number_en_1')?.setValidators([Validators.maxLength(1),Validators.required]);
+      // this.myForm.get('plate_numbers_filter_6')?.get('plate_number_ar_2')?.setValidators([Validators.maxLength(1)]);
+      // this.myForm.get('plate_numbers_filter_6')?.get('plate_number_ar_3')?.setValidators([Validators.maxLength(1)]);
+      // this.myForm.get('plate_numbers_filter_6')?.get('plate_number_ar_4')?.setValidators([Validators.maxLength(1)]);
       this.myForm.get('product_image_1')?.removeValidators([Validators.required]);
       this.myForm.get('product_image_2')?.removeValidators([Validators.required]);
       this.myForm.get('product_image_3')?.removeValidators([Validators.required]);
@@ -548,11 +548,11 @@ export class NewAddComponent implements OnInit {
       this.defaultImage_add = true;
       this.myForm.get('plate_chars_filter_6')?.get('plate_chars_ar_1')?.removeValidators([Validators.required]);
       this.myForm.get('plate_chars_en_filter_6')?.get('plate_chars_en_1')?.removeValidators([Validators.required]);
-      this.myForm.get('plate_numbers_filter_6')?.get('plate_number_ar_1')?.removeValidators([Validators.required]);
+      this.myForm.get('plate_numbers_filter_6')?.get('plate_number_ar_1')?.removeValidators([Validators.maxLength(1),Validators.required]);
       this.myForm.get('plate_numbers_en_filter_6')?.get('plate_number_en_1')?.removeValidators([Validators.required]);
-      // this.myForm.get('plate_numbers_filter_6')?.get('plate_number_ar_2')?.removeValidators([Validators.pattern(/^[\u0660-\u0669]/)]);
-      // this.myForm.get('plate_numbers_filter_6')?.get('plate_number_ar_3')?.removeValidators([Validators.pattern(/^[\u0660-\u0669]/)]);
-      // this.myForm.get('plate_numbers_filter_6')?.get('plate_number_ar_4')?.removeValidators([Validators.pattern(/^[\u0660-\u0669]/)]);
+      // this.myForm.get('plate_numbers_filter_6')?.get('plate_number_ar_2')?.removeValidators([Validators.maxLength(1)]);
+      // this.myForm.get('plate_numbers_filter_6')?.get('plate_number_ar_3')?.removeValidators([Validators.maxLength(1)]);
+      // this.myForm.get('plate_numbers_filter_6')?.get('plate_number_ar_4')?.removeValidators([Validators.maxLength(1)]);
       this.myForm.get('product_image_1')?.setValidators([Validators.required]);
       this.myForm.get('product_image_2')?.setValidators([Validators.required]);
       this.myForm.get('product_image_3')?.setValidators([Validators.required]);
@@ -696,7 +696,7 @@ export class NewAddComponent implements OnInit {
   openImgDialog(){
     this.modelAddImages.show();
   }
-  ngOnDestory() :void{
+  ngOnDestroy() :void{
     if(this.categorySub){
       this.categorySub.unsubscribe();
     } 

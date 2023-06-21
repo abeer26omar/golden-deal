@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Portfolio, Products, ResponseSuccess, UserProducts } from '../models/actions.model';
@@ -15,7 +15,7 @@ declare var window: any;
   templateUrl: './seller-profile.component.html',
   styleUrls: ['./seller-profile.component.css']
 })
-export class SellerProfileComponent implements OnInit {
+export class SellerProfileComponent implements OnInit, OnDestroy {
   filterModal: any;  
   faildAdds: any;
   portfolioId!: number;
@@ -169,7 +169,7 @@ export class SellerProfileComponent implements OnInit {
   paginate(event: any,meta_path: string){
     this.getUserProducts(this.portfolioId,event.page+1)
   } 
-  ngOnDestory() :void{
+  ngOnDestroy() :void{
     if(this.portSub){
       this.portSub.unsubscribe();
     } 

@@ -26,15 +26,15 @@ import { SingleChatComponent } from './chats/single-chat/single-chat.component';
 
 const routes: Routes = [
   // { path:'', redirectTo: '', pathMatch:'full'},
-  { path:'', component:HomeComponent},
+  { path:'', component: HomeComponent},
   { path:'search-result',component: SearchResultComponent},
   { path:'search-result/:key',component: SearchResultComponent},
-  { path:'product-details/:id', component:ProductDetailsComponent},
-  { path:'seller-profile/:id', component:SellerProfileComponent,canActivate:[AuthGuardGuard]},
-  { path:'chat', component:ChatsComponent,canActivate:[AuthGuardGuard]},
-  { path:'userchat/:id', component:SingleChatComponent,canActivate:[AuthGuardGuard]},
-  { path:'adds/:id', component:AddsComponent, canActivate:[AuthGuardGuard]},
-  { path:'new-add', component:NewAddComponent,canActivate:[AuthGuardGuard]},
+  { path:'product-details/:id', component: ProductDetailsComponent},
+  { path:'seller-profile/:id', component: SellerProfileComponent,canActivate:[AuthGuardGuard]},
+  { path:'chat', component: ChatsComponent,canActivate:[AuthGuardGuard]},
+  { path:'userchat/:id', component: SingleChatComponent,canActivate:[AuthGuardGuard]},
+  { path:'adds/:id', component: AddsComponent, canActivate:[AuthGuardGuard]},
+  { path:'new-add', component: NewAddComponent,canActivate:[AuthGuardGuard]},
   { path:'edit-add/:id', component: EditAddComponent},
   { path:'subscriptions', component: SubscriptionsComponent,canActivate:[AuthGuardGuard]},
   { path:'termsandconditions/:slug', component: TermsConditionsComponent},
@@ -43,15 +43,15 @@ const routes: Routes = [
   { path:'profile', component: ProfileComponent, canActivate:[AuthGuardGuard]},
   { path:'address', component: AddressComponent, canActivate:[AuthGuardGuard]},
   { path:'add', component: AddEditAddressComponent, canActivate:[AuthGuardGuard]},
-  { path:'edit/:id', component:AddEditAddressComponent, canActivate:[AuthGuardGuard]},
+  { path:'edit/:id', component: AddEditAddressComponent, canActivate:[AuthGuardGuard]},
   { path:'deposit', component: DepositComponent},
   { path:'notification', component: NotificationsComponent},
-  { path:'**', component:NotfoundComponent}
+  { path:'**', component: NotfoundComponent}
 ];
 const routerOptions: ExtraOptions = {
-  scrollPositionRestoration: 'enabled',
-  anchorScrolling: 'enabled',
-  scrollOffset: [0, 64],
+  // scrollPositionRestoration: 'enabled',
+  // anchorScrolling: 'enabled',
+  // scrollOffset: [0, 64],
 };
 
 @NgModule({

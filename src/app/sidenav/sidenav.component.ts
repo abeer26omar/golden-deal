@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output, OnDestroy } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, OnDestroy, Input } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -16,10 +16,11 @@ declare var window: any;
 })
 export class SidenavComponent implements OnInit, OnDestroy {
   @Output() closeSideNav:EventEmitter<any> = new EventEmitter();
+  @Input() categories : Array<Category> = [];
 
   panelOpenState = false;
   httpService: any;
-  public categories : Array<Category> = [];
+  // public categories : Array<Category> = [];
   userId!: any;
   error: string = '';
   msgSucess: string = '';
@@ -33,7 +34,7 @@ export class SidenavComponent implements OnInit, OnDestroy {
     this.userId = localStorage.getItem('userId');
     }
   ngOnInit(): void {
-    this.getCategories();
+    // this.getCategories();
     this.toastSuccess = new window.bootstrap.Toast(
       document.getElementById('toastSuccess')
     )
@@ -44,20 +45,20 @@ export class SidenavComponent implements OnInit, OnDestroy {
   closeNav(){
     this.closeSideNav.emit();
   }
-  private categorySub : Subscription = new Subscription;
+  // private categorySub : Subscription = new Subscription;
 
-  getCategories(){
-    this.categorySub = this.categoryService.
-    getProductsCategories().
-    subscribe({
-      next:(categoryList: APIResponse2<Category>)=>{ 
-        this.categories = categoryList.data;
-      },
-      error: (err: HttpErrorResponse)=>{
-        this.errorHandel.openErrorModa(err);
-      }
-    })
-  }
+  // getCategories(){
+  //   this.categorySub = this.categoryService.
+  //   getProductsCategories().
+  //   subscribe({
+  //     next:(categoryList: APIResponse2<Category>)=>{ 
+  //       this.categories = categoryList.data;
+  //     },
+  //     error: (err: HttpErrorResponse)=>{
+  //       this.errorHandel.openErrorModa(err);
+  //     }
+  //   })
+  // }
   logOut(){
     this.authService.logOut().subscribe({
       next:(res: ResponseSuccess)=>{
@@ -83,9 +84,9 @@ export class SidenavComponent implements OnInit, OnDestroy {
     this.route.navigate(['/termsandconditions',slug])
   }
   ngOnDestroy() :void{
-   if(this.categorySub){
-     this.categorySub.unsubscribe();
-   }
+  //  if(this.categorySub){
+  //    this.categorySub.unsubscribe();
+  //  }
   }
 
 }

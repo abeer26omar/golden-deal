@@ -199,9 +199,15 @@ export class ProductsComponent implements OnInit, OnDestroy {
           }
         }, 
         {
+          breakpoint: 1200,
+          settings: {
+            slidesToShow: 8
+          }
+        },
+        {
           breakpoint: 1024,
           settings: {
-            slidesToShow: 9
+            slidesToShow: 8
           }
         },
         {

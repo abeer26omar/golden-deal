@@ -177,7 +177,7 @@
                         </div>
                         <p class="none">{{errProducts}}</p>
                         <p-paginator [rows]="meta.per_page" [totalRecords]="meta.total" 
-                          [pageLinkSize]="3" (onPageChange)="paginate($event,meta.path)"></p-paginator>
+                          [pageLinkSize]="3" (onPageChange)="paginate($event,meta.path)"  *ngIf="products.length !== 0"></p-paginator>
                         <div class="d-flex justify-content-center py-5">
                             <button class="btn btn-adds btn-prim" type="button" (click)="addNewAdd()">اضافه اعلان</button>
                         </div>

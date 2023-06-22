@@ -49,9 +49,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
   @Output() errorNot: string = '';
   @Input() not_count: number = 0;
+  @Input() categories : Array<Category> = [];
   panelOpenState = false;
-  httpService: any;
-  public categories : Array<Category> = [];
+  httpService: any; 
   userId!: any;
   userImage: any;
   error: string = '';
@@ -81,7 +81,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   private notifiSub : Subscription = new Subscription;
 
   ngOnInit(): void { 
-    this.getCategories();
+    // this.getCategories();
     this.toastSuccess = new window.bootstrap.Toast(
       document.getElementById('toastSuccess'),{backdrop: this.macService.backdrop}
     )
@@ -119,18 +119,18 @@ export class HeaderComponent implements OnInit, OnDestroy {
       }
     })
   }
-  getCategories(){
-    this.categorySub = this.categoryService.
-    getProductsCategories().
-    subscribe({
-      next:(categoryList: APIResponse2<Category>)=>{ 
-        this.categories = categoryList.data;
-      },
-      error: (err: HttpErrorResponse)=>{
-        this.errorHandel.openErrorModa(err)
-      }
-    })
-  }
+  // getCategories(){
+  //   this.categorySub = this.categoryService.
+  //   getProductsCategories().
+  //   subscribe({
+  //     next:(categoryList: APIResponse2<Category>)=>{ 
+  //       this.categories = categoryList.data;
+  //     },
+  //     error: (err: HttpErrorResponse)=>{
+  //       this.errorHandel.openErrorModa(err)
+  //     }
+  //   })
+  // }
   logOut(){
     this.authService.logOut().subscribe({
       next:(res: ResponseSuccess)=>{

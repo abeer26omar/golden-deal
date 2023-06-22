@@ -2,6 +2,10 @@ import { Component, HostListener, Input, OnInit, Output } from '@angular/core';
 import { AuthService } from './services/auth.service';
 import { NotificationsService } from './services/notifications.service';
 import { ClearStorageService } from './services/clear-storage.service'
+import { APIResponse2, Category } from './models/products.model';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ProductsRequestService } from './services/products-request.service';
+import { ErrorHandlerService } from './services/error-handler.service';
 declare var window: any;
 
 @Component({
@@ -14,6 +18,7 @@ export class AppComponent implements OnInit{
   sidebarOpen = true;
   notification: any;
   @Output() not_count: number = 0;
+  @Output() categories : Array<Category> = [];
   backdrops = Array.from(document.getElementsByClassName('modal-backdrop') as HTMLCollectionOf<HTMLElement>) 
   toggle(){
     this.sidebarOpen = !this.sidebarOpen;
@@ -21,9 +26,22 @@ export class AppComponent implements OnInit{
   close(){
     this.sidebarOpen = !this.sidebarOpen;
   }
+  getCategories(){
+    this.categoryService.
+      getProductsCategories().
+      subscribe({
+        next:(categoryList: APIResponse2<Category>)=>{ 
+          this.categories = categoryList.data;
+        },
+        error: (err: HttpErrorResponse)=>{
+          this.errorHandel.openErrorModa(err);
+        }
+      })
+  }
   constructor(public authService: AuthService,
     private notificationService: NotificationsService,
-    private ClearStorageService: ClearStorageService){
+    private categoryService: ProductsRequestService,
+    private errorHandel: ErrorHandlerService){
       this.hidebackdrop()
     }
     hidebackdrop(){
@@ -32,6 +50,7 @@ export class AppComponent implements OnInit{
       });
     }
     ngOnInit(): void {
+      this.getCategories()
       this.not_count = 0
       if(this.authService.IsloggedIn()){
         this.not_count += this.not_count;

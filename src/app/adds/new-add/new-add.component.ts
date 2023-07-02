@@ -175,10 +175,10 @@ export class NewAddComponent implements OnInit, OnDestroy {
         plate_number_ar_4: new FormControl('')
       }),
       plate_numbers_en_filter_6: new FormGroup({
-        plate_number_en_1: new FormControl(''),
-        plate_number_en_2: new FormControl(''),
+        plate_number_en_4: new FormControl(''),
         plate_number_en_3: new FormControl(''),
-        plate_number_en_4: new FormControl('')
+        plate_number_en_2: new FormControl(''),
+        plate_number_en_1: new FormControl('')
       })
     })
     get f(){

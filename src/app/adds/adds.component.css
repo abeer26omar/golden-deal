@@ -190,16 +190,28 @@
     font-size: 1.33rem;
 }
 .card_chars_en {
+    position: absolute;
+    font-weight: 900;
+    color: var(--black);
     bottom: 33%;
     top: unset;
 }
 .card_chars_ar {
+    position: absolute;
+    font-weight: 900;
+    color: var(--black);
     top: 33%;
 }
 .card_num_en {
+    position: absolute;
+    font-weight: 900;
+    color: var(--black);
     bottom: 33%;
     top: unset;
 }
 .card_num_ar {
+    position: absolute;
+    font-weight: 900;
+    color: var(--black);
     top: 33%;
 }

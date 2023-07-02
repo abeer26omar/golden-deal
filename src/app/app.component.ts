@@ -33,7 +33,6 @@ export class AppComponent implements OnInit{
     ngOnInit(): void {
       if(this.authService.IsloggedIn()){
         this.notificationService.insideChatComponent.subscribe((insideChat)=>{
-          console.log(insideChat);
           if(!insideChat){
             // this.notificationService.requestPermission();
             this.notificationService.getMyNotifications();

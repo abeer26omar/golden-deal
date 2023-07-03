@@ -198,6 +198,11 @@ input.disabled{
 input.invalid_input{
     border: 1px solid var(--semi-red);
 }
+.plates span{
+    position: absolute;
+    font-weight: 900;
+    color: var(--black);
+}
 .card_num_ar {
     top: 20%;
     left: 24%;

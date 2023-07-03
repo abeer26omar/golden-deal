@@ -186,3 +186,11 @@ input{
         transform: translateY(0px);
       }
     }
+    .card_chars_ar,
+    .card_chars_en,
+    .card_num_ar,
+    .card_num_en{
+      position: absolute;
+      font-weight: 900;
+      color: var(--black);
+    }

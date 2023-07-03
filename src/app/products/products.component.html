@@ -103,7 +103,7 @@
                   animation-name: fadeIn;" *ngIf="product.category_slug == 'car_plates'">
                     <div class="card-header plates text-center" >
                       <a (click)="productDetails(product.id)"
-                      [ngClass]="{'pe-none': product.status === 'sold' }">
+                      [ngClass]="{'pe-none': product.status === 'sold' }" class="car_plates_container">
                       <ng-container *ngFor="let property of product.properties">
                         <ng-container *ngIf="property.slug_name == 'plate_type_filter_6'">
                           <img class="car_plates" src="{{property.filter_value.filter_value == 'نقل' ?  '../../assets/images/carplate_nakl.svg' : '../../assets/images/car_paletes_details.svg'}}" alt="carplate_img" width="100%">

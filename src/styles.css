@@ -430,18 +430,18 @@ input.star:checked ~ label.star:before {
     left: 13%;
     direction: ltr;
 }
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 375px) {
     .card_chars_ar{
-        right: 11%;
+        right: 10%;
     }
     .card_num_ar{
-        left: 11%;
+        left: 10%;
     }
     .card_chars_en{
-        right: 11%;
+        right: 10%;
     }
     .card_num_en{
-        left: 11%;
+        left: 10%;
     }
 }
 .mat-menu-panel {

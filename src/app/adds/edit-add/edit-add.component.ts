@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, Validators} from '@angular/forms';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { APIResponse2, APIResponse4, Category, EditProduct, EditProductFilters, Update } from 'src/app/models/products.model';
 import { ProductsRequestService } from 'src/app/services/products-request.service';
@@ -59,6 +59,7 @@ export class EditAddComponent implements OnInit, OnDestroy {
   error_CarPlate: string = '';
   error_CarPlate_num: string = '';
   rest_images: any = [];
+  userId!: any;
   Add : EditProduct = {
     data: {
       id: 0,
@@ -167,6 +168,7 @@ export class EditAddComponent implements OnInit, OnDestroy {
 
   constructor(private productService: ProductsRequestService,
     private router: ActivatedRoute,
+    private route: Router,
     private macService: MacPrefixService,
     private actionService: ActionsService,
     private errorHandel: ErrorHandlerService) { }
@@ -202,6 +204,7 @@ export class EditAddComponent implements OnInit, OnDestroy {
     }
   };
   ngOnInit(): void {
+    this.userId = localStorage.getItem('userId');
     this.routeSub = this.router.params.subscribe((params: Params) => {
       this.addId = params['id'];
     })
@@ -661,7 +664,7 @@ export class EditAddComponent implements OnInit, OnDestroy {
       next: (res: Update)=>{
         this.load = false;
         this.updateProduct = res;
-        this.modelSuccessNewProduct.show()
+        this.modelSuccessNewProduct.show();
       },
       error: (err: HttpErrorResponse)=>{
         this.load = false;
@@ -670,7 +673,11 @@ export class EditAddComponent implements OnInit, OnDestroy {
     })
   }
   close(){
-    this.modelAddImages.hide()
+    const modelSuccessNewProduct = document.getElementById('modelSuccessNewProduct');
+    this.modelSuccessNewProduct.hide();
+    modelSuccessNewProduct?.addEventListener('hidden.bs.modal', () => {
+      this.route.navigate([`adds/${this.userId}`])
+    })
   }
   ngOnDestroy() :void{
     if(this.editSub){

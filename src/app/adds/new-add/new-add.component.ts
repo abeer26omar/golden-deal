@@ -7,7 +7,6 @@ import { ProductsRequestService } from 'src/app/services/products-request.servic
 import { HttpErrorResponse } from '@angular/common/http';
 import { environment as env } from 'src/environments/environment';
 import { MacPrefixService } from 'src/app/services/mac-prefix.service';
-import { NgOtpInputConfig } from 'ng-otp-input';
 import { ActionsService } from 'src/app/services/actions.service';
 import { Regions } from 'src/app/models/actions.model';
 import { SwiperOptions } from 'swiper';
@@ -90,8 +89,8 @@ export class NewAddComponent implements OnInit, OnDestroy {
   categoryName: string = ''
   inputValue: any;
   catergoryId!:number;
-  ownerId = localStorage.getItem('userId');
-  region_id = localStorage.getItem('region_id');
+  ownerId: any = localStorage.getItem('userId');
+  region_id: any = localStorage.getItem('region_id');
   NewProductRes: NewProduct = {
     data:{
       order_code: 0,
@@ -145,7 +144,7 @@ export class NewAddComponent implements OnInit, OnDestroy {
       seller_phone: new FormControl(''),
       productCategory: new FormControl('', [Validators.required]),
       name: new FormControl(''),
-      price: new FormControl('', [Validators.required]),
+      price: new FormControl('0', [Validators.required]),
       desc: new FormControl('', [Validators.required]),
       owner_id: new FormControl(this.ownerId),
       negotiable: new FormControl(''),
@@ -196,6 +195,8 @@ export class NewAddComponent implements OnInit, OnDestroy {
         document.getElementById('addFaild'),{backdrop: this.macService.backdrop}
       );
       this.getRegions();
+      this.ownerId = localStorage.getItem('userId');
+      this.region_id = localStorage.getItem('region_id');
   }
   onNegotiable(){
     if(this.negotiable == 0){
@@ -656,7 +657,7 @@ export class NewAddComponent implements OnInit, OnDestroy {
               this.errorAdd = ''
               this.NewProductRes = res;
               this.modelSuccessNewProduct.show();
-              this.myForm.reset()
+              this.RestFormForNewAdds();
             },
             error: (err: HttpErrorResponse)=>{
               this.load = false;
@@ -669,11 +670,35 @@ export class NewAddComponent implements OnInit, OnDestroy {
         }
     }
   }
+  RestFormForNewAdds(){
+    console.log(this.ownerId);
+    console.log(this.region_id);
+    this.myForm.reset();
+    this.myForm.get('negotiable')?.setValue(0);
+    this.myForm.get('price')?.setValue(0);
+    this.myForm.get('owner_id')?.setValue(this.ownerId);
+    this.myForm.get('region_id')?.setValue(this.region_id);
+    this.card_chars_ar_1 = '';
+    this.card_chars_ar_2 = '';
+    this.card_chars_ar_3 = '';
+    this.card_chars_en_1 = '';
+    this.card_chars_en_2 = '';
+    this.card_chars_en_3 = '';
+    this.card_num_ar_1 = '';
+    this.card_num_ar_2 = '';
+    this.card_num_ar_3 = '';
+    this.card_num_ar_4 = '';
+    this.card_num_en_1 = '';
+    this.card_num_en_2 = '';
+    this.card_num_en_3 = '';
+    this.card_num_en_4 = '';
+  }
   close(){
+    const modelSuccessNewProduct = document.getElementById('modelSuccessNewProduct');
     this.modelSuccessNewProduct.hide();
-    setTimeout(()=>{
-      this.router.navigate([`/adds/${this.ownerId}`])
-    },500) 
+    modelSuccessNewProduct?.addEventListener('hidden.bs.modal', () => {
+      this.step = 1;
+    })
   }
   getProductCategoryId(){
     const productCategory = this.myForm.get('productCategory')?.value;

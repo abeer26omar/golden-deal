@@ -1,9 +1,10 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit , Inject, OnDestroy} from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
 import { MatDialogClose, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { ResponseSuccess } from 'src/app/models/actions.model';
 import { ProductsRequestService } from 'src/app/services/products-request.service';
+
 @Component({
   selector: 'app-dialog-delete',
   templateUrl: './dialog-delete.component.html',
@@ -31,6 +32,7 @@ export class DialogDeleteComponent implements OnInit, OnDestroy {
     this.load = true;
     this.delSub = this.productService.deleteProduct(this.id).subscribe({
       next:(res: ResponseSuccess)=>{
+        this.load = false;
         this.sucMsg = res.data;
         this.dialogRef.close();
       },

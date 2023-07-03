@@ -285,21 +285,21 @@ input:focus , textarea:focus{
 }
 .card_chars_ar{
     position: absolute;
-    top: 15%;
+    top: 18%;
     right: 25%;
     font-weight: 900;
     font-size: 1.5rem;
 }
 .card_num_ar{
     position: absolute;
-    top: 15%;
+    top: 18%;
     left: 21%;
     font-weight: 900;
     font-size: 1.5rem;
 }
 .card_chars_en{
     position: absolute;
-    bottom: 30%;
+    bottom: 28%;
     right: 25%;
     top: unset;
     font-weight: 900;
@@ -307,7 +307,7 @@ input:focus , textarea:focus{
 }
 .card_num_en{
     position: absolute;
-    bottom: 30%;
+    bottom: 28%;
     left: 21%;
     top: unset;
     font-weight: 900;
@@ -319,21 +319,20 @@ input:focus , textarea:focus{
     }
     .card_chars_ar{
         top: 15%;
-        right: 18%;
+        right: 13%;
         font-size: 1rem;
     }
     .card_num_ar{
         top: 15%;
-        left: 15%;
+        left: 10%;
         font-size: 1rem;
     }
     .card_chars_en{
-        right: 18%;
+        right: 13%;
         font-size: 1rem;
     }
     .card_num_en{
-        bottom: 27%;
-        left: 15%;
+        left: 10%;
         font-size: 1rem;
     }
 }

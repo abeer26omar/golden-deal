@@ -106,7 +106,7 @@
                       [ngClass]="{'pe-none': product.status === 'sold' }" class="car_plates_container">
                       <ng-container *ngFor="let property of product.properties">
                         <ng-container *ngIf="property.slug_name == 'plate_type_filter_6'">
-                          <img class="car_plates" src="{{property.filter_value.filter_value == 'نقل' ?  '../../assets/images/carplate_nakl.svg' : '../../assets/images/car_paletes_details.svg'}}" alt="carplate_img" width="100%">
+                          <img class="car_plates" src="{{property.filter_value.filter_value == 'نقل' ?  '../../assets/images/carplate_nakl.svg' : '../../assets/images/car_paletes_details.svg'}}" alt="carplate_img">
                         </ng-container>
                           <ng-container  *ngIf="property.type == 'text'">
                               <span *ngIf="property.name_ar == 'حروف اللوحة عربي'" class="card_chars_ar">{{property.filter_value.filter_value}}</span>

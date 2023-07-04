@@ -137,7 +137,7 @@ ul.more-dropdown{
 @media screen and (max-width: 575.5px) {
   .notifcation.dropdown-menu{
     width: 370px;
-    right: -200px;
+    right: -174px;
   }
 }
 @media screen and (max-width: 375.5px) {

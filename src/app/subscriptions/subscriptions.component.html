@@ -1,4 +1,4 @@
-<div class="main mt-5 mb-5">
+<div class="main my-5">
     <div class="title">
         <p class="main-title">الأشتراكات</p>
         <div class="star">
@@ -7,11 +7,11 @@
             <span>اضف مزيد من الاعلانات</span>
         </div>
     </div>
-    <div class="container pt-5 pb-5">
-        <form [formGroup] ="subscribtionForm" class="d-flex justify-content-center">
+    <form [formGroup] ="subscribtionForm" class="d-flex justify-content-center">
+        <div class="container py-5">
             <div class="row row-cols-1 row-cols-md-2 row-cols-lg-2 g-5 justify-content-center">
                     <div class="col" *ngFor="let subscription of subscriptions">
-                        <div class="card"[ngClass]="{'gold': subscription.slug == 'gold'}">
+                        <div class="card" [ngClass]="{'gold': subscription.slug == 'gold'}">
                             <p class="name">{{subscription.title}}</p>
                             <div class="card-header">
                                 <p class="price mt-5"><span>{{subscription.fees}}</span>  {{subscription.currency_name}}</p>
@@ -35,10 +35,10 @@
                                     <a class="btn btn_choose" (click)="choose(subscription.id)">اختر</a>
                             </div>
                         </div>
-                </div>
+                    </div>
             </div> 
-        </form> 
-    </div>
+        </div>
+    </form> 
 </div>
 <!-- payment modal -->
 <div class="modal fade"

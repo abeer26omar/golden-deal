@@ -254,3 +254,8 @@ input.invalid_input{
         font-size: 14px;
     }
 }
+@media screen and (max-width: 425px){
+    .btn_negotiable{
+        padding: .7rem;
+    }
+}

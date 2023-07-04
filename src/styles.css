@@ -355,6 +355,7 @@ input.star:checked ~ label.star:before {
 }
 .products-row .card-header img.car_plates{
     height: 200px;
+    width: 100%;
 }
 @media screen and (min-width: 992px) {
     .products-row .card-header img.car_plates{
@@ -405,7 +406,7 @@ input.star:checked ~ label.star:before {
     width: fit-content;
 }
 .car_plates_container{
-    display: inline-flex;
+    display: flex;
     position: relative;
 }
 .car_plates_container span{

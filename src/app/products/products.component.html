@@ -109,15 +109,19 @@
                                 <img class="car_plates" src="{{property.filter_value.filter_value == 'نقل' ?  '../../assets/images/carplate_nakl.svg' : '../../assets/images/car_paletes_details.svg'}}" alt="carplate_img">
                               </ng-container>
                       </ng-container>
-                      <table class="table table-bordered border-primary">
+                      <table class="table">
                         <tbody>
                           <tr>
                             <ng-container *ngFor="let property of product.properties">
                               <ng-container *ngIf="property.type == 'text'">
-                                  <td colspan="1" *ngIf="property.name_ar == 'حروف اللوحة عربي'"  style="width: 5%"></td>
-                                  <td colspan="2" *ngIf="property.name_ar == 'حروف اللوحة عربي'">{{property.filter_value.filter_value}}</td>
-                                  <td colspan="1" *ngIf="property.name_ar == 'ارقام اللوحة عربي'"  style="width: 20%"></td>
-                                  <td colspan="2" *ngIf="property.name_ar == 'ارقام اللوحة عربي'">{{property.filter_value.filter_value}}</td>
+                                  <td colspan="1" *ngIf="property.name_ar == 'حروف اللوحة عربي'"  class="separate_thin"></td>
+                                  <td colspan="2" *ngIf="property.name_ar == 'حروف اللوحة عربي'">
+                                    <span>{{property.filter_value.filter_value}}</span>
+                                  </td>
+                                  <td colspan="1" *ngIf="property.name_ar == 'ارقام اللوحة عربي'" class="separate_thick"></td>
+                                  <td colspan="2" *ngIf="property.name_ar == 'ارقام اللوحة عربي'">
+                                    <span>{{property.filter_value.filter_value}}</span>
+                                  </td>
                               </ng-container>
                             </ng-container>
                           </tr>
@@ -127,10 +131,14 @@
                                 <!-- <ng-container *ngIf="property.name_ar == 'حروف اللوحة انجليزي' || property.name_ar == 'ارقام اللوحة انجليزي'">
                                   <td colspan="">{{property.filter_value.filter_value}}</td>
                                 </ng-container> -->
-                                  <td colspan="1" *ngIf="property.name_ar == 'حروف اللوحة انجليزي'"  style="width: 5%"></td>
-                                  <td colspan="2" *ngIf="property.name_ar == 'حروف اللوحة انجليزي'">{{property.filter_value.filter_value}}</td>
-                                  <td colspan="1" *ngIf="property.name_ar == 'ارقام اللوحة انجليزي'" style="width: 20%"></td>
-                                  <td colspan="2" *ngIf="property.name_ar == 'ارقام اللوحة انجليزي'">{{property.filter_value.filter_value}}</td>
+                                  <td colspan="1" *ngIf="property.name_ar == 'حروف اللوحة انجليزي'" class="separate_thin"></td>
+                                  <td colspan="2" *ngIf="property.name_ar == 'حروف اللوحة انجليزي'">
+                                    <span>{{property.filter_value.filter_value}}</span>
+                                  </td>
+                                  <td colspan="1" *ngIf="property.name_ar == 'ارقام اللوحة انجليزي'" class="separate_thick"></td>
+                                  <td colspan="2" *ngIf="property.name_ar == 'ارقام اللوحة انجليزي'">
+                                    <span>{{property.filter_value.filter_value}}</span>
+                                  </td>
                               </ng-container>
                             </ng-container>
                           </tr>

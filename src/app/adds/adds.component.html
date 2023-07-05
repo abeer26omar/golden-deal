@@ -118,7 +118,7 @@
                               </div>
                               <div class="card h-100" *ngIf="product.category_slug == 'car_plates'">
                                 <div class="card-header plates text-center" >
-                                  <a (click)="productDetails(product.id)"
+                                  <!-- <a (click)="productDetails(product.id)"
                                   [ngClass]="{'pe-none': product.status === 'sold' }">
                                     <ng-container *ngFor="let property of product.properties">
                                       <ng-container *ngIf="property.slug_name == 'plate_type_filter_6'">
@@ -133,7 +133,50 @@
                                         <span *ngIf="property.name_ar == 'ارقام اللوحة عربي'" class="card_num_ar">{{property.filter_value.filter_value}}</span>
                                         <span *ngIf="property.name_ar == 'ارقام اللوحة انجليزي'" class="card_num_en">{{property.filter_value.filter_value}}</span>
                                     </ng-container>
-                                  </ng-container>
+                                  </ng-container> -->
+                                  <a (click)="productDetails(product.id)"
+                      [ngClass]="{'pe-none': product.status === 'sold' }" class="car_plates_container">
+                      <ng-container *ngFor="let property of product.properties">
+                              <ng-container *ngIf="property.slug_name == 'plate_type_filter_6'">
+                                <img class="car_plates" src="{{property.filter_value.filter_value == 'نقل' ?  '../../assets/images/carplate_nakl.svg' : '../../assets/images/car_paletes_details.svg'}}" alt="carplate_img">
+                              </ng-container>
+                      </ng-container>
+                      <table class="table">
+                        <tbody>
+                          <tr>
+                            <ng-container *ngFor="let property of product.properties">
+                              <ng-container *ngIf="property.type == 'text'">
+                                  <td colspan="1" *ngIf="property.name_ar == 'حروف اللوحة عربي'"  class="separate_thin"></td>
+                                  <td colspan="2" *ngIf="property.name_ar == 'حروف اللوحة عربي'">
+                                    <span>{{property.filter_value.filter_value}}</span>
+                                  </td>
+                                  <td colspan="1" *ngIf="property.name_ar == 'ارقام اللوحة عربي'" class="separate_thick"></td>
+                                  <td colspan="2" *ngIf="property.name_ar == 'ارقام اللوحة عربي'">
+                                    <span>{{property.filter_value.filter_value}}</span>
+                                  </td>
+                              </ng-container>
+                            </ng-container>
+                          </tr>
+                          <tr>
+                            <ng-container *ngFor="let property of product.properties">
+                              <ng-container *ngIf="property.type == 'text'">
+                                <!-- <ng-container *ngIf="property.name_ar == 'حروف اللوحة انجليزي' || property.name_ar == 'ارقام اللوحة انجليزي'">
+                                  <td colspan="">{{property.filter_value.filter_value}}</td>
+                                </ng-container> -->
+                                  <td colspan="1" *ngIf="property.name_ar == 'حروف اللوحة انجليزي'" class="separate_thin"></td>
+                                  <td colspan="2" *ngIf="property.name_ar == 'حروف اللوحة انجليزي'">
+                                    <span>{{property.filter_value.filter_value}}</span>
+                                  </td>
+                                  <td colspan="1" *ngIf="property.name_ar == 'ارقام اللوحة انجليزي'" class="separate_thick"></td>
+                                  <td colspan="2" *ngIf="property.name_ar == 'ارقام اللوحة انجليزي'">
+                                    <span>{{property.filter_value.filter_value}}</span>
+                                  </td>
+                              </ng-container>
+                            </ng-container>
+                          </tr>
+                        </tbody>
+                      </table>
+                      </a>
                                   <div  class="favorite" *ngIf="product.status === 'active'">
                                     <div ngbDropdown class="btn-dots">
                                       <a type="button" class="" id="dropdownBasic1" ngbDropdownToggle><img src="../../assets/images/btn-dots.svg" alt="btn-dots"></a>

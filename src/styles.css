@@ -357,9 +357,9 @@ input.star:checked ~ label.star:before {
     height: 200px;
     width: 100%;
 }
-@media screen and (min-width: 992px) {
+@media screen and (min-width: 1024px) {
     .products-row .card-header img.car_plates{
-        height: 215px;
+        height: 225px;
     }
 }
 .products-row .card-body{
@@ -405,21 +405,33 @@ input.star:checked ~ label.star:before {
     padding: 0.5rem 1rem;
     width: fit-content;
 }
+table  td{
+    width: 38.5%;
+}  
+
 .car_plates_container{
-    display: flex;
     position: relative;
 }
-.car_plates_container span{
+table{
+    position: absolute;
+    top: -132%;
+    bottom: 0%;
+    left: 0%;
+    right: 0%;
+    height: 97px;
+    margin: 0 !important;
+}
+/* .car_plates_container span{
     position: absolute;
     font-weight: 900;
     color: var(--black);
 }
 .card_chars_ar{
-    top: 30%;
+    top: 23%;
     right: 13%;
 }
 .card_num_ar{
-    top: 30%;
+    top: 23%;
     left: 13%;
 }
 .card_chars_en{
@@ -444,7 +456,7 @@ input.star:checked ~ label.star:before {
     .card_num_en{
         left: 11%;
     }
-}
+} */
 .mat-menu-panel {
     overflow: hidden !important;
 }

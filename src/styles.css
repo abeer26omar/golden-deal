@@ -414,6 +414,7 @@ input.star:checked ~ label.star:before {
 }
 .car_plates_container{
     position: relative;
+    right: 0%;
 }
 table{
     position: absolute;
@@ -443,16 +444,16 @@ table{
         height: 102px
     }
 }
+table  td{
+    width: 38.5%;
+    vertical-align: middle;
+    text-align: center;
+}
 table  td.separate_thin{
     width: 5%;
 }
 table td.separate_thick{
     width: 20%;
-}
-table  td{
-    width: 38.5%;
-    vertical-align: middle;
-    text-align: center;
 }
 table, td, tr{
     border: none !important;
@@ -463,6 +464,9 @@ table  td span{
     align-items: center;
     font-weight: 900;
     color: var(--black);
+}
+table td span.lrt{
+    direction: ltr;
 }
 /* .car_plates_container span{
     position: absolute;

@@ -357,7 +357,11 @@ input.star:checked ~ label.star:before {
     height: 200px;
     width: 100%;
 }
-
+@media screen and (min-width: 1440px) {
+    .products-row .card-header img.car_plates{
+        height: 230px;
+    }
+}
 @media screen and (min-width: 768px) and (max-width: 992px) {
     .products-row .card-header img.car_plates{
         height: 230px;
@@ -425,6 +429,12 @@ table{
     height: 97px;
     margin: 0 !important;
     max-width: 100% !important;
+}
+@media screen and (min-width: 1440px) {
+    .table{
+        top: -191%;
+        height: 121px;
+    }
 }
 @media screen and (max-width: 991.5px) {
     .table{

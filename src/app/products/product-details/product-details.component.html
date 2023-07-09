@@ -29,19 +29,45 @@
                         </div>
                       </div>-->                
             </div>
-            <div class="d-flex justify-content-center mb-5 plates" *ngIf="singleProduct.data.product_images.length == 0">
-                <ng-container  *ngFor="let property of singleProduct.data.properties">
-                    <ng-container *ngIf="property.slug_name == 'plate_type_filter_6'">
-                      <img *ngIf="property.filter_value.filter_value == 'نقل'" src="../../assets/images/car_palets_show_nakl.svg" alt="car_plates_icon" width="80%">
-                      <img *ngIf="property.filter_value.filter_value !== 'نقل'" src="../../assets/images/car_palets_show.svg" alt="car_plates_icon" width="80%">
-                    </ng-container>
-                    <ng-container  *ngIf="property.type == 'text'">
-                        <span *ngIf="property.name_ar == 'حروف اللوحة عربي'" class="card_chars_ar">{{property.filter_value.filter_value}}</span>
-                        <span *ngIf="property.name_ar == 'حروف اللوحة انجليزي'" class="card_chars_en">{{property.filter_value.filter_value}}</span>
-                        <span *ngIf="property.name_ar == 'ارقام اللوحة عربي'" class="card_num_ar">{{property.filter_value.filter_value}}</span>
-                        <span *ngIf="property.name_ar == 'ارقام اللوحة انجليزي'" class="card_num_en">{{property.filter_value.filter_value}}</span>
-                    </ng-container>
+            <div class="d-flex justify-content-center mb-5 mx-auto plates" *ngIf="singleProduct.data.product_images.length == 0">
+                <ng-container *ngFor="let property of singleProduct.data.properties">
+                        <ng-container *ngIf="property.slug_name == 'plate_type_filter_6'">
+                          <img class="car_plates"
+                           src="{{property.filter_value.filter_value == 'نقل' ?  '../../assets/images/carplate_nakl.svg' : '../../assets/images/car_paletes_details.svg'}}" alt="carplate_img">
+                        </ng-container>
                 </ng-container>
+                <table class="table">
+                  <tbody>
+                    <tr>
+                      <ng-container *ngFor="let property of singleProduct.data.properties">
+                        <ng-container *ngIf="property.type == 'text'">
+                            <td colspan="1" *ngIf="property.name_ar == 'حروف اللوحة عربي'"  class="separate_thin"></td>
+                            <td colspan="2" *ngIf="property.name_ar == 'حروف اللوحة عربي'">
+                              <span>{{property.filter_value.filter_value}}</span>
+                            </td>
+                            <td colspan="1" *ngIf="property.name_ar == 'ارقام اللوحة عربي'" class="separate_thick"></td>
+                            <td colspan="2" *ngIf="property.name_ar == 'ارقام اللوحة عربي'">
+                              <span>{{property.filter_value.filter_value}}</span>
+                            </td>
+                        </ng-container>
+                      </ng-container>
+                    </tr>
+                    <tr>
+                      <ng-container *ngFor="let property of singleProduct.data.properties">
+                        <ng-container *ngIf="property.type == 'text'">
+                            <td colspan="1" *ngIf="property.name_ar == 'حروف اللوحة انجليزي'" class="separate_thin"></td>
+                            <td colspan="2" *ngIf="property.name_ar == 'حروف اللوحة انجليزي'">
+                              <span>{{property.filter_value.filter_value}}</span>
+                            </td>
+                            <td colspan="1" *ngIf="property.name_ar == 'ارقام اللوحة انجليزي'" class="separate_thick"></td>
+                            <td colspan="2" *ngIf="property.name_ar == 'ارقام اللوحة انجليزي'">
+                              <span class="lrt">{{property.filter_value.filter_value}}</span>
+                            </td>
+                        </ng-container>
+                      </ng-container>
+                    </tr>
+                  </tbody>
+                </table>
             </div>
             <div class="card main-card">
                 <div class="card-header">

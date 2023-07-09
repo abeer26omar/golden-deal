@@ -28,6 +28,7 @@ p.time, p.p-rate, span.name{
 }
 .plates{
     position: relative;
+    width: 80%;
 }
 .prod-details p{
     color: var(--primary-color);
@@ -281,9 +282,9 @@ input:focus , textarea:focus{
     padding: 0.7rem 1.5rem;
 }
 .plates img{
-    width: 80%
+    width: 100%
 }
-.card_chars_ar{
+/* .card_chars_ar{
     position: absolute;
     top: 18%;
     right: 25%;
@@ -312,8 +313,8 @@ input:focus , textarea:focus{
     top: unset;
     font-weight: 900;
     font-size: 1.5rem;
-}
-@media screen and (max-width: 575px) {
+} */
+/* @media screen and (max-width: 575px) {
     .plates img{
         width: 100%
     }
@@ -335,7 +336,7 @@ input:focus , textarea:focus{
         left: 10%;
         font-size: 1rem;
     }
-}
+} */
 .desc_details{
     border-bottom: .5px solid #7070703b;
     padding: 1rem 0;
@@ -350,4 +351,19 @@ p{
 }
 .p-galleria-item-wrapper{
     height: 100%;
+}
+.table{
+    height: 83%;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+table td span{
+    font-size: 1rem;
+}
+@media screen and (min-width: 575px){
+    table td span{
+        font-size: 2rem;
+    }
 }

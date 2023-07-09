@@ -56,6 +56,7 @@ export class AppComponent implements OnInit{
         this.not_count += this.not_count;
         this.notificationService.insideChatComponent.subscribe((insideChat)=>{
           if(!insideChat){
+            
             // this.notificationService.requestPermission();
             this.not_count += this.not_count;
             this.notificationService.getMyNotifications();

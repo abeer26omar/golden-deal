@@ -148,11 +148,11 @@
                               <ng-container *ngIf="property.type == 'text'">
                                   <td colspan="1" *ngIf="property.name_ar == 'حروف اللوحة عربي'"  class="separate_thin"></td>
                                   <td colspan="2" *ngIf="property.name_ar == 'حروف اللوحة عربي'">
-                                    <span>{{property.filter_value.filter_value}}</span>
+                                    <span>{{property.filter_value.filter_value | input}}</span>
                                   </td>
                                   <td colspan="1" *ngIf="property.name_ar == 'ارقام اللوحة عربي'" class="separate_thick"></td>
                                   <td colspan="2" *ngIf="property.name_ar == 'ارقام اللوحة عربي'">
-                                    <span>{{property.filter_value.filter_value}}</span>
+                                    <span>{{property.filter_value.filter_value | input}}</span>
                                   </td>
                               </ng-container>
                             </ng-container>
@@ -165,11 +165,11 @@
                                 </ng-container> -->
                                   <td colspan="1" *ngIf="property.name_ar == 'حروف اللوحة انجليزي'" class="separate_thin"></td>
                                   <td colspan="2" *ngIf="property.name_ar == 'حروف اللوحة انجليزي'">
-                                    <span>{{property.filter_value.filter_value}}</span>
+                                    <span>{{property.filter_value.filter_value | input}}</span>
                                   </td>
                                   <td colspan="1" *ngIf="property.name_ar == 'ارقام اللوحة انجليزي'" class="separate_thick"></td>
                                   <td colspan="2" *ngIf="property.name_ar == 'ارقام اللوحة انجليزي'">
-                                    <span class="lrt">{{property.filter_value.filter_value}}</span>
+                                    <span class="lrt">{{property.filter_value.filter_value | input}}</span>
                                   </td>
                               </ng-container>
                             </ng-container>

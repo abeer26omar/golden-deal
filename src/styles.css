@@ -473,6 +473,7 @@ table  td span{
     justify-content: center;
     align-items: center;
     font-weight: 900;
+    font-size: 1.2rem;
     color: var(--black);
 }
 table td span.lrt{

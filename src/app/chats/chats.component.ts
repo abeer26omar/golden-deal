@@ -104,7 +104,7 @@ export class ChatsComponent implements OnInit, OnDestroy {
         this.load = false;
         this.supportData = res.data;
         this.messages = res.data.support_messages;
-        this.scrollToBottom();
+        // this.scrollToBottom();
       }
     })
   }

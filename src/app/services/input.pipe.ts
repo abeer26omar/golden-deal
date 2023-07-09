@@ -5,8 +5,9 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class InputPipe implements PipeTransform {
 
-  transform(value: unknown, ...args: unknown[]): unknown {
-    return null;
+  transform(value: any, ...args: unknown[]): unknown {
+    let arr = value.split('');
+    return arr.join('\u00A0');
   }
 
 }

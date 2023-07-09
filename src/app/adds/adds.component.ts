@@ -73,6 +73,7 @@ export class AddsComponent implements OnInit, OnDestroy {
   private routeSub : Subscription = new Subscription;
   private favSub: Subscription = new Subscription;
   private orderSub: Subscription = new Subscription;
+  mac: boolean = false;
   constructor(private router: Router,
     private route: ActivatedRoute,
     public actionService: ActionsService,
@@ -112,6 +113,11 @@ export class AddsComponent implements OnInit, OnDestroy {
       this.getPortfolioInfo(this.portfolioId);
       this.getUserProducts(this.portfolioId)
     });
+    if(this.macService.operatingSysDetect()){
+      this.mac = true;
+    }else{
+      this.mac = false;
+    }
   }
   getPortfolioInfo(id: number){
     this.loadding = true;

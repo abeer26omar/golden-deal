@@ -418,7 +418,7 @@ input.star:checked ~ label.star:before {
 }
 .car_plates_container{
     position: relative;
-    right: 0%;
+    /* display: inline-block; */
 }
 table{
     position: absolute;
@@ -461,6 +461,9 @@ table  td{
 }
 table  td.separate_thin{
     width: 5%;
+}
+table  td.separate_thin.mac{
+    width: 8%;
 }
 table td.separate_thick{
     width: 20%;

@@ -84,7 +84,7 @@
                           <tr>
                             <ng-container *ngFor="let property of add.properties">
                               <ng-container *ngIf="property.type == 'text'">
-                                  <td colspan="1" *ngIf="property.name_ar == 'حروف اللوحة عربي'"  class="separate_thin"></td>
+                                  <td colspan="1" *ngIf="property.name_ar == 'حروف اللوحة عربي'"  class="separate_thin" [ngClass]="{'mac': mac}"></td>
                                   <td colspan="2" *ngIf="property.name_ar == 'حروف اللوحة عربي'">
                                     <span>{{property.filter_value.filter_value | input}}</span>
                                   </td>
@@ -101,7 +101,7 @@
                                 <!-- <ng-container *ngIf="property.name_ar == 'حروف اللوحة انجليزي' || property.name_ar == 'ارقام اللوحة انجليزي'">
                                   <td colspan="">{{property.filter_value.filter_value}}</td>
                                 </ng-container> -->
-                                  <td colspan="1" *ngIf="property.name_ar == 'حروف اللوحة انجليزي'" class="separate_thin"></td>
+                                  <td colspan="1" *ngIf="property.name_ar == 'حروف اللوحة انجليزي'" class="separate_thin" [ngClass]="{'mac': mac}"></td>
                                   <td colspan="2" *ngIf="property.name_ar == 'حروف اللوحة انجليزي'">
                                     <span>{{property.filter_value.filter_value | input}}</span>
                                   </td>

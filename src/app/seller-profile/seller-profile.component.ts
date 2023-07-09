@@ -47,7 +47,7 @@ export class SellerProfileComponent implements OnInit, OnDestroy {
   productsStatus: Array<Products> = [];
   private portSub : Subscription = new Subscription;
   private routeSub : Subscription = new Subscription;
-  
+  mac: boolean = false;
   constructor(private router: Router,
     private route: ActivatedRoute,
     private actionService: ActionsService,
@@ -71,6 +71,11 @@ export class SellerProfileComponent implements OnInit, OnDestroy {
       this.getPortfolioInfo(this.portfolioId);
       this.getUserProducts(this.portfolioId)
     });
+    if(this.macService.operatingSysDetect()){
+      this.mac = true;
+    }else{
+      this.mac = false;
+    }
   }
   getPortfolioInfo(id: number){
     this.loadding = true;

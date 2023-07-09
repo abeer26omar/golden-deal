@@ -44,7 +44,9 @@ export class MacPrefixService {
       this.macsearch = true;
     } 
     if(this.platform.IOS){
-      this.backdrop = false
+      this.backdrop = false;
+      return true;
     }
+    return;
   }
 }

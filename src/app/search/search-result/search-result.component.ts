@@ -6,6 +6,7 @@ import { ResponseSuccess } from 'src/app/models/actions.model';
 import { APIResponse, Products, Search } from 'src/app/models/products.model';
 import { ActionsService } from 'src/app/services/actions.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler.service';
+import { MacPrefixService } from 'src/app/services/mac-prefix.service';
 import { ProductsRequestService } from 'src/app/services/products-request.service';
 import { environment as env } from 'src/environments/environment';
 
@@ -26,12 +27,14 @@ export class SearchResultComponent implements OnInit, OnDestroy {
   links: any = {};
   meta: any = {};
   is_animating: boolean = false;
+  mac: boolean = false;
   constructor(private route: ActivatedRoute,
     private productService: ProductsRequestService,
     private router: Router,
     public actionService: ActionsService,
     private http: HttpClient,
-    private errorHandel: ErrorHandlerService) { 
+    private errorHandel: ErrorHandlerService,
+    private macService: MacPrefixService) { 
     } 
     
     ngOnInit(): void {
@@ -40,6 +43,11 @@ export class SearchResultComponent implements OnInit, OnDestroy {
       });    
       this.getSearchResult(this.key);
       this.owner_id = localStorage.getItem('userId');
+      if(this.macService.operatingSysDetect()){
+        this.mac = true;
+      }else{
+        this.mac = false;
+      }
   }
   addToFav(product: any){
     this.is_animating = true;

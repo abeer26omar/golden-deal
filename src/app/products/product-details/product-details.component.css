@@ -364,6 +364,6 @@ table td span{
 }
 @media screen and (min-width: 575px){
     table td span{
-        font-size: 2rem;
+        font-size: 2.5rem;
     }
 }

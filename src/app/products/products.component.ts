@@ -76,6 +76,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
   regions: any = [];
   metaNo: any = [];
   owner_id: any;
+  mac: boolean = false;
   slickOptionsSubBrands: any;
   plate_town_filter_6: any;
   plate_type_filter_6: any;
@@ -314,7 +315,11 @@ export class ProductsComponent implements OnInit, OnDestroy {
       document.getElementById('faildProducts'),{backdrop: this.macService.backdrop}
     );
     this.getCategories();
-    // this.categoriesSplash = this.categories;    
+    if(this.macService.operatingSysDetect()){
+      this.mac = true;
+    }else{
+      this.mac = false;
+    }
     this.getProducts(this.route.snapshot.fragment ? this.route.snapshot.fragment: 'all', 1);
     this.getRegions();
     this.owner_id = localStorage.getItem('userId')

@@ -6,14 +6,14 @@
             <img src="../../../assets/images/support_whats_icon.svg" alt="support_whats_icon">
             <span class="px-2">واتساب</span> 
             </a>
-        <a href="https://twitter.com/goldendeal11" target="_blank"
+        <a href="https://www.instagram.com/golden.deal1/" target="_blank"
             class="btn btn-prim btn-tweet mx-4">
-            <img src="../../../assets/images/support_twitter_icon.svg" alt="support_twitter_icon">
-            <span class="px-3">تويتر</span> 
+            <img src="../../assets/images/Instagram.svg" alt="instgram-icon">
+            <span class="px-3">انستجرام</span> 
         </a>
-        <a href="" class="btn btn-prim btn-google">
-            <img src="../../../assets/images/support_goolgle_icon.svg" alt="support_goolgle_icon">
-            <span class="px-3">ايميل</span> 
+        <a href="https://t.snapchat.com/CpWgDLQx" class="btn btn-prim btn-google">
+            <img src="../../assets/images/Snapchat (1).svg" alt="Snapchat-icon">
+            <span class="px-3">سناب شات</span> 
         </a>
     </div>
   </div>
@@ -31,81 +31,83 @@
                     <mat-progress-bar mode="indeterminate"  *ngIf="loader" id="addprog"></mat-progress-bar>
                     <div class="card-body ps-container mt-2 ps-theme-default ps-active-y" 
                      style="overflow-y: scroll !important;height:505px !important;">
-                        <ul ngbNav #nav="ngbNav"  #chatWindow
+                        <ul ngbNav #nav="ngbNav"  #chatWindow [(activeId)]="activeId"
                             class="nav-pills p-0" orientation="vertical">
-                            <li ngbNavItem *ngFor="let user of msgUsersList">
-                              <a ngbNavLink (click)="getChat(user.sender === userId ? user.receiver : user.sender)" 
-                                [ngClass]="{'new_msg': user.receiver == userId && user.seen_at == 0}">
-                                <div class="column">
-                                    <div class="chats">
-                                        <div class="avatar">
-                                            <img src="{{user.sender === userId ? avatar_base_url+user.receiver_avatar : avatar_base_url+user.sender_avatar}}" alt="placeholderimg">
-                                        </div>
-                                        <div class="chat">
-                                            <p class="chat-name">{{user.sender === userId ? user.receiver_name : user.sender_name}}</p>
-                                            <p class="chat-desc">{{user.message}}</p>
-                                        </div>
-                                        <div *ngIf="user.receiver == userId && user.seen_at == 0">
-                                            <span matBadgeSize="small"></span>
+                            <ng-container *ngFor="let user of msgUsersList,let i=index;">
+                                <li [ngbNavItem]="i">
+                                  <a ngbNavLink (click)="getChat(user.sender === userId ? user.receiver : user.sender)" 
+                                    [ngClass]="{'new_msg': user.receiver == userId && user.seen_at == 0}">
+                                    <div class="column">
+                                        <div class="chats">
+                                            <div class="avatar">
+                                                <img src="{{user.sender === userId ? avatar_base_url+user.receiver_avatar : avatar_base_url+user.sender_avatar}}" alt="placeholderimg">
+                                            </div>
+                                            <div class="chat">
+                                                <p class="chat-name">{{user.sender === userId ? user.receiver_name : user.sender_name}}</p>
+                                                <p class="chat-desc">{{user.message}}</p>
+                                            </div>
+                                            <div *ngIf="user.receiver == userId && user.seen_at == 0">
+                                                <span matBadgeSize="small"></span>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </a>
-                              <ng-template ngbNavContent>
-                                <div class="page-content page-container" id="page-content">
-                                        <div class="card">
-                                            <button mat-icon-button class="toggler"
-                                                *ngIf="toggle" 
-                                                (click)="toggleSideMenu()">
-                                                <mat-icon>
-                                                   menu
-                                                </mat-icon>
-                                            </button>
-                                            <div class="card-header justify-content-center">
-                                                <h4 class="card-title"><strong>{{user.sender === userId ? user.receiver_name : user.sender_name}}</strong></h4>
-                                            </div>
-                                            <mat-progress-bar mode="indeterminate"  *ngIf="load" id="addprog"></mat-progress-bar>
-                                            <div class="ps-container ps-theme-default ps-active-y mt-2" id="chat-content">
-                                                <div class="media media-chat" 
-                                                [ngClass]="{'media-chat-reverse' : msg.sender_id !== userId}"
-                                                    *ngFor="let msg of usersMsg">
-                                                    <div class="p-2 m-1 media-1 media-2">
-                                                        <img class="avatar" src="{{avatar_base_url+msg.sender_avatar}}" alt="user_avatar" *ngIf="msg.sender_avatar !== ''">
-                                                        <p class="msg-txt">{{msg.message}}</p>
-                                                    </div>
+                                </a>
+                                  <ng-template ngbNavContent>
+                                    <div class="page-content page-container" id="page-content">
+                                            <div class="card">
+                                                <button mat-icon-button class="toggler"
+                                                    *ngIf="toggle" 
+                                                    (click)="toggleSideMenu()">
+                                                    <mat-icon>
+                                                       menu
+                                                    </mat-icon>
+                                                </button>
+                                                <div class="card-header justify-content-center">
+                                                    <h4 class="card-title"><strong>{{user.sender === userId ? user.receiver_name : user.sender_name}}</strong></h4>
                                                 </div>
-                                                <p class="text-danger text-center" *ngIf="errorTxt">{{errorTxt}}</p>
-                                              <div class="ps-scrollbar-x-rail" style="left: 0px; bottom: 0px;">
-                                                <div class="ps-scrollbar-x" tabindex="0" style="left: 0px; width: 0px;"></div>
+                                                <mat-progress-bar mode="indeterminate"  *ngIf="load" id="addprog"></mat-progress-bar>
+                                                <div class="ps-container ps-theme-default ps-active-y mt-2" id="chat-content">
+                                                    <div class="media media-chat" 
+                                                    [ngClass]="{'media-chat-reverse' : msg.sender_id !== userId}"
+                                                        *ngFor="let msg of usersMsg">
+                                                        <div class="p-2 m-1 media-1 media-2">
+                                                            <img class="avatar" src="{{avatar_base_url+msg.sender_avatar}}" alt="user_avatar" *ngIf="msg.sender_avatar !== ''">
+                                                            <p class="msg-txt">{{msg.message}}</p>
+                                                        </div>
+                                                    </div>
+                                                    <p class="text-danger text-center" *ngIf="errorTxt">{{errorTxt}}</p>
+                                                  <div class="ps-scrollbar-x-rail" style="left: 0px; bottom: 0px;">
+                                                    <div class="ps-scrollbar-x" tabindex="0" style="left: 0px; width: 0px;"></div>
+                                                </div>
+                                                <div class="ps-scrollbar-y-rail" style="top: 0px; height: 0px; right: 2px;">
+                                                    <div class="ps-scrollbar-y" tabindex="0" style="top: 0px; height: 2px;"></div>
+                                                </div>
                                             </div>
-                                            <div class="ps-scrollbar-y-rail" style="top: 0px; height: 0px; right: 2px;">
-                                                <div class="ps-scrollbar-y" tabindex="0" style="top: 0px; height: 2px;"></div>
-                                            </div>
-                                        </div>
-                                        <form>
-                                            <div class="publisher">
-                                              <div class="outer" #textArea>
-                                                  <div class="d-flex align-items-center" style="width: 100%;">
-                                                      <textarea class="publisher-input form-control" 
-                                                          type="text" 
-                                                          placeholder="اكتب رسالتك هنا"
-                                                          [(ngModel)]="messageTxt"
-                                                          [ngModelOptions]="{standalone: true}"
-                                                          (keyup)="$event.keyCode === 13"></textarea>
+                                            <form>
+                                                <div class="publisher">
+                                                  <div class="outer" #textArea>
+                                                      <div class="d-flex align-items-center" style="width: 100%;">
+                                                          <textarea class="publisher-input form-control" 
+                                                              type="text" 
+                                                              placeholder="اكتب رسالتك هنا"
+                                                              [(ngModel)]="messageTxt"
+                                                              [ngModelOptions]="{standalone: true}"
+                                                              (keyup)="$event.keyCode === 13"></textarea>
+                                                      </div>
                                                   </div>
-                                              </div>
-                                                  <button class="btn text-info" (click)="sendMsg()">
-                                                      <img src="../../assets/images/send.svg" alt="" style="width: 50px;">
-                                                  </button>
+                                                      <button class="btn text-info" (click)="sendMsg()">
+                                                          <img src="../../assets/images/send.svg" alt="" style="width: 50px;">
+                                                      </button>
+                                                </div>
+                                            </form>
                                             </div>
-                                        </form>
-                                        </div>
-                                </div>
-                              </ng-template>
-                            </li>
+                                    </div>
+                                  </ng-template>
+                                </li>
+                            </ng-container>
                             <mat-divider class="my-3"></mat-divider>
                             <p class="text-center text-danger" *ngIf="errorlist">{{errorlist}}</p>
-                            <li ngbNavItem="support">
+                            <li ngbNavItem>
                               <a ngbNavLink>
                                 <div class="column">
                                     <div class="chats">

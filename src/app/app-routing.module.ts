@@ -49,9 +49,9 @@ const routes: Routes = [
   { path:'**', component: NotfoundComponent}
 ];
 const routerOptions: ExtraOptions = {
-  // scrollPositionRestoration: 'enabled',
-  // anchorScrolling: 'enabled',
-  // scrollOffset: [0, 64],
+  scrollPositionRestoration: 'enabled',
+  anchorScrolling: 'enabled',
+  scrollOffset: [0, 0],
 };
 
 @NgModule({

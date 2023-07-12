@@ -29,6 +29,7 @@ export class ChatsComponent implements OnInit, OnDestroy {
   public usersMsg: Array<Messages> = []
   avatar_base_url: string = 'https://admin.gooldendeal.com/storage/'
   public chatSub: Subscription = new Subscription;
+  activeId: number = 0;
   @ViewChild('chatWindow') chatWindow!: ElementRef;
   @ViewChild('sideNav') sideNav!: ElementRef;
   @ViewChild('backDrop') backDrop!: ElementRef;
@@ -144,7 +145,9 @@ export class ChatsComponent implements OnInit, OnDestroy {
     this.chatService.getAllPreMsgList(this.userId).subscribe({
       next: (res: Array<MessagesList>)=>{
         this.loader = false;
-        this.msgUsersList = res;                
+        this.msgUsersList = res;
+        console.log(this.msgUsersList);
+                        
       }
     })
   } 

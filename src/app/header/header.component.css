@@ -187,9 +187,17 @@ ul.adds-list li a{
   padding: .5rem 0;
   font-weight: 400;
 }
-@media screen and (max-width: 992px) {
+.small_chat{
+  display: none;
+  position: relative;
+  top: 4px;
+}
+@media screen and (max-width: 991.5px) {
   .profile_icon{
     width: 45px;
     height: 45px;
+  }
+  .small_chat{
+    display: inline-block;
   }
 }

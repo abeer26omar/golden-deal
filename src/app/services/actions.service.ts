@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import { environment as env } from 'src/environments/environment';
-import { Subject, tap } from 'rxjs';
+import { Subject, of, tap } from 'rxjs';
 import { APIresponse, APIresponse2, Favourites, Orders, Portfolio, Provider, ResponseSuccess, Subscriptions, Regions, UserProducts } from '../models/actions.model';
 import { APIResponse, Products, SplashScreen } from '../models/products.model';
 import { MatDialog } from '@angular/material/dialog';
@@ -24,20 +24,57 @@ export class ActionsService {
       'Authorization': `Bearer ${localStorage.getItem('token_deal')}`
     })
   }
+  subscribtionsTypeList!: APIresponse<Subscriptions>;
+  portfolioData!: Portfolio;
+  userProducts!: UserProducts;
+  userFav!: Favourites;
+  regions!: Regions;
   getSubscribtionsType(){
-    return this.http.get<APIresponse<Subscriptions>>(`${env.api_url}/subscriptions/get-types`,this.httpOptions)
+    if(this.subscribtionsTypeList){
+      return of(this.subscribtionsTypeList);
+    }else{
+      return this.http.get<APIresponse<Subscriptions>>(`${env.api_url}/subscriptions/get-types`,this.httpOptions).pipe(
+        tap(subscribtionsType=>{
+          this.subscribtionsTypeList = subscribtionsType;
+        })
+      )
+    }
   }
   getPortfolio(id: number){
-    return this.http.get<Portfolio>(`${env.api_url}/portfolio/user/${id}`,this.httpOptions)
+    if(this.portfolioData){
+      return of(this.portfolioData);
+    }else{
+      return this.http.get<Portfolio>(`${env.api_url}/portfolio/user/${id}`,this.httpOptions).pipe(
+        tap(portfolio=>{
+          this.portfolioData =portfolio;
+        })
+      )
+    }
   }
   getPortfolioProducts(id: number,pageNo: number = 1){
-    return this.http.get<UserProducts>(`${env.api_url}/products/user-products?user_id=${id}&page=${pageNo}`,this.httpOptions)
+    if(this.userProducts){
+      return of(this.userProducts);
+    }else{
+      return this.http.get<UserProducts>(`${env.api_url}/products/user-products?user_id=${id}&page=${pageNo}`,this.httpOptions).pipe(
+        tap(userProducts=>{
+          this.userProducts =userProducts;
+        })
+      )
+    }
   }
   getMyOrders(){
     return this.http.get<APIresponse2<Orders>>(`${env.api_url}/portfolio/my-orders`,this.httpOptions)
   }
   getMyFav(){
-    return this.http.get<Favourites>(`${env.api_url}/favourites/my-favourites`,this.httpOptions)
+    if(this.userFav){
+      return of(this.userFav)
+    }else{
+      return this.http.get<Favourites>(`${env.api_url}/favourites/my-favourites`,this.httpOptions).pipe(
+        tap(userFav=>{
+          this.userFav = userFav;
+        })
+      )
+    }
   }
   getProviderRating(id: number){
     return this.http.get<Provider>(`${env.api_url}/rating/provider/${id}`,this.httpOptions)
@@ -75,7 +112,15 @@ export class ActionsService {
     })
   }
   getRegions(){
-    return this.http.get<Regions>(`${env.api_url}/general/regions`)
+    if(this.regions){
+      return of(this.regions)
+    }else{
+      return this.http.get<Regions>(`${env.api_url}/general/regions`).pipe(
+        tap(regions=>{
+          this.regions = regions;
+        })
+      )
+    }
   }
   regionFilter(region_id: number,category_slug: string){
     return this.http.get<APIResponse<Products>>(`${env.api_url}/filters/get-regions-filters?region_id=${region_id}&category_slug=${category_slug}`)

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders} from '@angular/common/http';
-import { Observable, Subject, tap} from 'rxjs';
+import { Observable, Subject, of, tap} from 'rxjs';
 import { environment as env } from 'src/environments/environment';
 import { Products , APIResponse , Product ,
   APIResponse2 , Category, CategoryFilter, NewProduct, EditProduct, APIResponse4, EditProductFilters, Update, APIResponse5, Search,BrandFilter, Category_Filter} from '../models/products.model';
@@ -18,18 +18,29 @@ export class ProductsRequestService {
     get refresh(){
       return this._refresh;
     }
+  productsListCashed!: APIResponse<Products>;
+  productsCategoriesList!: APIResponse2<Category>;
+
   constructor(public http: HttpClient) { }
 
   getProductsList(categorySlug: string, pageNo: number): Observable<APIResponse<Products>>{
-    return this.http.get<APIResponse<Products>>(`${env.api_url}/products/${categorySlug}?page=${pageNo}`,this.httpOptions).pipe(tap(()=>{
-      this._refresh.next();
-    }))
+      return this.http.get<APIResponse<Products>>(`${env.api_url}/products/${categorySlug}?page=${pageNo}`,this.httpOptions).pipe(tap(()=>{
+        this._refresh.next();
+      }))
+
   }
   getDetails(id: string): Observable<Product>{
     return this.http.get<Product>(`${env.api_url}/products/get-product-details/${id}`, this.httpOptions);
   }
   getProductsCategories(): Observable<APIResponse2<Category>>{
-    return this.http.get<APIResponse2<Category>>(`${env.api_url}/categories`)
+    if(this.productsCategoriesList){
+      return of(this.productsCategoriesList)
+    }else {
+      return this.http.get<APIResponse2<Category>>(`${env.api_url}/categories`).pipe(
+        tap((categories)=>{
+          this.productsCategoriesList = categories;
+        }))
+    }
   }
   addRate(provider_id :number, desc: string, value: number){
     return this.http.post<ResponseSuccess>(`${env.api_url}/rating/new`,{

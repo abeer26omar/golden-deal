@@ -215,3 +215,11 @@
     color: var(--black);
     top: 33%;
 }
+.products-row .card-header img.car_plates {
+    height: 215px;
+}
+@media screen and (min-width: 1440px){
+    .products-row .card-header img.car_plates {
+        height: 260px;
+    }
+}

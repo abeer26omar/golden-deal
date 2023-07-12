@@ -12,6 +12,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { NotificationsService } from '../services/notifications.service';
 import { ChatService } from '../services/chat.service';
 import { MessagesList } from '../models/chat.model';
+import { BreakpointObserver } from '@angular/cdk/layout';
 declare var window: any;
 
 @Component({
@@ -73,9 +74,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.userImage = localStorage.getItem('userImage')
       this.authService.refresh.subscribe(()=>{
       this.userImage = localStorage.getItem('userImage')
-      // this.chatService.refresh.subscribe(()=>{
-      //   this.getAllPreMsgList();
-      // })
     })
   }
   private notifiSub : Subscription = new Subscription;

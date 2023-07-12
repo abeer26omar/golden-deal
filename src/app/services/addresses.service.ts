@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders} from '@angular/common/http';
 import { environment as env } from 'src/environments/environment';
 import { Address, Addresses, APIResponse } from '../models/user.model';
-import { Subject, tap } from 'rxjs';
+import { Subject, of, tap } from 'rxjs';
 import { ResponseSuccess } from '../models/actions.model';
 
 @Injectable({
@@ -19,9 +19,18 @@ export class AddressesService {
     headers: new HttpHeaders({
       'Authorization': `Bearer ${localStorage.getItem('token_deal')}`
     })}
+  addresses!: APIResponse<Addresses>;
   getAllAddresses(){
-    return this.http.get<APIResponse<Addresses>>(`${env.api_url}/address/info`
-    ,this.httpOptions)
+    if(this.addresses){
+      return of(this.addresses)
+    }else{
+      return this.http.get<APIResponse<Addresses>>(`${env.api_url}/address/info`
+      ,this.httpOptions).pipe(
+        tap(addresses=>{
+          this.addresses = addresses
+        })
+      )
+    }
   }
   getAddress(id: number){
     return this.http.get<Address>(`${env.api_url}/address/address-details/${id}`,this.httpOptions)

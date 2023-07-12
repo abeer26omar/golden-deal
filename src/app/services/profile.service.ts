@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders} from '@angular/common/http';
 import { environment as env } from 'src/environments/environment';
 import { APIResponse2, Profile, Purchases} from '../models/user.model';
-import { Observable, Subject,tap } from 'rxjs';
+import { Observable, Subject,of,tap } from 'rxjs';
 import { ResponseSuccess } from '../models/actions.model';
 
 @Injectable({
@@ -18,8 +18,17 @@ export class ProfileService {
     get refresh(){
       return this._refresh;
     }
+    myProfileInfo!: Profile;
     profileInfo(){
-      return this.http.get<Profile>(`${env.api_url}/profile/info`, this.httpOptions)
+      if(this.myProfileInfo){
+        return of(this.myProfileInfo)
+      }else{
+        return this.http.get<Profile>(`${env.api_url}/profile/info`, this.httpOptions).pipe(
+          tap(info=>{
+            this.myProfileInfo = info;
+          })
+        )
+      }
     }
     editProfile(name:string, email:string, phone: string, birthdate: any,gender: string,address: string){
       return this.http.post<ResponseSuccess>(`${env.api_url}/profile/update`,{

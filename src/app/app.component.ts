@@ -6,6 +6,7 @@ import { APIResponse2, Category } from './models/products.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ProductsRequestService } from './services/products-request.service';
 import { ErrorHandlerService } from './services/error-handler.service';
+import { GoBackService } from './services/go-back.service';
 declare var window: any;
 
 @Component({
@@ -41,8 +42,9 @@ export class AppComponent implements OnInit{
   constructor(public authService: AuthService,
     private notificationService: NotificationsService,
     private categoryService: ProductsRequestService,
-    private errorHandel: ErrorHandlerService){
-      this.hidebackdrop()
+    private errorHandel: ErrorHandlerService,
+    private gobackservice: GoBackService){
+      this.hidebackdrop();
     }
     hidebackdrop(){
       this.backdrops.forEach(element => {
@@ -56,11 +58,12 @@ export class AppComponent implements OnInit{
         this.not_count += this.not_count;
         this.notificationService.insideChatComponent.subscribe((insideChat)=>{
           if(!insideChat){
-            this.notificationService.requestPermission();
+            // this.notificationService.requestPermission();
             this.not_count += this.not_count;
             this.notificationService.getMyNotifications();
           }
         })
       }
+      // this.gobackservice.goBack()
   }
 }

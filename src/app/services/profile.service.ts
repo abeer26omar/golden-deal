@@ -20,15 +20,7 @@ export class ProfileService {
     }
     myProfileInfo!: Profile;
     profileInfo(){
-      if(this.myProfileInfo){
-        return of(this.myProfileInfo)
-      }else{
-        return this.http.get<Profile>(`${env.api_url}/profile/info`, this.httpOptions).pipe(
-          tap(info=>{
-            this.myProfileInfo = info;
-          })
-        )
-      }
+      return this.http.get<Profile>(`${env.api_url}/profile/info`, this.httpOptions);
     }
     editProfile(name:string, email:string, phone: string, birthdate: any,gender: string,address: string){
       return this.http.post<ResponseSuccess>(`${env.api_url}/profile/update`,{

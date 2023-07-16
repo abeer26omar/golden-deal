@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Renderer2 } from '@angular/core';
 import { FormControl, FormGroup, Validators} from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -171,7 +171,8 @@ export class EditAddComponent implements OnInit, OnDestroy {
     private route: Router,
     private macService: MacPrefixService,
     private actionService: ActionsService,
-    private errorHandel: ErrorHandlerService) { }
+    private errorHandel: ErrorHandlerService,
+    private renderer: Renderer2) { }
   get f(){
     return this.myForm.controls;
   }
@@ -635,6 +636,8 @@ export class EditAddComponent implements OnInit, OnDestroy {
     this.modelAddImages.show();
   }
   submit(){
+    this.renderer.setProperty(document.documentElement, 'scrollTop', 0);
+    this.renderer.setProperty(document.body, 'scrollTop', 0);
     this.load = true;
     let plate_chars_en_filter_6: any, 
     plate_chars_filter_6: any,

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Renderer2 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription, from } from 'rxjs';
@@ -137,7 +137,8 @@ export class NewAddComponent implements OnInit, OnDestroy {
     private macService: MacPrefixService,
     private actionService: ActionsService,
     private productsService: ProductsRequestService,
-    private errorHandel: ErrorHandlerService ) {}
+    private errorHandel: ErrorHandlerService,
+    private renderer: Renderer2 ) {}
     
     myForm = new FormGroup({
       agrement: new FormControl('', [Validators.required]),
@@ -647,7 +648,9 @@ export class NewAddComponent implements OnInit, OnDestroy {
               formData.append(field, this.myForm.controls[field].value);
             }
         }
-          this.load = true;
+        this.renderer.setProperty(document.documentElement, 'scrollTop', 0);
+        this.renderer.setProperty(document.body, 'scrollTop', 0);
+        this.load = true;
           this.sendSub = this.httpService.http.post<NewProduct>(`${env.api_url}/products/store-new-product`,
             formData,
           this.httpService.httpOptions)

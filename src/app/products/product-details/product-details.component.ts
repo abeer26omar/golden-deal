@@ -335,7 +335,13 @@ export class ProductDetailsComponent implements OnInit ,AfterViewInit ,OnDestroy
       this.formModal.hide();
   }
   onBuy(){
-    this.buyModal.show()
+    if(this.authService.IsloggedIn()){
+      this.buyModal.show()
+    }else{
+      this.dialogRef.open(AuthRemainderModalComponent,{
+        data: {}
+      })
+    }
   } 
   chat(data:any){
     // this.buyModal.hide()

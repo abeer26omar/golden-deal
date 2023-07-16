@@ -24,6 +24,7 @@
                 </div>
             </div>
                 <div class="card-body row g-4 add_images justify-content-center" *ngIf="step == 2">
+                    <mat-progress-bar mode="indeterminate" class="my-3" *ngIf="load" id="addprog"></mat-progress-bar>
                     <div class="col-12 col-sm-6">
                         <div class="d-flex flex-column align-items-center justify-content-center">
                             <label for="productCategory" class="form-label align-self-start">التصنيف</label>
@@ -357,7 +358,6 @@
                             placeholder=""  formControlName="desc"></textarea>
                             <div *ngIf="submitted && f['desc'].errors" class="text-danger">يجب اضافه وصف للمنتج</div> 
                         </div>
-                        <mat-progress-bar mode="indeterminate" class="my-3" *ngIf="load" id="addprog"></mat-progress-bar>
                 </div>
             <div class="d-flex justify-content-center align-items-center pt-5 pb-3">
                 <button class="btn btn-next btn-prim" type="submit">التالى</button>

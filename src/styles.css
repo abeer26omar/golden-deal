@@ -45,6 +45,7 @@ body {
     padding: 0;
     direction: rtl;
     overflow-x: hidden;
+    scroll-behavior: smooth;
     -webkit-transition: all ease 500ms ;
     transition: all ease 500ms;
 }
@@ -653,9 +654,6 @@ table td span.lrt{
 .btn-google{
     background-color: #FF0000 !important;
 }
-.p-element{
-    direction: ltr;
-}
 .slick-initialized .slick-slide {
     display: flex;
     justify-content: center;
@@ -681,6 +679,18 @@ table td span.lrt{
 }
 .p-paginator{
     background: none !important;
+}
+.pi-angle-left:before {
+    content: "\e932";
+}
+.pi-angle-double-right:before {
+    content: "\e92d";
+}
+.pi-angle-right:before {
+    content: "\e931";
+}
+.pi-angle-double-left:before {
+    content: "\e92e";
 }
 @media screen and (max-width: 575px) {
     .p-paginator .p-paginator-first, 

@@ -74,15 +74,15 @@ export class ChatsComponent implements OnInit, OnDestroy {
   }
   ngAfterViewInit() {
     // this.scrollToBottom();
-    this.breakPointObserver.observe(['(max-width: 992px)']).subscribe((res)=>{
-      if(res.matches){
-        this.sideNav.nativeElement.classList.add('hidden');
-        this.toggle = true;
-      }else{
-        this.sideNav.nativeElement.classList.remove('hidden');
-        this.toggle = false;
-      }
-    })
+    // this.breakPointObserver.observe(['(max-width: 992px)']).subscribe((res)=>{
+    //   if(res.matches){
+    //     this.sideNav.nativeElement.classList.add('hidden');
+    //     this.toggle = true;
+    //   }else{
+    //     this.sideNav.nativeElement.classList.remove('hidden');
+    //     this.toggle = false;
+    //   }
+    // })
   }
   toggleSideMenu(){
     this.opend != this.opend;
@@ -95,7 +95,7 @@ export class ChatsComponent implements OnInit, OnDestroy {
       try {
         const chatContent = document.getElementById('chat-content');
         const lastMessage = chatContent!.lastElementChild as HTMLElement;
-        lastMessage.scrollIntoView({ behavior: 'smooth' });
+        lastMessage.scrollIntoView({ behavior: 'smooth', block: 'end' });
       } catch(err) { }
     }, 100);
   }
@@ -146,8 +146,7 @@ export class ChatsComponent implements OnInit, OnDestroy {
       next: (res: Array<MessagesList>)=>{
         this.loader = false;
         this.msgUsersList = res;
-        console.log(this.msgUsersList);
-                        
+        this.getChat(this.msgUsersList[0].sender === this.userId ? this.msgUsersList[0].receiver : this.msgUsersList[0].sender)                        
       }
     })
   } 

@@ -654,6 +654,12 @@ table td span.lrt{
 .btn-google{
     background-color: #FF0000 !important;
 }
+.btn-insta{
+    background-color: #8a59dd !important;
+}
+.btn-snapchat{
+    background-color: #ffe400!important;
+}
 .slick-initialized .slick-slide {
     display: flex;
     justify-content: center;

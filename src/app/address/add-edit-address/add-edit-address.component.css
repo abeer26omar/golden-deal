@@ -4,7 +4,7 @@
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
-    border-radius: 15px;
+    border-radius: 15px 15px 0 0;
 }
 .btn-prim{
     padding: .6rem 4.5rem;

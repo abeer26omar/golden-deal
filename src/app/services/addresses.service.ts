@@ -21,16 +21,7 @@ export class AddressesService {
     })}
   addresses!: APIResponse<Addresses>;
   getAllAddresses(){
-    if(this.addresses){
-      return of(this.addresses)
-    }else{
-      return this.http.get<APIResponse<Addresses>>(`${env.api_url}/address/info`
-      ,this.httpOptions).pipe(
-        tap(addresses=>{
-          this.addresses = addresses
-        })
-      )
-    }
+      return this.http.get<APIResponse<Addresses>>(`${env.api_url}/address/info`,this.httpOptions)
   }
   getAddress(id: number){
     return this.http.get<Address>(`${env.api_url}/address/address-details/${id}`,this.httpOptions)

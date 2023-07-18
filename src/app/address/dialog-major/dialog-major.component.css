@@ -1,3 +1,17 @@
-.header,.body{
+.body{
     padding: 1rem 3rem;
+}
+.header{
+    padding: 1rem;
+    position: relative;
+}
+.btn-yes,.btn-no{
+    padding: 1rem 3.5rem !important;
+}
+.mat-button{
+    position: absolute;
+    min-width: auto;
+    padding: 0;
+    top: 3%;
+    right: 6%;
 }

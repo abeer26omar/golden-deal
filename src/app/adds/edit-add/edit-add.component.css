@@ -219,21 +219,44 @@ input.invalid_input{
     bottom: 28%;
     right: 25%;
 }
+.plates .img_plate{
+    width: 80%
+}
+.table{
+    height: 81%;
+    top: 0%;
+    right: 22%;
+    max-width: 80% !important;
+}
+@media screen and (max-width: 768px) {
+    .table{
+        top: -3%;
+        right: 20%;
+    }
+}
+
 @media screen and (max-width: 575px) {
-    .card_num_ar {
-        top: 11.5%;
-        font-size: 14px;
+    .plates .img_plate{
+        width: 100%
     }
-    .card_num_en {
-        bottom: 20%;
-        font-size: 14px;
+    .table{
+        max-width: 100% !important;
     }
-    .card_chars_ar {
-        top: 11.5%;
-        font-size: 14px;
+    .table{
+        top: -4%;
+        right: 10%;
     }
-    .card_chars_en{
-        bottom: 20%;
-        font-size: 14px;
+}
+@media screen and (max-width: 425px) {
+    .table{
+        top: -10%;
+    }
+    .table td span {
+        font-size: 1rem;
+    }
+}
+@media screen and (max-width: 375px) {
+    .table{
+        right: 8%;
     }
 }

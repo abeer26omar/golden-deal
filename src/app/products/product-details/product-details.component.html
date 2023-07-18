@@ -97,18 +97,18 @@
                                 </div>
                             </div>
                             <img src="../../assets/images/nego_icon.svg" alt="nego_icon" class="nego_icon" *ngIf="singleProduct.data.negotiable == 1">
-                            <div class="prod-details d-flex align-items-center py-2">
+                            <div class="prod-details d-flex align-items-center py-2 justify-content-between justify-content-sm-start">
                                 <div class="owner">
                                     <p class="m-0">{{singleProduct.data.price}} ر.س</p>
                                 </div>
-                                <p class="time px-5"><img src="../../assets/images/location_icon (2).svg" alt="clock"><span class="pe-1">{{singleProduct.data.region_name}}</span></p>
+                                <p class="time px-2 px-sm-5"><img src="../../assets/images/location_icon (2).svg" alt="clock"><span class="pe-1">{{singleProduct.data.region_name}}</span></p>
                             </div>
-                            <div class="prod-details d-flex align-items-center">
+                            <div class="prod-details d-flex align-items-center justify-content-between justify-content-sm-start">
                                 <div class="owner">
                                     <img class="ps-1" src="../../assets/images/profile_icon.svg" alt="profile_icon">
                                     <a (click)="sellerProfile(singleProduct.data.owner.id)">{{singleProduct.data.owner.name}}</a>
                                 </div>
-                                <p class="time px-5"><img src="../../assets/images/clock.svg" alt="clock"><span class="pe-1">منذ {{singleProduct.data.created_since | dateAgo}}</span></p>
+                                <p class="time px-2 px-sm-5"><img src="../../assets/images/clock.svg" alt="clock"><span class="pe-1">منذ {{singleProduct.data.created_since | dateAgo}}</span></p>
                             </div>
                         </div>
                     </div>

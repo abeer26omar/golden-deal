@@ -17,14 +17,38 @@
                             </mat-radio-group>
                         </div>
                     </div>
-                    <div class="d-flex justify-content-center mb-5 plates" *ngIf="Add.data.category_slug == 'car_plates'">
-                        <img src="../../../assets/images/car_palets_show.svg" alt="car_plates_icon" width="80%">
-                        <ng-container>
+                    <div class="d-flex justify-content-center mb-4 plates" *ngIf="Add.data.category_slug == 'car_plates'">
+                        <img src="{{Add.data.name == 'نقل' ?  '../../assets/images/carplate_nakl.svg' : '../../assets/images/car_paletes_details.svg'}}" alt="car_plates_icon" class="img_plate">
+                        <!-- <ng-container>
                             <span  class="card_chars_ar">{{card_chars_ar_1}} {{card_chars_ar_2}} {{card_chars_ar_3}}</span>
                             <span  class="card_chars_en">{{card_chars_en_3}} {{card_chars_en_2}} {{card_chars_en_1}}</span>
                             <span  class="card_num_ar">{{card_num_ar_1}} {{card_num_ar_2}} {{card_num_ar_3}} {{card_num_ar_4}}</span>
                             <span  class="card_num_en">{{card_num_en_1}} {{card_num_en_2}} {{card_num_en_3}} {{card_num_en_4}}</span>
-                        </ng-container>
+                        </ng-container> -->
+                        <table class="table">
+                            <tbody>
+                              <tr>
+                                <td colspan="1"  class="separate_thin" [ngClass]="{'mac': mac}"></td>
+                                <td colspan="2">
+                                    <span>{{card_chars_ar_1}} {{card_chars_ar_2}} {{card_chars_ar_3}}</span>
+                                </td>
+                                <td colspan="1" class="separate_thick"></td>
+                                <td colspan="2">
+                                    <span>{{card_num_ar_1}} {{card_num_ar_2}} {{card_num_ar_3}} {{card_num_ar_4}}</span>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td colspan="1" class="separate_thin" [ngClass]="{'mac': mac}"></td>
+                                <td colspan="2">
+                                    <span>{{card_chars_en_3}} {{card_chars_en_2}} {{card_chars_en_1}}</span>
+                                </td>
+                                <td colspan="1" class="separate_thick"></td>
+                                <td colspan="2">
+                                    <span>{{card_num_en_1}} {{card_num_en_2}} {{card_num_en_3}} {{card_num_en_4}}</span>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
                     </div>
                     <div class="col-12" *ngIf="Add.data.category_slug == 'cars'">
                                 <div class="row row-cols-md-4 row-cols-lg-6 g-3 justify-content-center">
@@ -73,7 +97,7 @@
                             || (filter.slug_name !== 'plate_numbers_en_filter_6' 
                             && filter.slug_name == 'plate_numbers_filter_6') ">
                             <label for="productMark" class="form-label" *ngIf="filter.slug_name == 'plate_chars_filter_6'"> حروف اللوحة </label>
-                            <div class="row g-3" [formGroupName]="filter.slug_name"
+                            <div class="row g-3 justify-content-center justify-content-sm-start" [formGroupName]="filter.slug_name"
                                     *ngIf="filter.type == 'text' && filter.name_ar == 'حروف اللوحة عربي' ">
                                     <div class="col-3" *ngFor="let i of [1 , 2 , 3]">
                                         <input  
@@ -100,7 +124,7 @@
                                 </div>
                             </div> -->
                             <label for="productMark" class="form-label" *ngIf="filter.slug_name == 'plate_numbers_filter_6'"> ارقام اللوحة </label>
-                            <div class="row g-3" [formGroupName]="filter.slug_name"
+                            <div class="row g-3 justify-content-center justify-content-sm-start" [formGroupName]="filter.slug_name"
                                         *ngIf="filter.type == 'text' && filter.name_ar == 'ارقام اللوحة عربي' ">
                                         <div class="col-2" *ngFor="let i of [1,2,3,4]">
                                             <input  

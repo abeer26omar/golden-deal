@@ -115,7 +115,7 @@
       <ul class="navbar-nav main-nv mb-2 mb-lg-0 p-0 align-items-center">
         <li class="nav-item small_chat">
           <a class="nav-link p-0" routerLink="/chat" href="chat" *ngIf="authService.isRegister | async">
-            <span matBadge="{{count_msgs}}" matBadgeSize="small"></span>
+            <span matBadge="{{count_msgs}}" matBadgeSize="small" *ngIf="count_msgs !== 0"></span>
             <img src="../../assets/images/chat_icon_home.svg" alt="chat_icon" class="chat_icon" width="30px">
           </a>
         </li>

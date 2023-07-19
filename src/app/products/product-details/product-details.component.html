@@ -29,7 +29,7 @@
                         </div>
                       </div>-->                
             </div>
-            <div class="d-flex justify-content-center mb-sm-5 mb-3 mx-auto plates" *ngIf="singleProduct.data.product_images.length == 0">
+            <div class="d-flex justify-content-center mb-sm-5 mb-3 mx-auto plates" *ngIf="singleProduct.data.product_images.length == 0" [ngClass]="{'mac': mac}">
                 <ng-container *ngFor="let property of singleProduct.data.properties">
                         <ng-container *ngIf="property.slug_name == 'plate_type_filter_6'">
                           <img class="car_plates"

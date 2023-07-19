@@ -88,8 +88,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     )
     if(this.authService.IsloggedIn()){      
       this.notificationService.getMyNotifications(this.pageNo);
+      this.getAllPreMsgList();
     }
-    this.getAllPreMsgList()
   }
   private categorySub : Subscription = new Subscription;
   stopPropagation(event: any){
@@ -135,16 +135,21 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.toastSuccess.show();
         this.msgSucess = res.data
         localStorage.clear();
-        this.route.navigate(['/'])
         setTimeout(()=>{
-          window.location.reload();
+          this.route.navigate(['/'])
+          setTimeout(()=>{
+            window.location.reload();
+          },0)
         },50)
       },
       error: ()=>{
         this.toastFaild.show();
         localStorage.clear();
         setTimeout(()=>{
-          window.location.reload();
+          this.route.navigate(['/'])
+          setTimeout(()=>{
+            window.location.reload();
+          },0)
         },50)
       }
     })

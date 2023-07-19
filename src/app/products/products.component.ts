@@ -15,6 +15,7 @@ import { ErrorHandlerService } from '../services/error-handler.service';
 import { environment as env } from 'src/environments/environment';
 import { MatDialog } from '@angular/material/dialog';
 import { AuthRemainderModalComponent } from '../auth-remainder-modal/auth-remainder-modal.component';
+import { GoBackService } from '../services/go-back.service';
 declare var window: any;
 
 @Component({
@@ -111,7 +112,8 @@ export class ProductsComponent implements OnInit, OnDestroy {
     public datepipe: DatePipe,
     private http: HttpClient,
     private dialogRef: MatDialog,
-    private errorHandel: ErrorHandlerService) {
+    private errorHandel: ErrorHandlerService,
+    private gobackservice: GoBackService) {
       if(this.route.snapshot.fragment){        
         if(this.route.snapshot.fragment == 'cars'){
           this.active = 1
@@ -125,65 +127,6 @@ export class ProductsComponent implements OnInit, OnDestroy {
         this.getBrandFilter(this.route.snapshot.fragment);
       }
     }
-    // config: SwiperOptions = {
-    //   slidesPerView: 15,
-    //   allowSlideNext: true,
-    //   allowSlidePrev: true,
-    //   slidesPerGroup: 1,
-    //   spaceBetween: 3,
-    //   pagination: true,
-    //   scrollbar: false,
-    //   grabCursor: true,
-    //   navigation: true,
-    //   breakpoints: {
-    //     992: {
-    //       slidesPerView: 10
-    //     },
-    //     768: {
-    //       slidesPerView: 7
-    //     },
-    //     575: {
-    //       slidesPerView: 5
-    //     },
-    //     425: {
-    //       slidesPerView: 4
-    //     },
-    //     375: {
-    //       slidesPerView: 3
-    //     },
-    //     320: {
-    //       slidesPerView: 3
-    //     }
-    //   }
-    // };
-    // configSub_barnd: SwiperOptions = {
-    //   slidesPerView:  10,
-    //   spaceBetween: 0,
-    //   navigation: false,
-    //   pagination: false,
-    //   scrollbar: false,
-    //   grabCursor: true,
-    //   breakpoints: {
-    //     992: {
-    //       slidesPerView: 7
-    //     },
-    //     768: {
-    //       slidesPerView: 5
-    //     },
-    //     575: {
-    //       slidesPerView: 5
-    //     },
-    //     425: {
-    //       slidesPerView: 4 
-    //     },
-    //     375: {
-    //       slidesPerView: 3 
-    //     },
-    //     320: {
-    //       slidesPerView: 3 
-    //     }
-    //   }
-    // }
     slickOptions = {
       slidesToShow: 11,
       centerMode: false,
@@ -407,47 +350,6 @@ export class ProductsComponent implements OnInit, OnDestroy {
       }
      })    
   }
-  // getNewPage(current_page: number,pageNo: any,meta_path: string){        
-  //   if(meta_path.includes('filters')){
-  //     if(this.categorySlug == 'cars'){
-  //       if(Number.isNaN(+pageNo)){
-  //         if(pageNo.includes('Previous')){
-  //           pageNo = current_page - 1;
-  //           this.applayForPagination(this.brand_name,this.sub_brand_name,+pageNo);
-  //         }else{
-  //           pageNo = current_page + 1;
-  //           this.applayForPagination(this.brand_name,this.sub_brand_name,+pageNo);
-  //         }
-  //       }else{
-  //         this.applayForPagination(this.brand_name,this.sub_brand_name,+pageNo);
-  //       }
-  //     }else if (this.categorySlug == 'car_plates'){        
-  //       if(Number.isNaN(+pageNo)){
-  //         if(pageNo.includes('Previous')){
-  //           pageNo = current_page - 1;
-  //           this.onApplayPlatesFilters(+pageNo);
-  //         }else{
-  //           pageNo = current_page + 1;
-  //           this.onApplayPlatesFilters(+pageNo);
-  //         }
-  //       }else{
-  //         this.onApplayPlatesFilters(+pageNo);
-  //       }
-  //     }      
-  //   }else{
-  //     if(Number.isNaN(+pageNo)){
-  //       if(pageNo.includes('Previous')){
-  //         pageNo = current_page - 1;
-  //         this.getProducts(this.categorySlug,+pageNo);
-  //       }else{
-  //         pageNo = current_page + 1;
-  //         this.getProducts(this.categorySlug,+pageNo); 
-  //       }
-  //     }else{
-  //       this.getProducts(this.categorySlug,+pageNo)
-  //     }
-  //   }
-  // }
   paginate(event: any,meta_path: string){
     if(meta_path.includes('filters')){
       if(this.categorySlug == 'cars'){

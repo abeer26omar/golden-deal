@@ -2,12 +2,10 @@
 .main-card{
     box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.15);
     border-radius: 15px;
-    /* background-color: var(--white); */
     background-color: var(--bg-color);
 }
 .main-card .card-header{
     border-radius: 15px 15px  0 0;
-    /* border-bottom: 1px solid var(); */
 }
 .prod-name{
     color: var(--primary-color);
@@ -284,59 +282,6 @@ input:focus , textarea:focus{
 .plates img{
     width: 100%
 }
-/* .card_chars_ar{
-    position: absolute;
-    top: 18%;
-    right: 25%;
-    font-weight: 900;
-    font-size: 1.5rem;
-}
-.card_num_ar{
-    position: absolute;
-    top: 18%;
-    left: 21%;
-    font-weight: 900;
-    font-size: 1.5rem;
-}
-.card_chars_en{
-    position: absolute;
-    bottom: 28%;
-    right: 25%;
-    top: unset;
-    font-weight: 900;
-    font-size: 1.5rem;
-}
-.card_num_en{
-    position: absolute;
-    bottom: 28%;
-    left: 21%;
-    top: unset;
-    font-weight: 900;
-    font-size: 1.5rem;
-} */
-/* @media screen and (max-width: 575px) {
-    .plates img{
-        width: 100%
-    }
-    .card_chars_ar{
-        top: 15%;
-        right: 13%;
-        font-size: 1rem;
-    }
-    .card_num_ar{
-        top: 15%;
-        left: 10%;
-        font-size: 1rem;
-    }
-    .card_chars_en{
-        right: 13%;
-        font-size: 1rem;
-    }
-    .card_num_en{
-        left: 10%;
-        font-size: 1rem;
-    }
-} */
 .desc_details{
     border-bottom: .5px solid #7070703b;
     padding: 1rem 0;
@@ -359,12 +304,24 @@ p{
     left: 0;
     right: 0;
 }
-table td span{
-    font-size: 1rem;
+.table.mac{
+    height: 89%;
 }
-@media screen and (min-width: 575px){
+table td span{
+    font-size: 2.5rem;
+}
+@media screen and (max-width: 768px){
     table td span{
-        font-size: 2.5rem;
+        font-size: 1.5rem;
+    }
+}
+
+@media screen and (max-width: 575px){
+    table td span{
+        font-size: 1rem;
+    }
+    .plates{
+        width: 100%;
     }
 }
 @media screen and (max-width: 425px){

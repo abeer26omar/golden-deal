@@ -70,7 +70,6 @@ export class ChatsComponent implements OnInit, OnDestroy {
       })
       this.getAllPreMsgList();
       this.getAllSupportMsg();
-      // this.scrollToBottom();
   }
   ngAfterViewInit() {
     // this.scrollToBottom();
@@ -105,7 +104,6 @@ export class ChatsComponent implements OnInit, OnDestroy {
         this.load = false;
         this.supportData = res.data;
         this.messages = res.data.support_messages;
-        // this.scrollToBottom();
       }
     })
   }
@@ -152,7 +150,6 @@ export class ChatsComponent implements OnInit, OnDestroy {
   } 
   getChat(reciever: any){
     this.load = true;
-    // this.receiverId = this.admin.id; 
     this.receiverId =  reciever;
     this.chatSub = this.chatService.getAllMessages(this.userId,this.receiverId).subscribe({
       next: (res: Array<Messages>)=>{

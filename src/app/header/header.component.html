@@ -17,7 +17,7 @@
           </li>
           <li class="nav-item chat">
             <a class="nav-link" href="chat" routerLink="/chat" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-              <span matBadge="{{count_msgs}}" matBadgeSize="small"  *ngIf="authService.isRegister | async"></span>
+              <span matBadge="{{count_msgs}}" matBadgeSize="small"  *ngIf="(authService.isRegister | async) && count_msgs !== 0 "></span>
               الرسائل</a>
           </li>
           <li class="nav-item">
@@ -120,7 +120,7 @@
           </a>
         </li>
           <li class="nav-item dropdown" *ngIf="authService.isRegister | async">
-            <span matBadge="{{not_count}}" matBadgeSize="small"></span>
+            <span matBadge="{{not_count}}" matBadgeSize="small" *ngIf="not_count !== 0"></span>
               <button class="btn p-0 custom dropdown-toggle" 
                 id="dropdownMenuButton3" 
                 data-bs-toggle="dropdown" 

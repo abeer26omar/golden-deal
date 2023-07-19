@@ -150,6 +150,9 @@ ul.more-dropdown{
     width: 300px;
     right: -106px;
   }
+  .create-account{
+    padding: 0.8rem 1rem;
+  }
 }
 .more-list{
   list-style: none;

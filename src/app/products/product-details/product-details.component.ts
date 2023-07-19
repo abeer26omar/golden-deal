@@ -17,6 +17,7 @@ import { AuthRemainderModalComponent } from 'src/app/auth-remainder-modal/auth-r
 import { MatDialog } from '@angular/material/dialog';
 // import { Gallery, GalleryItem, ImageItem, ThumbnailsPosition, ImageSize } from '@ngx-gallery/core';
 import { GalleryItem, ImageItem } from 'ng-gallery';
+import { GoBackService } from 'src/app/services/go-back.service';
 
 declare var window: any;
 
@@ -30,7 +31,7 @@ export class ProductDetailsComponent implements OnInit ,AfterViewInit ,OnDestroy
   galleryImages: NgxGalleryImage[] = [];
   // items: GalleryItem[] = [];
   cameraImages: GalleryItem[] = [];
-
+  mac: boolean = false;
   singleProduct : Product = {
     data: {
       id: 0,
@@ -187,7 +188,11 @@ export class ProductDetailsComponent implements OnInit ,AfterViewInit ,OnDestroy
       }
     ];
     this.galleryImages = this.imgUrls;
-    // this.cameraImages = this.imgUrls;
+    if(this.macService.operatingSysDetect()){
+      this.mac = true;
+    }else{
+      this.mac = false;
+    }
   }
   ngAfterViewInit() {
   }

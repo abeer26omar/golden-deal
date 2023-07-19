@@ -215,7 +215,9 @@ textarea{
     transition: width 500ms ease;
 }
 .hidden{
-    display: none;
+    /* display: none; */
+    /* position: absolute;
+    left: -100%; */
 }
 .wavy{
     position: absolute;
@@ -257,4 +259,8 @@ textarea{
     .backDrop.active{
         height: 269.7%;
     }
+}
+.support_media a img{
+    width: 40px;
+    height: 40px;
 }

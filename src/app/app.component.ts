@@ -51,7 +51,7 @@ export class AppComponent implements OnInit{
     }
     ngOnInit(): void {
       this.getCategories()
-      this.not_count = 0
+      this.not_count = 0;
       if(this.authService.IsloggedIn()){
         this.not_count += this.not_count;
         this.notificationService.insideChatComponent.subscribe((insideChat)=>{

@@ -364,7 +364,7 @@ aria-hidden="true"
         <div class="modal-footer">
           <a style="width:100%" 
           *ngIf="singleProduct.data.seller_phone!== null"
-            href="tel:+{{singleProduct.data.seller_phone}}" 
+            href="tel:{{singleProduct.data.seller_phone}}" 
             class="btn btn-prim">اتصال <img src="../../../assets/images/call.svg" alt="call"></a>
           <a style="width:100%;" 
             class="btn btn-sec btn-deposit" data-bs-dismiss="modal">عربون <img src="../../../assets/images/deposit_icon.svg" alt="deposit_icon"></a>

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment as env } from 'src/environments/environment';
 import { io, Socket } from 'socket.io-client';
-import { Observable, Subject, tap } from 'rxjs';
+import { Observable, of, Subject, tap } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Messages, MessagesList, Support } from '../models/chat.model';
 import { ResponseSuccess } from '../models/actions.model';
@@ -21,6 +21,7 @@ export class ChatService {
   get refresh(){
     return this._refresh;
   }
+  allSupportMsg!: Support;
   constructor(private http: HttpClient) {
   }
   connect(userId: number): void{  
@@ -61,8 +62,12 @@ export class ChatService {
     }))
   }
   getAllSupportMsg(){
+    if(this.allSupportMsg){
+      return of(this.allSupportMsg)
+    }
     return this.http.get<Support>(`${env.api_url}/support/get-messages`,
-    this.httpOptions).pipe(tap(()=>{
+    this.httpOptions).pipe(tap((support)=>{
+      this.allSupportMsg = support;
       this._refresh.next();
     }))
   }

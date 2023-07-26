@@ -36,6 +36,7 @@ export class AddsComponent implements OnInit, OnDestroy {
   loadding: boolean = false;
   result: string = '';
   load: boolean = false;
+  loader: boolean = false;
   active_status: string = 'الكل';
   portfolio: Portfolio = {
     data:{
@@ -185,8 +186,10 @@ export class AddsComponent implements OnInit, OnDestroy {
     this.getUserProducts(this.portfolioId,event.page+1)
   } 
   getMyFav(){
+    this.loader = true;
     this.favSub = this.actionService.getMyFav().subscribe({
       next: (resData: Favourites)=>{
+        this.loader = false;
         this.favoraties = resData;        
         if(this.favoraties.data.favourites.length == 0){
           this.errFav = 'لا يوجد مفضله';
@@ -195,7 +198,7 @@ export class AddsComponent implements OnInit, OnDestroy {
         }
       },
       error: (err: HttpErrorResponse)=>{
-        this.loadding = false;
+        this.loader = false;
         this.errorHandel.openErrorModa(err);
       }
     })

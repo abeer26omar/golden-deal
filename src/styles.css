@@ -3,9 +3,7 @@
 :root{
     --font-family: 'Cairo', sans-serif;
     --bg-color: #F7F9FD;
-    /* --org-color: #E29547; */
     --org-color: #FA9C44;
-    /* --primary-color: #12004C; */
     --primary-color: #11014D;
     --newColor: #11014D;
     --sec-color: #145097;
@@ -38,7 +36,6 @@
     --color-input-success: rgba(23, 125, 23, 0.45);
     --color-input-disabled: #dde6f3;
 }
-/* html, body { height: 100%;} */
 
 body { 
     margin: 0; 
@@ -190,16 +187,6 @@ input.star:checked ~ label.star:before {
 .mat-select-value {
     text-align: end;
 }
-/* .mat-form-field-appearance-legacy .mat-form-field-infix , 
-.mat-form-field-appearance-fill .mat-form-field-infix{
-    padding: 0.7em 0;
-}
-.mat-select-value {
-    text-align: right;
-}
-.mat-form-field:nth-child(4){
-    direction: ltr;
-} */
 .mat-sidenav-container, .mat-sidenav-content, .mat-tab-body-content {
     transform: none !important;
 }
@@ -252,17 +239,10 @@ input.star:checked ~ label.star:before {
     width: 100% !important;
     height: 3px;
 }
-/* .mat-radio-container {
-    display: none !important;
-} */
-/* .mat-radio-button.mat-accent.mat-radio-checked .card a{
-    border: 3px solid var(--light-blue) !important;
-} */
 #payment .mat-radio-group{
     display: flex;
     flex-direction: column;
     direction: ltr;
-    /* padding: 1rem; */
 }
 #payment .mat-radio-label-content {
     padding-left: 1rem;
@@ -419,7 +399,6 @@ input.star:checked ~ label.star:before {
 }
 .car_plates_container{
     position: relative;
-    /* display: inline-block; */
 }
 table{
     position: absolute;
@@ -488,42 +467,6 @@ table td span.lrt{
         font-size: 1rem;
     }
 }
-/* .car_plates_container span{
-    position: absolute;
-    font-weight: 900;
-    color: var(--black);
-}
-.card_chars_ar{
-    top: 23%;
-    right: 13%;
-}
-.card_num_ar{
-    top: 23%;
-    left: 13%;
-}
-.card_chars_en{
-    bottom: 37%;
-    right: 13%;
-}
-.card_num_en{
-    bottom: 37%;
-    left: 13%;
-    direction: ltr;
-}
-@media screen and (max-width: 425px) {
-    .card_chars_ar{
-        right: 11%;
-    }
-    .card_num_ar{
-        left: 11%;
-    }
-    .card_chars_en{
-        right: 11%;
-    }
-    .card_num_en{
-        left: 11%;
-    }
-} */
 .mat-menu-panel {
     overflow: hidden !important;
 }
@@ -577,7 +520,7 @@ table td span.lrt{
     background: var(--newColor);
     width: 20% !important;
 }
-.brand a.active {
+.slick-current .brand a {
     background-color: var(--primary-color) !important;
 }
 /* nz-slider */
@@ -760,33 +703,25 @@ table td span.lrt{
     animation: heartPulse 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
 }
   
-  @keyframes heartPulse {
+@keyframes heartPulse {
     0% {
       transform: scale(1);
     }
     50% {
       transform: scale(1.5);
     }
-  }
-  lightbox {
+}
+lightbox {
     direction: rtl !important;
     box-shadow: none !important;
-  }
-  gallery {
+}
+gallery {
     background-color: transparent !important;
-    /* width: 100% !important; */
 }
 .g-nav-prev,
 .g-nav-next{
     display: none !important;
 }
-/* @media screen and (max-width: 575px) {
-    
-    .g-image-item {
-        -o-object-fit: contain !important;
-        object-fit: contain !important;
-    }
- } */
 gallery-core[thumbPosition=bottom] gallery-thumbs .g-slider {
     justify-content: center !important;
 }
@@ -805,6 +740,10 @@ gallery-core[thumbPosition=bottom] gallery-thumbs .g-slider {
     top: -2px;
     right: unset;
 }
+.loader {
+    display: flex;
+    justify-content: center;
+}
 .loader>div{
     width: 8px;
     height: 8px;
@@ -812,26 +751,26 @@ gallery-core[thumbPosition=bottom] gallery-thumbs .g-slider {
     background: var( --newColor);
     border-radius: 100%;
     animation: scaleUpDown 1.2s ease-in-out infinite;
-  }
+}
   
-  .loader .dot1{
+.loader .dot1{
     animation-delay:0.3s;
-  }
-  
-  .loader .dot2{
+}
+
+.loader .dot2{
     animation-delay: 0.6s;
-  }
+}
   
-  .loader .dot3{
+.loader .dot3{
     animation-delay: 0.9s;
-  }
+}
   
-  @keyframes scaleUpDown {
+@keyframes scaleUpDown {
     0% { transform: scale(1)}
     30% { transform: scale(1.8)}
     60% { transform: scale(1)}
     100% { transform: scale(1)}
-  }
+}
 .inValid{
     border: 1px solid var(--semi-red) !important;
 }

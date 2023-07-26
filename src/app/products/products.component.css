@@ -144,12 +144,6 @@ p.sorts{
   color: var(--white);
   background-color: var(--primary-color);
 }
-.loader {
-       display: flex;
-       justify-content: center;
-}
-
-
 .modal-header {
     justify-content: center;
     /* border: none; */

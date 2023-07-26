@@ -1,4 +1,4 @@
-import { Component, OnInit, Output } from '@angular/core';
+import { Component, HostListener, OnInit, Output } from '@angular/core';
 import { AuthService } from './services/auth.service';
 import { NotificationsService } from './services/notifications.service';
 import { APIResponse2, Category } from './models/products.model';
@@ -41,7 +41,8 @@ export class AppComponent implements OnInit{
   constructor(public authService: AuthService,
     private notificationService: NotificationsService,
     private categoryService: ProductsRequestService,
-    private errorHandel: ErrorHandlerService){
+    private errorHandel: ErrorHandlerService,
+    private goBackService: GoBackService){
       this.hidebackdrop();
     }
     hidebackdrop(){
@@ -62,6 +63,6 @@ export class AppComponent implements OnInit{
           }
         })
       }
-      // this.gobackservice.goBack()
+      this.goBackService.goBack()
   }
 }

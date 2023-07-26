@@ -1,12 +1,11 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Component, ElementRef, HostListener, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription, min } from 'rxjs';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { APIResponse, Products , APIResponse2, Category, CategoryFilter,BrandFilter, Category_Filter} from '../models/products.model';
 import { MacPrefixService } from '../services/mac-prefix.service';
 import { ProductsRequestService } from '../services/products-request.service';
-import { SwiperOptions } from 'swiper';
 import { ActionsService } from '../services/actions.service';
 import { AuthService } from '../services/auth.service';
 import { Regions, ResponseSuccess } from '../models/actions.model';
@@ -25,7 +24,6 @@ declare var window: any;
   providers: [DatePipe]
 })
 export class ProductsComponent implements OnInit, OnDestroy {
-  // @Input() categoriesSplash: any = [];
   filters: CategoryFilter = {
     data: {
       filters: [],
@@ -61,7 +59,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
   activeSub_brand = 0;
   brand_name: any;
   sub_brand_name: any;
-  show:boolean = false;
+  show: boolean = false;
   showBtnAction: boolean = false;
   loadding = false;
   load: boolean = false;
@@ -74,6 +72,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
   errorLength = '';
   activeClass: boolean = false;
   categorySlug: string = 'all';
+  pageNumber: number = 1;
   regions: any = [];
   metaNo: any = [];
   owner_id: any;
@@ -81,6 +80,9 @@ export class ProductsComponent implements OnInit, OnDestroy {
   slickOptionsSubBrands: any;
   plate_town_filter_6: any;
   plate_type_filter_6: any;
+  region_filter: any;
+  filterBrandKey: any;
+  selectedSlideIndex: any; 
   is_animating: boolean = false;
   private routeSub: Subscription = new Subscription;
   private productSub: Subscription = new Subscription;
@@ -95,14 +97,14 @@ export class ProductsComponent implements OnInit, OnDestroy {
   formFilter = new FormGroup({
     min_price: new FormControl(''),
     max_price: new FormControl('')
-  })
+  });
   formPlatesFilter = new FormGroup({
     min_price: new FormControl(''),
     max_price: new FormControl('')
-  })
+  });
   filterAllProducts = new FormGroup({
     filterAll: new FormControl('')
-  })
+  });
   constructor(private httpService: ProductsRequestService, 
     private router: Router,
     private route: ActivatedRoute,
@@ -114,17 +116,44 @@ export class ProductsComponent implements OnInit, OnDestroy {
     private dialogRef: MatDialog,
     private errorHandel: ErrorHandlerService,
     private gobackservice: GoBackService) {
-      if(this.route.snapshot.fragment){        
-        if(this.route.snapshot.fragment == 'cars'){
-          this.active = 1
-        }else if(this.route.snapshot.fragment == 'car_plates'){
-          this.active = 2
+      if(this.gobackservice.goBackState){
+        this.gobackservice.region_filter !== 'undefined' ? this.region_filter = this.gobackservice.region_filter  : undefined;
+        this.categorySlug = this.gobackservice.categorySlug;
+        this.getBrandFilter(this.gobackservice.categorySlug);
+        this.getCategoryFilter(this.gobackservice.categorySlug);
+        if(this.gobackservice.categorySlug === 'car_plates'){
+          this.active = 2;
+          if(this.gobackservice.carPlateType !== 'undefined'){
+            this.plate_type_filter_6 = this.gobackservice.carPlateType;
+            this.onApplayPlatesFilters(this.gobackservice.pageNumber);
+          }else{
+            this.getProducts(this.gobackservice.categorySlug, this.gobackservice.pageNumber);
+          }
+        }else if(this.gobackservice.categorySlug === 'cars'){
+          this.active = 1;
+          this.gobackservice.brand_name !== 'undefined' ? this.brand_name = this.gobackservice.brand_name : undefined;
+          this.gobackservice.sub_brand_name !== 'undefined' ? this.sub_brand_name = this.gobackservice.sub_brand_name : undefined;
+          if(this.gobackservice.filterBrandKey !== 'undefined'){
+            this.onApplayBrandFilters(this.gobackservice.filterBrandKey);
+            this.selectedSlideIndex = +this.gobackservice.selectedSlideIndex;
+          }
+          this.onApplayFiltersKeys(this.gobackservice.brand_name,this.gobackservice.sub_brand_name,this.gobackservice.region_filter)
         }else{
-          this.active = 0
+          this.getProducts(this.gobackservice.categorySlug, this.gobackservice.pageNumber);
         }
-        this.getProducts(this.route.snapshot.fragment, 1);
-        this.getCategoryFilter(this.route.snapshot.fragment);
-        this.getBrandFilter(this.route.snapshot.fragment);
+      }else{
+        if(this.route.snapshot.fragment){        
+          if(this.route.snapshot.fragment == 'cars'){
+            this.active = 1
+          }else if(this.route.snapshot.fragment == 'car_plates'){
+            this.active = 2
+          }else{
+            this.active = 0
+          }
+          this.getProducts(this.route.snapshot.fragment, 1);
+          this.getCategoryFilter(this.route.snapshot.fragment);
+          this.getBrandFilter(this.route.snapshot.fragment);
+        }
       }
     }
     slickOptions = {
@@ -192,7 +221,19 @@ export class ProductsComponent implements OnInit, OnDestroy {
         }
       ]
     }
-    
+  onCarouselInit(slickModal: any) {
+    setTimeout(()=>{
+      if (slickModal && slickModal.slickGoTo) {
+        slickModal.slickGoTo(this.selectedSlideIndex);
+      }
+    },100)
+  }
+  onSlideChanged(event: any) {
+    this.selectedSlideIndex = event.currentSlide;
+  }
+  onSlideClicked(i: number) {
+    this.selectedSlideIndex = i;
+  }
   getSlickOptionsSubBrands(length: any){
       return {
       slidesToShow: Math.min(length, 7),
@@ -263,9 +304,12 @@ export class ProductsComponent implements OnInit, OnDestroy {
     }else{
       this.mac = false;
     }
-    this.getProducts(this.route.snapshot.fragment ? this.route.snapshot.fragment: 'all', 1);
+    if(this.gobackservice.goBackState){
+    }else{
+      this.getProducts(this.route.snapshot.fragment ? this.route.snapshot.fragment: 'all', 1);
+    }
     this.getRegions();
-    this.owner_id = localStorage.getItem('userId')
+    this.owner_id = localStorage.getItem('userId');
   }
   getProducts(categorySlug: string, pageNo: number){
     this.loader = true;
@@ -281,8 +325,6 @@ export class ProductsComponent implements OnInit, OnDestroy {
         this.products = productsList.data;
         this.links = productsList.links;        
         this.meta = productsList.meta;
-        // this.metaNo = this.meta.links?.slice(0,1).concat(this.meta.links?.slice(1, 4)).concat(this.meta.links?.slice(this.meta.links.length-1))
-        // console.log(this.metaNo);
           if(this.products.length == 0){
             this.errorLength = 'لا يوجد منتجات';
           }else{
@@ -351,9 +393,11 @@ export class ProductsComponent implements OnInit, OnDestroy {
      })    
   }
   paginate(event: any,meta_path: string){
+    this.pageNumber = event.page+1;
     if(meta_path.includes('filters')){
       if(this.categorySlug == 'cars'){
-        this.applayForPagination(this.brand_name,this.sub_brand_name,event.page+1);
+        this.applayForPagination(this.brand_name !== 'undefined' ? this.brand_name : undefined,
+        this.sub_brand_name !== 'undefined' ? this.sub_brand_name : undefined,event.page+1);
       }else if (this.categorySlug == 'car_plates'){        
         this.onApplayPlatesFilters(event.page+1);
       }else{
@@ -393,7 +437,26 @@ export class ProductsComponent implements OnInit, OnDestroy {
     })
   }
   productDetails(id: number){
-    this.router.navigate(['product-details', id])
+    const fragment = {
+      categorySlug: this.categorySlug,
+      pageNumber: this.pageNumber,
+      carPlateType: this.plate_type_filter_6,
+      townFilter: this.plate_town_filter_6,
+      brandFilter: this.brand_name, 
+      brandSubFilter: this.sub_brand_name,
+      regionFilter: this.region_filter,
+      filterBrandKey: this.filterBrandKey,
+      selectedSlideIndex: this.selectedSlideIndex 
+    };
+    const fragmentString = Object.entries(fragment)
+      .map(([key, value]) => `${key}=${value}`)
+      .join('&');
+    const navigationExtras: NavigationExtras = {
+      fragment: fragmentString,
+    };
+    this.router.navigate(['product-details', id], navigationExtras);
+    const element = document.getElementById(`${id}`);
+    this.gobackservice.getElement(element);
   }
   sellerProfile(id:number){
     if(id == this.owner_id){
@@ -503,6 +566,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
       }
     }
   }
+  // for form submit 
   onApplayFilters(){
     this.loader = true;
     this.errorLength = '';
@@ -544,8 +608,10 @@ export class ProductsComponent implements OnInit, OnDestroy {
      this.filterSub = this.httpService.applayFilterKeys(this.valueMin,this.valueMax,brand_filter,brand_Subfilter,town_filter,plate_type_filter,plate_category_filter,page_num).subscribe({
       next: (res: APIResponse<Products>)=>{
           this.load = false;
-          this.loader = false;            
-          this.formModal.hide();          
+          this.loader = false;
+          if(this.formModal){
+            this.formModal.hide();
+          }
           this.products = res.data;
           this.links = res.links;
           this.meta = res.meta;         
@@ -567,6 +633,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
     this.loader = true;   
     this.filterbrandsOptions = [];
     this.errorLength = '';
+    this.filterBrandKey = filter_key;
     this.filterSub = this.httpService.applayBarndFilter(filter_key).subscribe({
       next: (res: any)=>{
           this.load = false;
@@ -574,7 +641,6 @@ export class ProductsComponent implements OnInit, OnDestroy {
           if(res.data != null){
             this.filterbrandsOptions = res.data.filter_options;
             this.slickOptionsSubBrands = this.getSlickOptionsSubBrands(this.filterbrandsOptions.length)
-            // this.configSub_barnd.slidesPerView = this.filterbrandsOptions.length;
           }
       },
       error:(err: HttpErrorResponse)=>{
@@ -628,8 +694,9 @@ export class ProductsComponent implements OnInit, OnDestroy {
       }
     })
   }
-  regionFilter(event: any){
+  getRegionFilter(event: any){
     this.load = true;
+    this.region_filter = event.target.value;
     if(event.target.value == 'all'){
       this.getProducts(this.categorySlug, 1);
     }else{

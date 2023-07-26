@@ -26,7 +26,10 @@ export class ActionsService {
   }
   subscribtionsTypeList!: APIresponse<Subscriptions>;
   portfolioData!: Portfolio;
+  private previousPortfolioData!: number
   userProducts!: UserProducts;
+  private previousUserProductId!: number;
+  private previousUserProductPageNo!: number; 
   userFav!: Favourites;
   regions!: Regions;
   getSubscribtionsType(){
@@ -41,9 +44,10 @@ export class ActionsService {
     }
   }
   getPortfolio(id: number){
-    if(this.portfolioData){
+    if(this.portfolioData && this.previousPortfolioData === id){
       return of(this.portfolioData);
     }else{
+      this.previousPortfolioData = id;
       return this.http.get<Portfolio>(`${env.api_url}/portfolio/user/${id}`,this.httpOptions).pipe(
         tap(portfolio=>{
           this.portfolioData =portfolio;
@@ -52,9 +56,11 @@ export class ActionsService {
     }
   }
   getPortfolioProducts(id: number,pageNo: number = 1){
-    if(this.userProducts){
+    if(this.userProducts && this.previousUserProductId === id && this.previousUserProductPageNo === pageNo){
       return of(this.userProducts);
     }else{
+      this.previousUserProductId = id;
+      this.previousUserProductPageNo = pageNo;
       return this.http.get<UserProducts>(`${env.api_url}/products/user-products?user_id=${id}&page=${pageNo}`,this.httpOptions).pipe(
         tap(userProducts=>{
           this.userProducts =userProducts;

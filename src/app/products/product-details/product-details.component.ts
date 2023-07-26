@@ -15,7 +15,6 @@ import { environment as env } from 'src/environments/environment';
 import { AuthService } from 'src/app/services/auth.service';
 import { AuthRemainderModalComponent } from 'src/app/auth-remainder-modal/auth-remainder-modal.component';
 import { MatDialog } from '@angular/material/dialog';
-// import { Gallery, GalleryItem, ImageItem, ThumbnailsPosition, ImageSize } from '@ngx-gallery/core';
 import { GalleryItem, ImageItem } from 'ng-gallery';
 import { GoBackService } from 'src/app/services/go-back.service';
 
@@ -29,7 +28,6 @@ declare var window: any;
 export class ProductDetailsComponent implements OnInit ,AfterViewInit ,OnDestroy{
   galleryOptions: NgxGalleryOptions[] = [];
   galleryImages: NgxGalleryImage[] = [];
-  // items: GalleryItem[] = [];
   cameraImages: GalleryItem[] = [];
   mac: boolean = false;
   singleProduct : Product = {
@@ -112,30 +110,23 @@ export class ProductDetailsComponent implements OnInit ,AfterViewInit ,OnDestroy
     private dialogRef: MatDialog,
     private http: HttpClient,
     private renderer: Renderer2,
-    // public gallery: Gallery
-    ) { 
+    private goBackService: GoBackService) { 
       this.actionService.refresh.subscribe(()=>{
         this.getProductDetails(this.ProductId);
-      })
+      });
+      this.route.fragment.subscribe((fragment: any) => {
+        const fragmentParams = new URLSearchParams(fragment);
+        this.goBackService.getFragments(fragmentParams.get('categorySlug'), 
+        Number(fragmentParams.get('pageNumber')),
+        fragmentParams.get('carPlateType'),
+        fragmentParams.get('townFilter'),
+        fragmentParams.get('brandFilter'),
+        fragmentParams.get('brandSubFilter'),
+        fragmentParams.get('regionFilter'),
+        fragmentParams.get('filterBrandKey'),
+        fragmentParams.get('selectedSlideIndex'))
+      });
     }
-  //   responsiveOptions:any[] = [
-  //   {
-  //       breakpoint: '1440px',
-  //       numVisible: 4
-  //   },
-  //   {
-  //       breakpoint: '1024px',
-  //       numVisible: 4
-  //   },
-  //   {
-  //       breakpoint: '768px',
-  //       numVisible: 3
-  //   },
-  //   {
-  //       breakpoint: '560px',
-  //       numVisible: 1
-  //   }
-  // ];
   ngOnInit(): void {
     this.routeSub = this.route.params.subscribe((params: Params) => {
       this.ProductId = params['id'];
@@ -195,6 +186,7 @@ export class ProductDetailsComponent implements OnInit ,AfterViewInit ,OnDestroy
     }
   }
   ngAfterViewInit() {
+    window.scrollTo(0, 0);
   }
   getProductDetails(id: string){
     this.productSub = this.httpService.getDetails(id)
@@ -242,23 +234,6 @@ export class ProductDetailsComponent implements OnInit ,AfterViewInit ,OnDestroy
       }
     })
   }
-  // basicLightboxExample() {
-  //   this.gallery.ref().load(this.items);
-  // }
-  // withCustomGalleryConfig() {
-
-  //   // 2. Get a lightbox gallery ref
-  //   const lightboxGalleryRef = this.gallery.ref('anotherLightbox');
-
-  //   // (Optional) Set custom gallery config to this lightbox
-  //   lightboxGalleryRef.setConfig({
-  //     imageSize: ImageSize.Cover,
-  //     thumbPosition: ThumbnailsPosition.Top
-  //   });
-
-  //   // 3. Load the items into the lightbox
-  //   lightboxGalleryRef.load(this.items);
-  // }
   addToFav(product: any, event: MouseEvent){
     this.is_animating = true;
     if(this.authService.IsloggedIn()){
@@ -408,5 +383,5 @@ ngOnDestroy() :void{
     if(this.routeSub){
      this.routeSub.unsubscribe();
    }
-  }
+}
 }

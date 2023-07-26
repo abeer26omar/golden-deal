@@ -25,7 +25,6 @@ import { SingleChatComponent } from './chats/single-chat/single-chat.component';
 
 
 const routes: Routes = [
-  // { path:'', redirectTo: '', pathMatch:'full'},
   { path:'', component: HomeComponent},
   { path:'search-result',component: SearchResultComponent},
   { path:'search-result/:key',component: SearchResultComponent},

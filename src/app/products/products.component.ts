@@ -89,6 +89,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
   private categorySub : Subscription = new Subscription;
   private brandSub : Subscription = new Subscription;
   private filterSub : Subscription = new Subscription;
+  @ViewChild('productsContainer') productsContainer!: ElementRef;
 
   valueMin: any = 0;
   valueMax: any = 8584040;
@@ -160,7 +161,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
       slidesToShow: 11,
       centerMode: false,
       focusOnSelect: false,
-      slidesToScroll: 3,
+      slidesToScroll: 1,
       infinite: false,
       centerPadding: "0",
       rtl: true,
@@ -333,7 +334,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
       },
       error:(err: HttpErrorResponse)=>{
         this.loader = false;
-        this.errorHandel.openErrorModa(err)
+        this.errorHandel.openErrorModa(err);
       }
     })
   }
@@ -385,10 +386,12 @@ export class ProductsComponent implements OnInit, OnDestroy {
           }else{
             this.errorLength = '';
           }
+          this.scrollToproductsContainer()
       },
       error:(err: HttpErrorResponse)=>{
         this.load = false;
         this.errorHandel.openErrorModa(err)
+        this.scrollToproductsContainer()
       }
      })    
   }
@@ -404,9 +407,15 @@ export class ProductsComponent implements OnInit, OnDestroy {
         this.onApplayPlatesFilters(event.page+1);
       }      
     }else{
-      this.getProducts(this.categorySlug,event.page+1)
+      this.getProducts(this.categorySlug,event.page+1);
+      setTimeout(()=>{
+        this.scrollToproductsContainer();
+      },80)
     }
-  } 
+  }
+  scrollToproductsContainer(){
+    this.productsContainer.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
   getCategories(){
     this.categorySub = this.httpService.
     getProductsCategories().
@@ -673,11 +682,13 @@ export class ProductsComponent implements OnInit, OnDestroy {
           }else{
             this.errorLength = '';
           }
+          this.scrollToproductsContainer();
       },
       error:(err: HttpErrorResponse)=>{
         this.load = false;
         this.loader = false;
-        this.errorHandel.openErrorModa(err)
+        this.errorHandel.openErrorModa(err);
+        this.scrollToproductsContainer();
       }
      })
   }

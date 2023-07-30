@@ -435,15 +435,6 @@ export class EditAddComponent implements OnInit, OnDestroy {
             this.myForm.addControl(ele.slug_name,new FormControl(''))
           }
         })
-
-        console.log('card_num_ar_1',this.card_num_ar_1);
-        console.log("card_num_en_1",this.card_num_en_1);
-        console.log('card_num_ar_2',this.card_num_ar_2);
-        console.log('card_num_en_2',this.card_num_en_2);
-        console.log('card_num_ar_3',this.card_num_ar_3);
-        console.log('card_num_en_3',this.card_num_en_3);
-        console.log('card_num_ar_4',this.card_num_ar_4);
-        console.log('card_num_en_4',this.card_num_en_4);
       },
       error: (err: HttpErrorResponse)=>{
         this.errorHandel.openErrorModa(err);
@@ -645,9 +636,6 @@ export class EditAddComponent implements OnInit, OnDestroy {
     this.modelAddImages.show();
   }
   submit(){
-    this.renderer.setProperty(document.documentElement, 'scrollTop', 0);
-    this.renderer.setProperty(document.body, 'scrollTop', 0);
-    this.load = true;
     let plate_chars_en_filter_6: any, 
     plate_chars_filter_6: any,
     plate_numbers_filter_6: any,
@@ -658,31 +646,38 @@ export class EditAddComponent implements OnInit, OnDestroy {
       plate_numbers_en_filter_6 = Object.values(this.myForm.get('plate_numbers_en_filter_6')?.value).join(' ')
       plate_numbers_filter_6 = Object.values(this.myForm.get('plate_numbers_filter_6')?.value).join(' ');
     }
-    const formData = new FormData();
-      for (const field in this.myForm.controls) {
-        if(field == 'plate_chars_en_filter_6'){
-          formData.append(field, plate_chars_en_filter_6);
-        }else if(field == 'plate_chars_filter_6'){
-          formData.append(field, plate_chars_filter_6);
-        }else if(field == 'plate_numbers_en_filter_6'){
-          formData.append(field, plate_numbers_en_filter_6);
-        }else if(field == 'plate_numbers_filter_6'){
-          formData.append(field, plate_numbers_filter_6);
-        }else{
-          formData.append(field, this.myForm.controls[field].value);
+    if(this.myForm.valid){   
+      this.load = true;
+      this.renderer.setProperty(document.documentElement, 'scrollTop', 0);
+      this.renderer.setProperty(document.body, 'scrollTop', 0);
+      const formData = new FormData();
+        for (const field in this.myForm.controls) {
+          if(field == 'plate_chars_en_filter_6'){
+            formData.append(field, plate_chars_en_filter_6);
+          }else if(field == 'plate_chars_filter_6'){
+            formData.append(field, plate_chars_filter_6);
+          }else if(field == 'plate_numbers_en_filter_6'){
+            formData.append(field, plate_numbers_en_filter_6);
+          }else if(field == 'plate_numbers_filter_6'){
+            formData.append(field, plate_numbers_filter_6);
+          }else{
+            formData.append(field, this.myForm.controls[field].value);
+          }
         }
-      }
-    this.editSub = this.productService.updateAdd(this.addId,formData).subscribe({
-      next: (res: Update)=>{
-        this.load = false;
-        this.updateProduct = res;
-        this.modelSuccessNewProduct.show();
-      },
-      error: (err: HttpErrorResponse)=>{
-        this.load = false;
-        this.errorHandel.openErrorModa(err);
-      }
-    })
+      this.editSub = this.productService.updateAdd(this.addId,formData).subscribe({
+        next: (res: Update)=>{
+          this.load = false;
+          this.updateProduct = res;
+          this.modelSuccessNewProduct.show();
+        },
+        error: (err: HttpErrorResponse)=>{
+          this.load = false;
+          this.errorHandel.openErrorModa(err);
+        }
+      });
+  }else{
+    return;
+  }
   }
   close(){
     const modelSuccessNewProduct = document.getElementById('modelSuccessNewProduct');

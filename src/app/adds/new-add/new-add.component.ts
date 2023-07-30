@@ -674,8 +674,6 @@ export class NewAddComponent implements OnInit, OnDestroy {
     }
   }
   RestFormForNewAdds(){
-    console.log(this.ownerId);
-    console.log(this.region_id);
     this.myForm.reset();
     this.myForm.get('negotiable')?.setValue(0);
     this.myForm.get('price')?.setValue(0);
@@ -695,6 +693,13 @@ export class NewAddComponent implements OnInit, OnDestroy {
     this.card_num_en_2 = '';
     this.card_num_en_3 = '';
     this.card_num_en_4 = '';
+    this.imgSrc1 = '';
+    this.imgSrc2 = '';
+    this.imgSrc3 = '';
+    this.imgSrc4 = '';
+    this.imgSrc5 = '';
+    this.imgSrc6 = '';
+    this.imgSrc7 = '';
   }
   close(){
     const modelSuccessNewProduct = document.getElementById('modelSuccessNewProduct');

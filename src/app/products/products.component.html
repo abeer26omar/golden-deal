@@ -259,7 +259,7 @@
   </div>
 </div>
   <div [ngbNavOutlet]="nav" class="mt-3 mb-5"></div>
-  <p-paginator [rows]="meta.per_page" [totalRecords]="meta.total" [ngClass]="{'highlight': pageNumber}"
+  <p-paginator #paginator [rows]="meta.per_page" [totalRecords]="meta.total"
   [pageLinkSize]="3" (onPageChange)="paginate($event,meta.path)" *ngIf="products.length !== 0"></p-paginator>
 <!-- filter modal -->
 <div class="modal fade"

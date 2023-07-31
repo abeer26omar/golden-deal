@@ -1,5 +1,5 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Component, ElementRef, HostListener, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, ViewChild, OnDestroy, AfterViewInit, ViewChildren, QueryList } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -15,6 +15,7 @@ import { environment as env } from 'src/environments/environment';
 import { MatDialog } from '@angular/material/dialog';
 import { AuthRemainderModalComponent } from '../auth-remainder-modal/auth-remainder-modal.component';
 import { GoBackService } from '../services/go-back.service';
+import { Paginator } from 'primeng/paginator';
 declare var window: any;
 
 @Component({
@@ -23,7 +24,7 @@ declare var window: any;
   styleUrls: ['./products.component.css'],
   providers: [DatePipe]
 })
-export class ProductsComponent implements OnInit, OnDestroy {
+export class ProductsComponent implements OnInit, AfterViewInit, OnDestroy {
   filters: CategoryFilter = {
     data: {
       filters: [],
@@ -72,7 +73,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
   errorLength = '';
   activeClass: boolean = false;
   categorySlug: string = 'all';
-  pageNumber: number = 1;
+  currentPage: number = 2;
   regions: any = [];
   metaNo: any = [];
   owner_id: any;
@@ -117,8 +118,13 @@ export class ProductsComponent implements OnInit, OnDestroy {
     private dialogRef: MatDialog,
     private errorHandel: ErrorHandlerService,
     private gobackservice: GoBackService) {
+      setTimeout(() => {
+        const paginatorsItems = document.getElementsByClassName('p-paginator-page');
+          console.log(paginatorsItems);          
+      },10);
       if(this.gobackservice.goBackState){
         this.gobackservice.region_filter !== 'undefined' ? this.region_filter = this.gobackservice.region_filter  : undefined;
+        this.currentPage = this.gobackservice.pageNumber;        
         this.categorySlug = this.gobackservice.categorySlug;
         this.getBrandFilter(this.gobackservice.categorySlug);
         this.getCategoryFilter(this.gobackservice.categorySlug);
@@ -312,6 +318,8 @@ export class ProductsComponent implements OnInit, OnDestroy {
     this.getRegions();
     this.owner_id = localStorage.getItem('userId');
   }
+  ngAfterViewInit() {
+  }
   getProducts(categorySlug: string, pageNo: number){
     this.loader = true;
     this.errorLength = '';
@@ -396,7 +404,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
      })    
   }
   paginate(event: any,meta_path: string){
-    this.pageNumber = event.page+1;
+    this.currentPage = event.page+1;
     if(meta_path.includes('filters')){
       if(this.categorySlug == 'cars'){
         this.applayForPagination(this.brand_name !== 'undefined' ? this.brand_name : undefined,
@@ -448,7 +456,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
   productDetails(id: number){
     const fragment = {
       categorySlug: this.categorySlug,
-      pageNumber: this.pageNumber,
+      pageNumber: this.currentPage,
       carPlateType: this.plate_type_filter_6,
       townFilter: this.plate_town_filter_6,
       brandFilter: this.brand_name, 

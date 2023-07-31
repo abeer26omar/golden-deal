@@ -208,7 +208,8 @@ export class ProductDetailsComponent implements OnInit ,AfterViewInit ,OnDestroy
           })
         });
         this.cameraImages = productDetails.data.product_images.map(item => new ImageItem({ src: item.image_url, thumb: item.image_url }));
-        document.documentElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        // document.documentElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        window.scrollTo(0,0)
 
         // [...productDetails.data.product_images].forEach(e=>{
         //   this.cameraImages.push(new ImageItem({ src: e.image_url, thumb: e.image_url }))

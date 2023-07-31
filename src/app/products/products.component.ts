@@ -91,6 +91,8 @@ export class ProductsComponent implements OnInit, AfterViewInit, OnDestroy {
   private brandSub : Subscription = new Subscription;
   private filterSub : Subscription = new Subscription;
   @ViewChild('productsContainer') productsContainer!: ElementRef;
+  @ViewChild(Paginator) paginator!: Paginator;
+  @ViewChild('paginatorPages') paginatorPages: any;
 
   valueMin: any = 0;
   valueMax: any = 8584040;
@@ -118,10 +120,6 @@ export class ProductsComponent implements OnInit, AfterViewInit, OnDestroy {
     private dialogRef: MatDialog,
     private errorHandel: ErrorHandlerService,
     private gobackservice: GoBackService) {
-      setTimeout(() => {
-        const paginatorsItems = document.getElementsByClassName('p-paginator-page');
-          console.log(paginatorsItems);          
-      },10);
       if(this.gobackservice.goBackState){
         this.gobackservice.region_filter !== 'undefined' ? this.region_filter = this.gobackservice.region_filter  : undefined;
         this.currentPage = this.gobackservice.pageNumber;        
@@ -319,6 +317,7 @@ export class ProductsComponent implements OnInit, AfterViewInit, OnDestroy {
     this.owner_id = localStorage.getItem('userId');
   }
   ngAfterViewInit() {
+    
   }
   getProducts(categorySlug: string, pageNo: number){
     this.loader = true;
@@ -404,7 +403,7 @@ export class ProductsComponent implements OnInit, AfterViewInit, OnDestroy {
      })    
   }
   paginate(event: any,meta_path: string){
-    this.currentPage = event.page+1;
+    this.currentPage = event.page+1;    
     if(meta_path.includes('filters')){
       if(this.categorySlug == 'cars'){
         this.applayForPagination(this.brand_name !== 'undefined' ? this.brand_name : undefined,

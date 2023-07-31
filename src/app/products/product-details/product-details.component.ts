@@ -127,7 +127,10 @@ export class ProductDetailsComponent implements OnInit ,AfterViewInit ,OnDestroy
         fragmentParams.get('selectedSlideIndex'))
       });
     }
+  @ViewChild('productContainer') productContainer!: ElementRef;
   ngOnInit(): void {
+    window.scrollTo(0, 0);
+    // this.productContainer.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
     this.routeSub = this.route.params.subscribe((params: Params) => {
       this.ProductId = params['id'];
     });
@@ -186,7 +189,6 @@ export class ProductDetailsComponent implements OnInit ,AfterViewInit ,OnDestroy
     }
   }
   ngAfterViewInit() {
-    window.scrollTo(0, 0);
   }
   getProductDetails(id: string){
     this.productSub = this.httpService.getDetails(id)

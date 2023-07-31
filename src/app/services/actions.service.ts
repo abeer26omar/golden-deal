@@ -72,15 +72,7 @@ export class ActionsService {
     return this.http.get<APIresponse2<Orders>>(`${env.api_url}/portfolio/my-orders`,this.httpOptions)
   }
   getMyFav(){
-    if(this.userFav){
-      return of(this.userFav)
-    }else{
-      return this.http.get<Favourites>(`${env.api_url}/favourites/my-favourites`,this.httpOptions).pipe(
-        tap(userFav=>{
-          this.userFav = userFav;
-        })
-      )
-    }
+    return this.http.get<Favourites>(`${env.api_url}/favourites/my-favourites`,this.httpOptions)
   }
   getProviderRating(id: number){
     return this.http.get<Provider>(`${env.api_url}/rating/provider/${id}`,this.httpOptions)

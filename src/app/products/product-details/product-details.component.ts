@@ -187,7 +187,8 @@ export class ProductDetailsComponent implements OnInit ,AfterViewInit ,OnDestroy
     }
   }
   ngAfterViewInit() {
-    this.productContainer.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    // this.productContainer.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    document.documentElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
   getProductDetails(id: string){
     this.productSub = this.httpService.getDetails(id)

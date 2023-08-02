@@ -646,9 +646,10 @@ table td span.lrt{
 .pi-angle-double-left:before {
     content: "\e92e";
 }
-.p-paginator.highlight .p-paginator-pages .p-paginator-page {
-    background-color: #007bff;
-    color: #fff;
+.p-paginator.highlight .p-paginator-pages .p-paginator-page.p-highlight {
+    background: none !important;
+    border-color: #EFF6FF;
+    color: #1D4ED8;
 }
 @media screen and (max-width: 575px) {
     .p-paginator .p-paginator-first, 

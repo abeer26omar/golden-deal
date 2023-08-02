@@ -73,13 +73,15 @@ export class RegisterComponent implements OnInit, OnDestroy {
   regions: any = [];
   //register
   registerForm = new FormGroup({
-    name: new FormControl('', [Validators.required]),
+    name: new FormControl('', [Validators.required,Validators.minLength(3)]),
     password: new FormControl('', [Validators.required,Validators.minLength(6)]),
     confirmPassword: new FormControl('', [Validators.required,Validators.minLength(6)]),
     phone: new FormControl('', [Validators.required, Validators.pattern("[0-9]{9}")]),
     region: new FormControl('', [Validators.required]),
     check: new FormControl('')
-  },{ validators: this.passMatchService.mustMatch('password', 'confirmPassword') });
+  },{ validators: [this.passMatchService.mustMatch('password', 'confirmPassword'),
+      this.passMatchService.nonZero('phone')]}
+  );
 
   private authSub : Subscription = new Subscription;
   private actionSub : Subscription = new Subscription;
@@ -147,13 +149,30 @@ export class RegisterComponent implements OnInit, OnDestroy {
     
     return this.fRegister['confirmPassword'].hasError('mustMatch') ? 'كلمه السر غير متطابقه ' : '';
   }
+  getErrorStartZero(){
+    const phoneControl = this.registerForm.get('phone');
+    if (phoneControl?.hasError('required')) {
+      return 'يجب ادخال رقم الهاتف';
+    } else if (phoneControl?.hasError('pattern')) {
+      return 'ارقام سعوديه فقط';
+    } else {
+      const nonZeroError = phoneControl?.getError('nonZero');
+      return nonZeroError ? 'ادخل رقم الهاتف بدون 0' : '';
+    }
+  }
+  getErrorName(){
+    if (this.fRegister['name'].hasError('required')) {
+      return 'يجب ادخال اسم المستخدم';
+    }
+      return this.fRegister['name'].hasError('minlength') ? ' اسم المستخدم يجب ان لا يقل عن 3 احرف' : '';
+  }
   submitData() {
     const userPhone = '+966' + this.registerForm.get('phone')?.value;
     const userName = this.registerForm.get('name')?.value;
     const region_id = this.registerForm.get('region')?.value;
     const userPass = this.registerForm.get('password')?.value;
     const userConfPass = this.registerForm.get('confirmPassword')?.value;
-    if(this.registerForm.valid){
+    if(this.registerForm.valid){      
       this.loader = true;
       this.error = '';      
       this.authSub = this.auth

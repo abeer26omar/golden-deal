@@ -1,5 +1,5 @@
 import { Component, HostListener, OnInit, OnDestroy } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 import { ProfileService } from '../services/profile.service';
@@ -13,6 +13,7 @@ import { DatePipe } from '@angular/common';
 import { ActionsService } from '../services/actions.service';
 import { ErrorHandlerService } from '../services/error-handler.service';
 import { Router } from '@angular/router';
+import { MustMatchService } from '../services/must-match.service';
 
 declare var window: any;
 
@@ -60,7 +61,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     private macService: MacPrefixService,
     private profileService: ProfileService,
     private dialogRef: MatDialog,
-    private datePipe: DatePipe,
+    private passMatchService: MustMatchService,
     private actionService: ActionsService,
     private errorHandel: ErrorHandlerService) {
       this.profileService.refresh.subscribe(()=>{
@@ -68,13 +69,11 @@ export class ProfileComponent implements OnInit, OnDestroy {
       })
    }
    userForm = new FormGroup({
-    name: new FormControl({value: '', disabled: this.edit}),
-    phone: new FormControl({value: '',disabled: this.edit}),
-    birthdate: new FormControl({value: '', disabled: this.edit}),
-    email: new FormControl({value: '', disabled: this.edit}),
-    address: new FormControl({value: '', disabled: this.edit}),
-    gender: new FormControl({value: '', disabled: this.edit})
-   });
+    name: new FormControl({value: '', disabled: this.edit}, [Validators.required,Validators.minLength(3)]),
+    phone: new FormControl({value: '',disabled: this.edit}, Validators.pattern("[0-9]{9}")),
+    email: new FormControl({value: '', disabled: this.edit}, Validators.required),
+    address: new FormControl({value: '', disabled: this.edit}, Validators.required),
+   },{ validators: this.passMatchService.nonZero('phone')});
     photoForm = new FormGroup({
       fileSource: new FormControl('')
    })
@@ -119,31 +118,44 @@ export class ProfileComponent implements OnInit, OnDestroy {
         this.userData = userDetails;
         localStorage.setItem('userImage', userDetails.data.image_url)        
         this.userForm = new FormGroup({
-          name: new FormControl({value:this.userData.data.name,disabled: this.edit}),
-          phone: new FormControl({value:this.userData.data.phone,disabled: this.edit}),
-          birthdate: new FormControl({value:this.userData.data.birth_date,disabled: this.edit}),
-          email: new FormControl({value:this.userData.data.email,disabled: this.edit}),
-          address: new FormControl({value:this.userData.data.region_id,disabled: this.edit}),
-          gender: new FormControl({value:this.userData.data.gender, disabled: this.edit})
-        })
+          name: new FormControl({value:this.userData.data.name,disabled: this.edit}, Validators.required),
+          phone: new FormControl({value:this.userData.data.phone,disabled: this.edit}, Validators.pattern("[0-9]{9}")),
+          email: new FormControl({value:this.userData.data.email,disabled: this.edit}, Validators.required),
+          address: new FormControl({value:this.userData.data.region_id,disabled: this.edit}, Validators.required),
+        },{ validators: this.passMatchService.nonZero('phone')})
       },
       error:(err: HttpErrorResponse)=>{
         this.errorHandel.openErrorModa(err)
       }
     })
   }
+  getErrorStartZero(){
+    const phoneControl = this.userForm.get('phone');
+    if (phoneControl?.hasError('required')) {
+      return 'يجب ادخال رقم الهاتف';
+    } else if (phoneControl?.hasError('pattern')) {
+      return 'ارقام سعوديه فقط';
+    } else {
+      const nonZeroError = phoneControl?.getError('nonZero');
+      return nonZeroError ? 'ادخل رقم الهاتف بدون 0' : '';
+    }
+  }
+  getErrorName(){
+    if (this.fuser['name'].hasError('required')) {
+      return 'يجب ادخال اسم المستخدم';
+    }
+      return this.fuser['name'].hasError('minlength') ? ' اسم المستخدم يجب ان لا يقل عن 3 احرف' : '';
+  }
   submitEdit(){ 
     this.error = '';
     this.sucMsg = '';
     const nameval = this.userForm.get('name')?.value;
     const emailval = this.userForm.get('email')?.value;
-    const birthval = this.datePipe.transform(this.userForm.get('birthdate')?.value,"yyyy-MM-dd");
     const phoneval = this.userForm.get('phone')?.value;
-    const genderVal = this.userForm.get('gender')?.value;
     const addressVal = this.userForm.get('address')?.value;
   this.loadProfile = true;
     this.userSub = this.profileService
-    .editProfile(nameval, emailval,phoneval,birthval,genderVal,addressVal)
+    .editProfile(nameval, emailval,phoneval,addressVal)
     .subscribe({
       next: (res:ResponseSuccess)=>{
         this.loadProfile = false;

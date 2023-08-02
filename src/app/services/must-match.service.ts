@@ -14,10 +14,20 @@ export class MustMatchService {
         confirmPassword?.setErrors({ mustMatch: true });
         return { mustMatch: true };
       } else {
-        confirmPassword?.setErrors(null);        
         return null;
       }
     };
+  }
+  nonZero(controlName: string): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      const phone = control.get(controlName);
+      if (phone?.value && phone.value.toString().startsWith('0')) {
+        phone?.setErrors({ nonZero: true });
+        return { nonZero: true };
+      } else {
+        return null;
+      }
+    }
   }
   constructor() { }
 }

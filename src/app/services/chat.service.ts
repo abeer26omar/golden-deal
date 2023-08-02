@@ -62,12 +62,8 @@ export class ChatService {
     }))
   }
   getAllSupportMsg(){
-    if(this.allSupportMsg){
-      return of(this.allSupportMsg)
-    }
     return this.http.get<Support>(`${env.api_url}/support/get-messages`,
-    this.httpOptions).pipe(tap((support)=>{
-      this.allSupportMsg = support;
+    this.httpOptions).pipe(tap(()=>{
       this._refresh.next();
     }))
   }

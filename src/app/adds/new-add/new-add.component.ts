@@ -11,6 +11,7 @@ import { ActionsService } from 'src/app/services/actions.service';
 import { Regions } from 'src/app/models/actions.model';
 import { SwiperOptions } from 'swiper';
 import { ErrorHandlerService } from 'src/app/services/error-handler.service';
+import { MustMatchService } from 'src/app/services/must-match.service';
 
 declare var window: any;
 
@@ -133,7 +134,7 @@ export class NewAddComponent implements OnInit, OnDestroy {
   private filterSub : Subscription = new Subscription;
   private sendSub: Subscription = new Subscription;
   constructor(private httpService: ProductsRequestService,
-    private router: Router,
+    private passMatchService: MustMatchService,
     private macService: MacPrefixService,
     private actionService: ActionsService,
     private productsService: ProductsRequestService,
@@ -142,7 +143,7 @@ export class NewAddComponent implements OnInit, OnDestroy {
     
     myForm = new FormGroup({
       agrement: new FormControl('', [Validators.required]),
-      seller_phone: new FormControl(''),
+      seller_phone: new FormControl('', Validators.pattern("[0-9]{9}")),
       productCategory: new FormControl('', [Validators.required]),
       name: new FormControl(''),
       price: new FormControl('0', [Validators.required]),
@@ -180,10 +181,19 @@ export class NewAddComponent implements OnInit, OnDestroy {
         plate_number_en_2: new FormControl(''),
         plate_number_en_1: new FormControl('')
       })
-    })
+    },{ validators: this.passMatchService.nonZero('seller_phone')})
     get f(){
       return this.myForm.controls;
     }
+  getErrorStartZero(){
+    const phoneControl = this.myForm.get('seller_phone');
+    if (phoneControl?.hasError('pattern')) {
+      return 'ارقام سعوديه فقط';
+    } else {
+      const nonZeroError = phoneControl?.getError('nonZero');
+      return nonZeroError ? 'ادخل رقم الهاتف بدون 0' : '';
+    }
+  }
   ngOnInit(): void {
       this.getCategories();
       this.modelSuccessNewProduct = new window.bootstrap.Modal(
@@ -612,7 +622,7 @@ export class NewAddComponent implements OnInit, OnDestroy {
       this.car_plate = event.target.value
     }
   }
-  submit(){  
+  submit(){
     this.submitted = true;  
     let plate_chars_en_filter_6: any, 
     plate_chars_filter_6: any,
@@ -631,7 +641,7 @@ export class NewAddComponent implements OnInit, OnDestroy {
         if(this.step == 1){
           this.step = this.step + 1;
         }
-      if(this.myForm.valid){        
+      if(this.myForm.valid){
         const formData = new FormData();
         for (const field in this.myForm.controls) {
             if(field == 'plate_chars_en_filter_6'){

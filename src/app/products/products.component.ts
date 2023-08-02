@@ -73,7 +73,7 @@ export class ProductsComponent implements OnInit, AfterViewInit, OnDestroy {
   errorLength = '';
   activeClass: boolean = false;
   categorySlug: string = 'all';
-  currentPage: number = 2;
+  currentPage: number = 1;
   regions: any = [];
   metaNo: any = [];
   owner_id: any;
@@ -83,7 +83,7 @@ export class ProductsComponent implements OnInit, AfterViewInit, OnDestroy {
   plate_type_filter_6: any;
   region_filter: any;
   filterBrandKey: any;
-  selectedSlideIndex: any; 
+  selectedSlideIndex: any = -1; 
   is_animating: boolean = false;
   private routeSub: Subscription = new Subscription;
   private productSub: Subscription = new Subscription;
@@ -136,15 +136,17 @@ export class ProductsComponent implements OnInit, AfterViewInit, OnDestroy {
           }
         }else if(this.gobackservice.categorySlug === 'cars'){
           this.active = 1;
-          this.gobackservice.brand_name !== 'undefined' ? this.brand_name = this.gobackservice.brand_name : undefined;
-          this.gobackservice.sub_brand_name !== 'undefined' ? this.sub_brand_name = this.gobackservice.sub_brand_name : undefined;
-          if(this.gobackservice.filterBrandKey !== 'undefined'){
-            this.onApplayBrandFilters(this.gobackservice.filterBrandKey);
-            this.selectedSlideIndex = +this.gobackservice.selectedSlideIndex;
+          if(this.gobackservice.brand_name == 'undefined' && this.gobackservice.sub_brand_name == 'undefined'){
+            this.getProducts(this.gobackservice.categorySlug, this.gobackservice.pageNumber);
+          }else{
+            this.gobackservice.brand_name !== undefined ? this.brand_name = this.gobackservice.brand_name : undefined;
+            this.gobackservice.sub_brand_name !== undefined ? this.sub_brand_name = this.gobackservice.sub_brand_name : undefined;
+              if(this.gobackservice.filterBrandKey !== 'undefined'){
+                this.onApplayBrandFilters(this.gobackservice.filterBrandKey);
+                this.selectedSlideIndex = +this.gobackservice.selectedSlideIndex;
+              }
+              this.onApplayFiltersKeys(this.gobackservice.brand_name,this.gobackservice.sub_brand_name,this.gobackservice.region_filter)
           }
-          this.onApplayFiltersKeys(this.gobackservice.brand_name,this.gobackservice.sub_brand_name,this.gobackservice.region_filter)
-        }else{
-          this.getProducts(this.gobackservice.categorySlug, this.gobackservice.pageNumber);
         }
       }else{
         if(this.route.snapshot.fragment){        

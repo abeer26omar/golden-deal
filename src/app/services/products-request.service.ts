@@ -99,15 +99,10 @@ export class ProductsRequestService {
       ,this.httpOptions)
   }
   getEditAddInfo(id: number){
-    if(this.editAddInfo && this.previouseditAddId === id){
-      return of(this.editAddInfo)
-    }else{
-      this.previouseditAddId = id;
-      return this.http.get<EditProduct>(`${env.api_url}/products/edit-product-info/${id}`,this.httpOptions).pipe(tap((product)=>{
-        this.editAddInfo = product;
+    return this.http.get<EditProduct>(`${env.api_url}/products/edit-product-info/${id}`,this.httpOptions).pipe(tap(()=>{
         this._refresh.next();
-      }))
-    }
+      })
+    )
   }
   getEditFilters(id: number, category: string){
     if(this.editAddFilters && this.previouseditAddIdFilters === id && this.previouseditAddcategoreyFilters === category){

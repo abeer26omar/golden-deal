@@ -7,10 +7,6 @@
             <div class="card-body" *ngIf="step == 1">
                 <div class="aggrement p-sm-5 p-2 ">
                     <p class="title">إتفاقية العمولة <img src="../../../assets/images/arrows.svg" alt="arrows" class="pe-3"></p>
-                    <!-- <div class="pt-4">
-                        <p class="qoran">بسم الله الرحمن الرحيم</p>
-                        <p><span>قال الله تعالى</span><span class="sora">:"وَأَوْفُواْ بِعَهْدِ ٱللَّهِ إِذَا عَٰهَدتُّمْ وَلَا تَنقُضُواْ ٱلْأَيْمَٰنَ <br>بَعْدَ تَوْكِيدِهَا وَقَدْ جَعَلْتُمُ ٱللَّهَ عَلَيْكُمْ كَفِيلًا "</span> <span>صدق الله العظيم</span></p>
-                    </div> -->
                     <div class="form-check col-12 col-md-8 pt-4">
                         <input class="form-check-input" type="checkbox" 
                         value="" 
@@ -253,7 +249,7 @@
                             <input type="text" class="form-control" id="productName" 
                             placeholder=""
                             formControlName="name">
-                            <div *ngIf="submitted && f['name'].errors" class="text-danger">يجب كتابه عنوان الإعلان </div>  
+                            <div class="text-danger">{{submitted && f['name'].errors ? 'يجب كتابه عنوان الإعلان ' : ''}}</div>  
                         </div>
                         <!-- <div class="col-md-6">
                             <label for="productMark" class="form-label">المنطقه</label>
@@ -269,6 +265,7 @@
                             class="form-control" 
                             id="phone"
                             formControlName="seller_phone">
+                            <div *ngIf="submitted && f['seller_phone'].errors" class="text-danger">{{getErrorStartZero()}}</div>  
                         </div>
                         <div class="col-md-6">
                             <label for="productPrice" class="form-label">السعر</label>

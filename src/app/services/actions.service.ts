@@ -44,16 +44,7 @@ export class ActionsService {
     }
   }
   getPortfolio(id: number){
-    if(this.portfolioData && this.previousPortfolioData === id){
-      return of(this.portfolioData);
-    }else{
-      this.previousPortfolioData = id;
-      return this.http.get<Portfolio>(`${env.api_url}/portfolio/user/${id}`,this.httpOptions).pipe(
-        tap(portfolio=>{
-          this.portfolioData =portfolio;
-        })
-      )
-    }
+    return this.http.get<Portfolio>(`${env.api_url}/portfolio/user/${id}`,this.httpOptions)
   }
   getPortfolioProducts(id: number,pageNo: number = 1){
     if(this.userProducts && this.previousUserProductId === id && this.previousUserProductPageNo === pageNo){

@@ -83,7 +83,7 @@ export class GoBackService {
             element.scrollIntoView({ block: 'center' , behavior: 'smooth'});
           }
         }
-      }, 100);
+      }, 50);
     }
   }
 }

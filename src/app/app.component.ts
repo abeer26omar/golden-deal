@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit, Output } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, Output, Renderer2 } from '@angular/core';
 import { AuthService } from './services/auth.service';
 import { NotificationsService } from './services/notifications.service';
 import { APIResponse2, Category } from './models/products.model';
@@ -13,13 +13,15 @@ declare var window: any;
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit, AfterViewInit{
   title = 'Golden-deal';
   sidebarOpen = true;
   notification: any;
   @Output() not_count: number = 0;
   @Output() categories : Array<Category> = [];
-  backdrops = Array.from(document.getElementsByClassName('modal-backdrop') as HTMLCollectionOf<HTMLElement>) 
+  // backdrops = Array.from(document.getElementsByClassName('modal-backdrop') as HTMLCollectionOf<HTMLElement>)
+  backdrops!: HTMLElement[];
+
   toggle(){
     this.sidebarOpen = !this.sidebarOpen;
   }
@@ -42,27 +44,33 @@ export class AppComponent implements OnInit{
     private notificationService: NotificationsService,
     private categoryService: ProductsRequestService,
     private errorHandel: ErrorHandlerService,
-    private goBackService: GoBackService){
+    private goBackService: GoBackService,
+    private renderer: Renderer2, 
+    private elementRef: ElementRef){
+      this.backdrops = [];
       this.hidebackdrop();
-    }
+  }
     hidebackdrop(){
       this.backdrops.forEach(element => {
         element.style.opacity = '1';
       });
     }
-    ngOnInit(): void {
+  ngOnInit(): void {
       this.getCategories()
       this.not_count = 0;
       if(this.authService.IsloggedIn()){
         this.not_count += this.not_count;
         this.notificationService.insideChatComponent.subscribe((insideChat)=>{
           if(!insideChat){
-            // this.notificationService.requestPermission();
+            this.notificationService.requestPermission();
             this.not_count += this.not_count;
             this.notificationService.getMyNotifications();
           }
         })
       }
       this.goBackService.goBack()
+  }
+  ngAfterViewInit(): void {
+    this.backdrops = Array.from(this.elementRef.nativeElement.querySelectorAll('.modal-backdrop'));
   }
 }

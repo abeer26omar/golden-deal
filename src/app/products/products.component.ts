@@ -111,7 +111,7 @@ export class ProductsComponent implements OnInit, AfterViewInit, OnDestroy {
   });
   constructor(private httpService: ProductsRequestService, 
     private router: Router,
-    private route: ActivatedRoute,
+    public route: ActivatedRoute,
     private macService: MacPrefixService,
     public actionService: ActionsService,
     public authService: AuthService,
@@ -147,6 +147,8 @@ export class ProductsComponent implements OnInit, AfterViewInit, OnDestroy {
               }
               this.onApplayFiltersKeys(this.gobackservice.brand_name,this.gobackservice.sub_brand_name,this.gobackservice.region_filter)
           }
+        }else{
+          this.getProducts(this.gobackservice.categorySlug, this.gobackservice.pageNumber);
         }
       }else{
         if(this.route.snapshot.fragment){        
@@ -405,18 +407,19 @@ export class ProductsComponent implements OnInit, AfterViewInit, OnDestroy {
      })    
   }
   paginate(event: any,meta_path: string){
-    this.currentPage = event.page+1;    
+    this.currentPage = event;
+    this.meta.current_page = event;
     if(meta_path.includes('filters')){
       if(this.categorySlug == 'cars'){
         this.applayForPagination(this.brand_name !== 'undefined' ? this.brand_name : undefined,
-        this.sub_brand_name !== 'undefined' ? this.sub_brand_name : undefined,event.page+1);
+        this.sub_brand_name !== 'undefined' ? this.sub_brand_name : undefined,event);
       }else if (this.categorySlug == 'car_plates'){        
-        this.onApplayPlatesFilters(event.page+1);
+        this.onApplayPlatesFilters(event);
       }else{
-        this.onApplayPlatesFilters(event.page+1);
+        this.onApplayPlatesFilters(event);
       }      
     }else{
-      this.getProducts(this.categorySlug,event.page+1);
+      this.getProducts(this.categorySlug,event);
       setTimeout(()=>{
         this.scrollToproductsContainer();
       },80)

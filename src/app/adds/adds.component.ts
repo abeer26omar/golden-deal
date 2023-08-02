@@ -182,8 +182,8 @@ export class AddsComponent implements OnInit, OnDestroy {
       }
     })
   }
-  paginate(event: any,meta_path: string){
-    this.getUserProducts(this.portfolioId,event.page+1)
+  paginate(event: any){
+    this.getUserProducts(this.portfolioId,event)
   } 
   getMyFav(){
     this.loader = true;

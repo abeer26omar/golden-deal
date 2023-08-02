@@ -83,11 +83,16 @@ export class SearchResultComponent implements OnInit, OnDestroy {
         this.loader = false;
         this.searchRes = res.data;
         this.links = res.links;
-        this.meta = res.meta;  
+        this.meta = res.meta;
+        if(this.searchRes.length == 0){
+          this.errMsg = 'لا يوجد منتجات';
+        }else{
+          this.errMsg = '';
+        }  
       },
       error: (err: HttpErrorResponse)=>{
-        this.loader = false;
-        this.errorHandel.openErrorModa(err)
+        this.loader = false;        
+        // this.errorHandel.openErrorModa(err)
       }
      })
   }
@@ -110,21 +115,8 @@ export class SearchResultComponent implements OnInit, OnDestroy {
   goLittleRockStar(){
     this.router.navigate(['/new-add'])
   }
-  // getNewPage(current_page: number,pageNo: any){        
-  //     if(Number.isNaN(+pageNo)){
-  //       if(pageNo.includes('Previous')){
-  //         pageNo = current_page - 1;
-  //         this.getSearchResult(this.key,+pageNo);
-  //       }else{
-  //         pageNo = current_page + 1;
-  //         this.getSearchResult(this.key,+pageNo); 
-  //       }
-  //     }else{
-  //       this.getSearchResult(this.key,+pageNo)
-  //     }
-  // } 
   paginate(event: any){
-    this.getSearchResult(this.key2,event.page+1)
+    this.getSearchResult(this.key2,event)
   } 
   ngOnDestroy() :void{
     if(this.routeSub){

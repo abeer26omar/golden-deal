@@ -203,8 +203,26 @@
                           </div>
                         </div>
                         <p class="none">{{errProducts}}</p>
-                        <p-paginator [rows]="meta.per_page" [totalRecords]="meta.total" 
-                          [pageLinkSize]="3" (onPageChange)="paginate($event,meta.path)"  *ngIf="products.length !== 0"></p-paginator>
+                          <ngb-pagination class="d-flex justify-content-center my-pagination" 
+                            [collectionSize]="meta.total"
+                            [pageSize]="meta.per_page" 
+                            [(page)]="meta.current_page"
+                            [boundaryLinks]="true"
+                            [maxSize]="2"
+                            (pageChange)="paginate($event)">
+                              <ng-template ngbPaginationFirst>
+                                <i class="fas fa-angle-double-right"></i>
+                              </ng-template>
+                              <ng-template ngbPaginationNext>
+                                <i class="fa-solid fa-angle-left"></i>
+                              </ng-template>
+                              <ng-template ngbPaginationPrevious>
+                                <i class="fa-solid fa-angle-right"></i>
+                              </ng-template>
+                              <ng-template ngbPaginationLast>
+                                <i class="fas fa-angle-double-left"></i>
+                              </ng-template>
+                            </ngb-pagination>
                         <div class="d-flex justify-content-center py-5">
                             <button class="btn btn-adds btn-prim" type="button" (click)="addNewAdd()">اضافه اعلان</button>
                         </div>

@@ -1,4 +1,4 @@
-<div class="content pt-5 pb-2" #productsContainer>
+<div class="content pt-5 pb-2" #productsContainer [id]="route.snapshot.fragment">
   <p class="sorts m-0">الفئات</p>
   <div class="d justify-content-center">
     <ul ngbNav #nav="ngbNav"  class="nav-tabs flex-no-wrap justify-content-sm-center justify-content-evenly" [(activeId)]="active">
@@ -259,8 +259,26 @@
   </div>
 </div>
   <div [ngbNavOutlet]="nav" class="mt-3 mb-5"></div>
-  <p-paginator [rows]="meta.per_page" [totalRecords]="meta.total" [ngClass]="{'highlight': currentPage == meta.current_page}"
-  [pageLinkSize]="3" (onPageChange)="paginate($event,meta.path)" *ngIf="products.length !== 0"></p-paginator>
+<ngb-pagination class="d-flex justify-content-center my-pagination" 
+  [collectionSize]="meta.total"
+  [pageSize]="meta.per_page" 
+  [(page)]="meta.current_page"
+  [boundaryLinks]="true"
+  [maxSize]="2"
+  (pageChange)="paginate($event,meta.path)">
+    <ng-template ngbPaginationFirst>
+      <i class="fas fa-angle-double-right"></i>
+    </ng-template>
+    <ng-template ngbPaginationNext>
+      <i class="fa-solid fa-angle-left"></i>
+    </ng-template>
+    <ng-template ngbPaginationPrevious>
+      <i class="fa-solid fa-angle-right"></i>
+    </ng-template>
+    <ng-template ngbPaginationLast>
+      <i class="fas fa-angle-double-left"></i>
+    </ng-template>
+</ngb-pagination>
 <!-- filter modal -->
 <div class="modal fade"
 id="filterModal"

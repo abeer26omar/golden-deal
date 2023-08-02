@@ -779,3 +779,28 @@ gallery-core[thumbPosition=bottom] gallery-thumbs .g-slider {
 .inValid{
     border: 1px solid var(--semi-red) !important;
 }
+ngb-pagination ul.pagination{
+    padding: 0;
+}
+ul.pagination .page-link {
+    background-color: var(--bg-color);
+}
+.active>.page-link, .page-link.active {
+    border-color: #AAAAAA;
+    color: var(--primary-color);
+}
+.page-item:first-child .page-link{
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 0.375rem;
+    border-bottom-right-radius: 0.375rem;
+}
+.page-item:last-child .page-link {
+    border-top-left-radius: 0.375rem;
+    border-bottom-left-radius: 0.375rem;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+.page-item .page-link span{
+  display: none;
+}

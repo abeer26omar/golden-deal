@@ -9,7 +9,7 @@
   </div>
 </div>
 <!-- <app-adds-banner></app-adds-banner> -->
-<section class="buy-record mt-5 mb-5">
+<section class="buy-record mt-5 mb-5" #productsContainer>
     <div class="header ">
         <span class="title"><img src="../../assets/images/left-arrow.svg" class="ps-2">نتائج البحث</span>
     </div>
@@ -139,7 +139,9 @@
   [pageSize]="meta.per_page" 
   [(page)]="meta.current_page"
   [boundaryLinks]="true"
-  [maxSize]="2"
+  [maxSize]="5"
+  [rotate]="true"
+  [ellipses]="false"
   (pageChange)="paginate($event)">
     <ng-template ngbPaginationFirst>
       <i class="fas fa-angle-double-right"></i>

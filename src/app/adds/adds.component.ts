@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { APIresponse2, Favourites, Orders, Portfolio, Products, UserProducts } from '../models/actions.model';
@@ -75,6 +75,7 @@ export class AddsComponent implements OnInit, OnDestroy {
   private favSub: Subscription = new Subscription;
   private orderSub: Subscription = new Subscription;
   mac: boolean = false;
+  @ViewChild('productsContainer') productsContainer!: ElementRef;
   constructor(private router: Router,
     private route: ActivatedRoute,
     public actionService: ActionsService,
@@ -183,7 +184,13 @@ export class AddsComponent implements OnInit, OnDestroy {
     })
   }
   paginate(event: any){
-    this.getUserProducts(this.portfolioId,event)
+    this.getUserProducts(this.portfolioId,event);
+    setTimeout(()=>{
+      this.scrollToproductsContainer();
+    },80)
+  }
+  scrollToproductsContainer(){
+    this.productsContainer.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
   } 
   getMyFav(){
     this.loader = true;

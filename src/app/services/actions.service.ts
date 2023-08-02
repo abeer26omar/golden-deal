@@ -26,12 +26,14 @@ export class ActionsService {
   }
   subscribtionsTypeList!: APIresponse<Subscriptions>;
   portfolioData!: Portfolio;
-  private previousPortfolioData!: number
   userProducts!: UserProducts;
   private previousUserProductId!: number;
   private previousUserProductPageNo!: number; 
   userFav!: Favourites;
   regions!: Regions;
+  regionFilterRes!: APIResponse<Products>;
+  private region_id!: number;
+  private caterorySlug!: string;
   getSubscribtionsType(){
     if(this.subscribtionsTypeList){
       return of(this.subscribtionsTypeList);
@@ -112,7 +114,17 @@ export class ActionsService {
     }
   }
   regionFilter(region_id: number,category_slug: string){
-    return this.http.get<APIResponse<Products>>(`${env.api_url}/filters/get-regions-filters?region_id=${region_id}&category_slug=${category_slug}`)
+    if(this.regionFilterRes && this.region_id == region_id && this.caterorySlug == category_slug){
+      return of(this.regionFilterRes)
+    }else{
+      this.region_id = region_id;
+      this.caterorySlug = category_slug;
+      return this.http.get<APIResponse<Products>>(`${env.api_url}/filters/get-regions-filters?region_id=${region_id}&category_slug=${category_slug}`).pipe(
+        tap((products)=>{
+          this.regionFilterRes = products;
+        })
+      )
+    }
   }
   search(name: string){
     return  this.http.get<APIResponse<Products>>(`${env.api_url}/products/search-products/search-with-key?key=${name}`)

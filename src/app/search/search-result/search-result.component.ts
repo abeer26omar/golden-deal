@@ -1,5 +1,5 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ResponseSuccess } from 'src/app/models/actions.model';
@@ -28,6 +28,7 @@ export class SearchResultComponent implements OnInit, OnDestroy {
   meta: any = {};
   is_animating: boolean = false;
   mac: boolean = false;
+  @ViewChild('productsContainer') productsContainer!: ElementRef;
   constructor(private route: ActivatedRoute,
     private productService: ProductsRequestService,
     private router: Router,
@@ -116,7 +117,13 @@ export class SearchResultComponent implements OnInit, OnDestroy {
     this.router.navigate(['/new-add'])
   }
   paginate(event: any){
-    this.getSearchResult(this.key2,event)
+    this.getSearchResult(this.key2,event);
+    setTimeout(()=>{
+      this.scrollToproductsContainer();
+    },80)
+  }
+  scrollToproductsContainer(){
+    this.productsContainer.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
   } 
   ngOnDestroy() :void{
     if(this.routeSub){

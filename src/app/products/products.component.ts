@@ -121,7 +121,6 @@ export class ProductsComponent implements OnInit, AfterViewInit, OnDestroy {
     private errorHandel: ErrorHandlerService,
     private gobackservice: GoBackService) {
       if(this.gobackservice.goBackState){
-        this.gobackservice.region_filter !== 'undefined' ? this.region_filter = this.gobackservice.region_filter  : undefined;
         this.currentPage = this.gobackservice.pageNumber;        
         this.categorySlug = this.gobackservice.categorySlug;
         this.getBrandFilter(this.gobackservice.categorySlug);
@@ -148,7 +147,12 @@ export class ProductsComponent implements OnInit, AfterViewInit, OnDestroy {
               this.onApplayFiltersKeys(this.gobackservice.brand_name,this.gobackservice.sub_brand_name,this.gobackservice.region_filter)
           }
         }else{
-          this.getProducts(this.gobackservice.categorySlug, this.gobackservice.pageNumber);
+          if(this.gobackservice.region_filter !== 'undefined'){
+            this.region_filter = this.gobackservice.region_filter;
+            this.getRegionFilterForBack();
+          }else{
+            this.getProducts(this.gobackservice.categorySlug, this.gobackservice.pageNumber);
+          }
         }
       }else{
         if(this.route.snapshot.fragment){        
@@ -707,7 +711,7 @@ export class ProductsComponent implements OnInit, AfterViewInit, OnDestroy {
   openFormModal() {
     this.formModal.show();
   }
-  getRegions(){
+  getRegions(){    
     this.filterSub = this.actionService.getRegions().subscribe({
       next: (res: Regions) => {
         this.regions = res.data;                
@@ -742,6 +746,25 @@ export class ProductsComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       })
     }
+  }
+  getRegionFilterForBack(){
+    this.filterSub = this.actionService.regionFilter(this.region_filter ,this.categorySlug).subscribe({
+      next: (res: APIResponse<Products>)=>{
+        this.load = false;
+        this.products = res.data;
+        this.links = res.links;
+        this.meta = res.meta;          
+        if(this.products.length == 0){
+          this.errorLength = 'لا يوجد منتجات';
+        }else{
+          this.errorLength = '';
+        }
+      },
+      error:(err: HttpErrorResponse)=>{
+        this.load = false;
+        this.errorHandel.openErrorModa(err)
+      }
+    })
   }
   getSubFirlters(filter_name: string,event: any){
     if(filter_name == 'ماركة السيارة'){

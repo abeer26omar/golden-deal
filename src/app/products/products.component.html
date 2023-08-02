@@ -188,7 +188,7 @@
     <select class="form-select" id="productMark" style="width: auto;" (change)="getRegionFilter($event)" >
       <option value="" disabled selected>المنطقه</option>
       <option value="all">كل المناطق</option>
-      <option value="{{region.id}}" *ngFor="let region of regions">{{region.name}}</option>
+      <option value="{{region.id}}" *ngFor="let region of regions" [selected]="region_filter == region.id">{{region.name}}</option>
     </select>
     <a (click)="openFormModal()">
       <img src="../../assets/images/filter.svg" alt="filter" width="40px">
@@ -264,7 +264,9 @@
   [pageSize]="meta.per_page" 
   [(page)]="meta.current_page"
   [boundaryLinks]="true"
-  [maxSize]="2"
+  [maxSize]="5"
+  [rotate]="true"
+	[ellipses]="false"
   (pageChange)="paginate($event,meta.path)">
     <ng-template ngbPaginationFirst>
       <i class="fas fa-angle-double-right"></i>

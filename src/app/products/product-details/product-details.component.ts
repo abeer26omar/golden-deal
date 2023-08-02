@@ -116,7 +116,8 @@ export class ProductDetailsComponent implements OnInit ,AfterViewInit ,OnDestroy
       });
       this.route.fragment.subscribe((fragment: any) => {
         const fragmentParams = new URLSearchParams(fragment);
-        this.goBackService.getFragments(fragmentParams.get('categorySlug'), 
+        this.goBackService.getFragments(
+        fragmentParams.get('categorySlug'), 
         Number(fragmentParams.get('pageNumber')),
         fragmentParams.get('carPlateType'),
         fragmentParams.get('townFilter'),
@@ -125,7 +126,7 @@ export class ProductDetailsComponent implements OnInit ,AfterViewInit ,OnDestroy
         fragmentParams.get('regionFilter'),
         fragmentParams.get('filterBrandKey'),
         fragmentParams.get('selectedSlideIndex'))
-      });
+      })
     }
   @ViewChild('productContainer') productContainer!: ElementRef;
   ngOnInit(): void {

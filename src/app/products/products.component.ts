@@ -83,7 +83,8 @@ export class ProductsComponent implements OnInit, AfterViewInit, OnDestroy {
   plate_type_filter_6: any;
   region_filter: any;
   filterBrandKey: any;
-  selectedSlideIndex: any = -1; 
+  selectedSlideIndex: any = -1;
+  selectedSlideSubBrandIndex: any = -1 
   is_animating: boolean = false;
   private routeSub: Subscription = new Subscription;
   private productSub: Subscription = new Subscription;
@@ -143,6 +144,7 @@ export class ProductsComponent implements OnInit, AfterViewInit, OnDestroy {
               if(this.gobackservice.filterBrandKey !== 'undefined'){
                 this.onApplayBrandFilters(this.gobackservice.filterBrandKey);
                 this.selectedSlideIndex = +this.gobackservice.selectedSlideIndex;
+                this.selectedSlideSubBrandIndex = +this.gobackservice.selectedSlideSubBrandIndex;
               }
               this.onApplayFiltersKeys(this.gobackservice.brand_name,this.gobackservice.sub_brand_name,this.gobackservice.region_filter)
           }
@@ -241,18 +243,31 @@ export class ProductsComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     },100)
   }
+  onCarouselSubBrandInit(slickModal: any) {
+    setTimeout(()=>{
+      if (slickModal && slickModal.slickGoTo) {
+        slickModal.slickGoTo(this.selectedSlideSubBrandIndex);
+      }
+    },100)
+  }
   onSlideChanged(event: any) {
     this.selectedSlideIndex = event.currentSlide;
   }
+  onSlideSubBrandChanged(event: any) {
+    this.selectedSlideSubBrandIndex = event.currentSlide;
+  }
   onSlideClicked(i: number) {
     this.selectedSlideIndex = i;
+  }
+  onSlideSubBrandClicked(i: number) {
+    this.selectedSlideSubBrandIndex = i;
   }
   getSlickOptionsSubBrands(length: any){
       return {
       slidesToShow: Math.min(length, 7),
       centerMode: false,
       focusOnSelect: false,
-      slidesToScroll: 3,
+      slidesToScroll: 1,
       infinite: false,
       cssEase: 'linear',
       centerPadding: "0",
@@ -471,7 +486,8 @@ export class ProductsComponent implements OnInit, AfterViewInit, OnDestroy {
       brandSubFilter: this.sub_brand_name,
       regionFilter: this.region_filter,
       filterBrandKey: this.filterBrandKey,
-      selectedSlideIndex: this.selectedSlideIndex 
+      selectedSlideIndex: this.selectedSlideIndex,
+      selectedSlideSubBrandIndex: this.selectedSlideSubBrandIndex 
     };
     const fragmentString = Object.entries(fragment)
       .map(([key, value]) => `${key}=${value}`)

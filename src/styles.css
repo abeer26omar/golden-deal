@@ -520,8 +520,10 @@ table td span.lrt{
     background: var(--newColor);
     width: 20% !important;
 }
-.slick-current .brand a {
+.slick-current .brand a ,
+.slick-current .sub_brand a {
     background-color: var(--primary-color) !important;
+    color: var(--white) !important;
 }
 /* nz-slider */
 .ant-slider-track{

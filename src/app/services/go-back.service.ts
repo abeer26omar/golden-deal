@@ -20,7 +20,8 @@ export class GoBackService {
   brand_name: any;
   sub_brand_name: any;
   filterBrandKey: any;
-  selectedSlideIndex: any; 
+  selectedSlideIndex: any;
+  selectedSlideSubBrandIndex: any; 
   constructor(private location: Location) {}
   getElement(element: HTMLElement| null){
     this.previousElementId = element?.id;    
@@ -33,7 +34,8 @@ export class GoBackService {
     brandSubFilter?: any,
     regionFilter?: any,
     filterBrandKey?: any,
-    selectedSlideIndex?: any){
+    selectedSlideIndex?: any,
+    selectedSlideSubBrandIndex?: any){
     this.categorySlug = category_slug;
     this.pageNumber = page_num;
     this.carPlateType = carPlateType;
@@ -43,6 +45,7 @@ export class GoBackService {
     this.sub_brand_name =  brandSubFilter;
     this.filterBrandKey = filterBrandKey;
     this.selectedSlideIndex = selectedSlideIndex;
+    this.selectedSlideSubBrandIndex = selectedSlideSubBrandIndex;
   }
   goBack(){
     this.currentRoute = this.location.path();

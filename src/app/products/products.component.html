@@ -227,11 +227,14 @@
   <ul class="nav nav-tabs swipers swipy" id="myTab" role="tablist" *ngIf="showBrandsOptions" dir="rtl">
     <ngx-slick-carousel class="carousel subbrand" 
         #slickModal="slick-carousel" 
-        [config]= 'slickOptionsSubBrands'>
-          <div  ngxSlickItem *ngFor="let brand of filterbrandsOptions" class="slide">
+        [config]= 'slickOptionsSubBrands'
+        (init)="onCarouselSubBrandInit(slickModal)" 
+        (afterChange)="onSlideSubBrandChanged($event)">
+          <div  ngxSlickItem *ngFor="let brand of filterbrandsOptions;let i = index" class="slide"
+          [class.slick-current]="selectedSlideSubBrandIndex === i">
             <li class="nav-item sub_brand d-flex justify-content-center px-1" role="presentation">
               <a  
-              (click)="onApplayFiltersKeys(undefined,brand.name)"
+              (click)="onSlideSubBrandClicked(i);onApplayFiltersKeys(undefined,brand.name)"
               data-bs-toggle="tab" 
               type="button" 
               role="tab" 

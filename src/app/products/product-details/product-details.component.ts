@@ -125,7 +125,8 @@ export class ProductDetailsComponent implements OnInit ,AfterViewInit ,OnDestroy
         fragmentParams.get('brandSubFilter'),
         fragmentParams.get('regionFilter'),
         fragmentParams.get('filterBrandKey'),
-        fragmentParams.get('selectedSlideIndex'))
+        fragmentParams.get('selectedSlideIndex'),
+        fragmentParams.get('selectedSlideSubBrandIndex'))
       })
     }
   @ViewChild('productContainer') productContainer!: ElementRef;

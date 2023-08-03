@@ -27,8 +27,6 @@ export class ActionsService {
   subscribtionsTypeList!: APIresponse<Subscriptions>;
   portfolioData!: Portfolio;
   userProducts!: UserProducts;
-  private previousUserProductId!: number;
-  private previousUserProductPageNo!: number; 
   userFav!: Favourites;
   regions!: Regions;
   regionFilterRes!: APIResponse<Products>;
@@ -49,17 +47,7 @@ export class ActionsService {
     return this.http.get<Portfolio>(`${env.api_url}/portfolio/user/${id}`,this.httpOptions)
   }
   getPortfolioProducts(id: number,pageNo: number = 1){
-    if(this.userProducts && this.previousUserProductId === id && this.previousUserProductPageNo === pageNo){
-      return of(this.userProducts);
-    }else{
-      this.previousUserProductId = id;
-      this.previousUserProductPageNo = pageNo;
-      return this.http.get<UserProducts>(`${env.api_url}/products/user-products?user_id=${id}&page=${pageNo}`,this.httpOptions).pipe(
-        tap(userProducts=>{
-          this.userProducts =userProducts;
-        })
-      )
-    }
+    return this.http.get<UserProducts>(`${env.api_url}/products/user-products?user_id=${id}&page=${pageNo}`,this.httpOptions)
   }
   getMyOrders(){
     return this.http.get<APIresponse2<Orders>>(`${env.api_url}/portfolio/my-orders`,this.httpOptions)

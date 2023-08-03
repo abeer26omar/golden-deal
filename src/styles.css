@@ -833,3 +833,14 @@ ul.pagination .page-item:not(.active):not(.disabled):hover .page-link{
         height: 2rem;
     }
 }
+/* notifications snack bar */
+.mat-simple-snackbar {
+    flex-direction: column-reverse
+}
+.mat-simple-snackbar-action {
+    color: var(--org-color);
+    margin: 0;
+}
+.mat-simple-snack-bar-content{
+    direction: rtl;
+}

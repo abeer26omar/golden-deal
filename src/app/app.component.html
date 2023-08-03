@@ -4,7 +4,7 @@
       <app-sidenav (closeSideNav)="close()" [categories]="categories"></app-sidenav>
     </mat-sidenav>
     <mat-sidenav-content>
-      <app-header (toggleSideBar)= "toggle()" [not_count]="not_count" [categories]="categories"></app-header>
+      <app-header (toggleSideBar)= "toggle()" [categories]="categories"></app-header>
       <div class="container-fluid">
         <router-outlet></router-outlet>
       </div>

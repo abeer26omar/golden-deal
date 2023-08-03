@@ -10,6 +10,8 @@ import { AngularFireMessaging } from '@angular/fire/compat/messaging';
 })
 export class NotificationsService {
   currentMessage = new BehaviorSubject<any>(null)
+  private _notCounter = new BehaviorSubject<boolean>(false);
+  notCounter = this._notCounter.asObservable();
   httpOptions = {
     headers: new HttpHeaders({
       'Authorization': `Bearer ${localStorage.getItem('token_deal')}`
@@ -47,11 +49,11 @@ export class NotificationsService {
       }
     )
   }
-  getNotifications(){
+  getNotification(){
     this.angularFireMessaging.messages.subscribe(
       (payload)=>{  
-        console.log('new message received. ', payload);    
-        this.currentMessage.next(payload)
+        this.currentMessage.next(payload);
+        this._notCounter.next(true);
       })
   }
 }

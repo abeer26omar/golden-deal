@@ -34,7 +34,9 @@ export class DialogDeleteComponent implements OnInit, OnDestroy {
       next:(res: ResponseSuccess)=>{
         this.load = false;
         this.sucMsg = res.data;
-        this.dialogRef.close();
+        setTimeout(()=>{
+          this.dialogRef.close();
+        },500)
       },
       error: (err: HttpErrorResponse)=>{
         this.load = false;

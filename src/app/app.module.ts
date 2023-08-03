@@ -36,6 +36,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatBadgeModule } from '@angular/material/badge';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { SwiperModule } from 'swiper/angular';
 import { NgxGalleryModule } from 'ngx-gallery-9';
@@ -44,8 +45,6 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { AngularFireMessagingModule} from '@angular/fire/compat/messaging';
 import { AngularFireModule } from '@angular/fire/compat';
-// import { GalleryModule } from '@ngx-gallery/core';
-// import { LightboxModule } from '@ngx-gallery/lightbox';
 import { GalleryModule } from  'ng-gallery';
 import { LightboxModule } from  'ng-gallery/lightbox';
 
@@ -172,6 +171,7 @@ import { ResetPassModalComponent } from './Auth/reset-pass-modal/reset-pass-moda
     MatCheckboxModule,
     MatStepperModule,
     MatBadgeModule,
+    MatSnackBarModule,
     ScrollingModule,
     SwiperModule,
     NgxGalleryModule,

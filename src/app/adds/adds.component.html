@@ -203,7 +203,7 @@
                           </div>
                         </div>
                         <p class="none">{{errProducts}}</p>
-                          <ngb-pagination class="d-flex justify-content-center my-pagination" 
+                          <ngb-pagination *ngIf="products.length !== 0" class="d-flex justify-content-center my-pagination" 
                             [collectionSize]="meta.total"
                             [pageSize]="meta.per_page" 
                             [(page)]="meta.current_page"
@@ -224,7 +224,7 @@
                               <ng-template ngbPaginationLast>
                                 <i class="fas fa-angle-double-left"></i>
                               </ng-template>
-                            </ngb-pagination>
+                          </ngb-pagination>
                         <div class="d-flex justify-content-center py-5">
                             <button class="btn btn-adds btn-prim" type="button" (click)="addNewAdd()">اضافه اعلان</button>
                         </div>

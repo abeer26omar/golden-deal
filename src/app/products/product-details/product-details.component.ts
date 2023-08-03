@@ -330,11 +330,8 @@ export class ProductDetailsComponent implements OnInit ,AfterViewInit ,OnDestroy
     }
   } 
   chat(data:any){
-    // this.buyModal.hide()
-    // this.chatModal.show()
     localStorage.setItem('userInfoDeal',JSON.stringify(data))
     this.router.navigate([`/userchat/${data.owner.id}`])
-    // this.adminService.setOption(data)
   }
   sendMsg(){
     const data = {

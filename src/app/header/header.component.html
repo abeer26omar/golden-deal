@@ -115,12 +115,12 @@
       <ul class="navbar-nav main-nv mb-2 mb-lg-0 p-0 align-items-center">
         <li class="nav-item small_chat">
           <a class="nav-link p-0" routerLink="/chat" href="chat" *ngIf="authService.isRegister | async">
-            <span matBadge="{{count_msgs}}" matBadgeSize="small" *ngIf="count_msgs !== 0"></span>
+            <span matBadge="" matBadgeSize="small" *ngIf="count_msgs"></span>
             <img src="../../assets/images/chat_icon_home.svg" alt="chat_icon" class="chat_icon" width="30px">
           </a>
         </li>
           <li class="nav-item dropdown" *ngIf="authService.isRegister | async">
-            <span matBadge="{{not_count}}" matBadgeSize="small" *ngIf="not_count !== 0"></span>
+            <span matBadge="" matBadgeSize="small" *ngIf="notificationService.notCounter | async"></span>
               <button class="btn p-0 custom dropdown-toggle" 
                 id="dropdownMenuButton3" 
                 data-bs-toggle="dropdown" 
@@ -172,58 +172,3 @@
       <button type="button" class="btn-close btn-close-white ms-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
     </div>
   </div>
-
-<!-- modal pay deposit -->
-<!-- <div id="payDepositModal" 
-class="modal fade"
-tabindex="-1"
-aria-labelledby="exampleModalLabel"
-aria-hidden="true"
->
-	<div class="modal-dialog modal-dialog-centered">
-		<div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="btn p-0" data-bs-dismiss="modal" aria-label="Close">
-            <img src="../../assets/images/close.svg" alt="close">
-          </button>
-          <h5 class="modal-title text-center col-10" id="staticBackdropLabel">دفع العموله</h5>
-        </div>
-			<div class="modal-body d-flex justify-content-center ">
-        <div class="col-11">
-          <form>
-            <p>قيمه الدفع</p>
-            <mat-form-field appearance="fill">
-              <mat-label>مبلغ البيع كامل</mat-label>
-              <input type="number" matInput placeholder="ادخل المبلغ هنا" (change)="calcDeposit($event)">
-            </mat-form-field>
-            <mat-form-field appearance="fill">
-              <mat-label>العموله 1% </mat-label>
-              <input matInput value="{{deposit}}" readonly>
-            </mat-form-field>
-            <p class="">معلومات الدفع</p>
-            <div class="row g-3">
-              <div class="col-12">
-                <mat-form-field   appearance="fill">
-                  <mat-label>الاسم</mat-label>
-                  <input type="text" matInput value="مؤسسه شبكات المميز لتقنيه المعلومات" readonly/>
-                </mat-form-field>
-              </div>
-              <div class="col-12">
-                <mat-form-field appearance="fill" >
-                  <mat-label>رقم الحساب الجارى</mat-label>
-                  <input matInput value="2140993259940" readonly/>
-                </mat-form-field>
-              </div>
-              <div class="col-12">
-                <mat-form-field appearance="fill" >
-                  <mat-label>رقم الحساب الموحد / اللأيبان</mat-label>
-                  <input matInput value="SA5520000002140993259940" readonly/>
-                </mat-form-field>
-              </div>
-              </div>
-          </form>
-        </div>
-			</div>
-		</div>
-	</div>
-</div> -->

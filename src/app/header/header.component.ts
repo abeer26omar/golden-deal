@@ -49,7 +49,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
   }
   @Output() errorNot: string = '';
-  @Input() not_count: number = 0;
   @Input() categories : Array<Category> = [];
   panelOpenState = false;
   httpService: any; 
@@ -68,7 +67,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private macService: MacPrefixService,
     public getProducts: GetproductsService,
     private errorHandel: ErrorHandlerService,
-    private notificationService: NotificationsService,
+    public notificationService: NotificationsService,
     private chatService: ChatService) { 
       this.userId = localStorage.getItem('userId');
       this.userImage = localStorage.getItem('userImage')
@@ -185,11 +184,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
     })
   }
   ngOnDestroy() :void{
-   if(this.categorySub){
-     this.categorySub.unsubscribe();
-   }
-   if(this.notifiSub){
-    this.notifiSub.unsubscribe();
-  }
+    if(this.categorySub){
+      this.categorySub.unsubscribe();
+    }
+    if(this.notifiSub){
+      this.notifiSub.unsubscribe();
+    }
   }
 }

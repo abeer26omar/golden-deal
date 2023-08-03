@@ -6,6 +6,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ProductsRequestService } from './services/products-request.service';
 import { ErrorHandlerService } from './services/error-handler.service';
 import { GoBackService } from './services/go-back.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 declare var window: any;
 
 @Component({
@@ -17,7 +18,6 @@ export class AppComponent implements OnInit, AfterViewInit{
   title = 'Golden-deal';
   sidebarOpen = true;
   notification: any;
-  @Output() not_count: number = 0;
   @Output() categories : Array<Category> = [];
   // backdrops = Array.from(document.getElementsByClassName('modal-backdrop') as HTMLCollectionOf<HTMLElement>)
   backdrops!: HTMLElement[];
@@ -45,7 +45,7 @@ export class AppComponent implements OnInit, AfterViewInit{
     private categoryService: ProductsRequestService,
     private errorHandel: ErrorHandlerService,
     private goBackService: GoBackService,
-    private renderer: Renderer2, 
+    private snackBar: MatSnackBar,
     private elementRef: ElementRef){
       this.backdrops = [];
       this.hidebackdrop();
@@ -57,14 +57,22 @@ export class AppComponent implements OnInit, AfterViewInit{
     }
   ngOnInit(): void {
       this.getCategories()
-      this.not_count = 0;
       if(this.authService.IsloggedIn()){
-        this.not_count += this.not_count;
         this.notificationService.insideChatComponent.subscribe((insideChat)=>{
           if(!insideChat){
             this.notificationService.requestPermission();
-            this.not_count += this.not_count;
             this.notificationService.getMyNotifications();
+            this.notificationService.getNotification();
+            this.notificationService.currentMessage.subscribe(
+              (payload) => {
+                if (payload) {
+                  this.snackBar.open(payload.notification.body, payload.notification.title, {
+                    duration: 5000,
+                    horizontalPosition: 'center',
+                    verticalPosition: 'top'
+                  });
+                }
+              })
           }
         })
       }

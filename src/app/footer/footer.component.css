@@ -6,7 +6,7 @@ ul{
 }
 .footer-widget__contact li{
     color: var(--white);
-    padding: 1rem 0rem;
+    padding: .5rem 0rem;
 }
 .footer-widget__contact li:nth-child(1){
     padding-top: 0;
@@ -44,4 +44,12 @@ ul{
     .google-play{
         padding-top: .6rem;
     }
+}
+.qrCode{
+    width: 200px;
+    height: 200px;
+}
+hr{
+    margin: .5rem 0;
+    color: var(--white);
 }

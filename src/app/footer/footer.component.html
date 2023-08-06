@@ -1,14 +1,14 @@
 <footer class="site-footer mt-5">
     <div class="container">
       <div class="row pt-5 pb-5 justify-content-between">
-        <div class="col-sm-12 col-md-12 col-lg-3 col-xl-2 d-flex justify-content-center logofooter">
+        <div class="col-sm-12 col-md-12 col-lg-3 col-xl-2 d-flex justify-content-lg-start justify-content-md-center justify-content-center logofooter">
           <div class="footer-widget">
             <a routerLink="/" class="footer-widget__Logo">
               <img src="../../assets/images/golden_new_deal_footer.svg" alt="logo_footer">
             </a>
           </div>
         </div>
-        <div class="col-sm-12 col-md-6 col-lg-4 col-xl-5 d-flex justify-content-center">
+        <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 d-flex justify-content-start">
           <ul class="footer-widget__contact">
             <li>
               <a routerLink="/subscriptions">الاشتراكات</a>
@@ -16,46 +16,60 @@
             <li>
               <a routerLink="/new-add">اضافه اعلان</a>
             </li>
-          </ul>
-          <ul class="footer-widget__contact">
             <li class="align-self-center">
               <a routerLink="/chat">تواصل معنا</a>
             </li>
-            <!-- <li>
-              <a routerLink="/address">العنواين</a>
-            </li> -->
-            <!-- <li>
-              <a routerLink="/buyingrecord">سجل الشراء</a>
-            </li> -->
             <li>
               <a (click)="termsCondition('terms_conditions')">الأحكام والشروط</a>
             </li>
           </ul>
         </div>
         <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4 lastwidget">
-            <div class="get-apps d-flex justify-content-center justify-content-md-start align-items-center">
-                <div class="play-store p-0">
-                    <a href="https://apps.apple.com/eg/app/goldendeal/id1622588695"
-                     target="_blank" rel="noopener noreferrer">
-                        <img src="../../assets/images/appStore_icon.svg" alt="app-store">
-                    </a>
-                </div>
-                <div class="google-play p-0 pe-2">
-                    <a href="https://play.google.com/store/apps/details?id=com.app.goldendeal" 
-                    target="_blank" rel="noopener noreferrer">
-                        <img src="../../assets/images/googleplay_icon.svg" alt="google-play">
-                    </a>
-                </div>
-            </div>
-            <div class="footer__social pt-5">
+            <ul class="list-unstyled footer-widget__contact p-0">
+              <li class="d-flex">
+                <i class="ps-2"><img src="../../assets/images/phoneFooter_icon.svg" alt="phoneFooter_icon"></i>
+                <a href="tel:966570000675">966-570-000-675</a>
+              </li>
+              <li class="d-flex">
+                <i class="ps-2"><img src="../../assets/images/locationFooter_icon.svg" alt="locationFooter_icon"></i>
+                <p>٢٢٣٩،طريق الدمام ،حى غرناطه ،٧٨٥٦</p>
+              </li>
+              <li class="d-flex">
+                <i class="ps-2"><img src="../../assets/images/emailFooter_icon.svg" alt="emailFooter_icon"></i>
+                <a href="mailto:info@gooldendeal.com">info@gooldendeal.com</a>
+              </li>
+            </ul>
+            <div class="footer__social">
                <a href="https://www.instagram.com/golden.deal1/" target="_blank" class="btn p-2"><img src="../../assets/images/Instagram.svg" alt="instgram-icon"></a>
                <!-- <a href="https://www.facebook.com/goldendeal2030" target="_blank" class="btn p-2"><img src="../../assets/images/Facebook.svg" alt="facebook-icon"></a> -->
                <a href="https://twitter.com/goldendeal11" target="_blank" class="btn p-2"><img src="../../assets/images/Twitter WC.svg" alt="Twitter-icon"></a>
                <!-- <a href="https://www.tiktok.com/@goldendeal2030" target="_blank" class="btn p-2"><img src="../../assets/images/TikTok.svg" alt="TikTok-icon"></a> -->
                <a href="https://t.snapchat.com/CpWgDLQx" target="_blank" class="btn p-2"><img src="../../assets/images/Snapchat (1).svg" alt="Snapchat-icon"></a>
             </div>
-            <p class="rights pt-3">جميع الحقوق محفوظة لـ Golden Deal 2023</p>
+        </div>
+        <div class="col-xl-3 d-flex justify-content-center align-items-center flex-column pt-lg-0 pt-3">
+          <div class="qrCode">
+            <img src="../../assets/images/GoldenDeal_qrcode.svg" alt="GoldenDeal_qrcode" loading="lazy" width="100%">
+          </div>
+          <div class="get-apps d-flex justify-content-center justify-content-md-start align-items-center">
+            <div class="play-store p-0">
+              <a href="https://apps.apple.com/eg/app/goldendeal/id1622588695"
+               target="_blank" rel="noopener noreferrer">
+                  <img src="../../assets/images/appStore_icon.svg" alt="app-store">
+              </a>
+            </div>
+            <div class="google-play p-0 pe-2">
+                <a href="https://play.google.com/store/apps/details?id=com.app.goldendeal" 
+                target="_blank" rel="noopener noreferrer">
+                    <img src="../../assets/images/googleplay_icon.svg" alt="google-play">
+                </a>
+            </div>
+          </div>
         </div>
       </div>
+    </div>
+    <hr>
+    <div class="mini_fo py-3 text-center">
+      <p class="rights m-0">جميع الحقوق محفوظة لـ Golden Deal 2023</p>
     </div>
 </footer>

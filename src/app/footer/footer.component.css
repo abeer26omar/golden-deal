@@ -46,10 +46,19 @@ ul{
     }
 }
 .qrCode{
-    width: 200px;
-    height: 200px;
+    width: 220px;
+    background-color: var(--white);
+    display: flex;
+    justify-content: center;
+    border-radius: .5rem;
+}
+.qrCode img{
+    width: fit-content;
 }
 hr{
     margin: .5rem 0;
     color: var(--white);
+}
+p.title{
+    color: var(--white)
 }

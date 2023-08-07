@@ -181,7 +181,7 @@ export class NewAddComponent implements OnInit, OnDestroy {
         plate_number_en_2: new FormControl(''),
         plate_number_en_1: new FormControl('')
       })
-    },{ validators: this.passMatchService.nonZero('seller_phone')})
+    })
     get f(){
       return this.myForm.controls;
     }

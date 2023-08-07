@@ -120,7 +120,7 @@ export class EditAddComponent implements OnInit, OnDestroy {
     plate_chars_en_filter_6: new FormGroup({}),
     plate_numbers_filter_6: new FormGroup({}),
     plate_numbers_en_filter_6: new FormGroup({})
-  },{ validators: this.passMatchService.nonZero('seller_phone')});
+  });
   updateProduct: Update = {
     data:{
       order_code: 0,

@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy, Renderer2 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { Subscription, from } from 'rxjs';
 import { APIResponse2, Category, CategoryFilter, NewProduct} from '../../models/products.model';
 import { ProductsRequestService } from 'src/app/services/products-request.service';
@@ -143,7 +142,7 @@ export class NewAddComponent implements OnInit, OnDestroy {
     
     myForm = new FormGroup({
       agrement: new FormControl('', [Validators.required]),
-      seller_phone: new FormControl('', Validators.pattern("[0-9]{9}")),
+      seller_phone: new FormControl(''),
       productCategory: new FormControl('', [Validators.required]),
       name: new FormControl(''),
       price: new FormControl('0', [Validators.required]),
@@ -181,19 +180,10 @@ export class NewAddComponent implements OnInit, OnDestroy {
         plate_number_en_2: new FormControl(''),
         plate_number_en_1: new FormControl('')
       })
-    },{ validators: this.passMatchService.nonZero('seller_phone')})
+    })
     get f(){
       return this.myForm.controls;
     }
-  getErrorStartZero(){
-    const phoneControl = this.myForm.get('seller_phone');
-    if (phoneControl?.hasError('pattern')) {
-      return 'ارقام سعوديه فقط';
-    } else {
-      const nonZeroError = phoneControl?.getError('nonZero');
-      return nonZeroError ? 'ادخل رقم الهاتف بدون 0' : '';
-    }
-  }
   ngOnInit(): void {
       this.getCategories();
       this.modelSuccessNewProduct = new window.bootstrap.Modal(

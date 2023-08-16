@@ -10,7 +10,6 @@ import { Regions } from 'src/app/models/actions.model';
 import { SwiperOptions } from 'swiper';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorHandlerService } from 'src/app/services/error-handler.service';
-import { MustMatchService } from 'src/app/services/must-match.service';
 declare var window: any;
 
 @Component({
@@ -100,7 +99,7 @@ export class EditAddComponent implements OnInit, OnDestroy {
   };
   regions: any = [];
   myForm = new FormGroup({
-    seller_phone: new FormControl('', Validators.pattern("[0-9]{9}")),
+    seller_phone: new FormControl(''),
     productCategory: new FormControl(''),
     name: new FormControl(''),
     price: new FormControl(''),
@@ -120,7 +119,7 @@ export class EditAddComponent implements OnInit, OnDestroy {
     plate_chars_en_filter_6: new FormGroup({}),
     plate_numbers_filter_6: new FormGroup({}),
     plate_numbers_en_filter_6: new FormGroup({})
-  },{ validators: this.passMatchService.nonZero('seller_phone')});
+  });
   updateProduct: Update = {
     data:{
       order_code: 0,
@@ -170,7 +169,6 @@ export class EditAddComponent implements OnInit, OnDestroy {
   constructor(private productService: ProductsRequestService,
     private router: ActivatedRoute,
     private route: Router,
-    private passMatchService: MustMatchService,
     private macService: MacPrefixService,
     private actionService: ActionsService,
     private errorHandel: ErrorHandlerService,
@@ -206,15 +204,6 @@ export class EditAddComponent implements OnInit, OnDestroy {
       }
     }
   };
-  getErrorStartZero(){
-    const phoneControl = this.myForm.get('seller_phone');
-    if (phoneControl?.hasError('pattern')) {
-      return 'ارقام سعوديه فقط';
-    } else {
-      const nonZeroError = phoneControl?.getError('nonZero');
-      return nonZeroError ? 'ادخل رقم الهاتف بدون 0' : '';
-    }
-  }
   ngOnInit(): void {
     this.userId = localStorage.getItem('userId');
     this.routeSub = this.router.params.subscribe((params: Params) => {
@@ -354,7 +343,7 @@ export class EditAddComponent implements OnInit, OnDestroy {
           }
           if(this.Add.data.category_slug == 'car_plates'){
             this.myForm = new FormGroup({
-              seller_phone: new FormControl(this.Add.data.seller_phone, Validators.pattern("[0-9]{9}")),
+              seller_phone: new FormControl(this.Add.data.seller_phone),
               productCategory: new FormControl(this.Add.data.category_slug),
               name: new FormControl(this.Add.data.name),
               price: new FormControl(this.Add.data.price),
@@ -367,7 +356,7 @@ export class EditAddComponent implements OnInit, OnDestroy {
               plate_chars_en_filter_6: new FormGroup({}),
               plate_numbers_filter_6: new FormGroup({}),
               plate_numbers_en_filter_6: new FormGroup({})
-            },{ validators: this.passMatchService.nonZero('seller_phone')});
+            });
           }else{
             this.myForm = new FormGroup({
               seller_phone: new FormControl(this.Add.data.seller_phone),

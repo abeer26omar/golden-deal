@@ -183,18 +183,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
             this.id = resData.data.user.id;
             this.region_id = resData.data.user.region_id
             this.loader = false;
-            this.openOtpModal()
-            // localStorage.setItem('token_deal', this.token);
-            // localStorage.setItem('userId', JSON.stringify(this.id));
-            // localStorage.setItem('region_id', this.region_id);
-            // localStorage.setItem('userImage', resData.data.user.image_url)
-            // this.actionService.handelRes(resData.status_msg)
-            // setTimeout(()=>{
-            //   this.router.navigate(['/'])
-            //   setTimeout(()=>{
-            //     window.location.reload();
-            //   },0)
-            // },50)
+            this.openOtpModal();
         },
         error: (err: HttpErrorResponse) =>{
             this.loader = false;
@@ -225,8 +214,10 @@ export class RegisterComponent implements OnInit, OnDestroy {
           localStorage.setItem('token_deal', this.token);
           localStorage.setItem('userId', JSON.stringify(this.id));
           localStorage.setItem('region_id', this.region_id);
-          localStorage.setItem('userImage', resData.data.user.image_url)
-          this.actionService.handelRes(resData.status_msg)
+          localStorage.setItem('userImage', resData.data.user.image_url);
+          const loginTime = new Date().getTime();
+          localStorage.setItem('loginTime', loginTime.toString());
+          this.actionService.handelRes(resData.status_msg);
           setTimeout(()=>{
             this.router.navigate(['/'])
             setTimeout(()=>{
@@ -291,7 +282,9 @@ export class RegisterComponent implements OnInit, OnDestroy {
       localStorage.setItem('token_deal', this.token);
       localStorage.setItem('userId', JSON.stringify(this.id));
       localStorage.setItem('region_id', this.region_id);
-      localStorage.setItem('userImage', this.userData.data.user.image_url)
+      localStorage.setItem('userImage', this.userData.data.user.image_url);
+      const loginTime = new Date().getTime();
+      localStorage.setItem('loginTime', loginTime.toString());
       setTimeout(()=>{
         this.otpModal.hide();
         this.router.navigate(['/'])

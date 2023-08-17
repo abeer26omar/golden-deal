@@ -127,7 +127,7 @@ export class EditAddComponent implements OnInit, OnDestroy {
     }
   }
   plates_chars: any = [
-    { char: 'أ' , trans: 'A' },
+    { char: 'ا' , trans: 'A' },
     { char: 'ب' , trans: 'B' },
     { char: 'ح' , trans: 'J '},
     { char: 'د' , trans: 'D' },
@@ -389,7 +389,7 @@ export class EditAddComponent implements OnInit, OnDestroy {
       next: (res: APIResponse4<EditProductFilters>)=>{
         this.EditFilter = res.data;
         
-        this.EditFilter.forEach(ele=>{   
+        this.EditFilter.forEach(ele=>{    
           if(ele.filter_value !== null){
             if(ele.slug_name == 'plate_chars_filter_6'){
               this.card_chars_ar_1 = ele.filter_value.filter_value[0];
@@ -400,13 +400,13 @@ export class EditAddComponent implements OnInit, OnDestroy {
               plate_chars_filter_6.addControl('plate_chars_ar_2', new FormControl(ele.filter_value.filter_value[2],[Validators.pattern(/^[\u0627-\u0628\u062d\u062f\u0631\u0633\u0635\u0637\u0639\u0642\u0643\u0644\u0645\u0646\u0647\u0648\u0649]+$/),Validators.maxLength(1)]));
               plate_chars_filter_6.addControl('plate_chars_ar_3', new FormControl(ele.filter_value.filter_value[4],[Validators.pattern(/^[\u0627-\u0628\u062d\u062f\u0631\u0633\u0635\u0637\u0639\u0642\u0643\u0644\u0645\u0646\u0647\u0648\u0649]+$/),Validators.maxLength(1)]));
             }else if(ele.slug_name == 'plate_chars_en_filter_6'){
-              this.card_chars_en_1 = ele.filter_value.filter_value[0];
+              this.card_chars_en_3 = ele.filter_value.filter_value[0];
               this.card_chars_en_2 = ele.filter_value.filter_value[2];
-              this.card_chars_en_3 = ele.filter_value.filter_value[4];
+              this.card_chars_en_1 = ele.filter_value.filter_value[4];
               let plate_chars_en_filter_6 = this.myForm.get('plate_chars_en_filter_6') as FormGroup  
-              plate_chars_en_filter_6.addControl('plate_chars_en_1', new FormControl(ele.filter_value.filter_value[0]));
+              plate_chars_en_filter_6.addControl('plate_chars_en_3', new FormControl(ele.filter_value.filter_value[0]));
               plate_chars_en_filter_6.addControl('plate_chars_en_2', new FormControl(ele.filter_value.filter_value[2]));
-              plate_chars_en_filter_6.addControl('plate_chars_en_3', new FormControl(ele.filter_value.filter_value[4]));
+              plate_chars_en_filter_6.addControl('plate_chars_en_1', new FormControl(ele.filter_value.filter_value[4]));              
             }else if(ele.slug_name == 'plate_numbers_filter_6'){
               this.card_num_ar_1 = ele.filter_value.filter_value[0];
               this.card_num_ar_2 = ele.filter_value.filter_value[2];
@@ -418,20 +418,20 @@ export class EditAddComponent implements OnInit, OnDestroy {
               plate_numbers_filter_6.addControl('plate_number_ar_3', new FormControl(ele.filter_value.filter_value[4],[Validators.pattern(/^[\u0660-\u0669]/),Validators.maxLength(1)]));
               plate_numbers_filter_6.addControl('plate_number_ar_4', new FormControl(ele.filter_value.filter_value[6],[Validators.pattern(/^[\u0660-\u0669]/),Validators.maxLength(1)]));
             }else if(ele.slug_name == 'plate_numbers_en_filter_6'){
-              this.card_num_en_1 = ele.filter_value.filter_value[6];
-              this.card_num_en_2 = ele.filter_value.filter_value[4];
-              this.card_num_en_3 = ele.filter_value.filter_value[2];
               this.card_num_en_4 = ele.filter_value.filter_value[0];
+              this.card_num_en_3 = ele.filter_value.filter_value[2];
+              this.card_num_en_2 = ele.filter_value.filter_value[4];
+              this.card_num_en_1 = ele.filter_value.filter_value[6];
               let plate_numbers_en_filter_6 = this.myForm.get('plate_numbers_en_filter_6') as FormGroup;
-              plate_numbers_en_filter_6.addControl('plate_number_en_1', new FormControl(ele.filter_value.filter_value[0]));
-              plate_numbers_en_filter_6.addControl('plate_number_en_2', new FormControl(ele.filter_value.filter_value[2]));
-              plate_numbers_en_filter_6.addControl('plate_number_en_3', new FormControl(ele.filter_value.filter_value[4]));
-              plate_numbers_en_filter_6.addControl('plate_number_en_4', new FormControl(ele.filter_value.filter_value[6]));
+              plate_numbers_en_filter_6.addControl('plate_number_en_4', new FormControl(ele.filter_value.filter_value[0]));
+              plate_numbers_en_filter_6.addControl('plate_number_en_3', new FormControl(ele.filter_value.filter_value[2]));
+              plate_numbers_en_filter_6.addControl('plate_number_en_2', new FormControl(ele.filter_value.filter_value[4]));
+              plate_numbers_en_filter_6.addControl('plate_number_en_1', new FormControl(ele.filter_value.filter_value[6]));
             }
             else{
               this.myForm.addControl(ele.slug_name,new FormControl(ele.filter_value.filter_value))
             }
-          }else{
+          }else{ 
             this.myForm.addControl(ele.slug_name,new FormControl(''))
           }
         })
@@ -471,8 +471,8 @@ export class EditAddComponent implements OnInit, OnDestroy {
     let foundChar = false;
     switch(key){
       case 1:
-        this.card_chars_ar_1 = '';
-        this.card_chars_en_1 = '';
+        // this.card_chars_ar_1 = '';
+        // this.card_chars_en_1 = '';
         this.plates_chars.forEach((char: any) => {
           if(char.char == plate_char){
             foundChar = true;
@@ -489,8 +489,8 @@ export class EditAddComponent implements OnInit, OnDestroy {
         this.myForm.get('plate_chars_en_filter_6')?.get('plate_chars_en_1')?.setValue(trans_value)
       break;
       case 2:
-        this.card_chars_ar_2 = '';
-        this.card_chars_en_2 = '';
+        // this.card_chars_ar_2 = '';
+        // this.card_chars_en_2 = '';
         this.plates_chars.forEach((char: any) => {
           if(char.char == plate_char){
             foundChar = true;
@@ -507,8 +507,8 @@ export class EditAddComponent implements OnInit, OnDestroy {
         this.myForm.get('plate_chars_en_filter_6')?.get('plate_chars_en_2')?.setValue(trans_value)
       break;
       case 3:
-        this.card_chars_ar_3 = '';
-        this.card_chars_en_3 = '';
+        // this.card_chars_ar_3 = '';
+        // this.card_chars_en_3 = '';
         this.plates_chars.forEach((char: any) => {
           if(char.char == plate_char){
             foundChar = true;
@@ -528,11 +528,11 @@ export class EditAddComponent implements OnInit, OnDestroy {
   }
   convertNumbers(key: number,value: any){        
     let plate_num = value.target.value;
-    let foundChar = false;
+    let foundChar = false;    
     switch(key){
       case 1: 
-          this.card_num_ar_1 = '';
-          this.card_num_en_1 = '';
+          // this.card_num_ar_1 = '';
+          // this.card_num_en_1 = '';
           this.plates_numbers.forEach((char: any) => {
             if(char.char == plate_num){
                 foundChar = true;
@@ -556,8 +556,8 @@ export class EditAddComponent implements OnInit, OnDestroy {
             }
       break;
       case 2:
-        this.card_num_ar_2 = '';
-        this.card_num_en_2 = '';
+        // this.card_num_ar_2 = '';
+        // this.card_num_en_2 = '';
         this.plates_numbers.forEach((char: any) => {
           if(char.char == plate_num){
               foundChar = true;
@@ -581,8 +581,8 @@ export class EditAddComponent implements OnInit, OnDestroy {
         }
       break;
       case 3:
-        this.card_num_ar_3 = '';
-        this.card_num_en_3 = '';
+        // this.card_num_ar_3 = '';
+        // this.card_num_en_3 = '';
         this.plates_numbers.forEach((char: any) => {
           if(char.char == plate_num){
               foundChar = true;
@@ -606,8 +606,8 @@ export class EditAddComponent implements OnInit, OnDestroy {
         }
       break;
       case 4:
-        this.card_num_ar_4 = '';
-        this.card_num_en_4 = '';
+        // this.card_num_ar_4 = '';
+        // this.card_num_en_4 = '';
         this.plates_numbers.forEach((char: any) => {
           if(char.char == plate_num){
               foundChar = true;
@@ -638,13 +638,13 @@ export class EditAddComponent implements OnInit, OnDestroy {
   submit(){
     let plate_chars_en_filter_6: any, 
     plate_chars_filter_6: any,
-    plate_numbers_filter_6: any,
-    plate_numbers_en_filter_6: any;
+    plate_number_en_filter_6_value: any,
+    plate_number_filter_6_value: any;
     if(this.myForm.get('productCategory')?.value == 'car_plates'){
       plate_chars_en_filter_6 = Object.values(this.myForm.get('plate_chars_en_filter_6')?.value).join(' ');
       plate_chars_filter_6 = Object.values(this.myForm.get('plate_chars_filter_6')?.value).join(' ')
-      plate_numbers_en_filter_6 = Object.values(this.myForm.get('plate_numbers_en_filter_6')?.value).join(' ')
-      plate_numbers_filter_6 = Object.values(this.myForm.get('plate_numbers_filter_6')?.value).join(' ');
+      plate_number_en_filter_6_value = Object.values(this.myForm.get('plate_numbers_en_filter_6')?.value).join(' ');
+      plate_number_filter_6_value = Object.values(this.myForm.get('plate_numbers_filter_6')?.value).join(' ');
     }
     if(this.myForm.valid){   
       this.load = true;
@@ -656,10 +656,11 @@ export class EditAddComponent implements OnInit, OnDestroy {
             formData.append(field, plate_chars_en_filter_6);
           }else if(field == 'plate_chars_filter_6'){
             formData.append(field, plate_chars_filter_6);
-          }else if(field == 'plate_numbers_en_filter_6'){
-            formData.append(field, plate_numbers_en_filter_6);
+          }
+          else if(field == 'plate_numbers_en_filter_6'){
+            formData.append(field, plate_number_en_filter_6_value);
           }else if(field == 'plate_numbers_filter_6'){
-            formData.append(field, plate_numbers_filter_6);
+            formData.append(field, plate_number_filter_6_value);
           }else{
             formData.append(field, this.myForm.controls[field].value);
           }

@@ -534,12 +534,8 @@ export class NewAddComponent implements OnInit, OnDestroy {
       this.myForm.get('plate_chars_filter_6')?.get('plate_chars_ar_1')?.setValidators([Validators.required,Validators.maxLength(1),Validators.pattern(/^[\u0627-\u0628\u062d\u062f\u0631\u0633\u0635\u0637\u0639\u0642\u0643\u0644\u0645\u0646\u0647\u0648\u0649]+$/)]);
       this.myForm.get('plate_chars_filter_6')?.get('plate_chars_ar_2')?.setValidators([Validators.maxLength(1),Validators.pattern(/^[\u0627-\u0628\u062d\u062f\u0631\u0633\u0635\u0637\u0639\u0642\u0643\u0644\u0645\u0646\u0647\u0648\u0649]+$/)]);
       this.myForm.get('plate_chars_filter_6')?.get('plate_chars_ar_3')?.setValidators([Validators.maxLength(1),Validators.pattern(/^[\u0627-\u0628\u062d\u062f\u0631\u0633\u0635\u0637\u0639\u0642\u0643\u0644\u0645\u0646\u0647\u0648\u0649]+$/)]);
-      // this.myForm.get('plate_chars_en_filter_6')?.get('plate_chars_en_1')?.setValidators([Validators.required]);
       this.myForm.get('plate_numbers_filter_6')?.get('plate_number_ar_1')?.setValidators([Validators.maxLength(1),Validators.required]);
       this.myForm.get('plate_numbers_en_filter_6')?.get('plate_number_en_1')?.setValidators([Validators.maxLength(1),Validators.required]);
-      // this.myForm.get('plate_numbers_filter_6')?.get('plate_number_ar_2')?.setValidators([Validators.maxLength(1)]);
-      // this.myForm.get('plate_numbers_filter_6')?.get('plate_number_ar_3')?.setValidators([Validators.maxLength(1)]);
-      // this.myForm.get('plate_numbers_filter_6')?.get('plate_number_ar_4')?.setValidators([Validators.maxLength(1)]);
       this.myForm.get('product_image_1')?.removeValidators([Validators.required]);
       this.myForm.get('product_image_2')?.removeValidators([Validators.required]);
       this.myForm.get('product_image_3')?.removeValidators([Validators.required]);
@@ -552,9 +548,6 @@ export class NewAddComponent implements OnInit, OnDestroy {
       this.myForm.get('plate_chars_en_filter_6')?.get('plate_chars_en_1')?.removeValidators([Validators.required]);
       this.myForm.get('plate_numbers_filter_6')?.get('plate_number_ar_1')?.removeValidators([Validators.maxLength(1),Validators.required]);
       this.myForm.get('plate_numbers_en_filter_6')?.get('plate_number_en_1')?.removeValidators([Validators.required]);
-      // this.myForm.get('plate_numbers_filter_6')?.get('plate_number_ar_2')?.removeValidators([Validators.maxLength(1)]);
-      // this.myForm.get('plate_numbers_filter_6')?.get('plate_number_ar_3')?.removeValidators([Validators.maxLength(1)]);
-      // this.myForm.get('plate_numbers_filter_6')?.get('plate_number_ar_4')?.removeValidators([Validators.maxLength(1)]);
       this.myForm.get('product_image_1')?.setValidators([Validators.required]);
       this.myForm.get('product_image_2')?.setValidators([Validators.required]);
       this.myForm.get('product_image_3')?.setValidators([Validators.required]);

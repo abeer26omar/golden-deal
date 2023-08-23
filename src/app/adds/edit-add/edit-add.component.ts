@@ -403,30 +403,36 @@ export class EditAddComponent implements OnInit, OnDestroy {
               this.card_chars_en_3 = ele.filter_value.filter_value[0];
               this.card_chars_en_2 = ele.filter_value.filter_value[2];
               this.card_chars_en_1 = ele.filter_value.filter_value[4];
+
               let plate_chars_en_filter_6 = this.myForm.get('plate_chars_en_filter_6') as FormGroup  
-              plate_chars_en_filter_6.addControl('plate_chars_en_3', new FormControl(ele.filter_value.filter_value[0]));
+              plate_chars_en_filter_6.addControl('plate_chars_en_1', new FormControl(ele.filter_value.filter_value[0]));
               plate_chars_en_filter_6.addControl('plate_chars_en_2', new FormControl(ele.filter_value.filter_value[2]));
-              plate_chars_en_filter_6.addControl('plate_chars_en_1', new FormControl(ele.filter_value.filter_value[4]));              
+              plate_chars_en_filter_6.addControl('plate_chars_en_3', new FormControl(ele.filter_value.filter_value[4]));              
             }else if(ele.slug_name == 'plate_numbers_filter_6'){
               this.card_num_ar_1 = ele.filter_value.filter_value[0];
               this.card_num_ar_2 = ele.filter_value.filter_value[2];
               this.card_num_ar_3 = ele.filter_value.filter_value[4];
               this.card_num_ar_4 = ele.filter_value.filter_value[6];
+
               let plate_numbers_filter_6 = this.myForm.get('plate_numbers_filter_6') as FormGroup;
               plate_numbers_filter_6.addControl('plate_number_ar_1', new FormControl(ele.filter_value.filter_value[0],[Validators.required,Validators.pattern(/^[\u0660-\u0669]/)]));
               plate_numbers_filter_6.addControl('plate_number_ar_2', new FormControl(ele.filter_value.filter_value[2],[Validators.pattern(/^[\u0660-\u0669]/),Validators.maxLength(1)]));
               plate_numbers_filter_6.addControl('plate_number_ar_3', new FormControl(ele.filter_value.filter_value[4],[Validators.pattern(/^[\u0660-\u0669]/),Validators.maxLength(1)]));
               plate_numbers_filter_6.addControl('plate_number_ar_4', new FormControl(ele.filter_value.filter_value[6],[Validators.pattern(/^[\u0660-\u0669]/),Validators.maxLength(1)]));
+
             }else if(ele.slug_name == 'plate_numbers_en_filter_6'){
-              this.card_num_en_4 = ele.filter_value.filter_value[0];
-              this.card_num_en_3 = ele.filter_value.filter_value[2];
-              this.card_num_en_2 = ele.filter_value.filter_value[4];
-              this.card_num_en_1 = ele.filter_value.filter_value[6];
+              const reversedValue = ele.filter_value.filter_value.split('').reverse().join('');
+
+              this.card_num_en_1 = reversedValue[0];
+              this.card_num_en_2 = reversedValue[2];
+              this.card_num_en_3 = reversedValue[4];
+              this.card_num_en_4 = reversedValue[6];
+
               let plate_numbers_en_filter_6 = this.myForm.get('plate_numbers_en_filter_6') as FormGroup;
-              plate_numbers_en_filter_6.addControl('plate_number_en_4', new FormControl(ele.filter_value.filter_value[0]));
-              plate_numbers_en_filter_6.addControl('plate_number_en_3', new FormControl(ele.filter_value.filter_value[2]));
-              plate_numbers_en_filter_6.addControl('plate_number_en_2', new FormControl(ele.filter_value.filter_value[4]));
-              plate_numbers_en_filter_6.addControl('plate_number_en_1', new FormControl(ele.filter_value.filter_value[6]));
+              plate_numbers_en_filter_6.addControl('plate_number_en_1', new FormControl(reversedValue[0]));
+              plate_numbers_en_filter_6.addControl('plate_number_en_2', new FormControl(reversedValue[2]));
+              plate_numbers_en_filter_6.addControl('plate_number_en_3', new FormControl(reversedValue[4]));
+              plate_numbers_en_filter_6.addControl('plate_number_en_4', new FormControl(reversedValue[6]));
             }
             else{
               this.myForm.addControl(ele.slug_name,new FormControl(ele.filter_value.filter_value))
@@ -471,8 +477,8 @@ export class EditAddComponent implements OnInit, OnDestroy {
     let foundChar = false;
     switch(key){
       case 1:
-        // this.card_chars_ar_1 = '';
-        // this.card_chars_en_1 = '';
+        this.card_chars_ar_1 = '';
+        this.card_chars_en_1 = '';
         this.plates_chars.forEach((char: any) => {
           if(char.char == plate_char){
             foundChar = true;
@@ -489,8 +495,8 @@ export class EditAddComponent implements OnInit, OnDestroy {
         this.myForm.get('plate_chars_en_filter_6')?.get('plate_chars_en_1')?.setValue(trans_value)
       break;
       case 2:
-        // this.card_chars_ar_2 = '';
-        // this.card_chars_en_2 = '';
+        this.card_chars_ar_2 = '';
+        this.card_chars_en_2 = '';
         this.plates_chars.forEach((char: any) => {
           if(char.char == plate_char){
             foundChar = true;
@@ -507,8 +513,8 @@ export class EditAddComponent implements OnInit, OnDestroy {
         this.myForm.get('plate_chars_en_filter_6')?.get('plate_chars_en_2')?.setValue(trans_value)
       break;
       case 3:
-        // this.card_chars_ar_3 = '';
-        // this.card_chars_en_3 = '';
+        this.card_chars_ar_3 = '';
+        this.card_chars_en_3 = '';
         this.plates_chars.forEach((char: any) => {
           if(char.char == plate_char){
             foundChar = true;
@@ -528,17 +534,20 @@ export class EditAddComponent implements OnInit, OnDestroy {
   }
   convertNumbers(key: number,value: any){        
     let plate_num = value.target.value;
-    let foundChar = false;    
+    let foundChar = false;
+    this.error_CarPlate_num = '';
+    // let trans_value: any;
     switch(key){
-      case 1: 
-          // this.card_num_ar_1 = '';
-          // this.card_num_en_1 = '';
+      case 1:
+          this.card_num_ar_1 = '';
+          this.card_num_en_1 = '';
           this.plates_numbers.forEach((char: any) => {
             if(char.char == plate_num){
                 foundChar = true;
                 this.card_num_ar_1 = char.char;
                 this.card_num_en_1 = char.trans;
                 this.myForm.get('plate_numbers_en_filter_6')?.get('plate_number_en_1')?.setValue(char.trans);
+                this.myForm.get('plate_numbers_filter_6')?.get('plate_number_ar_1')?.setValue(char.char);
             }else if(char.trans == plate_num){
               foundChar = true;
               this.card_num_ar_1 = char.char;
@@ -550,20 +559,21 @@ export class EditAddComponent implements OnInit, OnDestroy {
             }
           });
             if(!foundChar){
-              this.error_CarPlate_num = 'ارقام اللوحه يجب ان تكون ضمن هذه المجموعه [٠-١-٢-٣-٤-٥-٦-٧-٨-٩] او هذه المجموعه [1-2-3-4-5-6-7-8-9]';  
+              this.error_CarPlate_num = 'ارقام اللوحه يجب ان تكون ضمن هذه المجموعه [٠-١-٢-٣-٤-٥-٦-٧-٨-٩] او هذه المجموعه [0-1-2-3-4-5-6-7-8-9]';  
             }else{
               this.error_CarPlate_num = '';
             }
       break;
       case 2:
-        // this.card_num_ar_2 = '';
-        // this.card_num_en_2 = '';
+        this.card_num_ar_2 = '';
+        this.card_num_en_2 = '';
         this.plates_numbers.forEach((char: any) => {
           if(char.char == plate_num){
               foundChar = true;
               this.card_num_ar_2 = char.char;
               this.card_num_en_2 = char.trans;
               this.myForm.get('plate_numbers_en_filter_6')?.get('plate_number_en_2')?.setValue(char.trans);
+              this.myForm.get('plate_numbers_filter_6')?.get('plate_number_ar_2')?.setValue(char.char);
           }else if(char.trans == plate_num){
             foundChar = true;
             this.card_num_ar_2 = char.char;
@@ -575,20 +585,21 @@ export class EditAddComponent implements OnInit, OnDestroy {
           }
         });
         if(!foundChar){
-          this.error_CarPlate_num = 'ارقام اللوحه يجب ان تكون ضمن هذه المجموعه [٠-١-٢-٣-٤-٥-٦-٧-٨-٩] او هذه المجموعه [1-2-3-4-5-6-7-8-9]';  
+          this.error_CarPlate_num = 'ارقام اللوحه يجب ان تكون ضمن هذه المجموعه [٠-١-٢-٣-٤-٥-٦-٧-٨-٩] او هذه المجموعه [0-1-2-3-4-5-6-7-8-9]';  
         }else{
           this.error_CarPlate_num = '';
         }
       break;
       case 3:
-        // this.card_num_ar_3 = '';
-        // this.card_num_en_3 = '';
+        this.card_num_ar_3 = '';
+        this.card_num_en_3 = '';
         this.plates_numbers.forEach((char: any) => {
           if(char.char == plate_num){
               foundChar = true;
               this.card_num_ar_3 = char.char;
               this.card_num_en_3 = char.trans;
               this.myForm.get('plate_numbers_en_filter_6')?.get('plate_number_en_3')?.setValue(char.trans);
+              this.myForm.get('plate_numbers_filter_6')?.get('plate_number_ar_3')?.setValue(char.char);
           }else if(char.trans == plate_num){
             foundChar = true;
             this.card_num_ar_3 = char.char;
@@ -600,20 +611,21 @@ export class EditAddComponent implements OnInit, OnDestroy {
           }
         });
         if(!foundChar){
-          this.error_CarPlate_num = 'ارقام اللوحه يجب ان تكون ضمن هذه المجموعه [٠-١-٢-٣-٤-٥-٦-٧-٨-٩] او هذه المجموعه [1-2-3-4-5-6-7-8-9]';  
+          this.error_CarPlate_num = 'ارقام اللوحه يجب ان تكون ضمن هذه المجموعه [٠-١-٢-٣-٤-٥-٦-٧-٨-٩] او هذه المجموعه [0-1-2-3-4-5-6-7-8-9]';  
         }else{
           this.error_CarPlate_num = '';
         }
       break;
       case 4:
-        // this.card_num_ar_4 = '';
-        // this.card_num_en_4 = '';
+        this.card_num_ar_4 = '';
+        this.card_num_en_4 = '';
         this.plates_numbers.forEach((char: any) => {
           if(char.char == plate_num){
               foundChar = true;
               this.card_num_ar_4 = char.char;
               this.card_num_en_4 = char.trans;
               this.myForm.get('plate_numbers_en_filter_6')?.get('plate_number_en_4')?.setValue(char.trans);
+              this.myForm.get('plate_numbers_filter_6')?.get('plate_number_ar_4')?.setValue(char.char);
           }else if(char.trans == plate_num){
             foundChar = true;
             this.card_num_ar_4 = char.char;
@@ -625,7 +637,7 @@ export class EditAddComponent implements OnInit, OnDestroy {
           }
         });
           if(!foundChar){
-            this.error_CarPlate_num = 'ارقام اللوحه يجب ان تكون ضمن هذه المجموعه [٠-١-٢-٣-٤-٥-٦-٧-٨-٩] او هذه المجموعه [1-2-3-4-5-6-7-8-9]';  
+            this.error_CarPlate_num = 'ارقام اللوحه يجب ان تكون ضمن هذه المجموعه [٠-١-٢-٣-٤-٥-٦-٧-٨-٩] او هذه المجموعه [0-1-2-3-4-5-6-7-8-9]';  
           }else{
             this.error_CarPlate_num = '';
           }
@@ -658,7 +670,7 @@ export class EditAddComponent implements OnInit, OnDestroy {
             formData.append(field, plate_chars_filter_6);
           }
           else if(field == 'plate_numbers_en_filter_6'){
-            formData.append(field, plate_number_en_filter_6_value);
+            formData.append(field, plate_number_en_filter_6_value.split('').reverse().join(''));
           }else if(field == 'plate_numbers_filter_6'){
             formData.append(field, plate_number_filter_6_value);
           }else{

@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy, Renderer2 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { Subscription, from } from 'rxjs';
 import { APIResponse2, Category, CategoryFilter, NewProduct} from '../../models/products.model';
 import { ProductsRequestService } from 'src/app/services/products-request.service';
@@ -145,7 +144,7 @@ export class NewAddComponent implements OnInit, OnDestroy {
     
     myForm = new FormGroup({
       agrement: new FormControl('', [Validators.required]),
-      seller_phone: new FormControl('', Validators.pattern("[0-9]{9}")),
+      seller_phone: new FormControl(''),
       productCategory: new FormControl('', [Validators.required]),
       name: new FormControl(''),
       price: new FormControl('0', [Validators.required]),
@@ -187,15 +186,6 @@ export class NewAddComponent implements OnInit, OnDestroy {
     get f(){
       return this.myForm.controls;
     }
-  getErrorStartZero(){
-    const phoneControl = this.myForm.get('seller_phone');
-    if (phoneControl?.hasError('pattern')) {
-      return 'ارقام سعوديه فقط';
-    } else {
-      const nonZeroError = phoneControl?.getError('nonZero');
-      return nonZeroError ? 'ادخل رقم الهاتف بدون 0' : '';
-    }
-  }
   ngOnInit(): void {
       this.getCategories();
       this.modelSuccessNewProduct = new window.bootstrap.Modal(
@@ -546,12 +536,8 @@ export class NewAddComponent implements OnInit, OnDestroy {
       this.myForm.get('plate_chars_filter_6')?.get('plate_chars_ar_1')?.setValidators([Validators.required,Validators.maxLength(1),Validators.pattern(/^[\u0627-\u0628\u062d\u062f\u0631\u0633\u0635\u0637\u0639\u0642\u0643\u0644\u0645\u0646\u0647\u0648\u0649]+$/)]);
       this.myForm.get('plate_chars_filter_6')?.get('plate_chars_ar_2')?.setValidators([Validators.maxLength(1),Validators.pattern(/^[\u0627-\u0628\u062d\u062f\u0631\u0633\u0635\u0637\u0639\u0642\u0643\u0644\u0645\u0646\u0647\u0648\u0649]+$/)]);
       this.myForm.get('plate_chars_filter_6')?.get('plate_chars_ar_3')?.setValidators([Validators.maxLength(1),Validators.pattern(/^[\u0627-\u0628\u062d\u062f\u0631\u0633\u0635\u0637\u0639\u0642\u0643\u0644\u0645\u0646\u0647\u0648\u0649]+$/)]);
-      // this.myForm.get('plate_chars_en_filter_6')?.get('plate_chars_en_1')?.setValidators([Validators.required]);
       this.myForm.get('plate_numbers_filter_6')?.get('plate_number_ar_1')?.setValidators([Validators.maxLength(1),Validators.required]);
       this.myForm.get('plate_numbers_en_filter_6')?.get('plate_number_en_1')?.setValidators([Validators.maxLength(1),Validators.required]);
-      // this.myForm.get('plate_numbers_filter_6')?.get('plate_number_ar_2')?.setValidators([Validators.maxLength(1)]);
-      // this.myForm.get('plate_numbers_filter_6')?.get('plate_number_ar_3')?.setValidators([Validators.maxLength(1)]);
-      // this.myForm.get('plate_numbers_filter_6')?.get('plate_number_ar_4')?.setValidators([Validators.maxLength(1)]);
       this.myForm.get('product_image_1')?.removeValidators([Validators.required]);
       this.myForm.get('product_image_2')?.removeValidators([Validators.required]);
       this.myForm.get('product_image_3')?.removeValidators([Validators.required]);
@@ -564,9 +550,6 @@ export class NewAddComponent implements OnInit, OnDestroy {
       this.myForm.get('plate_chars_en_filter_6')?.get('plate_chars_en_1')?.removeValidators([Validators.required]);
       this.myForm.get('plate_numbers_filter_6')?.get('plate_number_ar_1')?.removeValidators([Validators.maxLength(1),Validators.required]);
       this.myForm.get('plate_numbers_en_filter_6')?.get('plate_number_en_1')?.removeValidators([Validators.required]);
-      // this.myForm.get('plate_numbers_filter_6')?.get('plate_number_ar_2')?.removeValidators([Validators.maxLength(1)]);
-      // this.myForm.get('plate_numbers_filter_6')?.get('plate_number_ar_3')?.removeValidators([Validators.maxLength(1)]);
-      // this.myForm.get('plate_numbers_filter_6')?.get('plate_number_ar_4')?.removeValidators([Validators.maxLength(1)]);
       this.myForm.get('product_image_1')?.setValidators([Validators.required]);
       this.myForm.get('product_image_2')?.setValidators([Validators.required]);
       this.myForm.get('product_image_3')?.setValidators([Validators.required]);

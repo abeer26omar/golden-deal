@@ -105,16 +105,10 @@ export class ProductsRequestService {
     )
   }
   getEditFilters(id: number, category: string){
-    if(this.editAddFilters && this.previouseditAddIdFilters === id && this.previouseditAddcategoreyFilters === category){
-      return of(this.editAddFilters)
-    }else{
-      this.previouseditAddIdFilters = id;
-      this.previouseditAddcategoreyFilters = category;
-      return this.http.get<APIResponse4<EditProductFilters>>(`${env.api_url}/filters/edit-product-filters-info/${id}/${category}`,this.httpOptions).pipe(tap((filters)=>{
-        this.editAddFilters = filters;
+      return this.http.get<APIResponse4<EditProductFilters>>(`${env.api_url}/filters/edit-product-filters-info/${id}/${category}`,this.httpOptions)
+      .pipe(tap(()=>{
         this._refresh.next();
-      }))
-    }
+      }));
   }
   updateAdd(id: number,body: any){
     return this.http.post<Update>(`${env.api_url}/products/update-product/${id}`,

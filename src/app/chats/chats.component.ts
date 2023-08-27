@@ -6,6 +6,7 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 import { ResponseSuccess } from '../models/actions.model';
 import { FormControl, FormGroup } from '@angular/forms';
 import { NotificationsService } from '../services/notifications.service';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-chats',
@@ -13,7 +14,7 @@ import { NotificationsService } from '../services/notifications.service';
   styleUrls: ['./chats.component.css']
 })
 export class ChatsComponent implements OnInit, OnDestroy {
-  userId = parseInt(localStorage.getItem('userId') || '') ;
+  userId = parseInt(localStorage.getItem('userId') || this.cookieService.get('userId'));
   receiverId: any;
   admin: any;
   message: string = '';
@@ -27,7 +28,8 @@ export class ChatsComponent implements OnInit, OnDestroy {
   loader: boolean = false;
   public msgUsersList: Array<MessagesList> = []
   public usersMsg: Array<Messages> = []
-  avatar_base_url: string = 'https://admin.gooldendeal.com/storage/'
+  // avatar_base_url: string = 'https://admin.gooldendeal.com/storage/';
+  avatar_base_url: string = 'https://storage.googleapis.com/goldendeal-bucket/';
   public chatSub: Subscription = new Subscription;
   activeId: number = 0;
   @ViewChild('chatWindow') chatWindow!: ElementRef;
@@ -50,7 +52,8 @@ export class ChatsComponent implements OnInit, OnDestroy {
   constructor(private chatService: ChatService,
     private el: ElementRef,
     private notificationService: NotificationsService,
-    private breakPointObserver: BreakpointObserver) { 
+    private breakPointObserver: BreakpointObserver,
+    private cookieService: CookieService) { 
     }
     ngOnInit(): void {
       this.notificationService._insideChatComponent.next(true)

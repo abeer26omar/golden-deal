@@ -13,6 +13,8 @@ import { NotificationsService } from '../services/notifications.service';
 import { ChatService } from '../services/chat.service';
 import { MessagesList } from '../models/chat.model';
 import { BreakpointObserver } from '@angular/cdk/layout';
+import { CookieService } from 'ngx-cookie-service';
+
 declare var window: any;
 
 @Component({
@@ -68,11 +70,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
     public getProducts: GetproductsService,
     private errorHandel: ErrorHandlerService,
     public notificationService: NotificationsService,
-    private chatService: ChatService) { 
-      this.userId = localStorage.getItem('userId');
-      this.userImage = localStorage.getItem('userImage')
+    private chatService: ChatService,
+    private cookieService: CookieService) { 
+      this.userId = localStorage.getItem('userId') || this.cookieService.get('userId');
+      this.userImage = localStorage.getItem('userImage') || this.cookieService.get('userImage');
       this.authService.refresh.subscribe(()=>{
-      this.userImage = localStorage.getItem('userImage')
+      this.userImage = localStorage.getItem('userImage') || this.cookieService.get('userImage');
     })
   }
   private notifiSub : Subscription = new Subscription;
@@ -134,6 +137,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.toastSuccess.show();
         this.msgSucess = res.data
         localStorage.clear();
+        this.cookieService.deleteAll();
         setTimeout(()=>{
           this.route.navigate(['/'])
           setTimeout(()=>{
@@ -144,6 +148,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       error: ()=>{
         this.toastFaild.show();
         localStorage.clear();
+        this.cookieService.deleteAll();
         setTimeout(()=>{
           this.route.navigate(['/'])
           setTimeout(()=>{

@@ -16,6 +16,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { AuthRemainderModalComponent } from '../auth-remainder-modal/auth-remainder-modal.component';
 import { GoBackService } from '../services/go-back.service';
 import { Paginator } from 'primeng/paginator';
+import { CookieService } from 'ngx-cookie-service';
+
 declare var window: any;
 
 @Component({
@@ -120,7 +122,8 @@ export class ProductsComponent implements OnInit, AfterViewInit, OnDestroy {
     private http: HttpClient,
     private dialogRef: MatDialog,
     private errorHandel: ErrorHandlerService,
-    private gobackservice: GoBackService) {
+    private gobackservice: GoBackService,
+    private cookieService: CookieService) {
       if(this.gobackservice.goBackState){
         this.currentPage = this.gobackservice.pageNumber;        
         this.categorySlug = this.gobackservice.categorySlug;
@@ -337,7 +340,7 @@ export class ProductsComponent implements OnInit, AfterViewInit, OnDestroy {
       this.getProducts(this.route.snapshot.fragment ? this.route.snapshot.fragment: 'all', 1);
     }
     this.getRegions();
-    this.owner_id = localStorage.getItem('userId');
+    this.owner_id = localStorage.getItem('userId') || this.cookieService.get('userId');
   }
   ngAfterViewInit() {
     
@@ -580,7 +583,7 @@ export class ProductsComponent implements OnInit, AfterViewInit, OnDestroy {
       this.getProducts('all', 1);
       this.formModal.hide();
     }else{
-      let region_id = localStorage.getItem('region_id');
+      let region_id = localStorage.getItem('region_id') || this.cookieService.get('userId');
       if(region_id == null){
         this.formModal.hide();
         this.dialogRef.open(AuthRemainderModalComponent,{

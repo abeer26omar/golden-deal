@@ -4,6 +4,7 @@ import { environment as env } from 'src/environments/environment';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { Notifications } from '../models/actions.model';
 import { AngularFireMessaging } from '@angular/fire/compat/messaging';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class NotificationsService {
   notCounter = this._notCounter.asObservable();
   httpOptions = {
     headers: new HttpHeaders({
-      'Authorization': `Bearer ${localStorage.getItem('token_deal')}`
+      'Authorization': `Bearer ${localStorage.getItem('token_deal') || this.cookieService.get('token_deal')}`
     })}
   private _refresh = new Subject<void>();
   get refresh(){
@@ -23,7 +24,8 @@ export class NotificationsService {
   _insideChatComponent = new BehaviorSubject<boolean>(false);
   insideChatComponent = this._insideChatComponent.asObservable();
   constructor(private http: HttpClient,
-    private angularFireMessaging: AngularFireMessaging) { 
+    private angularFireMessaging: AngularFireMessaging,
+    private cookieService: CookieService) { 
   }
   getMyNotifications(pageNo: number = 1){
     return this.http.get<Notifications>(`${env.api_url}/notifications/my-notifications?page=${pageNo}`, this.httpOptions)

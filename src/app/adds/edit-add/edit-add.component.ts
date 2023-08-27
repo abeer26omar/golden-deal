@@ -11,6 +11,8 @@ import { SwiperOptions } from 'swiper';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorHandlerService } from 'src/app/services/error-handler.service';
 import { MustMatchService } from 'src/app/services/must-match.service';
+import { CookieService } from 'ngx-cookie-service';
+
 declare var window: any;
 
 @Component({
@@ -174,7 +176,8 @@ export class EditAddComponent implements OnInit, OnDestroy {
     private macService: MacPrefixService,
     private actionService: ActionsService,
     private errorHandel: ErrorHandlerService,
-    private renderer: Renderer2) { }
+    private renderer: Renderer2, 
+    private cookieService: CookieService) { }
   get f(){
     return this.myForm.controls;
   }
@@ -216,7 +219,7 @@ export class EditAddComponent implements OnInit, OnDestroy {
     }
   }
   ngOnInit(): void {
-    this.userId = localStorage.getItem('userId');
+    this.userId = localStorage.getItem('userId') || this.cookieService.get('userId');
     this.routeSub = this.router.params.subscribe((params: Params) => {
       this.addId = params['id'];
     })

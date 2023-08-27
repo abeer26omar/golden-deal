@@ -7,6 +7,8 @@ import { Category,APIResponse2 } from '../models/products.model';
 import { AuthService } from '../services/auth.service';
 import { ProductsRequestService } from '../services/products-request.service'
 import { ErrorHandlerService } from '../services/error-handler.service';
+import { CookieService } from 'ngx-cookie-service';
+
 declare var window: any;
 
 @Component({
@@ -30,8 +32,9 @@ export class SidenavComponent implements OnInit, OnDestroy {
   constructor(public authService: AuthService,
     private route: Router,
     private categoryService: ProductsRequestService,
-    private errorHandel: ErrorHandlerService) { 
-    this.userId = localStorage.getItem('userId');
+    private errorHandel: ErrorHandlerService, 
+    private cookieService: CookieService) { 
+    this.userId = localStorage.getItem('userId') || this.cookieService.get('userId');
     }
   ngOnInit(): void {
     // this.getCategories();
@@ -65,6 +68,7 @@ export class SidenavComponent implements OnInit, OnDestroy {
         this.toastSuccess.show();
         this.msgSucess = res.data
         localStorage.clear();
+        this.cookieService.deleteAll();
         this.route.navigate(['/'])
         setTimeout(()=>{
           window.location.reload();
@@ -73,6 +77,7 @@ export class SidenavComponent implements OnInit, OnDestroy {
       error: (err: HttpErrorResponse)=>{
         this.toastFaild.show();
         localStorage.clear();
+        this.cookieService.deleteAll();
         setTimeout(()=>{
           window.location.reload();
         },50)

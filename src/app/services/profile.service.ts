@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders} from '@angular/common/http';
 import { environment as env } from 'src/environments/environment';
 import { APIResponse2, Profile, Purchases} from '../models/user.model';
-import { Observable, Subject,of,tap } from 'rxjs';
+import { Observable, Subject,tap } from 'rxjs';
 import { ResponseSuccess } from '../models/actions.model';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,9 +12,9 @@ import { ResponseSuccess } from '../models/actions.model';
 export class ProfileService {
   httpOptions = {
     headers: new HttpHeaders({
-      'Authorization': `Bearer ${localStorage.getItem('token_deal')}`
+      'Authorization': `Bearer ${localStorage.getItem('token_deal') || this.cookieService.get('token_deal')}`
     })}
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private cookieService: CookieService) { }
     private _refresh = new Subject<void>();
     get refresh(){
       return this._refresh;

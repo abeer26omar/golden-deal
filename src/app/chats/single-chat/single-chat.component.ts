@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { Messages } from 'src/app/models/chat.model';
 import { ChatService } from 'src/app/services/chat.service';
 import { NotificationsService } from 'src/app/services/notifications.service';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-single-chat',
@@ -13,7 +14,7 @@ import { NotificationsService } from 'src/app/services/notifications.service';
 export class SingleChatComponent implements OnInit, OnDestroy {
   userInfo: any;
   load: boolean = false;
-  userId = parseInt(localStorage.getItem('userId') || '') ;
+  userId = parseInt(localStorage.getItem('userId') || this.cookieService.get('userId'));
   receiverId: any;
   admin: any;
   message: string = '';
@@ -30,11 +31,12 @@ export class SingleChatComponent implements OnInit, OnDestroy {
     return this.formChat.controls;
   }
   constructor(private chatService: ChatService,
-    private notificationService: NotificationsService) { }
+    private notificationService: NotificationsService,
+    private cookieService: CookieService) { }
   
   ngOnInit(): void {
     this.notificationService._insideChatComponent.next(false);
-    this.userInfo = JSON.parse(localStorage.getItem('userInfoDeal') || '') ;
+    this.userInfo = JSON.parse(localStorage.getItem('userInfoDeal') || this.cookieService.get('userInfoDeal'));
     this.chatService.connect(this.userId)
       this.chatSub = this.chatService.getMessage().subscribe((data)=>{
         const mappedData = {

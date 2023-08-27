@@ -9,6 +9,7 @@ import { ErrorHandlerService } from 'src/app/services/error-handler.service';
 import { MacPrefixService } from 'src/app/services/mac-prefix.service';
 import { ProductsRequestService } from 'src/app/services/products-request.service';
 import { environment as env } from 'src/environments/environment';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-search-result',
@@ -35,7 +36,8 @@ export class SearchResultComponent implements OnInit, OnDestroy {
     public actionService: ActionsService,
     private http: HttpClient,
     private errorHandel: ErrorHandlerService,
-    private macService: MacPrefixService) { 
+    private macService: MacPrefixService,
+    private cookieService: CookieService) { 
     } 
     
     ngOnInit(): void {
@@ -43,7 +45,7 @@ export class SearchResultComponent implements OnInit, OnDestroy {
         this.key = param['key'];
       });    
       this.getSearchResult(this.key);
-      this.owner_id = localStorage.getItem('userId');
+      this.owner_id = localStorage.getItem('userId') || this.cookieService.get('userId');
       if(this.macService.operatingSysDetect()){
         this.mac = true;
       }else{

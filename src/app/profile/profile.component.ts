@@ -14,6 +14,7 @@ import { ActionsService } from '../services/actions.service';
 import { ErrorHandlerService } from '../services/error-handler.service';
 import { Router } from '@angular/router';
 import { MustMatchService } from '../services/must-match.service';
+import { CookieService } from 'ngx-cookie-service';
 
 declare var window: any;
 
@@ -63,7 +64,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
     private dialogRef: MatDialog,
     private passMatchService: MustMatchService,
     private actionService: ActionsService,
-    private errorHandel: ErrorHandlerService) {
+    private errorHandel: ErrorHandlerService,
+    private cookieService: CookieService) {
       this.profileService.refresh.subscribe(()=>{
         this.getProfileInfo();
       })
@@ -116,7 +118,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
     .subscribe({
       next:(userDetails: Profile)=>{
         this.userData = userDetails;
-        localStorage.setItem('userImage', userDetails.data.image_url)        
+        localStorage.setItem('userImage', userDetails.data.image_url)
+        this.cookieService.set('userImage', userDetails.data.image_url);
         this.userForm = new FormGroup({
           name: new FormControl({value:this.userData.data.name,disabled: this.edit}, Validators.required),
           phone: new FormControl({value:this.userData.data.phone,disabled: this.edit}, Validators.pattern("[0-9]{9}")),
@@ -195,6 +198,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
         setTimeout(()=>{
           this.successModal.hide();
           localStorage.clear();
+          this.cookieService.deleteAll();
           this.router.navigate(['/register'])
           setTimeout(()=>{
             window.location.reload();

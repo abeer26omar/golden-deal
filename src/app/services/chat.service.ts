@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { environment as env } from 'src/environments/environment';
 import { io, Socket } from 'socket.io-client';
-import { Observable, of, Subject, tap } from 'rxjs';
+import { Observable, Subject, tap } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Messages, MessagesList, Support } from '../models/chat.model';
 import { ResponseSuccess } from '../models/actions.model';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class ChatService {
   userData: any;
   httpOptions = {
     headers: new HttpHeaders({
-      'Authorization': `Bearer ${localStorage.getItem('token_deal')}`,
+      'Authorization': `Bearer ${localStorage.getItem('token_deal') || this.cookieService.get('token_deal')}`,
     })
   }
   private _refresh = new Subject<void>();
@@ -22,7 +23,7 @@ export class ChatService {
     return this._refresh;
   }
   allSupportMsg!: Support;
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private cookieService: CookieService) {
   }
   connect(userId: number): void{  
     this.socket = io(env.socket_url);

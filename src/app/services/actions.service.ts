@@ -7,6 +7,7 @@ import { APIResponse, Products, SplashScreen } from '../models/products.model';
 import { MatDialog } from '@angular/material/dialog';
 import { ResponseModalComponent } from '../response-modal/response-modal.component';
 import { ErrorHandlerService } from './error-handler.service';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,14 +15,15 @@ import { ErrorHandlerService } from './error-handler.service';
 export class ActionsService {
   constructor(private http: HttpClient,
     private dialogRef: MatDialog,
-    private errorHandel: ErrorHandlerService) { }
+    private errorHandel: ErrorHandlerService,
+    private cookieService: CookieService) { }
   private _refresh = new Subject<void>();
   get refresh(){
     return this._refresh;
   }
   httpOptions = {
     headers: new HttpHeaders({
-      'Authorization': `Bearer ${localStorage.getItem('token_deal')}`
+      'Authorization': `Bearer ${localStorage.getItem('token_deal') || this.cookieService.get('token_deal')}`
     })
   }
   subscribtionsTypeList!: APIresponse<Subscriptions>;

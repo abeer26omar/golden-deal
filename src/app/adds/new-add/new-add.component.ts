@@ -12,6 +12,7 @@ import { Regions } from 'src/app/models/actions.model';
 import { SwiperOptions } from 'swiper';
 import { ErrorHandlerService } from 'src/app/services/error-handler.service';
 import { MustMatchService } from 'src/app/services/must-match.service';
+import { CookieService } from 'ngx-cookie-service';
 
 declare var window: any;
 
@@ -90,8 +91,8 @@ export class NewAddComponent implements OnInit, OnDestroy {
   categoryName: string = ''
   inputValue: any;
   catergoryId!:number;
-  ownerId: any = localStorage.getItem('userId');
-  region_id: any = localStorage.getItem('region_id');
+  ownerId: any = localStorage.getItem('userId') || this.cookieService.get('userId');
+  region_id: any = localStorage.getItem('region_id') || this.cookieService.get('region_id');
   NewProductRes: NewProduct = {
     data:{
       order_code: 0,
@@ -139,7 +140,8 @@ export class NewAddComponent implements OnInit, OnDestroy {
     private actionService: ActionsService,
     private productsService: ProductsRequestService,
     private errorHandel: ErrorHandlerService,
-    private renderer: Renderer2 ) {}
+    private renderer: Renderer2, 
+    private cookieService: CookieService ) {}
     
     myForm = new FormGroup({
       agrement: new FormControl('', [Validators.required]),
@@ -206,8 +208,8 @@ export class NewAddComponent implements OnInit, OnDestroy {
         document.getElementById('addFaild'),{backdrop: this.macService.backdrop}
       );
       this.getRegions();
-      this.ownerId = localStorage.getItem('userId');
-      this.region_id = localStorage.getItem('region_id');
+      this.ownerId = localStorage.getItem('userId') || this.cookieService.get('userId');
+      this.region_id = localStorage.getItem('region_id') || this.cookieService.get('region_id');;
   }
   onNegotiable(){
     if(this.negotiable == 0){

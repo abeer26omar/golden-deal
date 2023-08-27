@@ -40,6 +40,7 @@
     "ng-otp-input": "^1.8.5",
     "ng-zorro-antd": "^13.4.0",
     "ngx-clipboard": "^15.1.0",
+    "ngx-cookie-service": "^16.0.1",
     "ngx-font-awesome": "^1.0.0",
     "ngx-gallery-9": "^1.0.6",
     "ngx-infinite-scroll": "^13.0.0",

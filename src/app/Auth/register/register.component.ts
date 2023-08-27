@@ -14,13 +14,15 @@ import { ErrorHandlerService } from 'src/app/services/error-handler.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ResetPassModalComponent } from '../reset-pass-modal/reset-pass-modal.component';
 import { MustMatchService } from 'src/app/services/must-match.service';
+import { CookieService } from 'ngx-cookie-service';
+
 declare var window: any;
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],
-  providers:[DatePipe]
+  providers:[DatePipe,CookieService]
 })
 export class RegisterComponent implements OnInit, OnDestroy {
   userData : Login = {
@@ -98,7 +100,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
     private passMatchService: MustMatchService,
     private actionService: ActionsService,
     private errorHandel: ErrorHandlerService,
-    private dialogRef: MatDialog) { }
+    private dialogRef: MatDialog,
+    private cookieService: CookieService) { }
     //get forms controls
     get fRegister(){
       return this.registerForm.controls;
@@ -183,22 +186,12 @@ export class RegisterComponent implements OnInit, OnDestroy {
             this.id = resData.data.user.id;
             this.region_id = resData.data.user.region_id
             this.loader = false;
-            this.openOtpModal()
-            // localStorage.setItem('token_deal', this.token);
-            // localStorage.setItem('userId', JSON.stringify(this.id));
-            // localStorage.setItem('region_id', this.region_id);
-            // localStorage.setItem('userImage', resData.data.user.image_url)
-            // this.actionService.handelRes(resData.status_msg)
-            // setTimeout(()=>{
-            //   this.router.navigate(['/'])
-            //   setTimeout(()=>{
-            //     window.location.reload();
-            //   },0)
-            // },50)
+            this.openOtpModal();
         },
         error: (err: HttpErrorResponse) =>{
             this.loader = false;
             localStorage.clear();
+            this.cookieService.deleteAll();
             this.errorHandel.openErrorModa(err);
           }
       })  
@@ -222,11 +215,16 @@ export class RegisterComponent implements OnInit, OnDestroy {
           this.userData = resData;
           this.login = true;
           // this.openOtpModal();
-          localStorage.setItem('token_deal', this.token);
-          localStorage.setItem('userId', JSON.stringify(this.id));
-          localStorage.setItem('region_id', this.region_id);
-          localStorage.setItem('userImage', resData.data.user.image_url)
-          this.actionService.handelRes(resData.status_msg)
+          // localStorage.setItem('token_deal', this.token);
+          // localStorage.setItem('userId', JSON.stringify(this.id));
+          // localStorage.setItem('region_id', this.region_id);
+          // localStorage.setItem('userImage', resData.data.user.image_url);
+          // Save data into cookies
+          this.cookieService.set('token_deal', this.token, 24);
+          this.cookieService.set('userId', JSON.stringify(this.id), 24);
+          this.cookieService.set('region_id', this.region_id, 24);
+          this.cookieService.set('userImage', resData.data.user.image_url, 24);
+          this.actionService.handelRes(resData.status_msg);
           setTimeout(()=>{
             this.router.navigate(['/'])
             setTimeout(()=>{
@@ -237,6 +235,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
         error: (err: HttpErrorResponse)=>{
           this.loaderLogin = false;
           localStorage.clear();
+          this.cookieService.deleteAll();
           this.errorHandel.openErrorModa(err);
         }
       })
@@ -291,7 +290,12 @@ export class RegisterComponent implements OnInit, OnDestroy {
       localStorage.setItem('token_deal', this.token);
       localStorage.setItem('userId', JSON.stringify(this.id));
       localStorage.setItem('region_id', this.region_id);
-      localStorage.setItem('userImage', this.userData.data.user.image_url)
+      localStorage.setItem('userImage', this.userData.data.user.image_url);
+      // Save data into cookies
+      this.cookieService.set('token_deal', this.token, 24);
+      this.cookieService.set('userId', JSON.stringify(this.id), 24);
+      this.cookieService.set('region_id', this.region_id, 24);
+      this.cookieService.set('userImage', this.userData.data.user.image_url, 24);
       setTimeout(()=>{
         this.otpModal.hide();
         this.router.navigate(['/'])
@@ -304,7 +308,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
       this.loaderOtp = false;
       this.errorOtp = err.error.data
       localStorage.clear();
-      // this.errorHandel.openErrorModa(err);
+      this.cookieService.deleteAll();
     }
    })
   }
@@ -327,7 +331,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
       },
       error: (err: HttpErrorResponse)=>{
         this.loaderOtp = false;
-        localStorage.clear()
+        localStorage.clear();
+        this.cookieService.deleteAll();
         this.errorHandel.openErrorModa(err);
       }
     })

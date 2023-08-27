@@ -5,7 +5,7 @@ import { environment as env } from 'src/environments/environment';
 import { Products , APIResponse , Product ,
   APIResponse2 , Category, CategoryFilter, NewProduct, EditProduct, APIResponse4, EditProductFilters, Update, APIResponse5, Search,BrandFilter, Category_Filter} from '../models/products.model';
 import { ResponseSuccess } from '../models/actions.model';
-import { GoBackService } from './go-back.service';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +13,7 @@ import { GoBackService } from './go-back.service';
 export class ProductsRequestService {
   httpOptions = {
     headers: new HttpHeaders({
-      'Authorization': `Bearer ${localStorage.getItem('token_deal')}`
+      'Authorization': `Bearer ${localStorage.getItem('token_deal') || this.cookieService.get('token_deal')}`
     })}
     private _refresh = new Subject<void>();
     get refresh(){
@@ -35,7 +35,7 @@ export class ProductsRequestService {
   private previouscategoreyFilter!: string;
   private cacheFilterResponse: Map<string, APIResponse<Products>> = new Map();
 
-  constructor(public http: HttpClient) { }
+  constructor(public http: HttpClient, private cookieService: CookieService) { }
 
   getProductsList(categorySlug: string, pageNo: number): Observable<APIResponse<Products>>{
     if(this.productsListCashed  && this.previousCategorySlug === categorySlug && this.previousPageNo === pageNo){

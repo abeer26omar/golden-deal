@@ -17,6 +17,7 @@ import { AuthRemainderModalComponent } from 'src/app/auth-remainder-modal/auth-r
 import { MatDialog } from '@angular/material/dialog';
 import { GalleryItem, ImageItem } from 'ng-gallery';
 import { GoBackService } from 'src/app/services/go-back.service';
+import { CookieService } from 'ngx-cookie-service';
 
 declare var window: any;
 
@@ -88,7 +89,7 @@ export class ProductDetailsComponent implements OnInit ,AfterViewInit ,OnDestroy
   faild: any;
   chatModal: any;
   messageTxt: string = '';
-  userId: any = localStorage.getItem('userId');
+  userId: any = localStorage.getItem('userId') || this.cookieService.get('userId');
   receiverId: any;
   errMsg: string = '';
   sucessMsg: string = '';
@@ -110,7 +111,8 @@ export class ProductDetailsComponent implements OnInit ,AfterViewInit ,OnDestroy
     private dialogRef: MatDialog,
     private http: HttpClient,
     private renderer: Renderer2,
-    private goBackService: GoBackService) { 
+    private goBackService: GoBackService,
+    private cookieService: CookieService) { 
       this.actionService.refresh.subscribe(()=>{
         this.getProductDetails(this.ProductId);
       });
@@ -135,7 +137,7 @@ export class ProductDetailsComponent implements OnInit ,AfterViewInit ,OnDestroy
       this.ProductId = params['id'];
     });
     this.getProductDetails(this.ProductId);
-    this.owner_id = localStorage.getItem('userId')    
+    this.owner_id = localStorage.getItem('userId') || this.cookieService.get('userId');
     this.formModal = new window.bootstrap.Modal(
       document.getElementById('myModal'),{backdrop: this.macService.backdrop}
     );
@@ -331,6 +333,7 @@ export class ProductDetailsComponent implements OnInit ,AfterViewInit ,OnDestroy
   } 
   chat(data:any){
     localStorage.setItem('userInfoDeal',JSON.stringify(data))
+    this.cookieService.set('userInfoDeal',JSON.stringify(data));
     this.router.navigate([`/userchat/${data.owner.id}`])
   }
   sendMsg(){

@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
-import { throwError, catchError, tap,BehaviorSubject, Subject} from 'rxjs';
+import { HttpClient, HttpHeaders} from '@angular/common/http';
+import { tap,BehaviorSubject, Subject} from 'rxjs';
 import { environment as env } from 'src/environments/environment';
 import { Register, Login, Verify, OtpForgetPass} from '../models/user.model';
 import { ResponseSuccess } from '../models/actions.model';
+import { CookieService } from 'ngx-cookie-service';
 @Injectable({
   providedIn: 'root'
 })
@@ -11,7 +12,7 @@ export class AuthService {
   auth_token: any;
   httpOptions = {
     headers: new HttpHeaders({
-      'Authorization': `Bearer ${localStorage.getItem('token_deal')}`
+      'Authorization': `Bearer ${localStorage.getItem('token_deal') || this.cookieService.get('token_deal')}`
     })
   }
   private _isRegister = new BehaviorSubject<boolean>(false);
@@ -20,12 +21,12 @@ export class AuthService {
   get refresh(){
     return this._refresh;
   }
-  constructor(private http: HttpClient) {
-    const TOKEN = localStorage.getItem('token_deal');
-    this._isRegister.next(!!TOKEN)
+  constructor(private http: HttpClient, private cookieService: CookieService) {
+    const TOKEN = localStorage.getItem('token_deal') || this.cookieService.get('token_deal');
+    this._isRegister.next(!!TOKEN);
   }
   IsloggedIn(){
-    return !!localStorage.getItem('token_deal')
+    return !!localStorage.getItem('token_deal') || this.cookieService.get('token_deal');
   }
   signUp(name: string,phone: string,region_id: number, password: string, password_confirmation: string){
     return this.http.post<Register>(`${env.api_url}/auth/register`,{

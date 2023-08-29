@@ -21,6 +21,7 @@ import { SellerProfileComponent } from './seller-profile/seller-profile.componen
 import { DepositComponent } from './deposit/deposit.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { SingleChatComponent } from './chats/single-chat/single-chat.component';
+import { LoginComponent } from './Auth/login/login.component';
 
 
 
@@ -39,6 +40,7 @@ const routes: Routes = [
   { path:'termsandconditions/:slug', component: TermsConditionsComponent},
   { path:'buyingrecord', component: BuyingRecordComponent, canActivate:[AuthGuardGuard]},
   { path:'register', component: RegisterComponent},
+  { path:'login', component: LoginComponent},
   { path:'profile', component: ProfileComponent, canActivate:[AuthGuardGuard]},
   { path:'address', component: AddressComponent, canActivate:[AuthGuardGuard]},
   { path:'add', component: AddEditAddressComponent, canActivate:[AuthGuardGuard]},

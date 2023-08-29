@@ -73,7 +73,7 @@ p.pref{
 .overlay .sign-up{
     position: relative;
     width: 40%;
-    height: 100%;
+    right: 60%;
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -97,11 +97,11 @@ p.pref{
     border-radius: 0px 15px 15px 0px;
     overflow: hidden;
 }
-.form.active{
+/* .form.active{
     left: 0%;
     border-radius: 15px 0px 0px 15px;
-}
-.form .sign-up-form,
+} */
+/* .form .sign-up-form,
 .form .sign-in-form{
     position: absolute;
 }
@@ -117,7 +117,7 @@ p.pref{
   }
  .form.active .sign-up-form {
     left: -800%;
-  }
+  } */
   .form p.agree{
     color: var( --light-grey);
     text-align: center;
@@ -221,16 +221,17 @@ p.pref{
       position: absolute;
       width: 100%;
       height: 300px;
-      bottom: 0;
+      bottom: -10px;
+      right: 0%;
     }
-    .sign-in{
+    /* .sign-in{
       top: 0;
     }
     .form.active{
       top: 300px;
       border-radius: 0px 0px 15px 15px ;
 
-    }
+    } */
   }
 @media screen and (max-width:575px) {
   .overlay .sign-up,

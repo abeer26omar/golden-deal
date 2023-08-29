@@ -1,0 +1,64 @@
+<div class="register-card  mt-lg-0 mt-5 mb-lg-0 mb-5">
+    <div class="container">
+        <div class="row">
+            <div class="page-wrap p-0">
+                <div class="container-regiser">
+                    <div class="overlay">
+                        <div class="sign-in">
+                            <div class="logo">
+                                <img src="../../../assets/images/login_logo_new.svg" alt="login_logo_new" width="100%">
+                            </div>
+                           <div class="title text-center py-lg-5">
+                            <p class="ask pt-3 pt-sm-5 pb-2 pb-sm-4 ">هل تريد انشاء حساب ؟</p>
+                            <p class="pref">سيعرف جميع المستخدمين في Golden deal أن الملايين من الأشخاص موجودون هناك. كل يوم إلى جانب الكثير من الأشخاص الذين ينضمون إلى هذا المجتمع</p>
+                           </div> 
+                           <div class="btn-swiper">
+                            <button class="btn btn-sec" routerLink="/register">إنشاء حساب</button>
+                           </div>
+                        </div>
+                    </div>
+                    <div class="form">
+                        <div class="sign-in-form row justify-content-center">
+                            <div class="col-10 head text-center">
+                                <p class="title">تسجيل الدخول</p>
+                                <mat-progress-bar mode="indeterminate" *ngIf="loaderLogin" class="mb-3"></mat-progress-bar>
+                            </div>
+                            <div class="col-10">
+                                <div class="text-danger text-center" *ngIf="errorLogin">
+                                    {{errorLogin}}
+                                  </div>
+                                <form [formGroup]="loginForm" (ngSubmit)="submitLogin()" class="row  g-3">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <img src="../../../assets/images/suadi_flag_icon.svg" width="90px" alt="suadi-flag" class="suadi_flag pt-1">
+                                        <mat-form-field appearance="fill" class="phone">
+                                            <mat-label>رقم الهاتف</mat-label>
+                                            <input matInput 
+                                                type="tel" 
+                                                placeholder="ادخل رقم الهاتف بدون 0" 
+                                                formControlName="phone">
+                                                <span matPrefix>+966 &nbsp;</span>
+                                                <mat-error *ngIf="fLogin['phone'].touched && fLogin['phone'].invalid">{{getErrorPassword()}}</mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                    <mat-form-field appearance="fill">
+                                        <mat-label>كلمه السر</mat-label>
+                                        <input matInput [type]="hide ? 'password' : 'text'" formControlName="userPassword"> 
+                                        <a class="btn_hidepass" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                                            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                        </a>
+                                        <mat-error *ngIf="fLogin['userPassword'].touched && fLogin['userPassword'].invalid">{{getErrorPassword()}}</mat-error>
+                                    </mat-form-field>
+                                    <a (click)="openRestPassDialog()">هل نسيت كلمه المرور الخاصه بك ؟</a>
+                                      <!-- <p class="agree">بالنقر فوق تسجيل الدخول ، فإنك توافق على شروطنا. تعرف على كيفية معالجة بياناتك في سياسة الخصوصية وسياسة ملفات تعريف الارتباط. بالنقر فوق تسجيل الدخول ، فإنك توافق على شروطنا. تعرف على كيفية معالجة بياناتك في سياسة الخصوصية وملفات تعريف الارتباط الخاصة بنا </p> -->
+                                      <div class="d-flex justify-content-center py-3">
+                                          <button class="btn btn-prim" type="submit">تسجيل الدخول</button>
+                                      </div>   
+                                </form> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

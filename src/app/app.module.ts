@@ -92,6 +92,7 @@ import { NotificationsService } from './services/notifications.service';
 import { PaginatorModule } from 'primeng/paginator';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { ResetPassModalComponent } from './Auth/reset-pass-modal/reset-pass-modal.component';
+import { LoginComponent } from './Auth/login/login.component';
 
 @NgModule({
   declarations: [
@@ -135,6 +136,7 @@ import { ResetPassModalComponent } from './Auth/reset-pass-modal/reset-pass-moda
     AuthRemainderModalComponent,
     NotificationsComponent,
     ResetPassModalComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,

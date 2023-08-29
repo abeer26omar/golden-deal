@@ -95,7 +95,10 @@
     <mat-divider></mat-divider>
     <ul class="navbar-nav main-nv mb-2 mb-lg-0   align-items-center">
         <li class="nav-item" *ngIf="!(authService.isRegister | async)">
-          <button class="btn create-account" routerLink="register" (click)="closeNav()">إنشاء حساب</button>
+          <button class="btn create-account" routerLink="/register" (click)="closeNav()">إنشاء حساب</button>
+        </li>
+        <li class="nav-item" *ngIf="!(authService.isRegister | async)">
+          <button class="btn create-account" routerLink="/login" (click)="closeNav()">تسجيل الدخول</button>
         </li>
         <li class="nav-item" *ngIf="authService.isRegister | async">
           <a class="nav-link" routerLink="/profile" (click)="closeNav()">

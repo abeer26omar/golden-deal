@@ -122,17 +122,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.otpModal = new window.bootstrap.Modal(
     document.getElementById('otpModel'),{backdrop: this.macService.backdrop});
-    this.signin = document.getElementById('signin');
     this.signup = document.getElementById('signup');
-    this.formbox = document.querySelector('.form');
-    this.signin.addEventListener('click',(e:any)=>{
-      e.preventDefault();
-        this.formbox.classList.add('active');
-    });
-    this.signup.addEventListener('click',(e:any)=>{
-      e.preventDefault();
-        this.formbox.classList.remove('active');
-    })
     this.mac = this.macService.macphone;
     this.getRegions();
   }

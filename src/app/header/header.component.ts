@@ -161,6 +161,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   termsCondition(slug: string){
     this.route.navigate(['/termsandconditions',slug])
   }
+  gotoAuth(router: string){
+    this.route.navigate([`/${router}`]);
+  }
   toggleSidebar(){
     this.toggleSideBar.emit();
   }

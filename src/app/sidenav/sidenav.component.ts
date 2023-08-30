@@ -62,6 +62,9 @@ export class SidenavComponent implements OnInit, OnDestroy {
   //     }
   //   })
   // }
+  gotoAuth(router: string){
+    this.route.navigate([`/${router}`]);
+  }
   logOut(){
     this.authService.logOut().subscribe({
       next:(res: ResponseSuccess)=>{

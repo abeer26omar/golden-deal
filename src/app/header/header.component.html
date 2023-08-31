@@ -133,11 +133,11 @@
               </div>
           </li>
           <li class="nav-item p-0 d-flex align-items-center" *ngIf="!(authService.isRegister | async)">
-            <a class="create-account px-2" (click)="gotoAuth('register')">انشاء حساب</a>
-            <span>/</span>
+            <a class="btn create-account" (click)="gotoAuth('register')">انشاء حساب</a>
+            <!-- <span>/</span> -->
           </li>
           <li class="nav-item p-0" *ngIf="!(authService.isRegister | async)">
-            <a class="create-account px-2" (click)="gotoAuth('login')">تسجيل الدخول</a>
+            <a class="btn create-account me-2" (click)="gotoAuth('login')">تسجيل الدخول</a>
           </li>
           <li class="nav-item" *ngIf="authService.isRegister | async">
             <a class="nav-link p-0" routerLink="/profile" href="profile">

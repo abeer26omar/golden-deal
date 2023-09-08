@@ -7,6 +7,8 @@ import { ResponseSuccess } from '../models/actions.model';
 import { FormControl, FormGroup } from '@angular/forms';
 import { NotificationsService } from '../services/notifications.service';
 import { CookieService } from 'ngx-cookie-service';
+import { MatDialog } from '@angular/material/dialog';
+import { SendImagesComponent } from './send-images/send-images.component';
 
 @Component({
   selector: 'app-chats',
@@ -51,11 +53,12 @@ export class ChatsComponent implements OnInit, OnDestroy {
   }
   constructor(private chatService: ChatService,
     private el: ElementRef,
+    private dialogRef: MatDialog,
     private notificationService: NotificationsService,
     private breakPointObserver: BreakpointObserver,
     private cookieService: CookieService) { 
-    }
-    ngOnInit(): void {
+  }
+  ngOnInit(): void {
       this.notificationService._insideChatComponent.next(true)
       this.chatService.connect(this.userId)
       this.chatSub = this.chatService.getMessage().subscribe((data)=>{
@@ -73,6 +76,11 @@ export class ChatsComponent implements OnInit, OnDestroy {
       })
       this.getAllPreMsgList();
       this.getAllSupportMsg();
+  }
+  openModelAddImg(){
+    this.dialogRef.open(SendImagesComponent,{
+      width: '600px',
+    })
   }
   ngAfterViewInit() {
     // this.scrollToBottom();

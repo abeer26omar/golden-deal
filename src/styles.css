@@ -844,3 +844,8 @@ ul.pagination .page-item:not(.active):not(.disabled):hover .page-link{
 .mat-simple-snack-bar-content{
     direction: rtl;
 }
+.uploader .btn--primary {
+    background-color: var(--newColor) !important;
+    border-color: var(--newColor) !important;
+    cursor: pointer;
+}

@@ -47,6 +47,7 @@ import { AngularFireMessagingModule} from '@angular/fire/compat/messaging';
 import { AngularFireModule } from '@angular/fire/compat';
 import { GalleryModule } from  'ng-gallery';
 import { LightboxModule } from  'ng-gallery/lightbox';
+import { UploaderModule } from "angular-uploader";
 
 //components
 import { HeaderComponent } from './header/header.component';
@@ -93,6 +94,7 @@ import { PaginatorModule } from 'primeng/paginator';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { ResetPassModalComponent } from './Auth/reset-pass-modal/reset-pass-modal.component';
 import { LoginComponent } from './Auth/login/login.component';
+import { SendImagesComponent } from './chats/send-images/send-images.component';
 
 @NgModule({
   declarations: [
@@ -137,6 +139,7 @@ import { LoginComponent } from './Auth/login/login.component';
     NotificationsComponent,
     ResetPassModalComponent,
     LoginComponent,
+    SendImagesComponent,
   ],
   imports: [
     BrowserModule,
@@ -185,7 +188,8 @@ import { LoginComponent } from './Auth/login/login.component';
     PaginatorModule,
     SlickCarouselModule,
     GalleryModule,
-    LightboxModule
+    LightboxModule,
+    UploaderModule
   ], 
   providers: [ NotificationsService, AsyncPipe,
     {provide: LocationStrategy, useClass: PathLocationStrategy},

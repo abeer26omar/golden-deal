@@ -264,3 +264,14 @@ textarea{
     width: 40px;
     height: 40px;
 }
+.add_voice_icon{
+    padding: .5rem;
+    border-radius: 50%;
+    background-color: var(--primary-color);
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 .5rem;
+}

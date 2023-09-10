@@ -1,9 +1,17 @@
 <div class="content">
     <a mat-dialog-close class="p-2"><img src="../../../assets/images/close.svg" alt="close"></a>
-    <upload-dropzone 
+    <!-- <upload-dropzone 
         [uploader]="uploader" 
         [options]="options"
         [onUpdate]="onUpdate"
         > 
-    </upload-dropzone>
+    </upload-dropzone> -->
+    <button
+      uploadButton
+      [uploadComplete]="onComplete"
+      [uploadOptions]="options"
+      [uploader]="uploader"
+    >
+      Upload a file...
+    </button>
 </div>

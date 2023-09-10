@@ -24,5 +24,9 @@ export class SendImagesComponent implements OnInit {
     console.log(files);
     
   };
+  onComplete = (files: UploadWidgetResult[]) => {
+    console.log(files);
+    
+  };
 
 }

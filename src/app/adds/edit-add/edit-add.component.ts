@@ -396,6 +396,7 @@ export class EditAddComponent implements OnInit, OnDestroy {
         this.EditFilter.forEach(ele=>{    
           if(ele.filter_value !== null){
             if(ele.slug_name == 'plate_chars_filter_6'){
+              console.log(ele.filter_value.filter_value);
               this.card_chars_ar_1 = ele.filter_value.filter_value[0];
               this.card_chars_ar_2 = ele.filter_value.filter_value[2];
               this.card_chars_ar_3 = ele.filter_value.filter_value[4];
@@ -404,6 +405,8 @@ export class EditAddComponent implements OnInit, OnDestroy {
               plate_chars_filter_6.addControl('plate_chars_ar_2', new FormControl(ele.filter_value.filter_value[2],[Validators.pattern(/^[\u0627-\u0628\u062d\u062f\u0631\u0633\u0635\u0637\u0639\u0642\u0643\u0644\u0645\u0646\u0647\u0648\u0649]+$/),Validators.maxLength(1)]));
               plate_chars_filter_6.addControl('plate_chars_ar_3', new FormControl(ele.filter_value.filter_value[4],[Validators.pattern(/^[\u0627-\u0628\u062d\u062f\u0631\u0633\u0635\u0637\u0639\u0642\u0643\u0644\u0645\u0646\u0647\u0648\u0649]+$/),Validators.maxLength(1)]));
             }else if(ele.slug_name == 'plate_chars_en_filter_6'){
+              console.log(ele.filter_value.filter_value);
+
               this.card_chars_en_3 = ele.filter_value.filter_value[0];
               this.card_chars_en_2 = ele.filter_value.filter_value[2];
               this.card_chars_en_1 = ele.filter_value.filter_value[4];

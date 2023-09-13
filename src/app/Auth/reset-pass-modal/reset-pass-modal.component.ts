@@ -32,7 +32,9 @@ export class ResetPassModalComponent implements OnInit, OnDestroy {
   constructor(@Inject(MAT_DIALOG_DATA) public data: {name: string},
     public dialogRef: MatDialogRef<MatDialogClose>,
     private auth: AuthService, 
-    private passMatchService: MustMatchService) { }
+    private passMatchService: MustMatchService) {
+      dialogRef.disableClose = true;
+    }
 
   ngOnInit(): void {
   }
@@ -114,8 +116,10 @@ export class ResetPassModalComponent implements OnInit, OnDestroy {
   };
   onOtpChange(otp:any) {
     this.otp = otp;
-    if(otp.length == 4){
-      this.subOtp = !this.subOtp;
+    if(otp.length === 4){
+      this.subOtp = false;
+    }else{
+      this.subOtp = true;
     }
   }
   onOtpSubmmit(stepper: MatStepper){

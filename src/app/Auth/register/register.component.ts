@@ -11,8 +11,6 @@ import { Subscription } from 'rxjs';
 import { ActionsService } from 'src/app/services/actions.service';
 import { Regions } from 'src/app/models/actions.model';
 import { ErrorHandlerService } from 'src/app/services/error-handler.service';
-import { MatDialog } from '@angular/material/dialog';
-import { ResetPassModalComponent } from '../reset-pass-modal/reset-pass-modal.component';
 import { MustMatchService } from 'src/app/services/must-match.service';
 import { CookieService } from 'ngx-cookie-service';
 
@@ -100,7 +98,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
     private passMatchService: MustMatchService,
     private actionService: ActionsService,
     private errorHandel: ErrorHandlerService,
-    private dialogRef: MatDialog,
     private cookieService: CookieService) { }
     //get forms controls
     get fRegister(){
@@ -121,7 +118,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
   ngOnInit(): void {
     this.otpModal = new window.bootstrap.Modal(
-    document.getElementById('otpModel'),{backdrop: this.macService.backdrop});
+    document.getElementById('otpModel'),{backdrop: 'static' || this.macService.backdrop});
     this.signup = document.getElementById('signup');
     this.mac = this.macService.macphone;
     this.getRegions();
@@ -232,14 +229,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
       })
     }
   }
-  // reset password
-  openRestPassDialog(){
-    this.dialogRef.open(ResetPassModalComponent,{
-      width: '500px',
-      enterAnimationDuration: '800ms',
-      exitAnimationDuration: '500ms',
-    })
-  }
   //otp input
   otp!: number ;
   showOtpComponent = true;
@@ -255,8 +244,10 @@ export class RegisterComponent implements OnInit, OnDestroy {
   };
   onOtpChange(otp:any) {
     this.otp = otp;
-    if(otp.length == 4){
-      this.subOtp = !this.subOtp;
+    if(otp.length === 4){
+      this.subOtp = false;
+    }else{
+      this.subOtp = true;
     }
   }
   // timer to resend

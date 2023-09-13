@@ -1,56 +1,59 @@
-<mat-stepper linear="linear" orientation="vertical" animationDuration="1000" #stepper dir="rtl">
-    <mat-step [stepControl]="phoneSendForm">
-      <form [formGroup]="phoneSendForm">
-        <ng-template matStepLabel> ادخل رقم الهاتف المسجل به</ng-template>
-        <mat-form-field appearance="fill" class="phone">
-            <mat-label>رقم الهاتف</mat-label>
-            <input matInput 
-                type="tel" 
-                placeholder="ادخل رقم الهاتف بدون 0" 
-                formControlName="phone">
-                <span matPrefix>+966 &nbsp;</span>
-                <mat-error *ngIf="FphoneSend['phone'].touched && FphoneSend['phone'].invalid">ارقام سعوديه فقط</mat-error>
-        </mat-form-field>
-          <button (click)="sendOtp(stepper)" class="btn btn-prim"><span class="ps-2">ارسال</span><mat-spinner *ngIf="spinOtp"></mat-spinner></button>
-          <span class="text-success text-center pe-2">{{result}}</span>
-          <span class="text-danger text-center pe-2">{{resultErr}}</span>
-      </form>
-    </mat-step>
-    <mat-step [stepControl]="otpForm">
-        <ng-template matStepLabel>ادخل كود التحقق</ng-template>
-        <form [formGroup]="otpForm">
-            <ng-otp-input  
-                 (onInputChange)="onOtpChange($event)" 
-                  [config]="config"
-                  focus
-                  formControlName="otpControl"></ng-otp-input>
-          <button type="button" class="btn btn-prim" [disabled]="subOtp" (click)="onOtpSubmmit(stepper)"><span class="ps-2">تأكيد</span><mat-spinner *ngIf="submitOtp"></mat-spinner></button>
-          <span class="text-success text-center pe-2">{{resultOtP}}</span>
-          <span class="text-danger text-center pe-2">{{resultErrOtp}}</span>
+<div class="text-right">
+  <a mat-dialog-close class="p-2"><img src="../../../assets/images/close.svg" alt="close"></a>
+  <mat-stepper linear="linear" orientation="vertical" animationDuration="1000" #stepper dir="rtl">
+      <mat-step [stepControl]="phoneSendForm">
+        <form [formGroup]="phoneSendForm">
+          <ng-template matStepLabel> ادخل رقم الهاتف المسجل به</ng-template>
+          <mat-form-field appearance="fill" class="phone">
+              <mat-label>رقم الهاتف</mat-label>
+              <input matInput 
+                  type="tel" 
+                  placeholder="ادخل رقم الهاتف بدون 0" 
+                  formControlName="phone">
+                  <span matPrefix>+966 &nbsp;</span>
+                  <mat-error *ngIf="FphoneSend['phone'].touched && FphoneSend['phone'].invalid">ارقام سعوديه فقط</mat-error>
+          </mat-form-field>
+            <button (click)="sendOtp(stepper)" class="btn btn-prim"><span class="ps-2">ارسال</span><mat-spinner *ngIf="spinOtp"></mat-spinner></button>
+            <span class="text-success text-center pe-2">{{result}}</span>
+            <span class="text-danger text-center pe-2">{{resultErr}}</span>
         </form>
       </mat-step>
-    <mat-step [stepControl]="newPasswordForm">
-        <form [formGroup]="newPasswordForm">
-          <ng-template matStepLabel>ادخل كلمه السر الجديده</ng-template>
+      <mat-step [stepControl]="otpForm">
+          <ng-template matStepLabel>ادخل كود التحقق</ng-template>
+          <form [formGroup]="otpForm">
+              <ng-otp-input  
+                   (onInputChange)="onOtpChange($event)" 
+                    [config]="config"
+                    focus
+                    formControlName="otpControl"></ng-otp-input>
+            <button type="button" class="btn btn-prim" [disabled]="subOtp" (click)="onOtpSubmmit(stepper)"><span class="ps-2">تأكيد</span><mat-spinner *ngIf="submitOtp"></mat-spinner></button>
+            <span class="text-success text-center pe-2">{{resultOtP}}</span>
+            <span class="text-danger text-center pe-2">{{resultErrOtp}}</span>
+          </form>
+      </mat-step>
+      <mat-step [stepControl]="newPasswordForm">
+          <form [formGroup]="newPasswordForm">
+            <ng-template matStepLabel>ادخل كلمه السر الجديده</ng-template>
+            <mat-form-field appearance="fill">
+              <mat-label>كلمه السر</mat-label>
+              <input matInput [type]="hide ? 'password' : 'text'" formControlName="password"> 
+              <a class="btn_hidepass" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                  <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </a>
+              <mat-error *ngIf="FnewPassword['password'].touched && FnewPassword['password'].invalid">{{getErrorPassword()}}</mat-error>
+          </mat-form-field>
           <mat-form-field appearance="fill">
-            <mat-label>كلمه السر</mat-label>
-            <input matInput [type]="hide ? 'password' : 'text'" formControlName="password"> 
-            <a class="btn_hidepass" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-            </a>
-            <mat-error *ngIf="FnewPassword['password'].touched && FnewPassword['password'].invalid">{{getErrorPassword()}}</mat-error>
-        </mat-form-field>
-        <mat-form-field appearance="fill">
-            <mat-label> تأكيد كلمه السر </mat-label>
-            <input matInput [type]="hideConf ? 'password' : 'text'" formControlName="confirmPassword"> 
-            <a class="btn_hidepass" mat-icon-button matSuffix (click)="hideConf = !hideConf" [attr.aria-label]="'hideConf password'" [attr.aria-pressed]="hideConf">
-                <mat-icon>{{hideConf ? 'visibility_off' : 'visibility'}}</mat-icon>
-            </a>
-            <mat-error *ngIf="FnewPassword['confirmPassword'].touched && FnewPassword['confirmPassword'].invalid">{{getErrorConfirmPass()}}</mat-error>
-        </mat-form-field>
-        <button type="button" class="btn btn-prim" (click)="setNewPassword(stepper)"><span class="ps-2">تعيين</span><mat-spinner *ngIf="submitNewPass"></mat-spinner></button>
-        <span class="text-success text-center pe-2">{{resultSuccess}}</span>
-          <span class="text-danger text-center pe-2">{{resultError}}</span>
-        </form>
-    </mat-step>
+              <mat-label> تأكيد كلمه السر </mat-label>
+              <input matInput [type]="hideConf ? 'password' : 'text'" formControlName="confirmPassword"> 
+              <a class="btn_hidepass" mat-icon-button matSuffix (click)="hideConf = !hideConf" [attr.aria-label]="'hideConf password'" [attr.aria-pressed]="hideConf">
+                  <mat-icon>{{hideConf ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </a>
+              <mat-error *ngIf="FnewPassword['confirmPassword'].touched && FnewPassword['confirmPassword'].invalid">{{getErrorConfirmPass()}}</mat-error>
+          </mat-form-field>
+          <button type="button" class="btn btn-prim" (click)="setNewPassword(stepper)"><span class="ps-2">تعيين</span><mat-spinner *ngIf="submitNewPass"></mat-spinner></button>
+          <span class="text-success text-center pe-2">{{resultSuccess}}</span>
+            <span class="text-danger text-center pe-2">{{resultError}}</span>
+          </form>
+      </mat-step>
   </mat-stepper>
+</div>

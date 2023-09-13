@@ -1,11 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { NgOtpInputConfig } from 'ng-otp-input';
 import { AuthService } from 'src/app/services/auth.service';
-import { Login, Verify } from 'src/app/models/user.model';
+import { Login } from 'src/app/models/user.model';
 import { HttpErrorResponse } from '@angular/common/http';
-import { MacPrefixService } from 'src/app/services/mac-prefix.service';
 import { DatePipe } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { ActionsService } from 'src/app/services/actions.service';

@@ -58,7 +58,7 @@ export class AppComponent implements OnInit, AfterViewInit{
       });
     }
   ngOnInit(): void {
-    this.clearSorageForReAuth();
+    // this.clearSorageForReAuth();
       this.getCategories()
       if(this.authService.IsloggedIn()){
         this.notificationService.insideChatComponent.subscribe((insideChat)=>{
@@ -84,38 +84,38 @@ export class AppComponent implements OnInit, AfterViewInit{
   ngAfterViewInit(): void {
     this.backdrops = Array.from(this.elementRef.nativeElement.querySelectorAll('.modal-backdrop'));
   }
-  clearSorageForReAuth(){
-    this.clearStorage.removeTokenAfterOneHour();
+  // clearSorageForReAuth(){
+  //   this.clearStorage.removeTokenAfterOneHour();
 
-    // Handle app closing event
-    window.onbeforeunload = () => {
-      this.clearStorage.storeTimestampOnClose();      
-    };
+  //   // Handle app closing event
+  //   window.onbeforeunload = () => {
+  //     this.clearStorage.storeTimestampOnClose();      
+  //   };
 
-    // Check elapsed time when the app is reopened
-    const elapsed = this.clearStorage.calculateElapsedTime();
-    const oneHourInMillis = 24 * 60 * 60 * 1000; // 1 hour in milliseconds
+  //   // Check elapsed time when the app is reopened
+  //   const elapsed = this.clearStorage.calculateElapsedTime();
+  //   const oneHourInMillis = 24 * 60 * 60 * 1000; // 1 hour in milliseconds
 
-    if (elapsed >= oneHourInMillis) {
-      // Remove the token from localStorage if more than an hour elapsed
-      localStorage.removeItem('token_deal');
-      localStorage.removeItem('userId');
-      localStorage.removeItem('region_id');
-      localStorage.removeItem('userImage');
-      localStorage.removeItem('loginTime');
-      localStorage.removeItem('closeTime');
-    } else {
-      // Calculate remaining time and schedule token removal
-      const remainingTime = oneHourInMillis - elapsed;
-      setTimeout(() => {
-        // Remove the token from localStorage after the remaining time
-        localStorage.removeItem('token_deal');
-        localStorage.removeItem('userId');
-        localStorage.removeItem('region_id');
-        localStorage.removeItem('userImage');
-        localStorage.removeItem('loginTime');
-        localStorage.removeItem('closeTime');
-      }, remainingTime);
-    }
-  }
+  //   if (elapsed >= oneHourInMillis) {
+  //     // Remove the token from localStorage if more than an hour elapsed
+  //     localStorage.removeItem('token_deal');
+  //     localStorage.removeItem('userId');
+  //     localStorage.removeItem('region_id');
+  //     localStorage.removeItem('userImage');
+  //     localStorage.removeItem('loginTime');
+  //     localStorage.removeItem('closeTime');
+  //   } else {
+  //     // Calculate remaining time and schedule token removal
+  //     const remainingTime = oneHourInMillis - elapsed;
+  //     setTimeout(() => {
+  //       // Remove the token from localStorage after the remaining time
+  //       localStorage.removeItem('token_deal');
+  //       localStorage.removeItem('userId');
+  //       localStorage.removeItem('region_id');
+  //       localStorage.removeItem('userImage');
+  //       localStorage.removeItem('loginTime');
+  //       localStorage.removeItem('closeTime');
+  //     }, remainingTime);
+  //   }
+  // }
 }

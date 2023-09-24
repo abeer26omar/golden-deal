@@ -122,6 +122,7 @@ export interface Product{
         product_images: Array<productImages>,
         owner_ratings: Array<ownerRatings>,
         negotiable: number,
+        order_code: string,
         properties: Array<Product_Properties>,
         region_name: string,
         region_id: number,

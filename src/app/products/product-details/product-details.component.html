@@ -1,33 +1,9 @@
     <div class="product-row row g-4 justify-content-center pt-5 pb-5" #productContainer>
         <div class="col-lg-9 col-12" >
             <div class="py-3 text-center" *ngIf="singleProduct.data.product_images.length !== 0">
-                <!-- <div dir="rtl">
-                    <ngx-gallery [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
-                </div> -->
                 <gallery gallerize [items]="cameraImages" 
-                    [nav]="false" [dots]="true" [counter]="false"></gallery>
-                <!-- <div dir="rtl">
-                    <div class="container_productImages" >
-                        <img *ngFor="let item of items; index as i" 
-                         [lightbox]="i"
-                         [src]="item.data.thumb">
-                    </div>
-                </div> -->
-                <!-- <div class="container">
-                        <ng-container *ngFor="let img of singleProduct.data.product_images">
-                            <div class="mySlides" #slides>
-                              <img src={{img.image_url}} style="width:100%">
-                            </div>
-                        </ng-container>
-                        <a class="prev" (click)="plusSlides(-1)"> ❮</a>
-                        <a class="next" (click)="plusSlides(1)"> ❯</a>
-                      
-                        <div class="row">
-                          <div class="column" *ngFor="let img of singleProduct.data.product_images">
-                            <img class="demo cursor" #dots src="{{img.image_url}}" style="width:100%" (click)="currentSlide(1)" >
-                          </div>
-                        </div>
-                      </div>-->                
+                    [nav]="false" [dots]="true" [counter]="false">
+                </gallery>              
             </div>
             <div class="d-flex justify-content-center mb-sm-5 mb-3 mx-auto plates" *ngIf="singleProduct.data.product_images.length == 0" [ngClass]="{'mac': mac}">
                 <ng-container *ngFor="let property of singleProduct.data.properties">
@@ -81,19 +57,10 @@
                                       </ng-container>
                                 </ng-container>
                                 <h2 class="prod-name" *ngIf="singleProduct.data.category_slug == 'cars'">{{singleProduct.data.name}}</h2>
-                                <!-- <a (click)="actionService.addToFav(singleProduct.data.id)" class="">
-                                    <img src="../../../assets/images/wishlisticon.svg" alt="wishlisticon">
-                                </a> -->
                                 <div class="favorite" *ngIf="singleProduct.data.status === 'active'">
                                     <a (click)="addToFav(singleProduct.data, $event)">
                                         <img src="../../assets/images/{{singleProduct.data.product_fav == false ? 'favorite_icon.svg' : 'already_fav_icon.svg'}}" alt="already_fav_icon" >
                                     </a>
-                                    <!-- <a (click)="actionService.removeFav(singleProduct.data.id)" class="btn add_fav p-0" *ngIf="singleProduct.data.product_fav == true">
-                                     <img src="../../../assets/images/already_fav_icon.svg" alt="already_fav_icon" srcset="../../assets/images/already_fav_icon.svg">
-                                    </a>
-                                    <a (click)="actionService.addToFav(singleProduct.data.id)" class="btn add_fav p-0" *ngIf="singleProduct.data.product_fav == false">
-                                      <img src="../../../assets/images/favorite_icon.svg" alt="addToFav" srcset="../../assets/images/favorite_icon.svg">                         
-                                    </a> -->
                                 </div>
                             </div>
                             <img src="../../assets/images/nego_icon.svg" alt="nego_icon" class="nego_icon" *ngIf="singleProduct.data.negotiable == 1">
@@ -103,12 +70,15 @@
                                 </div>
                                 <p class="time px-2 px-sm-5"><img src="../../assets/images/location_icon (2).svg" alt="clock"><span class="pe-1">{{singleProduct.data.region_name}}</span></p>
                             </div>
-                            <div class="prod-details d-flex align-items-center justify-content-between justify-content-sm-start">
-                                <div class="owner">
-                                    <img class="ps-1" src="../../assets/images/profile_icon.svg" alt="profile_icon">
-                                    <a (click)="sellerProfile(singleProduct.data.owner.id)">{{singleProduct.data.owner.name}}</a>
+                            <div class="prod-details d-flex flex-wrap align-items-center justify-content-between">
+                                <div class="d-flex">
+                                    <div class="owner">
+                                        <img class="ps-1" src="../../assets/images/profile_icon.svg" alt="profile_icon">
+                                        <a (click)="sellerProfile(singleProduct.data.owner.id)">{{singleProduct.data.owner.name}}</a>
+                                    </div>
+                                    <p class="time px-2 px-sm-5"><img src="../../assets/images/clock.svg" alt="clock"><span class="pe-1">منذ {{singleProduct.data.created_since | dateAgo}}</span></p>
                                 </div>
-                                <p class="time px-2 px-sm-5"><img src="../../assets/images/clock.svg" alt="clock"><span class="pe-1">منذ {{singleProduct.data.created_since | dateAgo}}</span></p>
+                                <p class="opacity-50"><span class="pe-1">رقم الطلب: {{singleProduct.data.order_code}}</span></p>
                             </div>
                         </div>
                     </div>

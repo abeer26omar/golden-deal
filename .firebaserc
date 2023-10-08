@@ -1,5 +1,7 @@
 {
   "projects": {
-    "default": "golden-deal-angular"
-  }
+    "default": "golden-deal-faa53"
+  },
+  "targets": {},
+  "etags": {}
 }

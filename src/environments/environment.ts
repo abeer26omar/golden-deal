@@ -9,14 +9,14 @@ export const environment = {
   // socket_url: 'http://localhost:3000/',
   socket_url: 'https://dealsocket-e6d800cc0411.herokuapp.com/',
   firebase: {
-    apiKey: "AIzaSyCLLjhhfMEuj5Cklm5qQBUjYCmtCity8fc",
-    authDomain: "golden-deal-angular.firebaseapp.com",
-    projectId: "golden-deal-angular",
-    storageBucket: "golden-deal-angular.appspot.com",
-    messagingSenderId: "789293992920",
-    appId: "1:789293992920:web:0414009ca9d43480de00ad",
-    measurementId: "G-JWFWSFMBBK",
-    vapidKey: "BEBUzl6M-0aLWuU0d8Knm8qG2jjxfY_C2SYeXK5f2FIZF5wGhI28sQFINvUqk--mdBbvf70zLwwryOoyR9ilgK4"
+    apiKey: "AIzaSyDt354Yq0BWiLnO-KFqMtsOpVR1_MY-inI",
+    authDomain: "golden-deal-faa53.firebaseapp.com",
+    projectId: "golden-deal-faa53",
+    storageBucket: "golden-deal-faa53.appspot.com",
+    messagingSenderId: "841291602706",
+    appId: "1:841291602706:web:95aa80976160b35137f1cb",
+    measurementId: "G-1C9FPXMCX2",
+    vapidKey: "BOPFYKczQzswyf30MaAn-G7_EfZLg50pqZwBIc6m1DtTqU7reBLR-Q56QCJ4aVmZfKVnpSzYoNHH96UqDmcQMGE"
   }
 };
 

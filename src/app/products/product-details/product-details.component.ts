@@ -72,6 +72,7 @@ export class ProductDetailsComponent implements OnInit ,AfterViewInit ,OnDestroy
       ],
       owner_ratings: [],
       negotiable: 0,
+      order_code: '',
       properties:[],
       region_id: 0,
       region_name: "",

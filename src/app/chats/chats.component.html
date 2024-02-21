@@ -1,5 +1,4 @@
-
-<div class="d-flex justify-content-end align-items-center pt-5" >
+<!-- <div class="d-flex justify-content-end align-items-center pt-5" >
     <div class="support_media d-flex justify-content-center align-items-center col-xl-9 col-lg-8 col-12">
         <a  href="https://api.whatsapp.com/send?phone=966570000675&text=https://gooldendeal.com/" 
             target="_blank" class="btn btn-prim btn-whats">
@@ -16,8 +15,8 @@
             <span class="px-2">سناب{{'\u00A0'}}شات</span> 
         </a>
     </div>
-  </div>
-<div class="chat-row row g-4 justify-content-center py-5">
+  </div> -->
+    <div class="chat-row row g-4 justify-content-center py-5">
         <div class="col-xl-3 col-lg-4 col-12 conversation_list" #sideNav>
             <div class="side-chat">
                 <div class="card h-100">
@@ -27,6 +26,39 @@
                             *ngIf="toggle" (click)="toggleSideMenu()">
                             <mat-icon>close</mat-icon>
                         </button>
+                        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                            <mat-icon>more_vert</mat-icon>
+                          </button>
+                          <mat-menu #menu="matMenu">
+                            <a mat-menu-item 
+                                href="https://api.whatsapp.com/send?phone=966570000675&text=https://gooldendeal.com/" 
+                                target="_blank"
+                                style="text-align: end;">
+                                <span class="px-2">واتساب</span> 
+                                <img src="../../../assets/images/support_whats_icon.svg" alt="support_whats_icon">
+                            </a>
+                            <a mat-menu-item 
+                                href="https://www.instagram.com/golden.deal1/" 
+                                target="_blank"
+                                style="text-align: end;">
+                                <span class="px-2">انستجرام</span> 
+                                <img src="../../assets/images/Instagram.svg" alt="instgram-icon">
+                            </a>
+                            <a mat-menu-item 
+                                href="https://t.snapchat.com/CpWgDLQx" 
+                                target="_blank"
+                                style="text-align: end;">
+                                <span class="px-2">سناب{{'\u00A0'}}شات</span> 
+                                <img src="../../assets/images/Snapchat (1).svg" alt="Snapchat-icon">
+                            </a>
+                            <a 
+                                mat-menu-item
+                                routerLink="/chat/support"
+                                style="text-align: end;">
+                                <span class="px-2">الدعم</span>
+                                <img src="../../assets/images/support_chat_icon.svg" alt="avatar-img">
+                            </a>
+                        </mat-menu>
                     </div>
                     <mat-progress-bar mode="indeterminate"  *ngIf="loader" id="addprog"></mat-progress-bar>
                     <div class="card-body ps-container mt-2 ps-theme-default ps-active-y" 
@@ -35,25 +67,25 @@
                             class="nav-pills p-0" orientation="vertical">
                             <ng-container *ngFor="let user of msgUsersList,let i=index;">
                                 <li [ngbNavItem]="i">
-                                  <a ngbNavLink (click)="getChat(user.sender === userId ? user.receiver : user.sender)" 
-                                    [ngClass]="{'new_msg': user.receiver == userId && user.seen_at == 0}">
-                                    <div class="column">
-                                        <div class="chats">
-                                            <div class="avatar">
-                                                <img src="{{user.sender === userId ? avatar_base_url+user.receiver_avatar : avatar_base_url+user.sender_avatar}}" alt="placeholderimg">
-                                            </div>
-                                            <div class="chat">
-                                                <p class="chat-name">{{user.sender === userId ? user.receiver_name : user.sender_name}}</p>
-                                                <p class="chat-desc">{{user.message}}</p>
-                                            </div>
-                                            <div *ngIf="user.receiver == userId && user.seen_at == 0">
-                                                <span matBadgeSize="small"></span>
+                                    <a ngbNavLink (click)="getChat(1, 1)" 
+                                        [ngClass]="{'new_msg': user.receiver == userId && user.seen_at == 0}">
+                                        <div class="column">
+                                            <div class="chats">
+                                                <div class="avatar">
+                                                    <img src="{{user.sender === userId ? avatar_base_url+user.receiver_avatar : avatar_base_url+user.sender_avatar}}" alt="placeholderimg">
+                                                </div>
+                                                <div class="chat">
+                                                    <p class="chat-name">{{user.sender === userId ? user.receiver_name : user.sender_name}}</p>
+                                                    <p class="chat-desc">{{user.message}}</p>
+                                                </div>
+                                                <div *ngIf="user.receiver == userId && user.seen_at == 0">
+                                                    <span matBadgeSize="small"></span>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </a>
+                                    </a>
                                   <ng-template ngbNavContent>
-                                    <div class="page-content page-container" id="page-content">
+                                    <!-- <div class="page-content page-container" id="page-content">
                                             <div class="card">
                                                 <button mat-icon-button class="toggler"
                                                     *ngIf="toggle" 
@@ -108,13 +140,13 @@
                                                 </div>
                                             </form>
                                             </div>
-                                    </div>
+                                    </div> -->
+                                    <router-outlet></router-outlet>
                                   </ng-template>
                                 </li>
                             </ng-container>
-                            <mat-divider class="my-3"></mat-divider>
                             <p class="text-center text-danger" *ngIf="errorlist">{{errorlist}}</p>
-                            <li ngbNavItem>
+                            <!-- <li ngbNavItem>
                               <a ngbNavLink>
                                 <div class="column">
                                     <div class="chats">
@@ -186,7 +218,7 @@
                                     </div>
                             </div>
                               </ng-template>
-                            </li>
+                            </li> -->
                         </ul>
                     </div>
                 </div>

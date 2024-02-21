@@ -215,7 +215,14 @@
           <div ngxSlickItem *ngFor="let brand of brandsOptions; let i = index" class="slide"
            [class.slick-current]="selectedSlideIndex === i">
             <li class="nav-item brand p-0" role="presentation">
-              <a (click)="onSlideClicked(i); onApplayBrandFilters(brand.id); onApplayFiltersKeys(brand.name);" data-bs-toggle="tab" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">
+              <a 
+                (click)="onSlideClicked(i); onApplayBrandFilters(brand.id); onApplayFiltersKeys(brand.name);" 
+                data-bs-toggle="tab" 
+                type="button" 
+                role="tab" 
+                aria-controls="home-tab-pane" 
+                aria-selected="true"
+                title="{{brand.name}}">
                 <img src="{{brand.image}}" alt="{{brand.name}}">
               </a>
             </li>

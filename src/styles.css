@@ -103,6 +103,7 @@ a.btn{
 .btn-prim{
     background-color: var(--primary-color) !important;
     color: var(--white) !important;
+    padding: 0.5rem 1rem;
 }
 /*  */
 a.btn-sec,button.btn-sec{

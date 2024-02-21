@@ -120,12 +120,12 @@
           </a>
         </li>
           <li class="nav-item dropdown" *ngIf="authService.isRegister | async">
-            <span matBadge="" matBadgeSize="small" *ngIf="notificationService.notCounter | async"></span>
+            <span matBadge="1" matBadgeSize="small" *ngIf="(notificationService.notCounter | async)"></span>
               <button class="btn p-0 custom dropdown-toggle" 
                 id="dropdownMenuButton3" 
                 data-bs-toggle="dropdown" 
                 aria-expanded="false"
-                (click)="getMyNotifications(pageNo)">
+                (click)="getMyNotifications(1)">
                 <img src="../../assets/images/notify_icon.svg" alt="notify_icon" width="30px">
               </button>
               <div class="collapse notifcation dropdown-menu" aria-labelledby="dropdownMenuButton3" (scroll)="loadMore()">

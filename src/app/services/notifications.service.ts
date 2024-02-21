@@ -13,16 +13,19 @@ export class NotificationsService {
   currentMessage = new BehaviorSubject<any>(null)
   private _notCounter = new BehaviorSubject<boolean>(false);
   notCounter = this._notCounter.asObservable();
+
   httpOptions = {
     headers: new HttpHeaders({
       'Authorization': `Bearer ${localStorage.getItem('token_deal') || this.cookieService.get('token_deal')}`
     })}
+
   private _refresh = new Subject<void>();
   get refresh(){
       return this._refresh;
   }
   _insideChatComponent = new BehaviorSubject<boolean>(false);
   insideChatComponent = this._insideChatComponent.asObservable();
+
   constructor(private http: HttpClient,
     private angularFireMessaging: AngularFireMessaging,
     private cookieService: CookieService) { 
@@ -51,11 +54,15 @@ export class NotificationsService {
       }
     )
   }
+  updateNotiBadge(status: boolean) {
+    this._notCounter.next(status);
+
+  }
   getNotification(){
     this.angularFireMessaging.messages.subscribe(
       (payload)=>{  
         this.currentMessage.next(payload);
-        this._notCounter.next(true);
+        this.updateNotiBadge(true)
       })
   }
 }

@@ -99,9 +99,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
   pageNo: number = 1;
   lastpage: number = 1;
-  getMyNotifications(pageNo:number){
+  getMyNotifications(pageNo: number){
+    this.notificationService.updateNotiBadge(false);
     this.load = true;
-    this.notifiSub = this.notificationService.getMyNotifications(this.pageNo).subscribe({
+    this.notifiSub = this.notificationService.getMyNotifications(pageNo).subscribe({
       next: (resData: Notifications)=>{
         this.load = false;
         if(resData.data.length == 0){

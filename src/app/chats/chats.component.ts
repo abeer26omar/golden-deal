@@ -9,6 +9,7 @@ import { NotificationsService } from '../services/notifications.service';
 import { CookieService } from 'ngx-cookie-service';
 import { MatDialog } from '@angular/material/dialog';
 import { SendImagesComponent } from './send-images/send-images.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-chats',
@@ -52,6 +53,7 @@ export class ChatsComponent implements OnInit, OnDestroy {
     return this.formSupport.controls;
   }
   constructor(private chatService: ChatService,
+    private router: Router,
     private el: ElementRef,
     private dialogRef: MatDialog,
     private notificationService: NotificationsService,
@@ -60,7 +62,7 @@ export class ChatsComponent implements OnInit, OnDestroy {
   }
   ngOnInit(): void {
       this.notificationService._insideChatComponent.next(true)
-      this.chatService.connect(this.userId)
+      // this.chatService.connect(this.userId)
       this.chatSub = this.chatService.getMessage().subscribe((data)=>{
         const mappedData = {
           message: data.message,
@@ -155,23 +157,24 @@ export class ChatsComponent implements OnInit, OnDestroy {
       next: (res: Array<MessagesList>)=>{
         this.loader = false;
         this.msgUsersList = res;
-        this.getChat(this.msgUsersList[0].sender === this.userId ? this.msgUsersList[0].receiver : this.msgUsersList[0].sender)                        
+        // this.getChat(this.msgUsersList[0].sender === this.userId ? this.msgUsersList[0].receiver : this.msgUsersList[0].sender)                        
       }
     })
   } 
-  getChat(reciever: any){
-    this.load = true;
-    this.receiverId =  reciever;
-    this.chatSub = this.chatService.getAllMessages(this.userId,this.receiverId).subscribe({
-      next: (res: Array<Messages>)=>{
-        this.load = false;
-        this.usersMsg = res;
-        this.scrollToBottom();
-      },
-      error: ()=>{
-        this.load = false;
-      }
-    })
+  getChat(reciever: any , chatId: any){
+      this.router.navigate(['/chat', chatId]);
+    // this.load = true;
+    // this.receiverId =  reciever;
+    // this.chatSub = this.chatService.getAllMessages(this.userId,this.receiverId).subscribe({
+    //   next: (res: Array<Messages>)=>{
+    //     this.load = false;
+    //     this.usersMsg = res;
+    //     this.scrollToBottom();
+    //   },
+    //   error: ()=>{
+    //     this.load = false;
+    //   }
+    // })
   }
   ngOnDestroy(): void {
     this.notificationService._insideChatComponent.next(false);

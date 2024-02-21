@@ -75,6 +75,8 @@ export class AppComponent implements OnInit, AfterViewInit{
                     verticalPosition: 'top'
                   });
                 }
+                console.log(this.notificationService.notCounter);
+                
               })
           }
         })

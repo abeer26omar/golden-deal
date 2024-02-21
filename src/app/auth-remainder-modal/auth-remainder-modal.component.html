@@ -5,6 +5,9 @@
     </div>
     <div class="card-body">
         <p class="pref">سيعرف جميع المستخدمين في Golden deal أن الملايين من الأشخاص موجودون هناك. كل يوم إلى جانب الكثير من الأشخاص الذين ينضمون إلى هذا المجتمع</p>
-        <button class="btn btn-prim" (click)="getAccount()">إنشاء حساب</button>
+        <div>
+            <a class="btn btn-prim me-3" routerLink="/register" (click)="getAccount()">إنشاء حساب</a>
+            <a class="btn btn-prim" routerLink="/login" (click)="getAccount()">تسجيل الدخول</a>
+        </div>
     </div>
 </div>

@@ -95,7 +95,6 @@ import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { ResetPassModalComponent } from './Auth/reset-pass-modal/reset-pass-modal.component';
 import { LoginComponent } from './Auth/login/login.component';
 import { SendImagesComponent } from './chats/send-images/send-images.component';
-import { ChatLayoutComponent } from './chats/chat-layout/chat-layout.component';
 
 @NgModule({
   declarations: [
@@ -141,7 +140,6 @@ import { ChatLayoutComponent } from './chats/chat-layout/chat-layout.component';
     ResetPassModalComponent,
     LoginComponent,
     SendImagesComponent,
-    ChatLayoutComponent,
   ],
   imports: [
     BrowserModule,

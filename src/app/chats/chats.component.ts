@@ -46,6 +46,7 @@ export class ChatsComponent implements OnInit, OnDestroy {
   supportData: any;
   messages: any;
   supportErr: string = '';
+  isComponentVisible: boolean = false;
   formSupport = new FormGroup({
     message: new FormControl('')
   })
@@ -62,7 +63,7 @@ export class ChatsComponent implements OnInit, OnDestroy {
   }
   ngOnInit(): void {
       this.notificationService._insideChatComponent.next(true)
-      // this.chatService.connect(this.userId)
+      this.chatService.connect(this.userId)
       this.chatSub = this.chatService.getMessage().subscribe((data)=>{
         const mappedData = {
           message: data.message,
@@ -157,24 +158,27 @@ export class ChatsComponent implements OnInit, OnDestroy {
       next: (res: Array<MessagesList>)=>{
         this.loader = false;
         this.msgUsersList = res;
-        // this.getChat(this.msgUsersList[0].sender === this.userId ? this.msgUsersList[0].receiver : this.msgUsersList[0].sender)                        
+        this.getChat(this.msgUsersList[0].sender === this.userId ? this.msgUsersList[0].receiver : this.msgUsersList[0].sender)                        
       }
     })
   } 
-  getChat(reciever: any , chatId: any){
-      this.router.navigate(['/chat', chatId]);
-    // this.load = true;
-    // this.receiverId =  reciever;
-    // this.chatSub = this.chatService.getAllMessages(this.userId,this.receiverId).subscribe({
-    //   next: (res: Array<Messages>)=>{
-    //     this.load = false;
-    //     this.usersMsg = res;
-    //     this.scrollToBottom();
-    //   },
-    //   error: ()=>{
-    //     this.load = false;
-    //   }
-    // })
+  getChat(chatId: any){
+    this.isComponentVisible = false;
+    this.load = true;
+    this.receiverId =  chatId;
+    this.chatSub = this.chatService.getAllMessages(this.userId,this.receiverId).subscribe({
+      next: (res: Array<Messages>)=>{
+        this.load = false;
+        this.usersMsg = res;
+        this.scrollToBottom();
+      },
+      error: ()=>{
+        this.load = false;
+      }
+    })
+  }
+  toggleComponentVisibility(): void {
+    this.isComponentVisible = true;
   }
   ngOnDestroy(): void {
     this.notificationService._insideChatComponent.next(false);

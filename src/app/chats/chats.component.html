@@ -53,10 +53,10 @@
                             </a>
                             <a 
                                 mat-menu-item
-                                routerLink="/chat/support"
+                                (click)="toggleComponentVisibility()"
                                 style="text-align: end;">
                                 <span class="px-2">الدعم</span>
-                                <img src="../../assets/images/support_chat_icon.svg" alt="avatar-img">
+                                <img src="../../assets/images/support_chat_icon.svg" alt="avatar-img" width="36px" height="36px">
                             </a>
                         </mat-menu>
                     </div>
@@ -65,9 +65,9 @@
                      style="overflow-y: scroll !important;height:505px !important;">
                         <ul ngbNav #nav="ngbNav"  #chatWindow [(activeId)]="activeId"
                             class="nav-pills p-0" orientation="vertical">
-                            <ng-container *ngFor="let user of msgUsersList,let i=index;">
+                            <ng-container *ngFor="let user of msgUsersList, let i=index;">
                                 <li [ngbNavItem]="i">
-                                    <a ngbNavLink (click)="getChat(1, 1)" 
+                                    <a ngbNavLink (click)="getChat(user.sender === userId ? user.receiver : user.sender)" 
                                         [ngClass]="{'new_msg': user.receiver == userId && user.seen_at == 0}">
                                         <div class="column">
                                             <div class="chats">
@@ -85,140 +85,62 @@
                                         </div>
                                     </a>
                                   <ng-template ngbNavContent>
-                                    <!-- <div class="page-content page-container" id="page-content">
-                                            <div class="card">
-                                                <button mat-icon-button class="toggler"
-                                                    *ngIf="toggle" 
-                                                    (click)="toggleSideMenu()">
-                                                    <mat-icon>
-                                                       menu
-                                                    </mat-icon>
-                                                </button>
-                                                <div class="card-header justify-content-center">
-                                                    <h4 class="card-title"><strong>{{user.sender === userId ? user.receiver_name : user.sender_name}}</strong></h4>
+                                    <div class="page-content page-container" id="page-content" *ngIf="!isComponentVisible">
+                                        <div class="card">
+                                            <button mat-icon-button class="toggler"
+                                                *ngIf="toggle" 
+                                                (click)="toggleSideMenu()">
+                                                <mat-icon>
+                                                    menu
+                                                </mat-icon>
+                                            </button>
+                                            <div class="card-header justify-content-center">
+                                                <h4 class="card-title"><strong>{{user.sender === userId ? user.receiver_name : user.sender_name}}</strong></h4>
+                                            </div>
+                                            <mat-progress-bar mode="indeterminate"  *ngIf="load" id="addprog"></mat-progress-bar>
+                                            <div class="ps-container ps-theme-default ps-active-y mt-2" id="chat-content">
+                                                <div class="media media-chat" 
+                                                [ngClass]="{'media-chat-reverse' : msg.sender_id !== userId}"
+                                                *ngFor="let msg of usersMsg">
+                                                <div class="p-2 m-1 media-1 media-2">
+                                                    <img class="avatar" src="{{avatar_base_url+msg.sender_avatar}}" alt="user_avatar" *ngIf="msg.sender_avatar !== ''">
+                                                    <p class="msg-txt">{{msg.message}}</p>
                                                 </div>
-                                                <mat-progress-bar mode="indeterminate"  *ngIf="load" id="addprog"></mat-progress-bar>
-                                                <div class="ps-container ps-theme-default ps-active-y mt-2" id="chat-content">
-                                                    <div class="media media-chat" 
-                                                    [ngClass]="{'media-chat-reverse' : msg.sender_id !== userId}"
-                                                        *ngFor="let msg of usersMsg">
-                                                        <div class="p-2 m-1 media-1 media-2">
-                                                            <img class="avatar" src="{{avatar_base_url+msg.sender_avatar}}" alt="user_avatar" *ngIf="msg.sender_avatar !== ''">
-                                                            <p class="msg-txt">{{msg.message}}</p>
-                                                        </div>
+                                            </div>
+                                            <p class="text-danger text-center" *ngIf="errorTxt">{{errorTxt}}</p>
+                                            <div class="ps-scrollbar-x-rail" style="left: 0px; bottom: 0px;">
+                                                <div class="ps-scrollbar-x" tabindex="0" style="left: 0px; width: 0px;"></div>
+                                            </div>
+                                            <div class="ps-scrollbar-y-rail" style="top: 0px; height: 0px; right: 2px;">
+                                                <div class="ps-scrollbar-y" tabindex="0" style="top: 0px; height: 2px;"></div>
+                                            </div>
+                                        </div>
+                                        <form>
+                                            <div class="publisher">
+                                                <div class="outer" #textArea>
+                                                    <div class="d-flex align-items-center" style="width: 100%;">
+                                                        <textarea 
+                                                            class="publisher-input form-control" 
+                                                            type="text" 
+                                                            placeholder="اكتب رسالتك هنا"
+                                                            [(ngModel)]="messageTxt"
+                                                            [ngModelOptions]="{standalone: true}"
+                                                            (keyup)="$event.keyCode === 13">
+                                                        </textarea>
                                                     </div>
-                                                    <p class="text-danger text-center" *ngIf="errorTxt">{{errorTxt}}</p>
-                                                  <div class="ps-scrollbar-x-rail" style="left: 0px; bottom: 0px;">
-                                                    <div class="ps-scrollbar-x" tabindex="0" style="left: 0px; width: 0px;"></div>
                                                 </div>
-                                                <div class="ps-scrollbar-y-rail" style="top: 0px; height: 0px; right: 2px;">
-                                                    <div class="ps-scrollbar-y" tabindex="0" style="top: 0px; height: 2px;"></div>
-                                                </div>
+                                                <button class="btn text-info" (click)="sendMsg()">
+                                                    <img src="../../assets/images/send.svg" alt="" style="width: 50px;">
+                                                </button>
                                             </div>
-                                            <form>
-                                                <div class="publisher">
-                                                  <div class="outer" #textArea>
-                                                      <div class="d-flex align-items-center" style="width: 100%;">
-                                                          <textarea class="publisher-input form-control" 
-                                                              type="text" 
-                                                              placeholder="اكتب رسالتك هنا"
-                                                              [(ngModel)]="messageTxt"
-                                                              [ngModelOptions]="{standalone: true}"
-                                                              (keyup)="$event.keyCode === 13"></textarea>
-                                                              
-                                                            <!-- <a class="add_img_icon" (click)="openModelAddImg()">
-                                                                <img src="../../assets/images/add_img_icon.svg" alt="add_img_icon" loading="lazy">
-                                                            </a>
-                                                            <a class="add_voice_icon">
-                                                                <img src="../../assets/images/voice_mesg_icon.svg" alt="voice_mesg_icon" loading="lazy">
-                                                            </a> -->
-                                                      </div>
-                                                  </div>
-                                                      <button class="btn text-info" (click)="sendMsg()">
-                                                          <img src="../../assets/images/send.svg" alt="" style="width: 50px;">
-                                                      </button>
-                                                </div>
-                                            </form>
-                                            </div>
-                                    </div> -->
-                                    <router-outlet></router-outlet>
+                                        </form>
+                                    </div>
+                                    </div>
+                                    <app-chat-support *ngIf="isComponentVisible"></app-chat-support>
                                   </ng-template>
                                 </li>
                             </ng-container>
                             <p class="text-center text-danger" *ngIf="errorlist">{{errorlist}}</p>
-                            <!-- <li ngbNavItem>
-                              <a ngbNavLink>
-                                <div class="column">
-                                    <div class="chats">
-                                        <div class="avatar">
-                                            <img src="../../assets/images/support_chat_icon.svg" alt="avatar-img">
-                                        </div>
-                                        <div class="chat ">
-                                            <p class="chat-name">الدعم</p>
-                                        </div>
-                                    </div>
-                                </div>
-                              </a>
-                              <ng-template ngbNavContent>
-                                <div class="page-content page-container" id="page-content">
-                                    <div class="card">
-                                        <button mat-icon-button class="toggler"
-                                            *ngIf="toggle" 
-                                            (click)="toggleSideMenu()">
-                                            <mat-icon>
-                                               menu
-                                            </mat-icon>
-                                        </button>
-                                        <div class="card-header">
-                                            <p class="card-title"><strong>الدعم</strong></p>
-                                        </div>
-                                        <mat-progress-bar mode="indeterminate"  *ngIf="load" id="addprog"></mat-progress-bar>
-                                        <div class="ps-container ps-theme-default ps-active-y mt-2" id="chat-content">
-                                            <div class="media media-chat media-chat-reverse">
-                                                <div class="p-2 media-1 media-2">
-                                                    <img class="avatar" src="../../../assets/images/support_chat_icon.svg" alt="suportChat">
-                                                    <p class="msg-txt">مرحبا هل تحتاج مساعدة؟ <br>اتصل بنا هنا. سوف نجيب علي <br>استفسارك في أقرب وقت ممكن</p>
-                                                </div>
-                                            </div>
-                                            <div class="media media-chat">
-                                                    <div class="p-2 media-1 m-1" *ngFor="let msg of messages">
-                                                          <img class="avatar" src="{{supportData.image_url}}" alt="...">
-                                                          <p class="msg-txt">{{msg.message}}</p>
-                                                    </div>
-                                                    <div class="alert alert-danger" *ngIf="supportErr">{{supportErr}}</div>
-                                            </div>
-                                            <div class="media media-chat media-chat-reverse" *ngIf="supportRes">
-                                                  <div class="p-2 flex-row-reverse media-1 media-2">
-                                                      <img class="avatar" src="../../../assets/images/support_chat_icon.svg" alt="suportChat">
-                                                      <p class="msg-txt">{{supportRes}}</p>
-                                                </div>
-                                              </div>
-                                          <div class="ps-scrollbar-x-rail" style="left: 0px; bottom: 0px;">
-                                            <div class="ps-scrollbar-x" tabindex="0" style="left: 0px; width: 0px;"></div>
-                                          </div>
-                                          <div class="ps-scrollbar-y-rail" style="top: 0px; height: 0px; right: 2px;">
-                                            <div class="ps-scrollbar-y" tabindex="0" style="top: 0px; height: 2px;"></div>
-                                          </div>
-                                        </div>
-                                        <form [formGroup]="formSupport" (ngSubmit)="sendSupport()" (keyup)="$event.keyCode === 13">
-                                          <div class="publisher">
-                                            <div class="outer" >
-                                                <div class="d-flex align-items-center" style="width: 100%;">
-                                                    <textarea class="publisher-input form-control" 
-                                                    type="text" 
-                                                    placeholder="اكتب رسالتك هنا"
-                                                    formControlName='message'></textarea>
-                                                </div>
-                                            </div>
-                                                <button class="btn text-info" type="submit" >
-                                                  <img src="../../assets/images/send.svg" alt="" style="width: 50px;">
-                                                </button>
-                                            </div>
-                                        </form> 
-                                    </div>
-                            </div>
-                              </ng-template>
-                            </li> -->
                         </ul>
                     </div>
                 </div>

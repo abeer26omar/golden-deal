@@ -74,9 +74,7 @@ export class AppComponent implements OnInit, AfterViewInit{
                     horizontalPosition: 'center',
                     verticalPosition: 'top'
                   });
-                }
-                console.log(this.notificationService.notCounter);
-                
+                }                
               })
           }
         })

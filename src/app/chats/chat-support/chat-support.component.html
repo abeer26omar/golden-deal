@@ -1,50 +1,57 @@
 <div class="page-content page-container" id="page-content">
-        <div class="card">
-            <div class="card-header">
-                <p class="card-title"><strong>الدعم</strong></p>
-            </div>
-            <mat-progress-bar mode="indeterminate"  *ngIf="load" id="addprog"></mat-progress-bar>
-            <div class="ps-container ps-theme-default ps-active-y mt-2" id="chat-content">
-                <div class="media media-chat media-chat-reverse">
-                    <div class="p-2 media-2">
-                        <img class="avatar" src="../../../assets/images/support_chat_icon.svg" alt="suportChat">
-                        <p class="msg-txt">مرحبا هل تحتاج مساعدة؟ <br>اتصل بنا هنا. سوف نجيب علي <br>استفسارك في أقرب وقت ممكن</p>
-                    </div>
-                </div>
-                <div class="media media-chat">
-                        <div class="p-2 media-1 m-1" *ngFor="let msg of messages">
-                              <img class="avatar" src="{{supportData.image_url}}" alt="...">
-                              <p class="msg-txt">{{msg.message}}</p>
-                        </div>
-                        <div class="alert alert-danger" *ngIf="supportErr">{{supportErr}}</div>
-                </div>
-                <div class="media media-chat media-chat-reverse" *ngIf="supportRes">
-                      <div class="p-2 flex-row-reverse media-2">
-                          <img class="avatar" src="../../../assets/images/support_chat_icon.svg" alt="suportChat">
-                          <p class="msg-txt">{{supportRes}}</p>
-                    </div>
+  <div class="card">
+      <!-- <button mat-icon-button class="toggler"
+          *ngIf="toggle" 
+          (click)="toggleSideMenu()">
+          <mat-icon>
+             menu
+          </mat-icon>
+      </button> -->
+      <div class="card-header">
+          <p class="card-title"><strong>الدعم</strong></p>
+      </div>
+      <mat-progress-bar mode="indeterminate"  *ngIf="load" id="addprog"></mat-progress-bar>
+      <div class="ps-container ps-theme-default ps-active-y mt-2" id="chat-content">
+          <div class="media media-chat media-chat-reverse">
+              <div class="p-2 media-1 media-2">
+                  <img class="avatar" src="../../../assets/images/support_chat_icon.svg" alt="suportChat">
+                  <p class="msg-txt">مرحبا هل تحتاج مساعدة؟ <br>اتصل بنا هنا. سوف نجيب علي <br>استفسارك في أقرب وقت ممكن</p>
+              </div>
+          </div>
+          <div class="media media-chat">
+                  <div class="p-2 media-1 m-1" *ngFor="let msg of messages">
+                        <img class="avatar" src="{{supportData.image_url}}" alt="...">
+                        <p class="msg-txt">{{msg.message}}</p>
                   </div>
-              <div class="ps-scrollbar-x-rail" style="left: 0px; bottom: 0px;">
-                <div class="ps-scrollbar-x" tabindex="0" style="left: 0px; width: 0px;"></div>
-              </div>
-              <div class="ps-scrollbar-y-rail" style="top: 0px; height: 0px; right: 2px;">
-                <div class="ps-scrollbar-y" tabindex="0" style="top: 0px; height: 2px;"></div>
+                  <div class="alert alert-danger" *ngIf="supportErr">{{supportErr}}</div>
+          </div>
+          <div class="media media-chat media-chat-reverse" *ngIf="supportRes">
+                <div class="p-2 flex-row-reverse media-1 media-2">
+                    <img class="avatar" src="../../../assets/images/support_chat_icon.svg" alt="suportChat">
+                    <p class="msg-txt">{{supportRes}}</p>
               </div>
             </div>
-            <form [formGroup]="formSupport" (ngSubmit)="sendSupport()" (keyup)="$event.keyCode === 13">
-              <div class="publisher">
-                <div class="outer" >
-                    <div class="d-flex align-items-center" style="width: 100%;">
-                        <textarea class="publisher-input form-control" 
-                        type="text" 
-                        placeholder="اكتب رسالتك هنا"
-                        formControlName='message'></textarea>
-                    </div>
-                </div>
-                    <button class="btn text-info" type="submit" >
-                      <img src="../../assets/images/send.svg" alt="" style="width: 50px;">
-                    </button>
-                </div>
-            </form> 
+        <div class="ps-scrollbar-x-rail" style="left: 0px; bottom: 0px;">
+          <div class="ps-scrollbar-x" tabindex="0" style="left: 0px; width: 0px;"></div>
         </div>
+        <div class="ps-scrollbar-y-rail" style="top: 0px; height: 0px; right: 2px;">
+          <div class="ps-scrollbar-y" tabindex="0" style="top: 0px; height: 2px;"></div>
+        </div>
+      </div>
+      <form [formGroup]="formSupport" (ngSubmit)="sendSupport()" (keyup)="$event.keyCode === 13">
+        <div class="publisher">
+          <div class="outer" >
+              <div class="d-flex align-items-center" style="width: 100%;">
+                  <textarea class="publisher-input form-control" 
+                  type="text" 
+                  placeholder="اكتب رسالتك هنا"
+                  formControlName='message'></textarea>
+              </div>
+          </div>
+              <button class="btn text-info" type="submit" >
+                <img src="../../assets/images/send.svg" alt="" style="width: 50px;">
+              </button>
+          </div>
+      </form> 
+  </div>
 </div>

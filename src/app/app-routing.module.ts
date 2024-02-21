@@ -23,7 +23,6 @@ import { NotificationsComponent } from './notifications/notifications.component'
 import { SingleChatComponent } from './chats/single-chat/single-chat.component';
 import { LoginComponent } from './Auth/login/login.component';
 import { ChatSupportComponent } from './chats/chat-support/chat-support.component';
-import { ChatLayoutComponent } from './chats/chat-layout/chat-layout.component';
 
 
 
@@ -33,16 +32,8 @@ const routes: Routes = [
   { path:'search-result/:key',component: SearchResultComponent},
   { path:'product-details/:id', component: ProductDetailsComponent},
   { path:'seller-profile/:id', component: SellerProfileComponent,canActivate:[AuthGuardGuard]},
-  { path:'chat', component: ChatsComponent,canActivate:[AuthGuardGuard],
-    children: [
-      {
-        path: '',
-        redirectTo: 'chat',
-        pathMatch: 'full'
-      },
-      { path: ':id', component: ChatLayoutComponent, canActivate:[AuthGuardGuard]},
-      { path:'support', component: ChatSupportComponent,canActivate:[AuthGuardGuard] }
-    ]},
+  { path:'chat', component: ChatsComponent, canActivate: [AuthGuardGuard]},
+  { path:'support', component: ChatSupportComponent,canActivate: [AuthGuardGuard]},
   { path:'userchat/:id', component: SingleChatComponent,canActivate:[AuthGuardGuard]},
   { path:'adds/:id', component: AddsComponent, canActivate:[AuthGuardGuard]},
   { path:'new-add', component: NewAddComponent,canActivate:[AuthGuardGuard]},

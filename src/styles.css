@@ -850,3 +850,17 @@ ul.pagination .page-item:not(.active):not(.disabled):hover .page-link{
     border-color: var(--newColor) !important;
     cursor: pointer;
 }
+.mat-button, 
+.mat-icon-button, 
+.mat-stroked-button, 
+.mat-flat-button {
+    -webkit-tap-highlight-color: transparent !important;
+    min-width: auto !important;
+}
+.mat-button:is(:active, :focus, :hover){
+    -webkit-tap-highlight-color: transparent !important;
+}
+/* .mat-dialog-content {
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+} */

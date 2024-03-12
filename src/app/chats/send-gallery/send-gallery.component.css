@@ -1,0 +1,17 @@
+.mat-typography .header h5.title{
+    font-size: 1.2rem;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 120%;
+    color: var(--primary-color);
+}
+.rest_icon {
+    right: unset;
+    left: 12%;
+}
+@media screen and (max-width: 391px) {
+    label.file-upload {
+        width: 120px;
+        height: 120px;
+    }
+}

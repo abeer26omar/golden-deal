@@ -48,6 +48,7 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { GalleryModule } from  'ng-gallery';
 import { LightboxModule } from  'ng-gallery/lightbox';
 import { UploaderModule } from "angular-uploader";
+import { WebcamModule } from 'ngx-webcam';
 
 //components
 import { HeaderComponent } from './header/header.component';
@@ -95,6 +96,10 @@ import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { ResetPassModalComponent } from './Auth/reset-pass-modal/reset-pass-modal.component';
 import { LoginComponent } from './Auth/login/login.component';
 import { SendImagesComponent } from './chats/send-images/send-images.component';
+import { CameraMediaComponent } from './chats/camera-media/camera-media.component';
+import { ErrorMediaComponent } from './chats/error-media/error-media.component';
+import { SendGalleryComponent } from './chats/send-gallery/send-gallery.component';
+import { SendPdfComponent } from './chats/send-pdf/send-pdf.component';
 
 @NgModule({
   declarations: [
@@ -140,6 +145,10 @@ import { SendImagesComponent } from './chats/send-images/send-images.component';
     ResetPassModalComponent,
     LoginComponent,
     SendImagesComponent,
+    CameraMediaComponent,
+    ErrorMediaComponent,
+    SendGalleryComponent,
+    SendPdfComponent,
   ],
   imports: [
     BrowserModule,
@@ -189,7 +198,8 @@ import { SendImagesComponent } from './chats/send-images/send-images.component';
     SlickCarouselModule,
     GalleryModule,
     LightboxModule,
-    UploaderModule
+    UploaderModule,
+    WebcamModule
   ], 
   providers: [ NotificationsService, AsyncPipe,
     {provide: LocationStrategy, useClass: PathLocationStrategy},

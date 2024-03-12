@@ -10,6 +10,10 @@ import { CookieService } from 'ngx-cookie-service';
 import { MatDialog } from '@angular/material/dialog';
 import { SendImagesComponent } from './send-images/send-images.component';
 import { Router } from '@angular/router';
+import { CameraMediaComponent } from './camera-media/camera-media.component';
+import { ErrorMediaComponent } from './error-media/error-media.component';
+import { SendGalleryComponent } from './send-gallery/send-gallery.component';
+import { SendPdfComponent } from './send-pdf/send-pdf.component';
 
 @Component({
   selector: 'app-chats',
@@ -180,6 +184,33 @@ export class ChatsComponent implements OnInit, OnDestroy {
   toggleComponentVisibility(): void {
     this.isComponentVisible = true;
   }
+  openCameraDialog(){
+    this.dialogRef.open(CameraMediaComponent,{
+      width: '600px',
+      data: {
+      }
+    })
+  }
+  openGalleryDialog(){
+    this.dialogRef.open(SendGalleryComponent,{
+      width: '500px',
+    })
+  }
+  openPdfDialog(){
+    this.dialogRef.open(SendPdfComponent,{
+      width: '500px',
+    })
+  }
+  openPermissionDeined(error: any){
+    this.dialogRef.open(ErrorMediaComponent,{
+      data: {
+        error: error,
+        icon: 'error',
+        message: 'Please Allow Camera Access From Broswer Setting And Try Again'
+      }
+    })
+  }
+  
   ngOnDestroy(): void {
     this.notificationService._insideChatComponent.next(false);
     if (this.chatSub) {

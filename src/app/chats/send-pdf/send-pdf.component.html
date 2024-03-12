@@ -1,0 +1,31 @@
+<mat-dialog-content class="mat-typography p-0 m-0">
+    <div class="content p-4 p-sm-3">
+        <div class="header d-flex justify-content-between align-items-center mb-4">
+            <a mat-dialog-close><img src="../../../assets/images/close.svg" alt="close"></a>
+            <h5 class="title text-center mb-0" id="staticBackdropLabel">اختار صور المنتج</h5>
+        </div>
+        <mat-progress-bar mode="indeterminate" class="my-3" *ngIf="load" id="addprog"></mat-progress-bar>
+            <p class="text-danger text-center" *ngIf="error">{{error}}</p>
+            <p class="text-success text-center" *ngIf="resSuc">{{resSuc}}</p>
+    
+        <div class="body">
+                <div class="position-relative d-flex justify-content-center" dir="rtl">
+                    <a (click)="resetImg()" class="rest_icon" *ngIf="onAddNewImg">
+                        <img src="../../../assets/images/close_img_icon.svg" alt="close_img_icon">
+                    </a>
+                    <label for="file1" class="file-upload">
+                        <input
+                            id="file1"
+                            type="file"
+                            class="form-control"
+                            (change)="onFileChange($event)"
+                            accept="image/x-png,image/gif,image/jpeg"
+                            formControlName="product_image_1">
+                            <div class="text-center">
+                                <img  [src]="imgSrc ? imgSrc : '../../../assets/images/add_new_icon.svg'">
+                            </div> 
+                    </label>
+                </div>
+        </div>
+    </div>
+</mat-dialog-content>

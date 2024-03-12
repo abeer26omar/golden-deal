@@ -48,6 +48,7 @@
     "ngx-pagination": "^6.0.3",
     "ngx-slick-carousel": "^0.6.0",
     "ngx-star-rating": "^2.1.0",
+    "ngx-webcam": "^0.4.1",
     "ngx-wow": "^2.0.1",
     "primeicons": "^6.0.1",
     "primeng": "^14.0.0",

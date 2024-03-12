@@ -1,0 +1,51 @@
+<mat-dialog-content class="mat-typography p-0 m-0">
+  <div class="content p-4 p-sm-3">
+    <div class="header d-flex justify-content-between align-items-center mb-4">
+      <a mat-dialog-close><img src="../../../assets/images/close.svg" alt="close"></a>
+      <h5 class="title text-center mb-0" id="staticBackdropLabel">التقط صور المنتج</h5>
+    </div>
+    <div *ngIf="error">
+      <div class="d-flex align-items-center">
+        <mat-icon style="margin-right:0.25em;">{{'error' | lowercase}}</mat-icon>
+        <p class="mb-0 text-danger">{{messages}}</p>
+      </div>
+      <p>Please Allow Camera Access From Broswer Setting And Try Again</p>
+    </div>
+    <div class="text-center" *ngIf="!error">
+      <div class="d-flex justify-content-center my-3">
+        <a class="btn_bg bg_lightBlue me-3" (click)="triggerSnapshot();">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="24" viewBox="0 0 28 24" fill="none">
+            <path d="M17.8749 13.5015C17.8749 14.2803 17.6439 15.0416 17.2113 15.6891C16.7786 16.3366 16.1637 16.8413 15.4442 17.1393C14.7248 17.4373 13.9331 17.5153 13.1693 17.3633C12.4055 17.2114 11.7039 16.8364 11.1532 16.2857C10.6026 15.7351 10.2276 15.0335 10.0757 14.2697C9.92373 13.5059 10.0017 12.7142 10.2997 11.9947C10.5977 11.2753 11.1024 10.6603 11.7499 10.2277C12.3974 9.79501 13.1587 9.56409 13.9374 9.56409C14.9817 9.56409 15.9832 9.97893 16.7216 10.7173C17.46 11.4558 17.8749 12.4573 17.8749 13.5015Z" fill="white"/>
+            <path d="M25.4998 1.99955H20.0008L18.0056 0H10.0031L8.00031 1.99955H2.50023C1.83713 1.99955 1.20119 2.26297 0.732301 2.73186C0.263416 3.20074 0 3.83669 0 4.4998V21.4998C0 22.1629 0.263416 22.7988 0.732301 23.2677C1.20119 23.7366 1.83713 24 2.50023 24H25.4998C26.1629 24 26.7988 23.7366 27.2677 23.2677C27.7366 22.7988 28 22.1629 28 21.4998V4.4998C28 3.83669 27.7366 3.20074 27.2677 2.73186C26.7988 2.26297 26.1629 1.99955 25.4998 1.99955ZM14.0043 20.5005C12.6199 20.5005 11.2665 20.09 10.1153 19.3208C8.96419 18.5516 8.06698 17.4584 7.53717 16.1793C7.00735 14.9002 6.86873 13.4927 7.13883 12.1348C7.40892 10.777 8.07561 9.52967 9.05458 8.55069C10.0335 7.57172 11.2808 6.90503 12.6387 6.63493C13.9966 6.36483 15.404 6.50346 16.6831 7.03328C17.9622 7.56309 19.0554 8.46031 19.8246 9.61146C20.5938 10.7626 21.0043 12.116 21.0043 13.5005C21.0043 15.357 20.2668 17.1375 18.9541 18.4503C17.6413 19.763 15.8608 20.5005 14.0043 20.5005Z" fill="white"/>
+          </svg>
+        </a>
+        <a class="btn_bg bg_lightBlue" (click)="toggleWebcam();">Toggle Webcam</a>
+      </div>
+      <webcam 
+        [height]="500" 
+        [width]="500" 
+        [trigger]="triggerObservable" 
+        (imageCapture)="handleImage($event)" 
+        *ngIf="showWebcam"
+        [allowCameraSwitch]='true'
+        [switchCamera]="nextWebcamObservable"
+        [videoOptions]="videoOptions"
+        [imageQuality]="1"
+        (cameraSwitched)="cameraWasSwitched($event)"
+        (initError)="handleInitError($event)"
+        mirrorImage="never"
+      ></webcam>
+      
+    </div>
+    <div class="snapshot text-center" *ngIf="webcamImage">
+      <img [src]="webcamImage.imageAsDataUrl" alt="webcam image" width="500px" height="500px">
+      <a class="btn_bg bg_blue mt-3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30" fill="none">
+          <path d="M0 13.0268H22.6047L12.185 2.60462L14.8837 0L29.7674 14.8837L14.8837 29.7674L12.2841 27.1678L22.6047 16.7406H0V13.0268Z" fill="white"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+</mat-dialog-content>
+  
+  

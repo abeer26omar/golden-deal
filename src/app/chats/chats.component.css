@@ -59,6 +59,11 @@ p.title{
 }
 .side-chat .card-body p.chat-desc{
     color: var(--primary-color);
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
+    text-overflow: ellipsis
 }
 .side-chat .card-body small.time{
     font-size: 0.7em;
@@ -133,19 +138,10 @@ p.title{
     justify-content: space-evenly;
     padding: 12px 20px;
 }
-@media screen and (max-width: 575px) {
-    .publisher{
-        flex-wrap: wrap;
-    }
-    .media-2,.media-1{
-        max-width: 100%;
-    }
-
-}
 .publisher .outer{
     background-color: var(--white);
     padding: .5rem;
-    border-radius: 30px;
+    border-radius: 6px;
     display: flex;
     border: 1px solid var(--chat_gb);
     align-items: center;
@@ -242,17 +238,85 @@ textarea{
     background-color: black;
     opacity: 0.5;
 }
+.nav-pills li{
+    width: -webkit-fill-available;
+
+}
+.publisher .dropdown-menu.show {
+    background-color:  #F7F9FD;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row-reverse;
+    padding: .9rem 1rem;
+}
+.publisher .dropdown-menu li{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.publisher .dropdown-menu li span{
+    font-size: 9px;
+    font-weight: 400;
+}
+.btn_more{
+    background: none !important;
+    border: none !important;
+}
+.btn_more:is(:focus, :active, :hover){
+    background: none !important;
+    border: none !important;
+}
+.btn_bg{
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.bg_blue{
+    background-color: var(--primary-color);
+}
+.bg_lightBlue{
+    background: linear-gradient(0deg, #072585 0%, #1591D9 100%);
+}
+.bg_lightRed{
+    background: linear-gradient(hsla(0, 90%, 27%, 1), hsla(344, 82%, 47%, 1)); 
+}
+.bg_lightBirple{
+    background: linear-gradient(0deg, #570785 0%, #A26DFF 100%);
+}
+.bg_lightGreen{
+    background: linear-gradient(hsla(154, 90%, 27%, 1), hsla(148, 88%, 74%, 1));
+}
+.mat-menu-content{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 @media screen and (max-width: 768px) {
     .backDrop.active{
         height: 230%;
     }
 }
-@media screen and (max-width: 575.5px) {
+@media screen and (max-width: 575px) {
     .wavy{
         width: 100%;
     }
     .backDrop.active{
         height: 256.7%;
+    }
+    .media-2,
+    .media-1{
+            max-width: 100%;
+    }
+    .publisher .btn-group{
+        position: absolute;
+        left: 8%;
     }
 }
 @media screen and (max-width: 426px) {

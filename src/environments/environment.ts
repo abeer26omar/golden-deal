@@ -5,8 +5,8 @@
 export const environment = {
   production: false,
   api_url: 'https://admin.gooldendeal.com/api',
-  socket_url: 'http://localhost:3000/',
-  // socket_url: 'https://goldendealchat-35954574f978.herokuapp.com/',
+  // socket_url: 'http://localhost:3000/',
+  socket_url: 'https://goldendealchat-35954574f978.herokuapp.com/',
   firebase: {
     apiKey: "AIzaSyDt354Yq0BWiLnO-KFqMtsOpVR1_MY-inI",
     authDomain: "golden-deal-faa53.firebaseapp.com",

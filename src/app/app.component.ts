@@ -7,8 +7,7 @@ import { ProductsRequestService } from './services/products-request.service';
 import { ErrorHandlerService } from './services/error-handler.service';
 import { GoBackService } from './services/go-back.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ClearStorageService } from './services/clear-storage.service';
-declare var window: any;
+import { Router, NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -19,6 +18,7 @@ export class AppComponent implements OnInit, AfterViewInit{
   title = 'Golden-deal';
   sidebarOpen = true;
   notification: any;
+  private_marking: boolean = false;
   @Output() categories : Array<Category> = [];
   // backdrops = Array.from(document.getElementsByClassName('modal-backdrop') as HTMLCollectionOf<HTMLElement>)
   backdrops!: HTMLElement[];
@@ -48,7 +48,7 @@ export class AppComponent implements OnInit, AfterViewInit{
     private goBackService: GoBackService,
     private snackBar: MatSnackBar,
     private elementRef: ElementRef,
-    private clearStorage: ClearStorageService){
+    private router: Router){
       this.backdrops = [];
       this.hidebackdrop();
   }
@@ -79,43 +79,18 @@ export class AppComponent implements OnInit, AfterViewInit{
           }
         })
       }
-      this.goBackService.goBack()
+      this.goBackService.goBack();
+      this.router.events.subscribe((event) => {
+        if (event instanceof NavigationEnd) {
+          if (this.router.url.includes('private-marketing')) {
+            this.private_marking = true;
+          } else {
+            this.private_marking = false;
+          }
+        }
+      });
   }
   ngAfterViewInit(): void {
     this.backdrops = Array.from(this.elementRef.nativeElement.querySelectorAll('.modal-backdrop'));
   }
-  // clearSorageForReAuth(){
-  //   this.clearStorage.removeTokenAfterOneHour();
-
-  //   // Handle app closing event
-  //   window.onbeforeunload = () => {
-  //     this.clearStorage.storeTimestampOnClose();      
-  //   };
-
-  //   // Check elapsed time when the app is reopened
-  //   const elapsed = this.clearStorage.calculateElapsedTime();
-  //   const oneHourInMillis = 24 * 60 * 60 * 1000; // 1 hour in milliseconds
-
-  //   if (elapsed >= oneHourInMillis) {
-  //     // Remove the token from localStorage if more than an hour elapsed
-  //     localStorage.removeItem('token_deal');
-  //     localStorage.removeItem('userId');
-  //     localStorage.removeItem('region_id');
-  //     localStorage.removeItem('userImage');
-  //     localStorage.removeItem('loginTime');
-  //     localStorage.removeItem('closeTime');
-  //   } else {
-  //     // Calculate remaining time and schedule token removal
-  //     const remainingTime = oneHourInMillis - elapsed;
-  //     setTimeout(() => {
-  //       // Remove the token from localStorage after the remaining time
-  //       localStorage.removeItem('token_deal');
-  //       localStorage.removeItem('userId');
-  //       localStorage.removeItem('region_id');
-  //       localStorage.removeItem('userImage');
-  //       localStorage.removeItem('loginTime');
-  //       localStorage.removeItem('closeTime');
-  //     }, remainingTime);
-  //   }
-  // }
 }

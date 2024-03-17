@@ -39,7 +39,8 @@
     </div>
     <div class="snapshot text-center" *ngIf="webcamImage">
       <img [src]="webcamImage.imageAsDataUrl" alt="webcam image" width="500px" height="500px">
-      <a class="btn_bg bg_blue mt-3">
+      <input type="hidden" [value]="webcamImage"/>
+      <a class="btn_bg bg_blue mt-3" (click)="sendMsg(1)">
         <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30" fill="none">
           <path d="M0 13.0268H22.6047L12.185 2.60462L14.8837 0L29.7674 14.8837L14.8837 29.7674L12.2841 27.1678L22.6047 16.7406H0V13.0268Z" fill="white"/>
         </svg>

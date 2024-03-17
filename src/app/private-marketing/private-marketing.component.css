@@ -1,0 +1,68 @@
+.header_private{
+    height: 344px;
+    width: 100%;
+    background-image: url('../../assets/images/private_marketing.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.header_private h1{
+    color: #FFF;
+    font-size: 94px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+.content{
+    margin-top: 104px;
+}
+.px{
+    padding-left: 70px;
+    padding-right: 70px;
+}
+.content p,
+li{
+    color: var(--primary-color);
+    font-style: normal;
+    line-height: 30px;
+    font-weight: 400;
+    font-size: 20px;
+
+}
+.content p.title{
+    font-weight: 600;
+    font-size: 26px;
+
+}
+ul{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.flex_column{
+    display: flex;
+    flex-direction: column;
+}
+.alert p{
+    color: #C02929;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
+}
+@media screen and (max-width: 991.5px) {
+    .flex_column{
+        flex-direction: column-reverse;
+    }
+    .header_private h1{
+        font-size: 46px;
+    }
+}
+@media screen and (max-width: 575.5px) {
+    .px{
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+}

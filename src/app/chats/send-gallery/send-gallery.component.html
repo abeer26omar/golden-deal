@@ -5,12 +5,12 @@
             <h5 class="title text-center mb-0" id="staticBackdropLabel">اختار صور المنتج</h5>
         </div>
         <mat-progress-bar mode="indeterminate" class="my-3" *ngIf="load" id="addprog"></mat-progress-bar>
-            <p class="text-danger text-center" *ngIf="error">{{error}}</p>
+            <p class="text-danger text-center" *ngIf="error">{{errorMsg}}</p>
             <p class="text-success text-center" *ngIf="resSuc">{{resSuc}}</p>
     
         <div class="body">
             <div class="row row-cols-md-3 row-cols-2 g-3 justify-content-center">
-                <div class="col position-relative d-flex justify-content-center" dir="rtl">
+                <div class="col position-relative d-flex justify-content-center">
                     <a (click)="resetImg(1)" class="rest_icon" *ngIf="onAddNewImg1">
                         <img src="../../../assets/images/close_img_icon.svg" alt="close_img_icon">
                     </a>
@@ -20,14 +20,14 @@
                             type="file"
                             class="form-control"
                             (change)="onFileChange(1, $event)"
-                            accept="image/x-png,image/gif,image/jpeg"
+                            accept="image/x-png,image/jpg,image/jpeg"
                             formControlName="product_image_1">
                             <div class="text-center">
-                                <img  [src]="imgSrc1 ? imgSrc1 : '../../../assets/images/add_new_icon.svg'">
+                                <img  [src]="imgSrc1 ? imgSrc1 : '../../../assets/images/add_new_icon.svg'" />
                             </div> 
                     </label>
                 </div>
-                <div class="col position-relative d-flex justify-content-center">
+                <!-- <div class="col position-relative d-flex justify-content-center">
                     <a (click)="resetImg(2)" class="rest_icon"  *ngIf="onAddNewImg2">
                         <img src="../../../assets/images/close_img_icon.svg" alt="close_img_icon">
                     </a>
@@ -36,9 +36,9 @@
                             id="file2"
                             type="file"
                             class="form-control"
-                            accept="image/x-png,image/gif,image/jpeg"
+                            accept="image/x-png,image/jpg,image/jpeg"
                             formControlName="product_image_2"
-                            (change)="onFileChange(2,$event)">
+                            (change)="onFileChange(2, $event)">
                             <div class="text-center">
                                 <img  [src]="imgSrc2 ? imgSrc2 : '../../../assets/images/add_new_icon.svg'">
                             </div>
@@ -48,15 +48,14 @@
                     <a (click)="resetImg(3)" class="rest_icon" *ngIf="onAddNewImg3">
                         <img src="../../../assets/images/close_img_icon.svg" alt="close_img_icon">
                     </a>
-                    <label for="file3" class="file-upload"
-                    >
+                    <label for="file3" class="file-upload">
                         <input
                             id="file3"
                             type="file"
                             class="form-control"
-                            accept="image/x-png,image/gif,image/jpeg"
+                            accept="image/x-png,image/jpg,image/jpeg"
                             formControlName="product_image_3"
-                            (change)="onFileChange(3,$event)">
+                            (change)="onFileChange(3, $event)">
                             <div class="text-center">
                                 <img  [src]="imgSrc3 ? imgSrc3 : '../../../assets/images/add_new_icon.svg'">
                             </div>
@@ -66,15 +65,14 @@
                     <a (click)="resetImg(4)" class="rest_icon" *ngIf="onAddNewImg4">
                         <img src="../../../assets/images/close_img_icon.svg" alt="close_img_icon">
                     </a>
-                    <label for="file4" class="file-upload"
-                    >
+                    <label for="file4" class="file-upload">
                         <input
                             id="file4"
                             type="file"
                             class="form-control"
-                            accept="image/x-png,image/gif,image/jpeg"
+                            accept="image/x-png,image/jpg,image/jpeg"
                             formControlName="product_image_4"
-                            (change)="onFileChange(4,$event)">
+                            (change)="onFileChange(4, $event)">
                             <div class="text-center">
                                 <img  [src]="imgSrc4 ? imgSrc4 : '../../../assets/images/add_new_icon.svg'">
                             </div>
@@ -84,15 +82,14 @@
                     <a (click)="resetImg(5)" class="rest_icon" *ngIf="onAddNewImg5">
                         <img src="../../../assets/images/close_img_icon.svg" alt="close_img_icon">
                     </a>
-                    <label for="file5" class="file-upload"
-                    >
+                    <label for="file5" class="file-upload">
                         <input
                             id="file5"
                             type="file"
                             class="form-control"
-                            accept="image/x-png,image/gif,image/jpeg"
+                            accept="image/x-png,image/jpg,image/jpeg"
                             formControlName="product_image_5"
-                            (change)="onFileChange(5,$event)">
+                            (change)="onFileChange(5, $event)">
                             <div class="text-center">
                                 <img  [src]="imgSrc5 ? imgSrc5 : '../../../assets/images/add_new_icon.svg'">
                             </div>
@@ -102,22 +99,25 @@
                     <a (click)="resetImg(6)" class="rest_icon" *ngIf="onAddNewImg6">
                         <img src="../../../assets/images/close_img_icon.svg" alt="close_img_icon">
                     </a>
-                    <label for="file6" class="file-upload"
-                    >
+                    <label for="file6" class="file-upload">
                         <input
                             id="file6"
                             type="file"
                             class="form-control"
-                            accept="image/x-png,image/gif,image/jpeg"
+                            accept="image/x-png,image/jpg,image/jpeg"
                             formControlName="product_image_6"
                             (change)="onFileChange(6, $event)">
                             <div class="text-center">
                                 <img  [src]="imgSrc6 ? imgSrc6 : '../../../assets/images/add_new_icon.svg'">
                             </div>
                     </label>
-                </div>
+                </div> -->
             </div>
-            
+            <a class="btn_bg bg_blue mt-3" (click)="saveImagStorage()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30" fill="none">
+                  <path d="M0 13.0268H22.6047L12.185 2.60462L14.8837 0L29.7674 14.8837L14.8837 29.7674L12.2841 27.1678L22.6047 16.7406H0V13.0268Z" fill="white"/>
+                </svg>
+            </a>
         </div>
     </div>
 </mat-dialog-content>

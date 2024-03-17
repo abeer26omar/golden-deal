@@ -49,6 +49,7 @@ import { GalleryModule } from  'ng-gallery';
 import { LightboxModule } from  'ng-gallery/lightbox';
 import { UploaderModule } from "angular-uploader";
 import { WebcamModule } from 'ngx-webcam';
+import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 
 //components
 import { HeaderComponent } from './header/header.component';
@@ -95,11 +96,10 @@ import { PaginatorModule } from 'primeng/paginator';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { ResetPassModalComponent } from './Auth/reset-pass-modal/reset-pass-modal.component';
 import { LoginComponent } from './Auth/login/login.component';
-import { SendImagesComponent } from './chats/send-images/send-images.component';
 import { CameraMediaComponent } from './chats/camera-media/camera-media.component';
-import { ErrorMediaComponent } from './chats/error-media/error-media.component';
 import { SendGalleryComponent } from './chats/send-gallery/send-gallery.component';
 import { SendPdfComponent } from './chats/send-pdf/send-pdf.component';
+import { PrivateMarketingComponent } from './private-marketing/private-marketing.component';
 
 @NgModule({
   declarations: [
@@ -144,11 +144,10 @@ import { SendPdfComponent } from './chats/send-pdf/send-pdf.component';
     NotificationsComponent,
     ResetPassModalComponent,
     LoginComponent,
-    SendImagesComponent,
     CameraMediaComponent,
-    ErrorMediaComponent,
     SendGalleryComponent,
     SendPdfComponent,
+    PrivateMarketingComponent,
   ],
   imports: [
     BrowserModule,
@@ -199,7 +198,8 @@ import { SendPdfComponent } from './chats/send-pdf/send-pdf.component';
     GalleryModule,
     LightboxModule,
     UploaderModule,
-    WebcamModule
+    WebcamModule,
+    NgxExtendedPdfViewerModule,
   ], 
   providers: [ NotificationsService, AsyncPipe,
     {provide: LocationStrategy, useClass: PathLocationStrategy},

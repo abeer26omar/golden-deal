@@ -35,7 +35,7 @@ export class ChatService {
     });
   }
   sendMessage(data: any){
-    this.socket.emit('send_message', {sender: data.sender, receiver: data.receiver, message: data.message}) 
+    this.socket.emit('send_message', {sender: data.sender, receiver: data.receiver, message: data.message, type: data.type}) 
   }
   getMessage() : Observable<any>{
     return new Observable<any>(observer =>{
@@ -59,6 +59,13 @@ export class ChatService {
       receiver: receiver,
       sender: sender
     },this.httpOptions).pipe(tap(()=>{
+      this._refresh.next();
+    }))
+  }
+  sendImageRequest(body: any){
+    return this.http.post<ResponseSuccess>(`${env.api_url}/chat/upload-image`,
+      body
+    ,this.httpOptions).pipe(tap(()=>{
       this._refresh.next();
     }))
   }

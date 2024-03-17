@@ -1,0 +1,14 @@
+.btn_bg{
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.bg_blue{
+    background-color: var(--primary-color);
+}
+.bg_lightBlue{
+    background: linear-gradient(0deg, #072585 0%, #1591D9 100%);
+}

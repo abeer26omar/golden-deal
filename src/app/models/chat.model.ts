@@ -36,7 +36,8 @@ export interface Messages{
     seen_at: number
     sender_avatar: string,
     sender_id: number,
-    sender_name: string
+    sender_name: string,
+    type: number
 }
 export interface APIResponse7<T>{
     data: Array<T>

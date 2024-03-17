@@ -342,7 +342,7 @@ aria-hidden="true"
             <a (click)="chat(singleProduct.data)" 
             class="btn btn-sec" data-bs-dismiss="modal">محادثه <img src="../../../assets/images/chat.svg" alt="chat"></a>
             <a *ngIf="singleProduct.data.seller_phone!== null"
-            href="https://api.whatsapp.com/send?phone=966{{singleProduct.data.seller_phone}}&text=https://gooldendeal.com/" 
+            href="https://api.whatsapp.com/send?phone=966{{singleProduct.data.seller_phone}}&text={{singleProduct.data.name}}%20https://gooldendeal.com/product-details/{{singleProduct.data.id}}" 
             target="_blank" class="btn btn-prim btn-whats">واتساب <img src="../../../assets/images/whatsapp_icon.svg" alt="whatsapp_icon"></a>
         </div>
       </div>
@@ -365,7 +365,7 @@ aria-hidden="true"
             </div>
             <p>اكتب رسالتك هنا</p>
         </div>
-        <div class="modal-body d-flex justify-content-between">
+        <!-- <div class="modal-body d-flex justify-content-between">
                     <textarea class="publisher-input form-control" 
                         type="text" 
                         placeholder="اكتب هنا"
@@ -376,7 +376,7 @@ aria-hidden="true"
                 <button class="btn text-info" (click)="sendMsg()">
                     <img src="../../assets/images/send.svg" alt="" style="width: 50px;">
                 </button>
-        </div>
+        </div> -->
   </div>
 </div>
 <!-- modal success -->

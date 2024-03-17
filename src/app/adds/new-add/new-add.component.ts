@@ -217,7 +217,7 @@ export class NewAddComponent implements OnInit, OnDestroy {
   onFileChange(key: number,event: any){
     let reader = new FileReader();
     reader.readAsDataURL(event.target.files[0]);
-    this.file =<File>event.target.files[0];
+    this.file = <File>event.target.files[0];
     switch(key){
       case 1:
         this.onAddNewImg1 = true;

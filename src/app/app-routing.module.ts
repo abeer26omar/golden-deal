@@ -23,6 +23,7 @@ import { NotificationsComponent } from './notifications/notifications.component'
 import { SingleChatComponent } from './chats/single-chat/single-chat.component';
 import { LoginComponent } from './Auth/login/login.component';
 import { ChatSupportComponent } from './chats/chat-support/chat-support.component';
+import { PrivateMarketingComponent } from './private-marketing/private-marketing.component';
 
 
 
@@ -49,6 +50,7 @@ const routes: Routes = [
   { path:'edit/:id', component: AddEditAddressComponent, canActivate:[AuthGuardGuard]},
   { path:'deposit', component: DepositComponent},
   { path:'notification', component: NotificationsComponent},
+  { path:'private-marketing', component: PrivateMarketingComponent},
   { path:'**', component: NotfoundComponent}
 ];
 const routerOptions: ExtraOptions = {

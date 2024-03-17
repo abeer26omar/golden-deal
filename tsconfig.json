@@ -22,7 +22,8 @@
       "es2020",
       "dom",
       "dom.iterable"
-    ]
+    ],
+    "types": ["node"]
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

@@ -82,12 +82,32 @@
                                             <mat-progress-bar mode="indeterminate"  *ngIf="load" id="addprog"></mat-progress-bar>
                                             <div class="ps-container ps-theme-default ps-active-y mt-2" id="chat-content">
                                                 <div class="media media-chat" 
-                                                [ngClass]="{'media-chat-reverse' : msg.sender_id !== userId}"
-                                                *ngFor="let msg of usersMsg">
-                                                <div class="p-2 m-1 media-1 media-2">
-                                                    <img class="avatar" src="{{avatar_base_url+msg.sender_avatar}}" alt="user_avatar" *ngIf="msg.sender_avatar !== ''">
-                                                    <p class="msg-txt">{{msg.message}}</p>
-                                                </div>
+                                                    [ngClass]="{'media-chat-reverse' : msg.sender_id !== userId}"
+                                                    *ngFor="let msg of usersMsg">
+                                                    <div class="p-2 m-1 media-1 media-2">
+                                                        <img class="avatar ms-2" src="{{avatar_base_url+msg.sender_avatar}}" alt="user_avatar" *ngIf="msg.sender_avatar !== ''">
+                                                        <p class="msg-txt" *ngIf="msg.type === 0">{{msg.message}}</p>
+                                                        <img 
+                                                            *ngIf="msg.type === 1"
+                                                            class="msg-img" 
+                                                            [src]="msg.message" 
+                                                            alt="product image" 
+                                                            width="200px"
+                                                            height="150px"
+                                                        />
+                                                        <div class="msg-file" *ngIf="msg.type === 2">
+                                                            <ngx-extended-pdf-viewer
+                                                                [src]="msg.message"
+                                                                width="200px"
+                                                                [height]="'150px'">
+                                                            </ngx-extended-pdf-viewer>
+                                                        </div>
+                                                        <div class="msg-ad" *ngIf="msg.type === 3">
+                                                            <img src />
+                                                            <p></p>
+                                                            <p></p>
+                                                        </div>
+                                                    </div>
                                             </div>
                                             <p class="text-danger text-center" *ngIf="errorTxt">{{errorTxt}}</p>
                                             <div class="ps-scrollbar-x-rail" style="left: 0px; bottom: 0px;">
@@ -99,7 +119,7 @@
                                         </div>
                                         <form>
                                             <div class="publisher">
-                                                <button class="btn text-info btn_bg bg_blue m-0" (click)="sendMsg()">
+                                                <button class="btn text-info btn_bg bg_blue m-0" (click)="sendMsg(0)">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30" fill="none">
                                                         <path d="M0 13.0268H22.6047L12.185 2.60462L14.8837 0L29.7674 14.8837L14.8837 29.7674L12.2841 27.1678L22.6047 16.7406H0V13.0268Z" fill="white"/>
                                                     </svg>
@@ -128,7 +148,7 @@
                                                     </button>
                                                     <ul class="dropdown-menu">
                                                         <li class="me-2">
-                                                            <a class="btn_bg bg_lightGreen">
+                                                            <a class="btn_bg bg_lightGreen" href="https://www.google.com/maps" target="_blank">
                                                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="24" viewBox="0 0 20 24" fill="none">
                                                                     <path d="M9.99952 24L2.92536 16.9723C1.05169 15.1039 0 12.5765 0 9.9421C0 7.30766 1.05169 4.78027 2.92536 2.91194C3.85326 1.98896 4.95583 1.25662 6.16986 0.75692C7.38388 0.257223 8.68548 0 10 0C11.3145 0 12.6161 0.257223 13.8301 0.75692C15.0442 1.25662 16.1467 1.98896 17.0746 2.91194C18.9483 4.78027 20 7.30766 20 9.9421C20 12.5765 18.9483 15.1039 17.0746 16.9723L9.99952 24ZM9.99952 4.41761C8.89688 4.41476 7.81817 4.73627 6.89997 5.34145C5.98177 5.94663 5.26536 6.80827 4.84145 7.81727C4.41753 8.82628 4.30517 9.93728 4.51859 11.0096C4.732 12.082 5.2616 13.0674 6.04033 13.8412C6.81907 14.6151 7.81192 15.1424 8.89318 15.3566C9.97445 15.5708 11.0955 15.4621 12.1144 15.0444C13.1334 14.6266 14.0044 13.9186 14.6171 13.0099C15.2299 12.1012 15.5569 11.0327 15.5567 9.93969C15.5564 8.47755 14.9713 7.07518 13.9296 6.04003C12.8878 5.00488 11.4745 4.42144 9.99952 4.41761Z" fill="white"/>
                                                                 </svg>

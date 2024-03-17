@@ -1,7 +1,9 @@
 import { Component, OnInit, Inject, OnDestroy} from '@angular/core';
 import { MatDialogClose, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Subject, Observable } from 'rxjs';
+import { Subject, Observable, Subscription } from 'rxjs';
 import {WebcamImage, WebcamInitError, WebcamUtil} from 'ngx-webcam';
+import { ChatService } from 'src/app/services/chat.service';
+import { ResponseSuccess } from 'src/app/models/actions.model';
 
 @Component({
   selector: 'app-camera-media',
@@ -10,34 +12,46 @@ import {WebcamImage, WebcamInitError, WebcamUtil} from 'ngx-webcam';
 })
 export class CameraMediaComponent implements OnInit {
 
-  public showWebcam = true;
-  public allowCameraSwitch = true;
-  public multipleWebcamsAvailable = false;
-  public deviceId!: string;
-  public facingMode: string = 'environment';
-  error: boolean = false;
-  public messages: any;
+  // private storage = new Storage({
+  //   projectId: 'lithe-timer-396713',
+  //   keyFilename: '6b8cb5646e3c8172de852809206d523e3b3a9dcc'
+  // });
 
+  allowCameraSwitch = true;
+  showWebcam = true;
+  multipleWebcamsAvailable = false;
+  deviceId!: string;
+  facingMode: string = 'environment';
+  error: boolean = false;
+  messages: any;
+  receiverId: any;
+  userId: any;
   // latest snapshot
-  public webcamImage: WebcamImage | null = null;
+  webcamImage: WebcamImage | any = null;
 
   // webcam snapshot trigger
   private trigger: Subject<void> = new Subject<void>();
   // switch to next / previous / specific webcam; true/false: forward/backwards, string: deviceId
   private nextWebcam: Subject<boolean|string> = new Subject<boolean|string>();
+  public chatSub: Subscription = new Subscription;
 
-  // constructor(private dialogRef: MatDialog){}
+  constructor(@Inject(MAT_DIALOG_DATA) public data:any,
+  public dialogRef: MatDialogRef<MatDialogClose>,
+  private chatService: ChatService) {
+    this.userId = data.sender;
+    this.receiverId = data.receiver;
+  }
 
-  public ngOnInit(): void {
+  ngOnInit(): void {
     this.readAvailableVideoInputs();
   }
 
-  public triggerSnapshot(): void {
+  triggerSnapshot(): void {
     this.trigger.next();
     this.showWebcam = false;
   }
 
-  public toggleWebcam(): void {
+  toggleWebcam(): void {
     // Stop the webcam and release camera resources when hiding it
     if (this.showWebcam) {
       this.showWebcam = false;
@@ -50,26 +64,26 @@ export class CameraMediaComponent implements OnInit {
     }
   }
   
-  public handleInitError(error: WebcamInitError): void {
+  handleInitError(error: WebcamInitError): void {
     if (error.mediaStreamError && error.mediaStreamError.name === 'NotAllowedError') {
       this.error = true;
       this.messages = 'User denied camera access';
     }
   }
 
-  public showNextWebcam(directionOrDeviceId: boolean|string): void {
+  showNextWebcam(directionOrDeviceId: boolean|string): void {
     // true => move forward through devices
     // false => move backwards through devices
     // string => move to device with given deviceId
     this.nextWebcam.next(directionOrDeviceId);
   }
 
-  public handleImage(webcamImage: WebcamImage): void {
+  handleImage(webcamImage: WebcamImage): void {
     console.log(webcamImage);
     this.webcamImage = webcamImage;
   }
 
-  public cameraWasSwitched(deviceId: string): void {
+  cameraWasSwitched(deviceId: string): void {
     this.deviceId = deviceId;
     this.readAvailableVideoInputs();
   }
@@ -97,5 +111,25 @@ export class CameraMediaComponent implements OnInit {
       .then((mediaDevices: MediaDeviceInfo[]) => {
         this.multipleWebcamsAvailable = mediaDevices && mediaDevices.length > 1;
       });
+  }
+  saveImagStorage(body: any){
+    this.chatSub = this.chatService.sendImageRequest(body).subscribe({
+      next: (res: ResponseSuccess)=>{
+        console.log(res);
+      },
+      error: ()=>{
+      }
+    })
+  }
+  sendMsg(type: number){
+    console.log(this.webcamImage);
+    
+    const data = {
+      sender: this.userId,
+      receiver: this.receiverId,
+      message: this.webcamImage.imageAsDataUrl,
+      type: type
+    }    
+      this.chatService.sendMessage(data);
   }
 }

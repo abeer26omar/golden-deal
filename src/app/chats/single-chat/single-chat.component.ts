@@ -5,11 +5,15 @@ import { Messages } from 'src/app/models/chat.model';
 import { ChatService } from 'src/app/services/chat.service';
 import { NotificationsService } from 'src/app/services/notifications.service';
 import { CookieService } from 'ngx-cookie-service';
+import { MatDialog } from '@angular/material/dialog';
+import { CameraMediaComponent } from '../camera-media/camera-media.component';
+import { SendGalleryComponent } from '../send-gallery/send-gallery.component';
+import { SendPdfComponent } from '../send-pdf/send-pdf.component';
 
 @Component({
   selector: 'app-single-chat',
   templateUrl: './single-chat.component.html',
-  styleUrls: ['../chat-support/chat-support.component.css']
+  styleUrls: ['../chats.component.css']
 })
 export class SingleChatComponent implements OnInit, OnDestroy {
   userInfo: any;
@@ -19,8 +23,9 @@ export class SingleChatComponent implements OnInit, OnDestroy {
   admin: any;
   message: string = '';
   messageTxt: string = '';
-  public usersMsg: Array<Messages> = []
-  avatar_base_url: string = 'https://admin.gooldendeal.com/storage/';
+  product: any = JSON.parse(localStorage.getItem('productDeal') || '');
+  public usersMsg: Array<Messages> = [];
+  avatar_base_url: string = 'https://storage.googleapis.com/goldendeal-bucket/';
   @ViewChild('textArea') textArea!: ElementRef;
   public chatSub: Subscription = new Subscription;
   errorTxt: string = '';
@@ -32,7 +37,8 @@ export class SingleChatComponent implements OnInit, OnDestroy {
   }
   constructor(private chatService: ChatService,
     private notificationService: NotificationsService,
-    private cookieService: CookieService) { }
+    private cookieService: CookieService,
+    private dialogRef: MatDialog) { }
   
   ngOnInit(): void {
     this.notificationService._insideChatComponent.next(false);
@@ -47,17 +53,21 @@ export class SingleChatComponent implements OnInit, OnDestroy {
           seen_at: 0,
           sender_avatar: '',
           sender_id: data.sender,
-          sender_name: ''
+          sender_name: '',
+          type: 0
         }
         this.usersMsg.push(mappedData)        
       })
-    this.getChat(this.userInfo.owner.id)
+    this.getChat(this.userInfo.owner.id);
+    this.sendMsg(3);
+    this.product = JSON.parse(localStorage.getItem('productDeal') || '');    
   }
-  sendMsg(){    
+  sendMsg(type: number, msg?: string){
     const data = {
       sender: this.userId,
       receiver: this.receiverId,
-      message: this.messageTxt
+      message: this.messageTxt || msg,
+      type: type
     }
     if(this.messageTxt == ''){
       this.textArea.nativeElement.classList.add('inValid')
@@ -66,6 +76,33 @@ export class SingleChatComponent implements OnInit, OnDestroy {
       this.chatService.sendMessage(data);
       this.messageTxt = '';
     }
+  }
+  openCameraDialog(){
+    this.dialogRef.open(CameraMediaComponent,{
+      width: '600px',
+      data: {
+        sender: this.userId,
+        receiver: this.receiverId,
+      }
+    })
+  }
+  openGalleryDialog(){
+    this.dialogRef.open(SendGalleryComponent,{
+      width: '500px',
+      data: {
+        sender: this.userId,
+        receiver: this.receiverId,
+      }
+    })
+  }
+  openPdfDialog(){
+    this.dialogRef.open(SendPdfComponent,{
+      width: '500px',
+      data: {
+        sender: this.userId,
+        receiver: this.receiverId,
+      }
+    })
   }
   scrollToBottom() {
     setTimeout(() => {

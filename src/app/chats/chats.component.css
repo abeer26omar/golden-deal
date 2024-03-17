@@ -105,12 +105,13 @@ p.title{
     max-width: 100%;
 }
 .media-1{
-    display: inline-block;
+    display: flex;
     max-width: 80%;
     background-color: var(--chat_gb);
     border-radius: 8px;
     width: fit-content;
     color: var(--primary-color);
+    align-items: start;
 }
 .media-chat-reverse .media-1{
     background-color: var(--gray-color);

@@ -5,7 +5,7 @@
     </mat-sidenav>
     <mat-sidenav-content>
       <app-header (toggleSideBar)= "toggle()" [categories]="categories"></app-header>
-      <div class="container-fluid">
+      <div class="container-fluid" [ngClass]="{'p-0': private_marking}">
         <router-outlet></router-outlet>
       </div>
     <app-footer></app-footer>

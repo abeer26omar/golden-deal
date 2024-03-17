@@ -18,6 +18,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { GalleryItem, ImageItem } from 'ng-gallery';
 import { GoBackService } from 'src/app/services/go-back.service';
 import { CookieService } from 'ngx-cookie-service';
+import { Meta } from '@angular/platform-browser';
 
 declare var window: any;
 
@@ -31,7 +32,7 @@ export class ProductDetailsComponent implements OnInit ,AfterViewInit ,OnDestroy
   galleryImages: NgxGalleryImage[] = [];
   cameraImages: GalleryItem[] = [];
   mac: boolean = false;
-  singleProduct : Product = {
+  singleProduct: Product = {
     data: {
       id: 0,
       name: '',
@@ -113,7 +114,12 @@ export class ProductDetailsComponent implements OnInit ,AfterViewInit ,OnDestroy
     private http: HttpClient,
     private renderer: Renderer2,
     private goBackService: GoBackService,
-    private cookieService: CookieService) { 
+    private cookieService: CookieService,
+    private meta: Meta) {
+
+      this.meta.addTag({ name: this.singleProduct.data.name, content: this.singleProduct.data.desc});
+      this.meta.addTag({ property: 'og:image', content: this.singleProduct.data.product_images[0].image_url});
+
       this.actionService.refresh.subscribe(()=>{
         this.getProductDetails(this.ProductId);
       });
@@ -137,6 +143,7 @@ export class ProductDetailsComponent implements OnInit ,AfterViewInit ,OnDestroy
     this.routeSub = this.route.params.subscribe((params: Params) => {
       this.ProductId = params['id'];
     });
+    this.chatService.connect(this.userId);
     this.getProductDetails(this.ProductId);
     this.owner_id = localStorage.getItem('userId') || this.cookieService.get('userId');
     this.formModal = new window.bootstrap.Modal(
@@ -333,22 +340,25 @@ export class ProductDetailsComponent implements OnInit ,AfterViewInit ,OnDestroy
     }
   } 
   chat(data:any){
-    localStorage.setItem('userInfoDeal',JSON.stringify(data))
+    const product = {
+      name: data.name,
+      default_image: data.default_image,
+      order_code: data.order_code
+    }
+    localStorage.setItem('userInfoDeal',JSON.stringify(data));
     this.cookieService.set('userInfoDeal',JSON.stringify(data));
-    this.router.navigate([`/userchat/${data.owner.id}`])
+    localStorage.setItem('productDeal',JSON.stringify(product));
+    this.sendMsg(3, data.id);
+    this.router.navigate([`/userchat/${data.owner.id}`]);
   }
-  sendMsg(){
+  sendMsg(type: number, msg: string){
     const data = {
       sender: this.userId,
       receiver: this.receiverId,
-      message: this.messageTxt
+      message: msg,
+      type: type
     }
     this.chatService.sendMessage(data); 
-    this.messageTxt = '';
-    this.chatModal.hide();
-    setTimeout(()=>{
-      this.router.navigate([`/chat`])
-    },50)
   }
   sellerProfile(id:number){
     if(id == this.owner_id){

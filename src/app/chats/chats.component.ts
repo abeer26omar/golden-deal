@@ -2,16 +2,12 @@ import { Component, ElementRef, OnInit, ViewChild, OnDestroy } from '@angular/co
 import { ChatService } from '../services/chat.service';
 import { MessagesList ,Messages, APIResponse7, Support} from '../models/chat.model';
 import { Subscription } from 'rxjs';
-import { BreakpointObserver } from '@angular/cdk/layout';
 import { ResponseSuccess } from '../models/actions.model';
 import { FormControl, FormGroup } from '@angular/forms';
 import { NotificationsService } from '../services/notifications.service';
 import { CookieService } from 'ngx-cookie-service';
 import { MatDialog } from '@angular/material/dialog';
-import { SendImagesComponent } from './send-images/send-images.component';
-import { Router } from '@angular/router';
 import { CameraMediaComponent } from './camera-media/camera-media.component';
-import { ErrorMediaComponent } from './error-media/error-media.component';
 import { SendGalleryComponent } from './send-gallery/send-gallery.component';
 import { SendPdfComponent } from './send-pdf/send-pdf.component';
 
@@ -58,35 +54,32 @@ export class ChatsComponent implements OnInit, OnDestroy {
     return this.formSupport.controls;
   }
   constructor(private chatService: ChatService,
-    private router: Router,
     private el: ElementRef,
     private dialogRef: MatDialog,
     private notificationService: NotificationsService,
-    private breakPointObserver: BreakpointObserver,
     private cookieService: CookieService) { 
   }
   ngOnInit(): void {
       this.notificationService._insideChatComponent.next(true)
-      this.chatService.connect(this.userId)
-      this.chatSub = this.chatService.getMessage().subscribe((data)=>{
-        const mappedData = {
-          message: data.message,
-          receiver_avatar: '',
-          receiver_id: data.receiver,
-          receiver_name: '',
-          seen_at: 0,
-          sender_avatar: '',
-          sender_id: data.sender,
-          sender_name: ''
-        }
-        this.usersMsg.push(mappedData)
-      })
+      this.chatService.connect(this.userId);
+      this.getMessagesEmit();
       this.getAllPreMsgList();
       this.getAllSupportMsg();
   }
-  openModelAddImg(){
-    this.dialogRef.open(SendImagesComponent,{
-      width: '600px',
+  getMessagesEmit(){
+    this.chatSub = this.chatService.getMessage().subscribe((data)=>{
+      const mappedData = {
+        message: data.message,
+        receiver_avatar: '',
+        receiver_id: data.receiver,
+        receiver_name: '',
+        seen_at: 0,
+        sender_avatar: '',
+        sender_id: data.sender,
+        sender_name: '',
+        type: 0
+      }
+      this.usersMsg.push(mappedData)
     })
   }
   ngAfterViewInit() {
@@ -141,11 +134,12 @@ export class ChatsComponent implements OnInit, OnDestroy {
       }
     })
   }
-  sendMsg(){
+  sendMsg(type: number){
     const data = {
       sender: this.userId,
       receiver: this.receiverId,
-      message: this.messageTxt
+      message: this.messageTxt,
+      type: type
     }
     if(this.messageTxt == ''){
       this.textArea.nativeElement.classList.add('inValid')
@@ -154,7 +148,6 @@ export class ChatsComponent implements OnInit, OnDestroy {
       this.chatService.sendMessage(data);
       this.messageTxt = '';
     }
-    // this.getNewMsg();
   }
   getAllPreMsgList(){
     this.loader = true;
@@ -188,29 +181,29 @@ export class ChatsComponent implements OnInit, OnDestroy {
     this.dialogRef.open(CameraMediaComponent,{
       width: '600px',
       data: {
+        sender: this.userId,
+        receiver: this.receiverId,
       }
     })
   }
   openGalleryDialog(){
     this.dialogRef.open(SendGalleryComponent,{
       width: '500px',
+      data: {
+        sender: this.userId,
+        receiver: this.receiverId,
+      }
     })
   }
   openPdfDialog(){
     this.dialogRef.open(SendPdfComponent,{
       width: '500px',
-    })
-  }
-  openPermissionDeined(error: any){
-    this.dialogRef.open(ErrorMediaComponent,{
       data: {
-        error: error,
-        icon: 'error',
-        message: 'Please Allow Camera Access From Broswer Setting And Try Again'
+        sender: this.userId,
+        receiver: this.receiverId,
       }
     })
   }
-  
   ngOnDestroy(): void {
     this.notificationService._insideChatComponent.next(false);
     if (this.chatSub) {

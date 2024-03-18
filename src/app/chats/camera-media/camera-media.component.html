@@ -11,6 +11,7 @@
       </div>
       <p>Please Allow Camera Access From Broswer Setting And Try Again</p>
     </div>
+    <mat-progress-bar mode="indeterminate" class="my-3" *ngIf="load" id="addprog"></mat-progress-bar>
     <div class="text-center" *ngIf="!error">
       <div class="d-flex justify-content-center my-3">
         <a class="btn_bg bg_lightBlue me-3" (click)="triggerSnapshot();">
@@ -19,7 +20,9 @@
             <path d="M25.4998 1.99955H20.0008L18.0056 0H10.0031L8.00031 1.99955H2.50023C1.83713 1.99955 1.20119 2.26297 0.732301 2.73186C0.263416 3.20074 0 3.83669 0 4.4998V21.4998C0 22.1629 0.263416 22.7988 0.732301 23.2677C1.20119 23.7366 1.83713 24 2.50023 24H25.4998C26.1629 24 26.7988 23.7366 27.2677 23.2677C27.7366 22.7988 28 22.1629 28 21.4998V4.4998C28 3.83669 27.7366 3.20074 27.2677 2.73186C26.7988 2.26297 26.1629 1.99955 25.4998 1.99955ZM14.0043 20.5005C12.6199 20.5005 11.2665 20.09 10.1153 19.3208C8.96419 18.5516 8.06698 17.4584 7.53717 16.1793C7.00735 14.9002 6.86873 13.4927 7.13883 12.1348C7.40892 10.777 8.07561 9.52967 9.05458 8.55069C10.0335 7.57172 11.2808 6.90503 12.6387 6.63493C13.9966 6.36483 15.404 6.50346 16.6831 7.03328C17.9622 7.56309 19.0554 8.46031 19.8246 9.61146C20.5938 10.7626 21.0043 12.116 21.0043 13.5005C21.0043 15.357 20.2668 17.1375 18.9541 18.4503C17.6413 19.763 15.8608 20.5005 14.0043 20.5005Z" fill="white"/>
           </svg>
         </a>
-        <a class="btn_bg bg_lightBlue" (click)="toggleWebcam();">Toggle Webcam</a>
+        <a class="btn_bg bg_lightBlue" (click)="toggleWebcam();">
+          <svg fill="#ffffff" height="200px" width="200px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512.002 512.002" xml:space="preserve" transform="rotate(90)matrix(1, 0, 0, 1, 0, 0)" stroke="#ffffff"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <g> <path d="M436.866,436.871c48.312-48.311,74.921-112.546,74.921-180.871c0-141.039-114.744-255.785-255.783-255.786v49.507 c113.741,0.002,206.276,92.539,206.276,206.279c0,55.101-21.458,106.902-60.42,145.864l-7.571,7.571l-67.552-67.552l0.021,170.076 l170.096,0.041l-67.559-67.559L436.866,436.871z"></path> </g> </g> <g> <g> <path d="M49.724,256.001c0-55.101,21.458-106.902,60.42-145.864l7.571-7.571l67.552,67.552L185.245,0.041L15.148,0l67.559,67.559 l-7.571,7.57C26.824,123.439,0.215,187.674,0.215,255.999c0,141.039,114.744,255.785,255.783,255.786v-49.507 C142.258,462.278,49.724,369.742,49.724,256.001z"></path> </g> </g> </g></svg>
+        </a>
       </div>
       <webcam 
         [height]="500" 
@@ -40,7 +43,7 @@
     <div class="snapshot text-center" *ngIf="webcamImage">
       <img [src]="webcamImage.imageAsDataUrl" alt="webcam image" width="500px" height="500px">
       <input type="hidden" [value]="webcamImage"/>
-      <a class="btn_bg bg_blue mt-3" (click)="sendMsg(1)">
+      <a class="btn_bg bg_blue mt-3" (click)="saveImagStorage(webcamImage.imageAsDataUrl)">
         <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30" fill="none">
           <path d="M0 13.0268H22.6047L12.185 2.60462L14.8837 0L29.7674 14.8837L14.8837 29.7674L12.2841 27.1678L22.6047 16.7406H0V13.0268Z" fill="white"/>
         </svg>

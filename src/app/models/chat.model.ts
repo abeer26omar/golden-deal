@@ -24,7 +24,8 @@ export interface MessagesList{
     sender: number,
     sender_avatar: string,
     sender_name: string,
-    seen_at: number
+    seen_at: number,
+    type: number
 }
 // export interface APIResponse6<T>{
 // }

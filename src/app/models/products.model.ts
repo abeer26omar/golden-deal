@@ -29,7 +29,9 @@ export interface Products{
         activated_since: string,
         category_slug: string,    
         region_name: string,
-        status: string
+        status: string,
+        product_favorite_count: number,
+        pinned: number
 }
 interface Product_Properties{
         id: number,

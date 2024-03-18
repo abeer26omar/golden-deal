@@ -4,6 +4,7 @@ import { Subject, Observable, Subscription } from 'rxjs';
 import {WebcamImage, WebcamInitError, WebcamUtil} from 'ngx-webcam';
 import { ChatService } from 'src/app/services/chat.service';
 import { ResponseSuccess } from 'src/app/models/actions.model';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-camera-media',
@@ -28,6 +29,7 @@ export class CameraMediaComponent implements OnInit {
   userId: any;
   // latest snapshot
   webcamImage: WebcamImage | any = null;
+  load: boolean = false;
 
   // webcam snapshot trigger
   private trigger: Subject<void> = new Subject<void>();
@@ -112,24 +114,51 @@ export class CameraMediaComponent implements OnInit {
         this.multipleWebcamsAvailable = mediaDevices && mediaDevices.length > 1;
       });
   }
-  saveImagStorage(body: any){
-    this.chatSub = this.chatService.sendImageRequest(body).subscribe({
-      next: (res: ResponseSuccess)=>{
-        console.log(res);
-      },
-      error: ()=>{
-      }
-    })
+  convertFile(imageUrl: any){
+    // Extract the base64 data
+    const base64Data = imageUrl.split(",")[1];
+
+    // Convert base64 to Blob
+    const byteCharacters = atob(base64Data);
+    const byteNumbers = new Array(byteCharacters.length);
+    for (let i = 0; i < byteCharacters.length; i++) {
+      byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+    const byteArray = new Uint8Array(byteNumbers);
+    const blob = new Blob([byteArray], { type: "image/jpeg" });
+
+    // Convert Blob to File
+    const file = new File([blob], "image.jpg", { type: "image/jpeg" });
+
+   return file;
   }
-  sendMsg(type: number){
-    console.log(this.webcamImage);
-    
+  sendMsg(type: number, img: string){
     const data = {
       sender: this.userId,
       receiver: this.receiverId,
-      message: this.webcamImage.imageAsDataUrl,
+      message: img,
       type: type
-    }    
+    }
       this.chatService.sendMessage(data);
   }
+  saveImagStorage(body: any){
+    this.load = true;
+    const imgFile = this.convertFile(body);
+    const formData = new FormData();
+    formData.append('file', imgFile);
+    
+    this.chatSub = this.chatService.sendImageRequest(formData).subscribe({
+      next: (res: ResponseSuccess)=>{
+        this.load = false;
+        this.sendMsg(1, res.data);
+        this.dialogRef.close();
+      },
+      error: (err: HttpErrorResponse)=>{
+        this.load = false;
+
+        console.log(err);
+      }
+    })
+  }
+ 
 }

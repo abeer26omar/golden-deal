@@ -58,7 +58,7 @@
                                                 </div>
                                                 <div class="chat">
                                                     <p class="chat-name">{{user.sender === userId ? user.receiver_name : user.sender_name}}</p>
-                                                    <p class="chat-desc">{{user.message}}</p>
+                                                    <p class="chat-desc"  *ngIf="user.type === 0">{{user.message}}</p>
                                                 </div>
                                                 <div *ngIf="user.receiver == userId && user.seen_at == 0">
                                                     <span matBadgeSize="small"></span>
@@ -87,25 +87,26 @@
                                                     <div class="p-2 m-1 media-1 media-2">
                                                         <img class="avatar ms-2" src="{{avatar_base_url+msg.sender_avatar}}" alt="user_avatar" *ngIf="msg.sender_avatar !== ''">
                                                         <p class="msg-txt" *ngIf="msg.type === 0">{{msg.message}}</p>
-                                                        <img 
-                                                            *ngIf="msg.type === 1"
-                                                            class="msg-img" 
-                                                            [src]="msg.message" 
-                                                            alt="product image" 
-                                                            width="200px"
-                                                            height="150px"
-                                                        />
-                                                        <div class="msg-file" *ngIf="msg.type === 2">
-                                                            <ngx-extended-pdf-viewer
-                                                                [src]="msg.message"
+                                                        <a [href]="msg.message" target="_blank" *ngIf="msg.type === 1">
+                                                            <img 
+                                                                class="msg-img" 
+                                                                [src]="sanitizeUrl(msg.message)"
+                                                                alt="product image" 
                                                                 width="200px"
-                                                                [height]="'150px'">
-                                                            </ngx-extended-pdf-viewer>
-                                                        </div>
+                                                                height="150px"
+                                                            />
+                                                        </a>
+                                                        <a class="msg-file" [href]="msg.message" target="_blank" *ngIf="msg.type === 2">
+                                                            <img
+                                                                class="msg-img" 
+                                                                src="../../assets/images/pdf-svgrepo-com.svg"
+                                                                alt="product image" 
+                                                                width="70px"
+                                                                height="70px"
+                                                            />
+                                                        </a>
                                                         <div class="msg-ad" *ngIf="msg.type === 3">
-                                                            <img src />
-                                                            <p></p>
-                                                            <p></p>
+                                                            <div [innerHTML]="parsing(msg.message)"></div>
                                                         </div>
                                                     </div>
                                             </div>

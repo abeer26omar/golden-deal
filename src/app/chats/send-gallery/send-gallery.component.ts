@@ -157,18 +157,23 @@ export class SendGalleryComponent implements OnInit {
       this.chatService.sendMessage(data);
   }
   saveImagStorage(){
+
     if (this.addNewFlags.every(flag => !flag)) {
       this.error = true;
       this.errorMsg = 'يجب اضافه صوره على الاقل';
       return;
     }
+    this.load = true;
     const formData = new FormData();
     formData.append('file', this.file)
     this.chatSub = this.chatService.sendImageRequest(formData).subscribe({
       next: (res: ResponseSuccess)=>{
+        this.load = false;
         this.sendMsg(1, res.data);
+        this.dialogRef.close();
       },
       error: (err: HttpErrorResponse)=>{
+        this.load = false;
         console.log(err);
       }
     })

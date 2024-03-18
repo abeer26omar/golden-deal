@@ -67,13 +67,17 @@ export class SendPdfComponent implements OnInit {
       this.chatService.sendMessage(data);
   }
   saveImagStorage(){
+    this.load = true;
     const formData = new FormData();
     formData.append('file', this.file);
     this.chatSub = this.chatService.sendImageRequest(formData).subscribe({
       next: (res: ResponseSuccess)=>{
+        this.load = false;
         this.sendMsg(2, res.data);
+        this.dialogRef.close();
       },
       error: (err: HttpErrorResponse)=>{
+        this.load = false;
         console.log(err);
       }
     })

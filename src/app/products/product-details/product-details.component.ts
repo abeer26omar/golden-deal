@@ -343,15 +343,15 @@ export class ProductDetailsComponent implements OnInit ,AfterViewInit ,OnDestroy
     const product = {
       name: data.name,
       default_image: data.default_image,
-      order_code: data.order_code
+      order_code: data.order_code,
+      id: data.id
     }
     localStorage.setItem('userInfoDeal',JSON.stringify(data));
     this.cookieService.set('userInfoDeal',JSON.stringify(data));
-    localStorage.setItem('productDeal',JSON.stringify(product));
-    this.sendMsg(3, data.id);
     this.router.navigate([`/userchat/${data.owner.id}`]);
+    this.sendMsg(3, JSON.stringify(product));
   }
-  sendMsg(type: number, msg: string){
+  sendMsg(type: number, msg: any){
     const data = {
       sender: this.userId,
       receiver: this.receiverId,

@@ -1,4 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { ChatService } from '../services/chat.service';
 import { MessagesList ,Messages, APIResponse7, Support} from '../models/chat.model';
 import { Subscription } from 'rxjs';
@@ -10,6 +11,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { CameraMediaComponent } from './camera-media/camera-media.component';
 import { SendGalleryComponent } from './send-gallery/send-gallery.component';
 import { SendPdfComponent } from './send-pdf/send-pdf.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-chats',
@@ -54,10 +56,11 @@ export class ChatsComponent implements OnInit, OnDestroy {
     return this.formSupport.controls;
   }
   constructor(private chatService: ChatService,
-    private el: ElementRef,
+    private router: Router,
     private dialogRef: MatDialog,
     private notificationService: NotificationsService,
-    private cookieService: CookieService) { 
+    private cookieService: CookieService,
+    private sanitizer: DomSanitizer) { 
   }
   ngOnInit(): void {
       this.notificationService._insideChatComponent.next(true)
@@ -66,6 +69,20 @@ export class ChatsComponent implements OnInit, OnDestroy {
       this.getAllPreMsgList();
       this.getAllSupportMsg();
   }
+  sanitizeUrl(url: string) {
+    return this.sanitizer.bypassSecurityTrustUrl(url);
+  }
+  parsing(msg: any) {
+    const message = JSON.parse(msg);
+    const imageUrl = message.default_image;
+    const name = message.name;
+    const orderCode = message.order_code;
+
+  return `<img src="${imageUrl}" width='200px' height='150px'/>
+  <p class='mt-2'>اسم المنتج: ${name}</p>
+  <p class='mb-0'>رقم الطلب: ${orderCode}</p>`;
+  }
+  
   getMessagesEmit(){
     this.chatSub = this.chatService.getMessage().subscribe((data)=>{
       const mappedData = {

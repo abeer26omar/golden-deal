@@ -9,6 +9,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { CameraMediaComponent } from '../camera-media/camera-media.component';
 import { SendGalleryComponent } from '../send-gallery/send-gallery.component';
 import { SendPdfComponent } from '../send-pdf/send-pdf.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-single-chat',
@@ -23,7 +24,6 @@ export class SingleChatComponent implements OnInit, OnDestroy {
   admin: any;
   message: string = '';
   messageTxt: string = '';
-  product: any = JSON.parse(localStorage.getItem('productDeal') || '');
   public usersMsg: Array<Messages> = [];
   avatar_base_url: string = 'https://storage.googleapis.com/goldendeal-bucket/';
   @ViewChild('textArea') textArea!: ElementRef;
@@ -38,7 +38,8 @@ export class SingleChatComponent implements OnInit, OnDestroy {
   constructor(private chatService: ChatService,
     private notificationService: NotificationsService,
     private cookieService: CookieService,
-    private dialogRef: MatDialog) { }
+    private dialogRef: MatDialog,
+    private router: Router) { }
   
   ngOnInit(): void {
     this.notificationService._insideChatComponent.next(false);
@@ -59,8 +60,6 @@ export class SingleChatComponent implements OnInit, OnDestroy {
         this.usersMsg.push(mappedData)        
       })
     this.getChat(this.userInfo.owner.id);
-    this.sendMsg(3);
-    this.product = JSON.parse(localStorage.getItem('productDeal') || '');    
   }
   sendMsg(type: number, msg?: string){
     const data = {
@@ -77,6 +76,17 @@ export class SingleChatComponent implements OnInit, OnDestroy {
       this.messageTxt = '';
     }
   }
+  parsing(msg: any) {
+    const message = JSON.parse(msg);
+    const imageUrl = message.default_image;
+    const name = message.name;
+    const orderCode = message.order_code;
+//  href="https://gooldendeal.com/product-details/${msg.id}" target="_blank"
+  return `<img src="${imageUrl}" width='200px' height='150px'/>
+    <p class='mt-2'>اسم المنتج: ${name}</p>
+    <p class='mb-0'>رقم الطلب: ${orderCode}</p>`;
+  }
+  
   openCameraDialog(){
     this.dialogRef.open(CameraMediaComponent,{
       width: '600px',

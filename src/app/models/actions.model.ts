@@ -70,6 +70,8 @@ export interface Products{
     ownership_image_url: string,
     product_fav: boolean,
     negotiable: number,
+    product_favorite_count: number,
+    pinned: number,
     properties: Array<Product_Properties>
 }
 interface Product_Properties{

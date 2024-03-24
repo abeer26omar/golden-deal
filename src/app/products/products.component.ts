@@ -86,8 +86,10 @@ export class ProductsComponent implements OnInit, AfterViewInit, OnDestroy {
   region_filter: any;
   filterBrandKey: any;
   selectedSlideIndex: any = -1;
-  selectedSlideSubBrandIndex: any = -1 
+  selectedSlideSubBrandIndex: any = -1;
   is_animating: boolean = false;
+  brandName: string = '';
+  isAllFilterActive: boolean = true;
   private routeSub: Subscription = new Subscription;
   private productSub: Subscription = new Subscription;
   private categorySub : Subscription = new Subscription;
@@ -244,14 +246,15 @@ export class ProductsComponent implements OnInit, AfterViewInit, OnDestroy {
       if (slickModal && slickModal.slickGoTo) {
         slickModal.slickGoTo(this.selectedSlideIndex);
       }
-    },100)
+    }, 100)
   }
   onCarouselSubBrandInit(slickModal: any) {
+    this.isAllFilterActive = true;
     setTimeout(()=>{
       if (slickModal && slickModal.slickGoTo) {
         slickModal.slickGoTo(this.selectedSlideSubBrandIndex);
       }
-    },100)
+    }, 100)
   }
   onSlideChanged(event: any) {
     this.selectedSlideIndex = event.currentSlide;
@@ -259,14 +262,16 @@ export class ProductsComponent implements OnInit, AfterViewInit, OnDestroy {
   onSlideSubBrandChanged(event: any) {
     this.selectedSlideSubBrandIndex = event.currentSlide;
   }
-  onSlideClicked(i: number) {
+  onSlideClicked(i: number, name?: string) {
     this.selectedSlideIndex = i;
+    this.brandName = name || '';
   }
   onSlideSubBrandClicked(i: number) {
+    this.isAllFilterActive = false;
     this.selectedSlideSubBrandIndex = i;
   }
   getSlickOptionsSubBrands(length: any){
-      return {
+    return {
       slidesToShow: Math.min(length, 7),
       centerMode: false,
       focusOnSelect: false,

@@ -20,14 +20,14 @@
               <span matBadge="{{count_msgs}}" matBadgeSize="small"  *ngIf="(authService.isRegister | async) && count_msgs !== 0 "></span>
               الرسائل</a>
           </li>
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a class="nav-link" [routerLink]="['/adds',userId]"  href="my adds"
             routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">إعلاناتي</a>
-          </li>
-          <!-- <li class="nav-item">
-            <a class="nav-link" routerLink="/buyingrecord" 
-            routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">سجل الشراء</a>
           </li> -->
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/private-marketing"
+            routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">التسويق الخاص</a>
+          </li>
           <li class="nav-item dropdown">
             <button class="btn  custom dropdown-toggle" 
               id="dropdownMenuButton1" 
@@ -56,6 +56,10 @@
                             </li>
                         </ul>
                       </div>
+                    </li>
+                    <li>
+                      <a [routerLink]="['/adds', userId]" href="my adds">
+                        <img class="ps-2" width="32px" src="../../assets/images/advertising-expense-svgrepo-com.svg" alt="my_adds"/> إعلاناتي</a>
                     </li>
                     <li>
                       <a href="favorites items" [routerLink]="['/adds',userId]" fragment="fav">

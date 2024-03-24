@@ -237,3 +237,13 @@ interface Notification{
     user_id: number,
     created_at: string
 }
+export interface PrivateMarketing{
+    data: {
+        id: number,
+        title: string,
+        desc: string,
+        image: string,
+        whatsapp: string,
+        slug: string
+    }
+}

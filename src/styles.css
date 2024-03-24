@@ -530,7 +530,8 @@ table td span.lrt{
     width: 20% !important;
 }
 .slick-current .brand a ,
-.slick-current .sub_brand a {
+.slick-current .sub_brand a,
+.active-filter {
     background-color: var(--primary-color) !important;
     color: var(--white) !important;
 }

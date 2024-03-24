@@ -1,27 +1,32 @@
     <div class="header_private">
         <div class="container-fluid d-flex justify-content-center align-items-center">
-            <h1>ماهو التسويق الخاص؟</h1>
+            <h1>{{privatePage.data.title}}</h1>
         </div>
     </div>
     <div class="container-fluid px content">
         <div class="row g-4">
             <div class="col-lg-6">
                 <div class="flex_column">
-                    <p class="mb-5 title">ماهو التسويق الخاص ؟</p>
-                    <img src="../../assets/images/privateMarkiting.png" alt="private marketing"/>
+                    <p class="mb-5 title">{{privatePage.data.title}}</p>
+                    <img src="{{privatePage.data.image}}" alt="private marketing"/>
                 </div>
             </div>
             <div class="col-lg-6">
-                <p class="mb-5">خدمة نتولى من خلالها تسويق لوحتك المميزة نيابة عنك بفضل ما نتمتع به من خبرة كبيرة في التسويق والبيع.</p>
-                <ul>
+                <p class="mb-5">
+                    {{privatePage.data.desc}}
+                </p>
+                <!-- <ul>
                     <li>- نكفيك عناء استقبال المكالمات والرسائل والازعاج</li>
                     <li>- ايجاد الزبون الجاد والجاهز للشراء</li>
                     <li>- تثبيت اعلان لوحتك في مقدمة الموقع لزيادة المشاهدات</li>
                     <li>- التسويق في كافة وسائل التواصل الاجتماعي</li>
-                </ul>
+                </ul> -->
                 <div class="d-flex align-items-center my-5">
                     <p class="mb-0 ms-4">لطلب هذه الخدمة</p>
-                    <a class="btn btn-prim">اضغط هنا</a>
+                    <a class="btn btn-prim"
+                        href="{{privatePage.data.whatsapp}}&text=https://gooldendeal.com/"
+                        target="_blank"
+                    >اضغط هنا</a>
                 </div>
             </div>
         </div>

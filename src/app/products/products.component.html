@@ -71,7 +71,7 @@
                       </div>
                       <div class="favorite card_num p-2" *ngIf="product.status === 'active'">
                         <a (click)="addToFav(product, $event)">
-                          <span class="mb-0 ms-2">{{product.product_favorite_count}}</span>
+                          <span class="mb-0 ms-2" *ngIf="product.product_favorite_count > 0">{{product.product_favorite_count}}</span>
                           <img src="../../assets/images/{{product.product_fav == false ? 'favorite_icon.svg' : 'already_fav_icon.svg'}}" alt="already_fav_icon" >
                         </a>
                       </div>
@@ -149,7 +149,7 @@
                       </div>
                       <div  class="favorite card_num p-2" *ngIf="product.status === 'active'">
                         <a (click)="addToFav(product, $event)">
-                          <span class="mb-0 ms-2">{{product.product_favorite_count}}</span>
+                          <span class="mb-0 ms-2" *ngIf="product.product_favorite_count > 0">{{product.product_favorite_count}}</span>
                           <img src="../../assets/images/{{product.product_fav == false ? 'favorite_icon.svg' : 'already_fav_icon.svg'}}" alt="already_fav_icon" >
                         </a>
                       </div>
@@ -214,21 +214,24 @@
           </li>
         </div>
         <ngx-slick-carousel class="carousel subbrand" 
-        #slickModal="slick-carousel" 
-        [config]="slickOptions" 
-        (init)="onCarouselInit(slickModal)" 
-        (afterChange)="onSlideChanged($event)">
+          #slickModal="slick-carousel" 
+          [config]="slickOptions" 
+          (init)="onCarouselInit(slickModal)" 
+          (afterChange)="onSlideChanged($event)">
           <div ngxSlickItem *ngFor="let brand of brandsOptions; let i = index" class="slide"
            [class.slick-current]="selectedSlideIndex === i">
             <li class="nav-item brand p-0" role="presentation">
               <a 
-                (click)="onSlideClicked(i); onApplayBrandFilters(brand.id); onApplayFiltersKeys(brand.name);" 
+                (click)="onSlideClicked(i, brand.name); onApplayBrandFilters(brand.id); onApplayFiltersKeys(brand.name);" 
                 data-bs-toggle="tab" 
                 type="button" 
                 role="tab" 
                 aria-controls="home-tab-pane" 
                 aria-selected="true"
-                title="{{brand.name}}">
+                ngbPopover="{{brand.name}}"
+                triggers="mouseenter:mouseleave" 
+                container="body"
+                placement="top">
                 <img src="{{brand.image}}" alt="{{brand.name}}">
               </a>
             </li>
@@ -243,16 +246,27 @@
         [config]= 'slickOptionsSubBrands'
         (init)="onCarouselSubBrandInit(slickModal)" 
         (afterChange)="onSlideSubBrandChanged($event)">
+        <li class="nav-item sub_brand d-flex justify-content-center px-1" role="presentation" *ngIf="filterbrandsOptions.length !== 0">
+          <a
+            (click)="onSlideSubBrandClicked(-1); onApplayFiltersKeys(brandName);"
+            data-bs-toggle="tab" 
+            [ngClass]="{'active-filter': isAllFilterActive}"
+            type="button" 
+            role="tab" 
+            aria-controls="home-tab-pane" 
+            aria-selected="true"
+            class="slick-current">الكل</a>
+        </li> 
           <div  ngxSlickItem *ngFor="let brand of filterbrandsOptions;let i = index" class="slide"
-          [class.slick-current]="selectedSlideSubBrandIndex === i">
+          >
             <li class="nav-item sub_brand d-flex justify-content-center px-1" role="presentation">
-              <a  
-              (click)="onSlideSubBrandClicked(i);onApplayFiltersKeys(undefined,brand.name)"
-              data-bs-toggle="tab" 
-              type="button" 
-              role="tab" 
-              aria-controls="home-tab-pane" 
-              aria-selected="true">{{brand.name}}</a>
+              <a
+                (click)="onSlideSubBrandClicked(i);onApplayFiltersKeys(undefined,brand.name)"
+                data-bs-toggle="tab" 
+                type="button" 
+                role="tab" 
+                aria-controls="home-tab-pane" 
+                aria-selected="true">{{brand.name}}</a>
             </li> 
           </div>
     </ngx-slick-carousel>

@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AsyncPipe, CommonModule } from '@angular/common';  
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { LocationStrategy, HashLocationStrategy ,PathLocationStrategy} from '@angular/common';
+import { LocationStrategy, PathLocationStrategy} from '@angular/common';
 import { HttpHeadersInterceptor } from './interceptors/http-headers.interceptor';
 import { HttpErrorInterceptor } from './interceptors/http-errors.interceptor';
 import { AppRoutingModule } from './app-routing.module';
@@ -49,7 +49,6 @@ import { GalleryModule } from  'ng-gallery';
 import { LightboxModule } from  'ng-gallery/lightbox';
 import { UploaderModule } from "angular-uploader";
 import { WebcamModule } from 'ngx-webcam';
-import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 
 //components
 import { HeaderComponent } from './header/header.component';
@@ -199,7 +198,6 @@ import { PrivateMarketingComponent } from './private-marketing/private-marketing
     LightboxModule,
     UploaderModule,
     WebcamModule,
-    NgxExtendedPdfViewerModule,
   ], 
   providers: [ NotificationsService, AsyncPipe,
     {provide: LocationStrategy, useClass: PathLocationStrategy},

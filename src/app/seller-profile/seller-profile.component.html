@@ -17,51 +17,6 @@
             </div>
             <div class="user-info p-1 p-sm-3">
                   <ul ngbNav #nav="ngbNav" class="nav-tabs">
-                    <!-- <li [ngbNavItem]="1">
-                      <a ngbNavLink>التقيمات</a>
-                      <ng-template ngbNavContent>
-                        <div class="loader text-center pt-5 pb-5" *ngIf="loadding" dir="ltr">
-                          <svg version="1.1" id="L3" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                        viewBox="0 0 100 100" width="70px" height="70px" enable-background="new 0 0 0 0" xml:space="preserve">
-                        <circle fill="none" stroke="#E29547" stroke-width="4" cx="50" cy="50" r="44" style="opacity:0.7;"/>
-                        <circle fill="#E29547" stroke="#FFEEDD" stroke-width="3" cx="8" cy="54" r="6" >
-                          <animateTransform
-                            attributeName="transform"
-                            dur="1s"
-                            type="rotate"
-                            from="0 50 48"
-                            to="360 50 52"
-                            repeatCount="indefinite" />
-                        </circle>
-                        </svg>
-                        </div>
-                        <div class="rating-row row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 g-4 justify-content-center pt-5 pb-5" >
-                            <div class="col wow" 
-                             *ngFor="let rate of portfolio.data.provider_ratings">
-                              <div class="card h-100 card-rate">
-                                <div class="card-body text-center">
-                                  <div class="client-img">
-                                    <img src="../../assets/images/profile-img.svg" alt="profile">
-                                  </div>
-                                  <div class="client-name pt-1">
-                                      <p>ندا على</p>
-                                  </div>
-                                  <div class="rate d-flex justify-content-center">
-                                    <ng-container *ngFor="let _ of [].constructor(rate.value)">
-                                      <img src="../../../../assets/images/ratestar.svg" alt="ratestar" width="13%">
-                                    </ng-container>
-                                  </div>
-                                  <div class="desc pt-2">
-                                      <p>{{(rate.desc.length)? (rate.desc | slice:0:20)+'...':(rate.desc)}}</p>
-                                      <small>منذ {{rate.created_since}} ايام</small>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                        </div>
-                        <p class="none" *ngIf="!portfolio.data.reviews">لا يوجد تقيميات</p>
-                      </ng-template>
-                    </li> -->
                     <li [ngbNavItem]="2">
                       <a ngbNavLink>الاعلانات</a>
                       <ng-template ngbNavContent>
@@ -81,7 +36,7 @@
                                   </a>
                                   <div class="favorite card_num p-2" *ngIf="product.status === 'active'">
                                     <a (click)="addToFav(product)">
-                                      <span class="mb-0 ms-2">{{product.product_favorite_count}}</span>
+                                      <span class="mb-0 ms-2" *ngIf="product.product_favorite_count > 0">{{product.product_favorite_count}}</span>
                                       <img src="../../assets/images/{{product.product_fav == false ? 'favorite_icon.svg' : 'already_fav_icon.svg'}}" alt="already_fav_icon" >
                                     </a>
                                   </div>
@@ -150,7 +105,7 @@
                                   </a>
                                   <div class="favorite card_num p-2" *ngIf="product.status === 'active'">
                                     <a (click)="addToFav(product)">
-                                      <span class="mb-0 ms-2">{{product.product_favorite_count}}</span>
+                                      <span class="mb-0 ms-2" *ngIf="product.product_favorite_count > 0">{{product.product_favorite_count}}</span>
                                       <img src="../../assets/images/{{product.product_fav == false ? 'favorite_icon.svg' : 'already_fav_icon.svg'}}" alt="already_fav_icon" >
                                     </a>
                                   </div>

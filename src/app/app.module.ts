@@ -99,6 +99,7 @@ import { CameraMediaComponent } from './chats/camera-media/camera-media.componen
 import { SendGalleryComponent } from './chats/send-gallery/send-gallery.component';
 import { SendPdfComponent } from './chats/send-pdf/send-pdf.component';
 import { PrivateMarketingComponent } from './private-marketing/private-marketing.component';
+import { PinProductComponent } from './adds/pin-product/pin-product.component';
 
 @NgModule({
   declarations: [
@@ -147,6 +148,7 @@ import { PrivateMarketingComponent } from './private-marketing/private-marketing
     SendGalleryComponent,
     SendPdfComponent,
     PrivateMarketingComponent,
+    PinProductComponent,
   ],
   imports: [
     BrowserModule,

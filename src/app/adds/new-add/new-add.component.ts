@@ -31,6 +31,8 @@ export class NewAddComponent implements OnInit, OnDestroy {
   filtersArr: any = [];
   error: string = '';
   errorAdd: string = '';
+  error_format: boolean = false;
+  errorMsg: string = '';
   error_CarPlate: string = '';
   error_CarPlate_num: string = '';
   load: boolean = false;
@@ -218,57 +220,134 @@ export class NewAddComponent implements OnInit, OnDestroy {
     let reader = new FileReader();
     reader.readAsDataURL(event.target.files[0]);
     this.file = <File>event.target.files[0];
-    switch(key){
-      case 1:
-        this.onAddNewImg1 = true;
-        reader.onload = ()=>{
-          this.imgSrc1 = reader.result;
+      switch(key){
+        case 1:
+          const fileFormat_1 = this.file.type.split('/')[1].toLowerCase();
+          if (fileFormat_1 !== 'png' && fileFormat_1 !== 'jpeg' && fileFormat_1 !== 'jpg') {
+            this.error_format = true;
+            this.errorMsg = 'Supported Formats Only png/jpg/jpeg';
+            event.target.value = null;
+            this.myForm.get('product_image_1')?.patchValue('');
+            return;
+          }else{
+            this.error_format = false;
+            this.errorMsg = '';
+            this.onAddNewImg1 = true;
+            reader.onload = ()=>{
+              this.imgSrc1 = reader.result;
+            }
+            this.myForm.get('product_image_1')?.patchValue(this.file,this.file.name);
+          }
+          break;
+        case 2:
+          const fileFormat_2 = this.file.type.split('/')[1].toLowerCase();
+          if (fileFormat_2 !== 'png' && fileFormat_2 !== 'jpeg' && fileFormat_2 !== 'jpg') {
+            this.error_format = true;
+            this.errorMsg = 'Supported Formats Only png/jpg/jpeg';
+            event.target.value = null;
+            this.myForm.get('product_image_2')?.patchValue('');
+            return;
+          }else{
+            this.error_format = false;
+            this.errorMsg = '';
+            this.onAddNewImg2 = true;
+            reader.onload = ()=>{
+              this.imgSrc2 = reader.result;
+            }
+            this.myForm.get('product_image_2')?.patchValue(this.file,this.file.name);
         }
-        this.myForm.get('product_image_1')?.patchValue(this.file,this.file.name);
         break;
-      case 2:
-        this.onAddNewImg2 = true;
-        reader.onload = ()=>{
-          this.imgSrc2 = reader.result;
+        case 3:
+          const fileFormat_3 = this.file.type.split('/')[1].toLowerCase();
+          if (fileFormat_3 !== 'png' && fileFormat_3 !== 'jpeg' && fileFormat_3 !== 'jpg') {
+            this.error_format = true;
+            this.errorMsg = 'Supported Formats Only png/jpg/jpeg';
+            event.target.value = null;
+            this.myForm.get('product_image_3')?.patchValue('');
+            return;
+          }else{
+            this.error_format = false;
+            this.errorMsg = '';
+            this.onAddNewImg3 = true;
+            reader.onload = ()=>{
+              this.imgSrc3 = reader.result;
+            }
+            this.myForm.get('product_image_3')?.patchValue(this.file,this.file.name);
         }
-        this.myForm.get('product_image_2')?.patchValue(this.file,this.file.name);
-      break;
-      case 3:
-        this.onAddNewImg3 = true;
-        reader.onload = ()=>{
-          this.imgSrc3 = reader.result;
+        break;
+        case 4:
+          const fileFormat_4 = this.file.type.split('/')[1].toLowerCase();
+          if (fileFormat_4 !== 'png' && fileFormat_4 !== 'jpeg' && fileFormat_4 !== 'jpg') {
+            this.error_format = true;
+            this.errorMsg = 'Supported Formats Only png/jpg/jpeg';
+            event.target.value = null;
+            this.myForm.get('product_image_4')?.patchValue('');
+            return;
+          }else{
+            this.error_format = false;
+            this.errorMsg = '';
+            this.onAddNewImg4 = true;
+            reader.onload = ()=>{
+              this.imgSrc4 = reader.result;
+            }
+            this.myForm.get('product_image_4')?.patchValue(this.file,this.file.name);
         }
-        this.myForm.get('product_image_3')?.patchValue(this.file,this.file.name);
-      break;
-      case 4:
-        this.onAddNewImg4 = true;
-        reader.onload = ()=>{
-          this.imgSrc4 = reader.result;
+        break;
+        case 5:
+          const fileFormat_5 = this.file.type.split('/')[1].toLowerCase();
+          if (fileFormat_5 !== 'png' && fileFormat_5 !== 'jpeg' && fileFormat_5 !== 'jpg') {
+            this.error_format = true;
+            this.errorMsg = 'Supported Formats Only png/jpg/jpeg';
+            event.target.value = null;
+            this.myForm.get('product_image_5')?.patchValue('');
+            return;
+          }else{
+            this.error_format = false;
+            this.errorMsg = '';
+            this.onAddNewImg5 = true;
+            reader.onload = ()=>{
+              this.imgSrc5 = reader.result;
+            }
+            this.myForm.get('product_image_5')?.patchValue(this.file,this.file.name);
         }
-        this.myForm.get('product_image_4')?.patchValue(this.file,this.file.name);
-      break;
-      case 5:
-        this.onAddNewImg5 = true;
-        reader.onload = ()=>{
-          this.imgSrc5 = reader.result;
-        }
-        this.myForm.get('product_image_5')?.patchValue(this.file,this.file.name);
-      break;
-      case 6:
-        this.onAddNewImg6 = true;
-        reader.onload = ()=>{
-          this.imgSrc6 = reader.result;
-        }
-        this.myForm.get('product_image_6')?.patchValue(this.file,this.file.name);
-      break;
-      case 7:
-        this.onAddNewImg7 = true;
-        reader.onload = ()=>{
-          this.imgSrc7 = reader.result;
-        }
-        this.myForm.get('product_image_7')?.patchValue(this.file,this.file.name);
-      break;
-    }
+        break;
+        case 6:
+          const fileFormat_6 = this.file.type.split('/')[1].toLowerCase();
+          if (fileFormat_6 !== 'png' && fileFormat_6 !== 'jpeg' && fileFormat_6 !== 'jpg') {
+            this.error_format = true;
+            this.errorMsg = 'Supported Formats Only png/jpg/jpeg';
+            event.target.value = null;
+            this.myForm.get('product_image_6')?.patchValue('');
+            return;
+          }else{
+            this.error_format = false;
+            this.errorMsg = '';
+            this.onAddNewImg6 = true;
+            reader.onload = ()=>{
+              this.imgSrc6 = reader.result;
+            }
+          this.myForm.get('product_image_6')?.patchValue(this.file,this.file.name);
+          }
+        break;
+        case 7:
+          const fileFormat_7 = this.file.type.split('/')[1].toLowerCase();
+          if (fileFormat_7 !== 'png' && fileFormat_7 !== 'jpeg' && fileFormat_7 !== 'jpg') {
+            this.error_format = true;
+            this.errorMsg = 'Supported Formats Only png/jpg/jpeg';
+            event.target.value = null;
+            this.myForm.get('product_image_7')?.patchValue('');
+            return;
+          }else{
+            this.error_format = false;
+            this.errorMsg = '';
+            this.onAddNewImg7 = true;
+            reader.onload = ()=>{
+              this.imgSrc7 = reader.result;
+            }
+            this.myForm.get('product_image_7')?.patchValue(this.file,this.file.name);
+          }
+        break;
+      }
   }
   resetImg(key: any){
     switch(key){
@@ -626,7 +705,7 @@ export class NewAddComponent implements OnInit, OnDestroy {
         if(this.step == 1){
           this.step = this.step + 1;
         }
-      if(this.myForm.valid){
+      if(this.myForm.valid && this.error_format === false){
         const formData = new FormData();
         for (const field in this.myForm.controls) {
             if(field == 'plate_chars_en_filter_6'){

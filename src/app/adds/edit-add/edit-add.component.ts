@@ -25,6 +25,8 @@ export class EditAddComponent implements OnInit, OnDestroy {
   addId!: number;
   addCategory: string = '';
   error: string = '';
+  error_format: boolean = false;
+  errorMsg: string = '';
   modelSuccessNewProduct: any;
   modelAddImages: any;
   addFaild: any;
@@ -232,53 +234,130 @@ export class EditAddComponent implements OnInit, OnDestroy {
     this.file =<File>event.target.files[0];
     switch(key){
       case 1:
-        reader.onload = ()=>{
-          this.imgSrc1 = reader.result;
-          document.getElementById('imgSrc_1')?.setAttribute('src', this.imgSrc1)
+        const fileFormat_1 = this.file.type.split('/')[1].toLowerCase();
+          if (fileFormat_1 !== 'png' && fileFormat_1 !== 'jpeg' && fileFormat_1 !== 'jpg') {
+            this.error_format = true;
+            this.errorMsg = 'Supported Formats Only png/jpg/jpeg';
+            event.target.value = null;
+            this.myForm.get('product_image_1')?.patchValue('');
+            return;
+          }else{
+            this.error_format = false;
+            this.errorMsg = '';
+            reader.onload = ()=>{
+              this.imgSrc1 = reader.result;
+              document.getElementById('imgSrc_1')?.setAttribute('src', this.imgSrc1)
+            }
+            this.myForm.get('product_image_1')?.patchValue(this.file,this.file.name);
         }
-        this.myForm.get('product_image_1')?.patchValue(this.file,this.file.name);
         break;
       case 2:
-        reader.onload = ()=>{
-          this.imgSrc2 = reader.result;
-          document.getElementById('imgSrc_2')?.setAttribute('src', this.imgSrc2)
-        }
-        this.myForm.get('product_image_2')?.patchValue(this.file,this.file.name);
+        const fileFormat_2 = this.file.type.split('/')[1].toLowerCase();
+          if (fileFormat_2 !== 'png' && fileFormat_2 !== 'jpeg' && fileFormat_2 !== 'jpg') {
+            this.error_format = true;
+            this.errorMsg = 'Supported Formats Only png/jpg/jpeg';
+            event.target.value = null;
+            this.myForm.get('product_image_2')?.patchValue('');
+            return;
+          }else{
+            this.error_format = false;
+            this.errorMsg = '';
+            reader.onload = ()=>{
+              this.imgSrc2 = reader.result;
+              document.getElementById('imgSrc_2')?.setAttribute('src', this.imgSrc2)
+            }
+            this.myForm.get('product_image_2')?.patchValue(this.file,this.file.name);
+          }
       break;
       case 3:
-        reader.onload = ()=>{
-          this.imgSrc3 = reader.result;
-          document.getElementById('imgSrc_3')?.setAttribute('src', this.imgSrc3)
-        }
-        this.myForm.get('product_image_3')?.patchValue(this.file,this.file.name);
+        const fileFormat_3 = this.file.type.split('/')[1].toLowerCase();
+          if (fileFormat_3 !== 'png' && fileFormat_3 !== 'jpeg' && fileFormat_3 !== 'jpg') {
+            this.error_format = true;
+            this.errorMsg = 'Supported Formats Only png/jpg/jpeg';
+            event.target.value = null;
+            this.myForm.get('product_image_3')?.patchValue('');
+            return;
+          }else{
+            this.error_format = false;
+            this.errorMsg = '';
+            reader.onload = ()=>{
+              this.imgSrc3 = reader.result;
+              document.getElementById('imgSrc_3')?.setAttribute('src', this.imgSrc3)
+            }
+            this.myForm.get('product_image_3')?.patchValue(this.file,this.file.name);
+          }
       break;
       case 4:
-        reader.onload = ()=>{
-          this.imgSrc4 = reader.result;
-          document.getElementById('imgSrc_4')?.setAttribute('src', this.imgSrc4)
-        }
-        this.myForm.get('product_image_4')?.patchValue(this.file,this.file.name);
+        const fileFormat_4 = this.file.type.split('/')[1].toLowerCase();
+          if (fileFormat_4 !== 'png' && fileFormat_4 !== 'jpeg' && fileFormat_4 !== 'jpg') {
+            this.error_format = true;
+            this.errorMsg = 'Supported Formats Only png/jpg/jpeg';
+            event.target.value = null;
+            this.myForm.get('product_image_4')?.patchValue('');
+            return;
+          }else{
+            this.error_format = false;
+            this.errorMsg = '';
+            reader.onload = ()=>{
+              this.imgSrc4 = reader.result;
+              document.getElementById('imgSrc_4')?.setAttribute('src', this.imgSrc4)
+            }
+            this.myForm.get('product_image_4')?.patchValue(this.file,this.file.name);
+      }
       break;
       case 5:
-        reader.onload = ()=>{
-          this.imgSrc5 = reader.result;
-          document.getElementById('imgSrc_5')?.setAttribute('src', this.imgSrc5)
-        }
-        this.myForm.get('product_image_5')?.patchValue(this.file,this.file.name);
+        const fileFormat_5 = this.file.type.split('/')[1].toLowerCase();
+          if (fileFormat_5 !== 'png' && fileFormat_5 !== 'jpeg' && fileFormat_5 !== 'jpg') {
+            this.error_format = true;
+            this.errorMsg = 'Supported Formats Only png/jpg/jpeg';
+            event.target.value = null;
+            this.myForm.get('product_image_5')?.patchValue('');
+            return;
+          }else{
+            this.error_format = false;
+            this.errorMsg = '';
+            reader.onload = ()=>{
+              this.imgSrc5 = reader.result;
+              document.getElementById('imgSrc_5')?.setAttribute('src', this.imgSrc5)
+            }
+            this.myForm.get('product_image_5')?.patchValue(this.file,this.file.name);
+          }
       break;
       case 6:
-        reader.onload = ()=>{
-          this.imgSrc6 = reader.result;
-          document.getElementById('imgSrc_6')?.setAttribute('src', this.imgSrc5)
-        }
-        this.myForm.get('product_image_6')?.patchValue(this.file,this.file.name);
+        const fileFormat_6 = this.file.type.split('/')[1].toLowerCase();
+          if (fileFormat_6 !== 'png' && fileFormat_6 !== 'jpeg' && fileFormat_6 !== 'jpg') {
+            this.error_format = true;
+            this.errorMsg = 'Supported Formats Only png/jpg/jpeg';
+            event.target.value = null;
+            this.myForm.get('product_image_6')?.patchValue('');
+            return;
+          }else{
+            this.error_format = false;
+            this.errorMsg = '';
+            reader.onload = ()=>{
+              this.imgSrc6 = reader.result;
+              document.getElementById('imgSrc_6')?.setAttribute('src', this.imgSrc5)
+            }
+            this.myForm.get('product_image_6')?.patchValue(this.file,this.file.name);
+      }
       break;
       case 7:
+        const fileFormat_7 = this.file.type.split('/')[1].toLowerCase();
+          if (fileFormat_7 !== 'png' && fileFormat_7 !== 'jpeg' && fileFormat_7 !== 'jpg') {
+            this.error_format = true;
+            this.errorMsg = 'Supported Formats Only png/jpg/jpeg';
+            event.target.value = null;
+            this.myForm.get('product_image_7')?.patchValue('');
+            return;
+          }else{
+            this.error_format = false;
+            this.errorMsg = '';
         reader.onload = ()=>{
           this.imgSrc7 = reader.result;
           document.getElementById('imgSrc_7')?.setAttribute('src', this.imgSrc5)
         }
         this.myForm.get('product_image_7')?.patchValue(this.file,this.file.name);
+      }
       break;
     }
   }

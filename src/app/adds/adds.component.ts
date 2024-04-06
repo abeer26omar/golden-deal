@@ -12,6 +12,7 @@ import { APIResponse2, Purchases } from '../models/user.model';
 import { ProfileService } from '../services/profile.service';
 import { ErrorHandlerService } from '../services/error-handler.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { PinProductComponent } from './pin-product/pin-product.component';
 
 declare var window: any;
 
@@ -275,6 +276,13 @@ export class AddsComponent implements OnInit, OnDestroy {
   }
   openSolidDialog(id: number){
     this.dialogRef.open(DialogSolidComponent,{
+      data: {
+        id: id
+      }
+    })
+  }
+  openPinDialog(id: number){
+    this.dialogRef.open(PinProductComponent,{
       data: {
         id: id
       }

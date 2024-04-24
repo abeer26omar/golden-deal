@@ -61,7 +61,6 @@ export class SubscriptionsComponent implements OnInit, OnDestroy {
     })
   }
   choose(sub_id: number){
-        // this.openFormModal();
     this.dialogRef.open(PaymentDetailsDialogComponent,{
       data: {
         subscription_method: sub_id

@@ -57,7 +57,8 @@
                                       </ng-container>
                                 </ng-container>
                                 <h2 class="prod-name" *ngIf="singleProduct.data.category_slug == 'cars'">{{singleProduct.data.name}}</h2>
-                                <div class="favorite" *ngIf="singleProduct.data.status === 'active'">
+                                <div class="favorite card_num p-2" *ngIf="singleProduct.data.status === 'active'">
+                                    <span class="mb-0 ms-2" *ngIf="singleProduct.data.product_favorite_count > 0">{{singleProduct.data.product_favorite_count}}</span>
                                     <a (click)="addToFav(singleProduct.data, $event)">
                                         <img src="../../assets/images/{{singleProduct.data.product_fav == false ? 'favorite_icon.svg' : 'already_fav_icon.svg'}}" alt="already_fav_icon" >
                                     </a>

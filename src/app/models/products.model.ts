@@ -129,8 +129,9 @@ export interface Product{
         region_name: string,
         region_id: number,
         category_slug: string,
-        product_fav: boolean
-        }
+        product_fav: boolean,
+        product_favorite_count: number
+    }
 }
 export interface ownerRatings{
     id: number;

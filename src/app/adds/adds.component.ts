@@ -288,6 +288,13 @@ export class AddsComponent implements OnInit, OnDestroy {
       }
     })
   }
+  openUnPinDialog(id: number){
+    this.dialogRef.open(PinProductComponent,{
+      data: {
+        id: id
+      }
+    })
+  }
   openDelDialog(id: number){
     this.dialogRef.open(DialogDeleteComponent,{
       data: {

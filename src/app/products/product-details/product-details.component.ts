@@ -78,7 +78,8 @@ export class ProductDetailsComponent implements OnInit ,AfterViewInit ,OnDestroy
       region_id: 0,
       region_name: "",
       category_slug: '',
-      product_fav: false
+      product_fav: false,
+      product_favorite_count: 0
     }
   }
   error: string = '';
@@ -205,6 +206,8 @@ export class ProductDetailsComponent implements OnInit ,AfterViewInit ,OnDestroy
     this.productSub = this.httpService.getDetails(id)
     .subscribe({
       next:(productDetails: Product)=>{
+        console.log(productDetails);
+        
         this.singleProduct = productDetails;  
         this.receiverId = this.singleProduct.data.owner_id;        
         if (this.owner_id == this.singleProduct.data.owner_id) {

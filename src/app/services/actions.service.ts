@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import { environment as env } from 'src/environments/environment';
 import { Subject, of, tap } from 'rxjs';
-import { APIresponse, APIresponse2, Favourites, Orders, Portfolio, Provider, ResponseSuccess, Subscriptions, Regions, UserProducts, PrivateMarketing } from '../models/actions.model';
+import { APIresponse, APIresponse2, Favourites, Orders, Portfolio, Provider, ResponseSuccess, Subscriptions, Regions, UserProducts, PrivateMarketing, Consumption } from '../models/actions.model';
 import { APIResponse, Products, SplashScreen } from '../models/products.model';
 import { MatDialog } from '@angular/material/dialog';
 import { ResponseModalComponent } from '../response-modal/response-modal.component';
@@ -131,5 +131,8 @@ export class ActionsService {
   }
   getPrivateMarketingPage(){
     return this.http.get<PrivateMarketing>(`${env.api_url}/static-pages`)
+  }
+  getCheckConsumption(){
+    return this.http.get<Consumption>(`${env.api_url}/products/check-consumption`,this.httpOptions)
   }
 }

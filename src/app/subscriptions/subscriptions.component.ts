@@ -53,7 +53,7 @@ export class SubscriptionsComponent implements OnInit, OnDestroy {
   getSubscriptionTypes(){
     this.subscriptionSub = this.actionService.getSubscribtionsType().subscribe({
       next: (resData: APIresponse<Subscriptions>)=>{
-        this.subscriptions = resData.data;        
+        this.subscriptions = resData.data;
       },
       error: (err: HttpErrorResponse)=>{
         this.errorHandel.openErrorModa(err);
@@ -68,7 +68,6 @@ export class SubscriptionsComponent implements OnInit, OnDestroy {
     })
   }
   submitPay(){
-    console.log(this.payForm.get('chosePay')?.value)
     this.openReviewModal();
     this.paymentModal.hide()
   }

@@ -21,11 +21,15 @@
                                 <div class="conditions px-3 d-flex flex-column align-items-start align-self-start">
                                     <div class="d-flex align-items-center">
                                         <img class="ps-1" src="../../assets/images/subscribtion_icon.svg" alt="subscribtion_icon" width="26px">
-                                        <p class="desc">{{subscription.slug == 'gold' ? 'امكانيه اضافه 5 اعلانات فى اليوم' : 'امكانيه اضافه 4 اعلانات فى اليوم'}}</p>
+                                        <p class="desc">امكانيه اضافه {{subscription.number_of_ads}} اعلانات فى اليوم</p>
                                     </div>
                                     <div class="d-flex align-items-center py-2" >
                                         <img class="ps-1" src="../../assets/images/subscribtion_icon.svg" alt="subscribtion_icon" width="26px">
-                                        <p class="desc" >مده الاشتراك 3 شهور</p>
+                                        <p class="desc" >مده الاشتراك {{subscription.period}} شهور</p>
+                                    </div>
+                                    <div class="d-flex align-items-center py-2" *ngIf="subscription.can_pin === 1">
+                                        <img class="ps-1" src="../../assets/images/subscribtion_icon.svg" alt="subscribtion_icon" width="26px">
+                                        <p class="desc" >عدد الاعلانات {{subscription.number_of_pinned_ads}} المثبته</p>
                                     </div>
                                     <div class="d-flex align-items-center" *ngIf="subscription.slug == 'gold'">
                                         <img class="ps-1" src="../../assets/images/subscribtion_icon.svg" alt="subscribtion_icon" width="26px">

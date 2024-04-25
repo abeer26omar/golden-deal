@@ -7,7 +7,10 @@ export interface Subscriptions{
     currency_slug: string,
     currency_name: string,
     number_of_ads: number,
-    active: number
+    active: number,
+    period: number,
+    number_of_pinned_ads: number,
+    can_pin: number
 }
 export interface APIresponse<T>{
     data: Array<T>;
@@ -134,7 +137,7 @@ export interface Orders{
         id: number,
         title: string
       },
-    }
+}
 export interface APIresponse2<T>{
     data: Array<T>
 }
@@ -245,5 +248,12 @@ export interface PrivateMarketing{
         image: string,
         whatsapp: string,
         slug: string
+    }
+}
+export interface Consumption{
+    data: {
+        product_creation_limit_per_day: number,
+        product_creation_count_today: number,
+        remaining_product_creations: number
     }
 }

@@ -13,7 +13,6 @@ import { ProfileService } from '../services/profile.service';
 import { ErrorHandlerService } from '../services/error-handler.service';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { PinProductComponent } from './pin-product/pin-product.component';
-import { environment as env } from 'src/environments/environment';
 
 declare var window: any;
 

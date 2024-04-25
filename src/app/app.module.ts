@@ -100,6 +100,7 @@ import { SendGalleryComponent } from './chats/send-gallery/send-gallery.componen
 import { SendPdfComponent } from './chats/send-pdf/send-pdf.component';
 import { PrivateMarketingComponent } from './private-marketing/private-marketing.component';
 import { PinProductComponent } from './adds/pin-product/pin-product.component';
+import { ConsumptionModalComponent } from './adds/new-add/consumption-modal/consumption-modal.component';
 
 @NgModule({
   declarations: [
@@ -149,6 +150,7 @@ import { PinProductComponent } from './adds/pin-product/pin-product.component';
     SendPdfComponent,
     PrivateMarketingComponent,
     PinProductComponent,
+    ConsumptionModalComponent,
   ],
   imports: [
     BrowserModule,

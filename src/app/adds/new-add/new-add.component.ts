@@ -7,11 +7,13 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { environment as env } from 'src/environments/environment';
 import { MacPrefixService } from 'src/app/services/mac-prefix.service';
 import { ActionsService } from 'src/app/services/actions.service';
-import { Regions } from 'src/app/models/actions.model';
+import { Consumption, Regions } from 'src/app/models/actions.model';
 import { SwiperOptions } from 'swiper';
 import { ErrorHandlerService } from 'src/app/services/error-handler.service';
 import { MustMatchService } from 'src/app/services/must-match.service';
 import { CookieService } from 'ngx-cookie-service';
+import { MatDialog } from '@angular/material/dialog';
+import { ConsumptionModalComponent } from './consumption-modal/consumption-modal.component';
 
 declare var window: any;
 
@@ -39,6 +41,13 @@ export class NewAddComponent implements OnInit, OnDestroy {
   submitted: boolean = false;
   error_CarPlate_bool: boolean = false;
   file!: File;
+  consumption: Consumption = {
+    data: {
+      product_creation_limit_per_day: 0,
+      product_creation_count_today: 0,
+      remaining_product_creations: 0
+    }
+  }
   imgSrc1: any;
   imgSrc2: any;
   imgSrc3: any;
@@ -135,8 +144,9 @@ export class NewAddComponent implements OnInit, OnDestroy {
   private categorySub : Subscription = new Subscription;
   private filterSub : Subscription = new Subscription;
   private sendSub: Subscription = new Subscription;
-  constructor(private httpService: ProductsRequestService,
-    private passMatchService: MustMatchService,
+  private consumptionSub: Subscription = new Subscription;
+
+  constructor(private dialogRef: MatDialog,
     private macService: MacPrefixService,
     private actionService: ActionsService,
     private productsService: ProductsRequestService,
@@ -592,7 +602,7 @@ export class NewAddComponent implements OnInit, OnDestroy {
     }  
   }
   getCategories(){
-    this.categorySub = this.httpService.
+    this.categorySub = this.productsService.
     getProductsCategories().
     subscribe({
       next: (categoryList: APIResponse2<Category>)=>{ 
@@ -641,7 +651,7 @@ export class NewAddComponent implements OnInit, OnDestroy {
         this.myForm.get('category_id')?.patchValue(ele.id)
       }
     })
-    this.filterSub = this.httpService.getCategoryFilters(this.categoryName).subscribe({
+    this.filterSub = this.productsService.getCategoryFilters(this.categoryName).subscribe({
       next: (res: CategoryFilter)=>{
         this.filters = res;                                       
         this.filters.data.filters.forEach(filter=>{
@@ -686,6 +696,9 @@ export class NewAddComponent implements OnInit, OnDestroy {
       this.car_plate = event.target.value
     }
   }
+  openConsumtionModal(){
+    this.dialogRef.open(ConsumptionModalComponent,{})
+  }
   submit(){
     this.submitted = true;  
     let plate_chars_en_filter_6: any, 
@@ -699,11 +712,30 @@ export class NewAddComponent implements OnInit, OnDestroy {
       plate_number_filter_6_value = Object.values(this.myForm.get('plate_numbers_filter_6')?.value).join(' ');
       this.myForm.get('name')?.setValue(this.car_plate);
     }
-    if(this.myForm.get('agrement')?.invalid){
+    if(this.myForm.get('agrement')?.invalid){      
       return;
     }else{      
         if(this.step == 1){
-          this.step = this.step + 1;
+          this.consumptionSub = this.actionService.
+            getCheckConsumption().
+            subscribe({
+              next: (res: Consumption)=>{ 
+                this.consumption = res;
+                if(this.consumption.data.remaining_product_creations === 0){
+                  this.openConsumtionModal();
+                }else{
+                  this.step = this.step + 1;
+                }
+              },
+              error: (err: HttpErrorResponse)=>{
+                if(err.error.data){
+                  this.error = err.error.data;
+                }else{
+                  this.error = err.statusText;
+                }
+                this.addFaild.show();
+              }
+            })
         }
       if(this.myForm.valid && this.error_format === false){
         const formData = new FormData();
@@ -725,9 +757,9 @@ export class NewAddComponent implements OnInit, OnDestroy {
         this.renderer.setProperty(document.documentElement, 'scrollTop', 0);
         this.renderer.setProperty(document.body, 'scrollTop', 0);
         this.load = true;
-          this.sendSub = this.httpService.http.post<NewProduct>(`${env.api_url}/products/store-new-product`,
+          this.sendSub = this.productsService.http.post<NewProduct>(`${env.api_url}/products/store-new-product`,
             formData,
-          this.httpService.httpOptions)
+          this.productsService.httpOptions)
           .subscribe({
             next: (res: NewProduct)=>{
               this.load = false;
@@ -812,6 +844,9 @@ export class NewAddComponent implements OnInit, OnDestroy {
     } 
     if(this.sendSub){
       this.sendSub.unsubscribe();
+    }
+    if(this.consumptionSub){
+      this.consumptionSub.unsubscribe();
     } 
     
   }

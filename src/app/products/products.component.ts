@@ -407,7 +407,6 @@ export class ProductsComponent implements OnInit, AfterViewInit, OnDestroy {
       this.dialogRef.open(AuthRemainderModalComponent,{
         data: {}
       })
-      // this.route.navigate(['/register']);
     }
   }
   applayForPagination(brand_filter: string,brand_Subfilter: string,page_num: number){

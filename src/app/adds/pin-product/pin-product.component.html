@@ -1,13 +1,13 @@
 <div class="content yesORno">
     <div class="header justify-content-center">
-      <h5 class="title text-center" id="staticBackdropLabel">هل تريد تثبيت المنتج </h5>
+      <h5 class="title text-center" id="staticBackdropLabel">{{product.pinned === 0 ? 'هل تريد تثبيت المنتج ؟' : 'الغاء تثبيت المنتج ؟' }} </h5>
     </div>
     <mat-progress-bar mode="indeterminate" class="my-3" *ngIf="load" id="addprog"></mat-progress-bar>
-    <p *ngIf="sucMsg" class="text-center text-success">{{sucMsg}}</p>
-    <p *ngIf="failMsg" class="text-center text-danger">{{failMsg}}</p>
+    <p *ngIf="sucMsg" class="text-center text-success px-2">{{sucMsg}}</p>
+    <p *ngIf="failMsg" class="text-center text-danger px-2">{{failMsg}}</p>
     <div class="body">
-        <button type="button" class="btn btn-yes m-3" (click)="setAsPin()">نعم</button>
+        <button type="button" class="btn btn-yes m-3" (click)="pinProduct()">نعم</button>
 
-        <button type="button" class="btn btn-no m-3"(click)="onNoClick()">لا</button>
+        <button type="button" class="btn btn-no m-3"(click)="onNoClick(product.pinned)">لا</button>
     </div>
 </div>

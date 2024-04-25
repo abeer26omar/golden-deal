@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { APIresponse2, Favourites, Orders, Portfolio, Products, UserProducts } from '../models/actions.model';
+import { APIresponse2, Favourites, Orders, Portfolio, Products, ResponseSuccess, UserProducts } from '../models/actions.model';
 import { ActionsService } from '../services/actions.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogSolidComponent } from './dialog-solid/dialog-solid.component';
@@ -11,8 +11,9 @@ import { MacPrefixService } from '../services/mac-prefix.service';
 import { APIResponse2, Purchases } from '../models/user.model';
 import { ProfileService } from '../services/profile.service';
 import { ErrorHandlerService } from '../services/error-handler.service';
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { PinProductComponent } from './pin-product/pin-product.component';
+import { environment as env } from 'src/environments/environment';
 
 declare var window: any;
 
@@ -76,6 +77,7 @@ export class AddsComponent implements OnInit, OnDestroy {
   private favSub: Subscription = new Subscription;
   private orderSub: Subscription = new Subscription;
   mac: boolean = false;
+  pinStatus: string = 'تثبيت الاعلان';
   @ViewChild('productsContainer') productsContainer!: ElementRef;
   constructor(private router: Router,
     private route: ActivatedRoute,
@@ -83,15 +85,12 @@ export class AddsComponent implements OnInit, OnDestroy {
     private dialogRef: MatDialog,
     private macService: MacPrefixService,
     private profileService: ProfileService,
-    private errorHandel: ErrorHandlerService) { 
+    private errorHandel: ErrorHandlerService,
+    private http: HttpClient) { 
       if(this.route.snapshot.fragment == 'fav'){
         this.active = 3;
         this.getMyFav()
       }
-      // else if(this.route.snapshot.fragment == 'orders'){
-      //   this.active = 4;
-      //   this.getMyOrders()
-      // }
       else{}
       this.actionService.refresh.subscribe(()=>{
         this.getMyFav();
@@ -281,19 +280,25 @@ export class AddsComponent implements OnInit, OnDestroy {
       }
     })
   }
-  openPinDialog(id: number){
+  openPinDialog(product: any){
     this.dialogRef.open(PinProductComponent,{
       data: {
-        id: id
+        product: product
       }
+    }).afterClosed().subscribe(status => {
+      this.checkpinStatus(status);
     })
   }
-  openUnPinDialog(id: number){
-    this.dialogRef.open(PinProductComponent,{
-      data: {
-        id: id
-      }
-    })
+  // pin
+  checkpinStatus(status: number){    
+    if(status === 0){
+      return 'تثبيت الاعلان';
+    }else{
+      return 'الغاء التثبيت';
+    }
+  }
+  pinProduct(product: any){
+    this.openPinDialog(product)
   }
   openDelDialog(id: number){
     this.dialogRef.open(DialogDeleteComponent,{
